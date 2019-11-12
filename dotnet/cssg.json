@@ -1,0 +1,29 @@
+{
+  "language": "dotnet",
+  "sourcesRoot": ".",
+  "sourceExtension": ".cs",
+  "docsRoot": "docs",
+  "docExtension": ".md",
+
+  "snippetTemplate": "Snippet.t",
+  "testcaseTemplate": "TestCase.t",
+
+  "macro4doc": {
+    "secretId": "\"yourSecretId\"",
+    "secretKey": "\"yourSecretKey\"",
+    "region": "\"ap-guangzhou\"",
+    "appId": "\"1250000000\"",
+    "bucket": "example-1250000000"
+  },
+  "macro4test": {
+    "secretId": "Environment.GetEnvironmentVariable(\"COS_KEY\")",
+    "secretKey": "Environment.GetEnvironmentVariable(\"COS_SECRET\")",
+    "appId": "Environment.GetEnvironmentVariable(\"COS_APPID\")",
+    "bucket": "bucket-4-csharp-test-1253653367"
+  },
+  "dynamic": {
+    "get-object": {
+      "objectName": "your-cos-key"
+    }
+  }
+}
