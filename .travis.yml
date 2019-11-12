@@ -1,0 +1,24 @@
+language: node_js
+node_js:
+  - '8'
+  
+before_install:
+- npm i -g cssg
+
+script:
+- cd dotnet
+- cssg compile
+
+jobs:
+  include:
+    - language: csharp
+      mono: none
+      dotnet: 2.2.402
+      script:
+      - cd QCloudCSharpSDK/COSXMLTests
+      - dotnet restore
+      - dotnet test
+
+script:
+- cd dotnet
+- cssg write
