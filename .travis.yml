@@ -7,19 +7,12 @@ before_install:
 
 jobs:
   include:
-    - stage: compile
-      language: node_js
-      script:
-      - cd dotnet
-      - cssg compile
     - stage: test
       language: csharp
       mono: none
       dotnet: 2.2.402
       script:
+      - cd dotnet
+      - cssg compile
       - dotnet restore
       - dotnet test
-
-stages:
-- compile
-- test
