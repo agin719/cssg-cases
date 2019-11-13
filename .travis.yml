@@ -16,3 +16,4 @@ jobs:
       - cssg compile
       - dotnet restore
       - dotnet test
+      - cssg write
