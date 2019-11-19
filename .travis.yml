@@ -19,7 +19,6 @@ jobs:
       - dotnet test
       - cssg write
     - language: objective-c
-      cache: cocoapods 
       podfile: Podfile 
       xcode_workspace: COS_iOS_Test.xcworkspace
       xcode_scheme: COS_iOS_Test
