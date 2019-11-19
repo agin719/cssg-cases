@@ -4,7 +4,6 @@ node_js:
   
 before_install:
 - nvm install v8.11.3
-- gem install cocoapods -v '1.7.2'
 - npm i -g cssg
 
 jobs:
@@ -25,8 +24,11 @@ jobs:
       xcode_scheme: COS_iOS_Test
       xcode_destination: platform=iOS Simulator,OS=11.3,name=iPhone X
       before_install:
+      - gem install cocoapods -v '1.7.2'
       - cd iOS
-      - pod repo update
+      # - pod repo update
       install:
+      - pod install
+      before_script:
       - pod install
 
