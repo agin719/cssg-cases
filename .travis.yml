@@ -30,6 +30,6 @@ jobs:
       - cd iOS
       - cssg compile
       - xcrun instruments -s
-      - xcrun instruments -w "iPhone X (11.3)"
+      - xcrun instruments -w D18EED3E-1D5F-4CB8-A88F-79DE3893EBDB
       intall:
       - pod install
