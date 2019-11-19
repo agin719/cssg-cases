@@ -4,6 +4,7 @@ node_js:
   
 before_install:
 - nvm install v8.11.3
+- gem install cocoapods -v '1.7.2'
 - npm i -g cssg
 
 jobs:
