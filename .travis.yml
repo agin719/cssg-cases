@@ -42,7 +42,7 @@ xcode_scheme: COS_iOS_Test
 xcode_destination: platform=iOS Simulator,OS=11.3,name=iPhone X
 before_install:
 - cd iOS
-# - pod repo update
+- pod repo update
 intall:
 - pod install
 # - cssg compile
