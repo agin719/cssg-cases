@@ -3,6 +3,7 @@ node_js:
   - '8'
   
 before_install:
+- nvm use v8.11.3
 - npm i -g cssg
 
 jobs:
