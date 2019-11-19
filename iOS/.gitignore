@@ -1,0 +1,4 @@
+Pods/
+snippets/
+dist/*.h
+dist/*.m

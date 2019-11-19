@@ -28,8 +28,8 @@ namespace ObjectTest
         {
 
             // .cssg-body-start: [get-object]
-            string bucket = "bucket-4-csharp-test-1253653367";
-            string key = "{{objectName}}";
+            string bucket = "{{bucket}}";
+            string key = "your-cos-key";
             string localDir = System.IO.Path.GetTempPath();
             string localFileName = "my-local-temp-file";
 
@@ -54,7 +54,7 @@ namespace ObjectTest
         {
 
             // .cssg-body-start: [put-object]
-            string bucket = "bucket-4-csharp-test-1253653367";
+            string bucket = "{{bucket}}";
             string key = "your-cos-key";
             string srcPath = "temp-source-file";
             File.WriteAllBytes(srcPath, new byte[1024 * 1024 * 1]);

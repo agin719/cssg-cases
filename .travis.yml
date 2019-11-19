@@ -7,7 +7,7 @@ before_install:
 
 jobs:
   include:
-    - stage: test
+    - stage: test_dotnet
       language: csharp
       mono: none
       dotnet: 2.2.402
@@ -17,7 +17,14 @@ jobs:
       - dotnet restore
       - dotnet test
       - cssg write
-    - language: python
-      python: 3.6
-      script:
-      - python -c "print('Hi from Python!')"
+    - stage: test_iOS
+      language: objective-c
+      cache: cocoapods 
+      podfile: iOS/Podfile 
+      xcode_workspace: iOS/COS_iOS_Test.xcworkspace
+      xcode_scheme: COS_iOS_Test
+      xcode_destination: platform=iOS Simulator,OS=11.3,name=iPhone X
+      before_install:
+      - pod repo update
+      before_script:
+      - cd iOS

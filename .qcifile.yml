@@ -1,0 +1,19 @@
+version: 2.0
+
+setup:
+    - npm install cssg -g
+
+stages:
+    - stage: compile
+      cmds: 
+          - cd dotnet
+          - cssg compile
+    - stage: test
+      worker: mcr.microsoft.com/dotnet/core/sdk:2.1
+      cmds: 
+          - cd dotnet
+          - dotnet test
+    - stage: write
+      cmds:
+          - cd dotnet
+          - cssg write

@@ -1,0 +1,24 @@
+{
+  "language": "iOS",
+  "sourcesRoot": "COS_iOS_TestTests/",
+  "sourceExtension": ".m",
+  "docsRoot": "docs",
+  "docExtension": ".md",
+
+  "snippetTemplate": "Snippet.t",
+  "testcaseTemplate": "TestCase.t",
+
+  "macro4doc": {
+    "secretId": "\"yourSecretId\"",
+    "secretKey": "\"yourSecretKey\"",
+    "region": "ap-guangzhou",
+    "appId": "1250000000",
+    "bucket": "example-1250000000"
+  },
+  "macro4test": {
+    "secretId": "[SecretStorage sharedInstance].secretID",
+    "secretKey": "[SecretStorage sharedInstance].secretKey",
+    "appId": "1253653367",
+    "bucket": "bucket-4-csharp-test-1253653367"
+  }
+}
