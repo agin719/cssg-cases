@@ -28,3 +28,5 @@ jobs:
       before_script:
       - cd iOS
       - cssg compile
+      intall:
+      - pod install
