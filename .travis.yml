@@ -28,5 +28,6 @@ jobs:
       before_script:
       - cd iOS
       - cssg compile
+      - xcrun simctl list &>/dev/null
       intall:
       - pod install
