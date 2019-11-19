@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SceneDelegate : UIResponder <UIWindowSceneDelegate>
+@interface SceneDelegate : UIResponder
 
 @property (strong, nonatomic) UIWindow * window;
 
