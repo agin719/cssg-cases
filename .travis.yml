@@ -30,6 +30,6 @@ jobs:
       - cd iOS
       - cssg compile
       - xcrun instruments -s
-      - xcrun instruments -w D18EED3E-1D5F-4CB8-A88F-79DE3893EBDB
+      - xcrun instruments -w "iPhone X (11.3)" -t "/Applications/Xcode-9.4.1.app/Contents/Applications/Instruments.app/Contents/Resources/templates/Blank.tracetemplate"
       intall:
       - pod install
