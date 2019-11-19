@@ -17,7 +17,8 @@ jobs:
     #   - dotnet restore
     #   - dotnet test
     #   - cssg write
-    - language: objective-c
+    - osx_image: xcode10.2
+      language: objective-c
       cache: cocoapods 
       podfile: Podfile 
       xcode_workspace: COS_iOS_Test.xcworkspace
