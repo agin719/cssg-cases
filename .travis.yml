@@ -7,8 +7,7 @@ before_install:
 
 jobs:
   include:
-    - stage: test_dotnet
-      language: csharp
+    - language: csharp
       mono: none
       dotnet: 2.2.402
       script:
@@ -17,8 +16,7 @@ jobs:
       - dotnet restore
       - dotnet test
       - cssg write
-    - stage: test_iOS
-      language: objective-c
+    - language: objective-c
       cache: cocoapods 
       podfile: Podfile 
       xcode_workspace: COS_iOS_Test.xcworkspace

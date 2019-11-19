@@ -57,7 +57,7 @@ namespace ObjectTest
             string bucket = "{{bucket}}";
             string key = "your-cos-key";
             string srcPath = "temp-source-file";
-            File.WriteAllBytes(srcPath, new byte[1024 * 1024 * 1]);
+            File.WriteAllBytes(srcPath, new byte[1024]);
 
             PutObjectRequest request = new PutObjectRequest(bucket, key, srcPath);
             //设置签名有效时长
