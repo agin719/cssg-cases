@@ -46,6 +46,5 @@ before_script:
 - cd iOS
 # - cssg compile
 # - xcrun instruments -s
-- xcrun instruments -w "iPhone X (11.3)" -t "/Applications/Xcode-9.4.1.app/Contents/Applications/Instruments.app/Contents/Resources/templates/Blank.tracetemplate"
 intall:
 - pod install
