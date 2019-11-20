@@ -21,12 +21,5 @@ using System.Threading.Tasks;
 
 namespace COSSample
 {
-    public class {{name}}Sample {
-
-      [Test()]
-      public void {{name}}()
-      {
-{{{snippet}}}
-      }
-    }
+    {{{snippet}}}
 }

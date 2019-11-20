@@ -19,14 +19,25 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+// cssg-snippet-lang: [dotnet]
 namespace COSSample
 {
-    public class {{name}}Sample {
+    public class Assembly {
 
-      [Test()]
-      public void {{name}}()
-      {
-{{{snippet}}}
-      }
+        CosXml cosXml = new CosXmlServer(null, null);
+
+        {{#top}}
+        // .cssg-body-start: [{{name}}]
+        {{{code}}}
+        // .cssg-body-end
+        {{/top}}
+
+        {{#snippets}}
+        public void test{{index}}() {
+            // .cssg-body-start: [{{name}}]
+            {{{code}}}
+            // .cssg-body-end
+        }
+        {{/snippets}}
     }
 }

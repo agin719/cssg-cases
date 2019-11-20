@@ -1,0 +1,7 @@
+{
+    "secretId": "COS_SECRETID",
+    "secretKey": "COS_SECRETKEY",
+    "region": "ap-guangzhou",
+    "appId": "1250000000",
+    "bucket": "example-1250000000"
+}
