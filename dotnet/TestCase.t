@@ -17,7 +17,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DotnetTest
+namespace COSTest
 {
     public class {{name}}Test {
 
