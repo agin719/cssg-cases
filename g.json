@@ -1,7 +1,115 @@
 {
+  "macro4doc": {
     "secretId": "COS_SECRETID",
     "secretKey": "COS_SECRETKEY",
-    "region": "ap-guangzhou",
     "appId": "1250000000",
-    "bucket": "example-1250000000"
+    "uin": "100000000001",
+    "region": "ap-guangzhou",
+    "persistBucket": "example-1250000000",
+    "tempBucket": "example-1250000000",
+    "copySourceBucket": "source-1250000000",
+    "replicationDestBucket":"destinationbucket-1250000000",
+    "assistBucketRegion": "ap-beijing",
+    "object": "exampleobject",
+    "uploadId": "example-uploadId"
+  },
+  "macro4test": {
+    "appId": "1253653367",
+    "uin": "1278687956",
+    "persistBucket": "bucket-cssg-test-1253653367",
+    "region": "ap-guangzhou",
+    "copySourceBucket":"bucket-cssg-test-1253653367",
+    "replicationDestBucket":"bucket-cssg-assist-1253653367",
+    "assistBucketRegion": "ap-beijing",
+    "uploadId": "example-uploadId"
+  },
+  "group": {
+    "bucket-ACL": {
+      "setup": ["put-bucket"],
+      "steps": [
+        "head-bucket",
+        "put-bucket-acl",
+        "get-bucket-acl"
+      ],
+      "teardown": [
+        "delete-bucket"
+      ]
+    },
+    "bucket-CORS": {
+      "setup": ["put-bucket"],
+      "steps": [
+        "put-bucket-cors",
+        "get-bucket-cors",
+        "option-object",
+        "delete-bucket-cors"
+      ],
+      "teardown": [
+        "delete-bucket"
+      ]
+    },
+    "bucket-lifecycle": {
+      "setup": ["put-bucket"],
+      "steps": [
+        "put-bucket-lifecycle",
+        "get-bucket-lifecycle",
+        "delete-bucket-lifecycle"
+      ],
+      "teardown": [
+        "delete-bucket"
+      ]
+    },
+    "bucket-replication": {
+      "setup": ["put-bucket"],
+      "steps": [
+        "put-bucket-versioning",
+        "put-bucket-replication",
+        "get-bucket-replication",
+        "delete-bucket-replication"
+      ],
+      "teardown": [
+        "delete-bucket"
+      ]
+    },
+    "bucket-versioning": {
+      "setup": ["put-bucket"],
+      "steps": [
+        "put-bucket-versioning",
+        "get-bucket-versioning"
+      ],
+      "teardown": [
+        "delete-bucket"
+      ]
+    },
+    "object-ACL": [
+      "put-object",
+      "put-object-acl",
+      "get-object-acl"
+    ],
+    "object": [
+      "get-bucket",
+      "put-object",
+      "head-object",
+      "get-object",
+      "delete-object",
+      "delete-multi-object",
+      "post-object",
+      "restore-object",
+      "get-presign-download-url",
+      "get-presign-upload-url"
+    ],
+    "object-multi-upload": [
+      "init-multi-upload",
+      "list-multi-upload",
+      "upload-part",
+      "list-parts",
+      "complete-multi-upload",
+      "abort-multi-upload"
+    ],
+    "object-copy": [
+      "copy-object",
+      "init-multi-upload",
+      "upload-part-copy",
+      "complete-multi-upload"
+    ]
+  }
 }

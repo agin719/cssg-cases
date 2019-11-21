@@ -23,10 +23,30 @@ namespace COSSample
 {
     public class {{name}}Sample {
 
-      [Test()]
+      string uploadId;
+
+      {{#steps}}
       public void {{name}}()
       {
-{{{snippet}}}
+        {{{snippet}}}
+      }
+      {{/steps}}
+
+      [SetUp()]
+      public void setup() {
+        {{{setupBlock}}}
+      }
+
+      [Test()]
+      public void test{{name}}() {
+        {{#steps}}
+        {{name}}();
+        {{/steps}}
+      }
+
+      [TearDown()]
+      public void teardown() {
+        {{{teardownBlock}}}
       }
     }
 }

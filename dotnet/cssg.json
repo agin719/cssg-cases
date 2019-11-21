@@ -7,19 +7,24 @@
 
   "snippetTemplate": "Snippet.t",
   "testcaseTemplate": "TestCase.t",
-  "testcaseTopClsTemplate": "TestCaseTopcls.t",
+  "exclusiveTemplate": {
+    "global-init-custom-credential-provider": "TestCaseTopcls.t"
+  },
+  "ignoreExpressionInDoc": [
+    "Assert.Null\\([^()]+\\);",
+    "this.uploadId\\s*=\\s*.+;",
+    ".+\\s*=\\s*this.uploadId;"
+  ],
 
   "macro4doc": {
     "secretId": "\"${g.secretId}\"",
-    "secretKey": "\"${g.secretKey}\"",
-    "appId": "\"${g.appId}\""
+    "secretKey": "\"${g.secretKey}\""
   },
   "macro4test": {
     "secretId": "Environment.GetEnvironmentVariable(\"COS_KEY\")",
     "secretKey": "Environment.GetEnvironmentVariable(\"COS_SECRET\")",
-    "appId": "Environment.GetEnvironmentVariable(\"COS_APPID\")",
-    "bucket": "bucket-4-csharp-test-1253653367",
-    "region": "ap-guangzhou"
+    "tempBucket": "bucket-cssg-dotnet-temp-1253653367",
+    "object": "object4dotnet"
   },
   "dynamic": {
     "get-object": {

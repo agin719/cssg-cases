@@ -21,5 +21,7 @@ using System.Threading.Tasks;
 
 namespace COSSample
 {
+    {{#steps}}
     {{{snippet}}}
+    {{/steps}}
 }

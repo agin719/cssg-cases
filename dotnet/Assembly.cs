@@ -27,7 +27,7 @@ namespace COSSample
 
     CosXml cosXml = new CosXmlServer(null, null);
 
-    // .cssg-body-start: [global-init-topcls]
+    // .cssg-body-start: [global-init-custom-credential-provider]
     //方式3,自定义方式提供密钥信息， 继承 QCloudCredentialProvider 并 重写 GetQCloudCredentials() 方法
     public class MyQCloudCredentialProvider : QCloudCredentialProvider
     {
@@ -44,7 +44,6 @@ namespace COSSample
         //更新 密钥信息
       }
     }
-
     // .cssg-body-end
 
     public void test0()
@@ -63,14 +62,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test1()
@@ -78,7 +78,7 @@ namespace COSSample
       // .cssg-body-start: [put-bucket]
       try
       {
-        string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
+        string bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         PutBucketRequest request = new PutBucketRequest(bucket);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -90,14 +90,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test2()
@@ -105,7 +106,7 @@ namespace COSSample
       // .cssg-body-start: [head-bucket]
       try
       {
-        string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
+        string bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         HeadBucketRequest request = new HeadBucketRequest(bucket);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -117,14 +118,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test3()
@@ -132,7 +134,7 @@ namespace COSSample
       // .cssg-body-start: [delete-bucket]
       try
       {
-        string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
+        string bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         DeleteBucketRequest request = new DeleteBucketRequest(bucket);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -144,14 +146,13 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
       }
-
       // .cssg-body-end
     }
     public void test4()
@@ -159,7 +160,7 @@ namespace COSSample
       // .cssg-body-start: [put-bucket-acl]
       try
       {
-        string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
+        string bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         PutBucketACLRequest request = new PutBucketACLRequest(bucket);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -177,14 +178,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test5()
@@ -192,7 +194,7 @@ namespace COSSample
       // .cssg-body-start: [get-bucket-acl]
       try
       {
-        string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
+        string bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         GetBucketACLRequest request = new GetBucketACLRequest(bucket);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -204,14 +206,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test6()
@@ -219,7 +222,7 @@ namespace COSSample
       // .cssg-body-start: [put-bucket-cors]
       try
       {
-        string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
+        string bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         PutBucketCORSRequest request = new PutBucketCORSRequest(bucket);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -248,14 +251,16 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
+      Thread.Sleep(500);
       // .cssg-body-end
     }
     public void test7()
@@ -263,7 +268,7 @@ namespace COSSample
       // .cssg-body-start: [get-bucket-cors]
       try
       {
-        string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
+        string bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         GetBucketCORSRequest request = new GetBucketCORSRequest(bucket);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -275,14 +280,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test8()
@@ -290,7 +296,7 @@ namespace COSSample
       // .cssg-body-start: [delete-bucket-cors]
       try
       {
-        string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
+        string bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         DeleteBucketCORSRequest request = new DeleteBucketCORSRequest(bucket);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -302,14 +308,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test9()
@@ -317,7 +324,7 @@ namespace COSSample
       // .cssg-body-start: [put-bucket-lifecycle]
       try
       {
-        string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
+        string bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         PutBucketLifecycleRequest request = new PutBucketLifecycleRequest(bucket);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -343,14 +350,16 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
+      Thread.Sleep(500);
       // .cssg-body-end
     }
     public void test10()
@@ -358,7 +367,7 @@ namespace COSSample
       // .cssg-body-start: [get-bucket-lifecycle]
       try
       {
-        string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
+        string bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         GetBucketLifecycleRequest request = new GetBucketLifecycleRequest(bucket);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -370,14 +379,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test11()
@@ -385,7 +395,7 @@ namespace COSSample
       // .cssg-body-start: [delete-bucket-lifecycle]
       try
       {
-        string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
+        string bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         DeleteBucketLifecycleRequest request = new DeleteBucketLifecycleRequest(bucket);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -397,23 +407,24 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test12()
     {
       // .cssg-body-start: [put-bucket-versioning]
-      string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
+      string bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
       PutBucketVersioningRequest request = new PutBucketVersioningRequest(bucket);
       //设置签名有效时长
-      //request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
+      request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
       request.IsEnableVersionConfig(true); //true: 开启版本控制; false:暂停版本控制
                                            // 使用同步方法
       try
@@ -423,19 +434,21 @@ namespace COSSample
       }
       catch (COSXML.CosException.CosClientException clientEx)
       {
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
+      Thread.Sleep(500);
       // .cssg-body-end
     }
     public void test13()
     {
       // .cssg-body-start: [get-bucket-versioning]
-      string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
+      string bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
       GetBucketVersioningRequest request = new GetBucketVersioningRequest(bucket);
 
       // 使用同步方法
@@ -446,29 +459,30 @@ namespace COSSample
       }
       catch (COSXML.CosException.CosClientException clientEx)
       {
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test14()
     {
       // .cssg-body-start: [put-bucket-replication]
-      string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
-      string ownerUin = "ownerUin"; //发起者身份标示:OwnerUin 
-      string subUin = "SubUin"; //发起者身份标示:SubUin 
+      string bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
+      string ownerUin = "{{uin}}"; //发起者身份标示:OwnerUin 
+      string subUin = "{{uin}}"; //发起者身份标示:SubUin 
       PutBucketReplicationRequest request = new PutBucketReplicationRequest(bucket);
       //设置 replication
       PutBucketReplicationRequest.RuleStruct ruleStruct = new PutBucketReplicationRequest.RuleStruct();
       ruleStruct.id = "replication_01"; //用来标注具体 Rule 的名称
       ruleStruct.isEnable = true; //标识 Rule 是否生效 :true, 生效； false, 不生效
-      ruleStruct.appid = "1250000000"; //appid
-      ruleStruct.region = EnumUtils.GetValue(CosRegion.AP_Beijing); //目标存储桶地域信息
-      ruleStruct.bucket = "bucketName"; //bucketName,不包含 '-appid' 
+      ruleStruct.appid = "{{appId}}"; //appid
+      ruleStruct.region = "{{assistBucketRegion}}"; //目标存储桶地域信息
+      ruleStruct.bucket = "{{{replicationDestBucket}}}"; //bucketName,不包含 '-appid' 
       ruleStruct.prefix = "34"; //前缀匹配策略
       List<PutBucketReplicationRequest.RuleStruct> ruleStructs = new List<PutBucketReplicationRequest.RuleStruct>();
       ruleStructs.Add(ruleStruct);
@@ -482,19 +496,21 @@ namespace COSSample
       }
       catch (COSXML.CosException.CosClientException clientEx)
       {
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
+      Thread.Sleep(500);
       // .cssg-body-end
     }
     public void test15()
     {
       // .cssg-body-start: [get-bucket-replication]
-      string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
+      string bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
       GetBucketReplicationRequest request = new GetBucketReplicationRequest(bucket);
 
       //使用同步方法
@@ -505,19 +521,20 @@ namespace COSSample
       }
       catch (COSXML.CosException.CosClientException clientEx)
       {
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test16()
     {
       // .cssg-body-start: [delete-bucket-replication]
-      string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
+      string bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
       DeleteBucketReplicationRequest request = new DeleteBucketReplicationRequest(bucket);
 
       //使用同步方法
@@ -528,13 +545,14 @@ namespace COSSample
       }
       catch (COSXML.CosException.CosClientException clientEx)
       {
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test17()
@@ -542,7 +560,7 @@ namespace COSSample
       // .cssg-body-start: [get-bucket]
       try
       {
-        string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
+        string bucket = "{{{persistBucket}}}"; //格式：BucketName-APPID
         GetBucketRequest request = new GetBucketRequest(bucket);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -556,14 +574,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test18()
@@ -571,9 +590,11 @@ namespace COSSample
       // .cssg-body-start: [put-object]
       try
       {
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "exampleobject"; //对象在存储桶中的位置，即称对象键
-        string srcPath = @"F:\exampleobject";//本地文件绝对路径
+        string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
+        string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
+        string srcPath = @"temp-source-file";//本地文件绝对路径
+        File.WriteAllBytes(srcPath, new byte[1024]);
+
         PutObjectRequest request = new PutObjectRequest(bucket, key, srcPath);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -590,14 +611,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test19()
@@ -605,9 +627,10 @@ namespace COSSample
       // .cssg-body-start: [post-object]
       try
       {
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "exampleobject"; //对象在存储桶中的位置，即称对象键
-        string srcPath = @"F:\exampleobject";//本地文件绝对路径
+        string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
+        string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
+        string srcPath = @"temp-source-file";//本地文件绝对路径
+        File.WriteAllBytes(srcPath, new byte[1024]);
         PostObjectRequest request = new PostObjectRequest(bucket, key, srcPath);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -624,14 +647,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test20()
@@ -639,8 +663,8 @@ namespace COSSample
       // .cssg-body-start: [head-object]
       try
       {
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "exampleobject"; //对象在存储桶中的位置，即称对象键
+        string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
+        string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
         HeadObjectRequest request = new HeadObjectRequest(bucket, key);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -652,14 +676,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test21()
@@ -667,10 +692,10 @@ namespace COSSample
       // .cssg-body-start: [get-object]
       try
       {
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "exampleobject"; //对象在存储桶中的位置，即称对象键
-        string localDir = @"F:\";//下载到本地指定文件夹
-        string localFileName = "exampleobject"; //指定本地保存的文件名
+        string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
+        string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
+        string localDir = System.IO.Path.GetTempPath();//本地文件夹
+        string localFileName = "my-local-temp-file"; //指定本地保存的文件名
         GetObjectRequest request = new GetObjectRequest(bucket, key, localDir, localFileName);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -687,19 +712,21 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
 
       //下载返回 bytes 数据
       try
       {
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "exampleobject"; //对象在存储桶中的位置，即称对象键
+        string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
+        string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
 
         GetObjectBytesRequest request = new GetObjectBytesRequest(bucket, key);
         //设置签名有效时长
@@ -719,14 +746,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test22()
@@ -734,15 +762,15 @@ namespace COSSample
       // .cssg-body-start: [copy-object]
       try
       {
-        string sourceAppid = "1253960454"; //账号 appid
-        string sourceBucket = "source-1253960454"; //"源对象所在的存储桶
-        string sourceRegion = "ap-beijing"; //源对象的存储桶所在的地域
-        string sourceKey = "exampleobject"; //源对象键
+        string sourceAppid = "{{appId}}"; //账号 appid
+        string sourceBucket = "{{{copySourceBucket}}}"; //"源对象所在的存储桶
+        string sourceRegion = "{{region}}"; //源对象的存储桶所在的地域
+        string sourceKey = "sourceObject"; //源对象键
                                             //构造源对象属性
         COSXML.Model.Tag.CopySourceStruct copySource = new CopySourceStruct(sourceAppid, sourceBucket, sourceRegion, sourceKey);
 
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "copy_exampleobject"; //对象在存储桶中的位置，即称对象键
+        string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
+        string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
         CopyObjectRequest request = new CopyObjectRequest(bucket, key);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -758,14 +786,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test23()
@@ -773,8 +802,8 @@ namespace COSSample
       // .cssg-body-start: [option-object]
       try
       {
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "exampleobject"; //对象在存储桶中的位置，即称对象键
+        string bucket = "{{{tempBucket}}}"; //存储桶，格式：BucketName-APPID
+        string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
         string origin = "http://cloud.tencent.com";
         string accessMthod = "PUT";
         OptionObjectRequest request = new OptionObjectRequest(bucket, key, origin, accessMthod);
@@ -788,14 +817,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test24()
@@ -803,8 +833,8 @@ namespace COSSample
       // .cssg-body-start: [delete-object]
       try
       {
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "exampleobject"; //对象在存储桶中的位置，即称对象键
+        string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
+        string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
         DeleteObjectRequest request = new DeleteObjectRequest(bucket, key);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -816,14 +846,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test25()
@@ -831,14 +862,14 @@ namespace COSSample
       // .cssg-body-start: [delete-multi-object]
       try
       {
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
+        string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
         DeleteMultiObjectRequest request = new DeleteMultiObjectRequest(bucket);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
         //设置返回结果形式
         request.SetDeleteQuiet(false);
         //对象key
-        string key = "exampleobject"; //对象在存储桶中的位置，即称对象键
+        string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
         List<string> objects = new List<string>();
         objects.Add(key);
         request.SetObjectKeys(objects);
@@ -850,14 +881,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test26()
@@ -865,7 +897,7 @@ namespace COSSample
       // .cssg-body-start: [list-multi-upload]
       try
       {
-        string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
+        string bucket = "{{{persistBucket}}}"; //格式：BucketName-APPID
         ListMultiUploadsRequest request = new ListMultiUploadsRequest(bucket);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -877,23 +909,25 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
+    string uploadId;
     public void test27()
     {
       // .cssg-body-start: [init-multi-upload]
       try
       {
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "exampleobject"; //对象在存储桶中的位置，即称对象键
+        string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
+        string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
         InitMultipartUploadRequest request = new InitMultipartUploadRequest(bucket, key);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -901,19 +935,21 @@ namespace COSSample
         InitMultipartUploadResult result = cosXml.InitMultipartUpload(request);
         //请求成功
         string uploadId = result.initMultipartUpload.uploadId; //用于后续分块上传的 uploadId
+        this.uploadId = uploadId;
         Console.WriteLine(result.GetResultInfo());
       }
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test28()
@@ -921,9 +957,10 @@ namespace COSSample
       // .cssg-body-start: [list-parts]
       try
       {
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "exampleobject"; //对象在存储桶中的位置，即称对象键
-        string uploadId = "xxxxxxxx"; //初始化分块上传返回的uploadId
+        string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
+        string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
+        string uploadId = "{{{uploadId}}}"; //初始化分块上传返回的uploadId
+        uploadId = this.uploadId;
         ListPartsRequest request = new ListPartsRequest(bucket, key, uploadId);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -937,14 +974,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test29()
@@ -952,11 +990,13 @@ namespace COSSample
       // .cssg-body-start: [upload-part]
       try
       {
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "exampleobject"; //对象在存储桶中的位置，即称对象键
-        string uploadId = "xxxxxxxx"; //初始化分块上传返回的uploadId
+        string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
+        string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
+        string uploadId = "{{{uploadId}}}"; //初始化分块上传返回的uploadId
         int partNumber = 1; //分块编号，必须从1开始递增
-        string srcPath = @"F:\exampleobject"; //本地文件绝对路径
+        string srcPath = @"temp-source-file";//本地文件绝对路径
+        uploadId = this.uploadId;
+        File.WriteAllBytes(srcPath, new byte[1024]);
         UploadPartRequest request = new UploadPartRequest(bucket, key, partNumber, uploadId, srcPath);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -975,14 +1015,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test30()
@@ -990,17 +1031,18 @@ namespace COSSample
       // .cssg-body-start: [upload-part-copy]
       try
       {
-        string sourceAppid = "1253960454"; //账号 appid
-        string sourceBucket = "source-1253960454"; //"源对象所在的存储桶
-        string sourceRegion = "ap-beijing"; //源对象的存储桶所在的地域
-        string sourceKey = "exampleobject"; //源对象键
+        string sourceAppid = "{{appId}}"; //账号 appid
+        string sourceBucket = "{{{copySourceBucket}}}"; //"源对象所在的存储桶
+        string sourceRegion = "{{region}}"; //源对象的存储桶所在的地域
+        string sourceKey = "sourceObject"; //源对象键
                                             //构造源对象属性
         COSXML.Model.Tag.CopySourceStruct copySource = new CopySourceStruct(sourceAppid, sourceBucket, sourceRegion, sourceKey);
 
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "copy_exampleobject"; //对象在存储桶中的位置，即称对象键
-        string uploadId = "xxxxxxxx"; //初始化分块上传返回的uploadId
+        string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
+        string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
+        string uploadId = "{{{uploadId}}}"; //初始化分块上传返回的uploadId
         int partNumber = 1; //分块编号，必须从1开始递增
+        uploadId = this.uploadId;
         UploadPartCopyRequest request = new UploadPartCopyRequest(bucket, key, partNumber, uploadId);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -1018,14 +1060,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test31()
@@ -1033,9 +1076,9 @@ namespace COSSample
       // .cssg-body-start: [complete-multi-upload]
       try
       {
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "exampleobject"; //对象在存储桶中的位置，即称对象键
-        string uploadId = "xxxxxxxx"; //初始化分块上传返回的uploadId
+        string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
+        string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
+        string uploadId = "{{{uploadId}}}"; //初始化分块上传返回的uploadId
         CompleteMultipartUploadRequest request = new CompleteMultipartUploadRequest(bucket, key, uploadId);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -1049,14 +1092,13 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
       }
-
       // .cssg-body-end
     }
     public void test32()
@@ -1064,9 +1106,9 @@ namespace COSSample
       // .cssg-body-start: [abort-multi-upload]
       try
       {
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "exampleobject"; //对象在存储桶中的位置，即称对象键
-        string uploadId = "xxxxxxxx"; //初始化分块上传返回的uploadId
+        string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
+        string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
+        string uploadId = "{{{uploadId}}}"; //初始化分块上传返回的uploadId
         AbortMultipartUploadRequest request = new AbortMultipartUploadRequest(bucket, key, uploadId);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -1078,14 +1120,13 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
       }
-
       // .cssg-body-end
     }
     public void test33()
@@ -1093,8 +1134,8 @@ namespace COSSample
       // .cssg-body-start: [restore-object]
       try
       {
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "exampleobject"; //对象在存储桶中的位置，即称对象键
+        string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
+        string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
         RestoreObjectRequest request = new RestoreObjectRequest(bucket, key);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -1110,14 +1151,13 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
       }
-
       // .cssg-body-end
     }
     public void test34()
@@ -1126,8 +1166,8 @@ namespace COSSample
       //因为ACL+policy限制最多1000条，为避免acl达到上限，非必须情况不建议给对象单独设置ACL(对象默认继承bucket权限).
       try
       {
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "exampleobject"; //对象在存储桶中的位置，即称对象键
+        string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
+        string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
         PutObjectACLRequest request = new PutObjectACLRequest(bucket, key);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -1145,14 +1185,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test35()
@@ -1160,8 +1201,8 @@ namespace COSSample
       // .cssg-body-start: [get-object-acl]
       try
       {
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "exampleobject"; //对象在存储桶中的位置，即称对象键
+        string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
+        string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
         GetObjectACLRequest request = new GetObjectACLRequest(bucket, key);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -1173,22 +1214,23 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test36()
     {
       // .cssg-body-start: [global-init]
       //初始化 CosXmlConfig 
-      string appid = "1250000000";//设置腾讯云账户的账户标识 APPID
-      string region = "ap-beijing"; //设置一个默认的存储桶地域
+      string appid = "{{appId}}";//设置腾讯云账户的账户标识 APPID
+      string region = "{{region}}"; //设置一个默认的存储桶地域
       CosXmlConfig config = new CosXmlConfig.Builder()
         .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位 毫秒 ，默认 45000ms
         .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位 毫秒 ，默认 45000ms
@@ -1216,225 +1258,19 @@ namespace COSSample
 
       //初始化 CosXmlServer
       CosXmlServer cosXml = new CosXmlServer(config, cosCredentialProvider);
-
-
       // .cssg-body-end
     }
-    public void test38()
-    {
-      // .cssg-body-start: [qs-put-bucket]
-      try
-      {
-        string bucket = "examplebucket-1250000000"; //存储桶名称 格式：BucketName-APPID
-        PutBucketRequest request = new PutBucketRequest(bucket);
-        //设置签名有效时长
-        request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
-        //执行请求
-        PutBucketResult result = cosXml.PutBucket(request);
-        //请求成功
-        Console.WriteLine(result.GetResultInfo());
-      }
-      catch (COSXML.CosException.CosClientException clientEx)
-      {
-        //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
-      }
-      catch (COSXML.CosException.CosServerException serverEx)
-      {
-        //请求失败
-        Console.WriteLine("CosServerException: " + serverEx.GetInfo());
-      }
 
-
-      // .cssg-body-end
-    }
-    public void test39()
-    {
-      // .cssg-body-start: [qs-get-service]
-      try
-      {
-        GetServiceRequest request = new GetServiceRequest();
-        //设置签名有效时长
-        request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
-        //执行请求
-        GetServiceResult result = cosXml.GetService(request);
-        //请求成功
-        Console.WriteLine(result.GetResultInfo());
-      }
-      catch (COSXML.CosException.CosClientException clientEx)
-      {
-        //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
-      }
-      catch (COSXML.CosException.CosServerException serverEx)
-      {
-        //请求失败
-        Console.WriteLine("CosServerException: " + serverEx.GetInfo());
-      }
-
-      // .cssg-body-end
-    }
-    public void test40()
-    {
-      // .cssg-body-start: [qs-put-object]
-      string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-      string key = "exampleobject"; //对象在存储桶中的位置，即称对象键.
-      string srcPath = @"F:\exampleobject";//本地文件绝对路径
-      try
-      {
-        PutObjectRequest request = new PutObjectRequest(bucket, key, srcPath);
-        //设置签名有效时长
-        request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
-        //设置进度回调
-        request.SetCosProgressCallback(delegate (long completed, long total)
-        {
-          Console.WriteLine(String.Format("progress = {0:##.##}%", completed * 100.0 / total));
-        });
-        //执行请求
-        PutObjectResult result = cosXml.PutObject(request);
-        //请求成功
-        Console.WriteLine(result.GetResultInfo());
-      }
-      catch (COSXML.CosException.CosClientException clientEx)
-      {
-        //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
-      }
-      catch (COSXML.CosException.CosServerException serverEx)
-      {
-        //请求失败
-        Console.WriteLine("CosServerException: " + serverEx.GetInfo());
-      }
-
-      // 大文件需要使用分片上传(), 可参考 SDK 中封装的 TransferManager  和 COSXMLUploadTask 类, 如下示例
-      TransferManager transferManager = new TransferManager(cosXml, new TransferConfig());
-      COSXMLUploadTask uploadTask = new COSXMLUploadTask(bucket, null, key);
-      uploadTask.SetSrcPath(srcPath);
-      uploadTask.progressCallback = delegate (long completed, long total)
-      {
-        Console.WriteLine(String.Format("progress = {0:##.##}%", completed * 100.0 / total));
-      };
-      uploadTask.successCallback = delegate (CosResult cosResult)
-      {
-        COSXML.Transfer.COSXMLUploadTask.UploadTaskResult result = cosResult as COSXML.Transfer.COSXMLUploadTask.UploadTaskResult;
-        Console.WriteLine(result.GetResultInfo());
-      };
-      uploadTask.failCallback = delegate (CosClientException clientEx, CosServerException serverEx)
-      {
-        if (clientEx != null)
-        {
-          Console.WriteLine("CosClientException: " + clientEx.Message);
-        }
-        if (serverEx != null)
-        {
-          Console.WriteLine("CosServerException: " + serverEx.GetInfo());
-        }
-      };
-      transferManager.Upload(uploadTask);
-
-
-      // .cssg-body-end
-    }
-    public void test41()
-    {
-      // .cssg-body-start: [qs-get-bucket]
-      try
-      {
-        string bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
-        GetBucketRequest request = new GetBucketRequest(bucket);
-        //设置签名有效时长
-        request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
-        //执行请求
-        GetBucketResult result = cosXml.GetBucket(request);
-        //请求成功
-        Console.WriteLine(result.GetResultInfo());
-      }
-      catch (COSXML.CosException.CosClientException clientEx)
-      {
-        //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
-      }
-      catch (COSXML.CosException.CosServerException serverEx)
-      {
-        //请求失败
-        Console.WriteLine("CosServerException: " + serverEx.GetInfo());
-      }
-
-      // .cssg-body-end
-    }
-    public void test42()
-    {
-      // .cssg-body-start: [qs-get-object]
-      try
-      {
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "exampleobject"; //对象在存储桶中的位置，即称对象键.
-        string localDir = @"F:\";//下载到本地指定文件夹
-        string localFileName = "exampleobject"; //指定本地保存的文件名
-        GetObjectRequest request = new GetObjectRequest(bucket, key, localDir, localFileName);
-        //设置签名有效时长
-        request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
-        //设置进度回调
-        request.SetCosProgressCallback(delegate (long completed, long total)
-        {
-          Console.WriteLine(String.Format("progress = {0:##.##}%", completed * 100.0 / total));
-        });
-        //执行请求
-        GetObjectResult result = cosXml.GetObject(request);
-        //请求成功
-        Console.WriteLine(result.GetResultInfo());
-      }
-      catch (COSXML.CosException.CosClientException clientEx)
-      {
-        //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
-      }
-      catch (COSXML.CosException.CosServerException serverEx)
-      {
-        //请求失败
-        Console.WriteLine("CosServerException: " + serverEx.GetInfo());
-      }
-
-      // .cssg-body-end
-    }
-    public void test43()
-    {
-      // .cssg-body-start: [qs-delete-object]
-      try
-      {
-        string bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-        string key = "exampleobject"; //对象在存储桶中的位置，即称对象键.
-        DeleteObjectRequest request = new DeleteObjectRequest(bucket, key);
-        //设置签名有效时长
-        request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
-        //执行请求
-        DeleteObjectResult result = cosXml.DeleteObject(request);
-        //请求成功
-        Console.WriteLine(result.GetResultInfo());
-      }
-      catch (COSXML.CosException.CosClientException clientEx)
-      {
-        //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
-      }
-      catch (COSXML.CosException.CosServerException serverEx)
-      {
-        //请求失败
-        Console.WriteLine("CosServerException: " + serverEx.GetInfo());
-      }
-
-      // .cssg-body-end
-    }
     public void test44()
     {
       // .cssg-body-start: [get-presign-upload-url]
       try
       {
         PreSignatureStruct preSignatureStruct = new PreSignatureStruct();
-        preSignatureStruct.appid = "1250000000";//腾讯云账号 appid
-        preSignatureStruct.region = "ap-beijing"; //存储桶地域
-        preSignatureStruct.bucket = "examplebucket-1250000000"; //存储桶
-        preSignatureStruct.key = "exampleobject"; //对象键
+        preSignatureStruct.appid = "{{appId}}";//腾讯云账号 appid
+        preSignatureStruct.region = "{{region}}"; //存储桶地域
+        preSignatureStruct.bucket = "{{{persistBucket}}}"; //存储桶
+        preSignatureStruct.key = "{{{object}}}"; //对象键
         preSignatureStruct.httpMethod = "PUT"; //http 请求方法
         preSignatureStruct.isHttps = true; //生成 https 请求URL
         preSignatureStruct.signDurationSecond = 600; //请求签名时间为 600s
@@ -1443,7 +1279,7 @@ namespace COSSample
 
         string requestSignURL = cosXml.GenerateSignURL(preSignatureStruct); //上传预签名 URL (使用永久密钥方式计算的签名 URL )
 
-        string srcPath = @"F:\exampleobject";//本地文件绝地路径
+        string srcPath = @"temp-source-file";//本地文件绝地路径
         PutObjectRequest request = new PutObjectRequest(null, null, srcPath);
         //设置上传请求预签名 UR L
         request.RequestURLWithSign = requestSignURL;
@@ -1460,14 +1296,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
     public void test45()
@@ -1476,10 +1313,10 @@ namespace COSSample
       try
       {
         PreSignatureStruct preSignatureStruct = new PreSignatureStruct();
-        preSignatureStruct.appid = "1250000000";//腾讯云账号 appid
-        preSignatureStruct.region = "ap-beijing"; //存储桶地域
-        preSignatureStruct.bucket = "examplebucket-1250000000"; //存储桶
-        preSignatureStruct.key = "exampleobject"; //对象键
+        preSignatureStruct.appid = "{{appId}}";//腾讯云账号 appid
+        preSignatureStruct.region = "{{region}}"; //存储桶地域
+        preSignatureStruct.bucket = "{{{persistBucket}}}"; //存储桶
+        preSignatureStruct.key = "{{{object}}}"; //对象键
         preSignatureStruct.httpMethod = "GET"; //http 请求方法
         preSignatureStruct.isHttps = true; //生成 https 请求URL
         preSignatureStruct.signDurationSecond = 600; //请求签名时间为 600s
@@ -1488,8 +1325,8 @@ namespace COSSample
 
         string requestSignURL = cosXml.GenerateSignURL(preSignatureStruct); //载请求预签名 URL (使用永久密钥方式计算的签名 URL )
 
-        string localDir = @"F:\";//下载到本地指定文件夹
-        string localFileName = "exampleobject"; //指定本地保存的文件名
+        string localDir = System.IO.Path.GetTempPath();//本地文件夹
+        string localFileName = "my-local-temp-file"; //指定本地保存的文件名
         GetObjectRequest request = new GetObjectRequest(null, null, localDir, localFileName);
         //设置下载请求预签名 UR L
         request.RequestURLWithSign = requestSignURL;
@@ -1506,14 +1343,15 @@ namespace COSSample
       catch (COSXML.CosException.CosClientException clientEx)
       {
         //请求失败
-        Console.WriteLine("CosClientException: " + clientEx.Message);
+        Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
-
       // .cssg-body-end
     }
   }
