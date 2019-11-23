@@ -23,6 +23,7 @@
     "assistBucketRegion": "ap-beijing",
     "uploadId": "example-uploadId"
   },
+  "globalInitNamePrefix": "global-init",
   "group": {
     "bucket-ACL": {
       "setup": ["put-bucket"],

@@ -1,0 +1,36 @@
+CosXmlConfig config = new CosXmlConfig.Builder()
+  .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒 ，默认 45000ms
+  .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒 ，默认 45000ms
+  .IsHttps(true)  //设置默认 https 请求
+  .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
+  .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+  .Build();
+
+string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
+string secretKey = "COS_SECRETKEY"; //云 API 密钥 SecretKey
+long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
+QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
+secretKey, durationSecond);
+
+CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
+
+string bucket = "example-1250000000"; //格式：BucketName-APPID
+PutBucketVersioningRequest request = new PutBucketVersioningRequest(bucket);
+//设置签名有效时长
+request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
+request.IsEnableVersionConfig(true); //true: 开启版本控制; false:暂停版本控制
+                                     // 使用同步方法
+try
+{
+  PutBucketVersioningResult result = cosXml.PutBucketVersioning(request);
+  Console.WriteLine(result.GetResultInfo());
+}
+catch (COSXML.CosException.CosClientException clientEx)
+{
+  Console.WriteLine("CosClientException: " + clientEx);
+}
+catch (COSXML.CosException.CosServerException serverEx)
+{
+  Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+}
+Thread.Sleep(500);
