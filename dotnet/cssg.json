@@ -12,6 +12,7 @@
   },
   "ignoreExpressionInDoc": [
     "Assert.Null\\([^()]+\\);",
+    "Thread.Sleep\\(\\d+\\);",
     "this.uploadId\\s*=\\s*.+;",
     ".+\\s*=\\s*this.uploadId;"
   ],

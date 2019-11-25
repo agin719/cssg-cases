@@ -16,26 +16,33 @@ CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
 
 try
 {
-  string bucket = "example-1250000000"; //存储桶，格式：BucketName-APPID
-  string key = "exampleobject"; //对象在存储桶中的位置，即称对象键
-  string uploadId = "example-uploadId"; //初始化分块上传返回的uploadId
-  int partNumber = 1; //分块编号，必须从1开始递增
-  string srcPath = @"temp-source-file";//本地文件绝对路径
-  File.WriteAllBytes(srcPath, new byte[1024]);
-  UploadPartRequest request = new UploadPartRequest(bucket, key, partNumber, 
-    uploadId, srcPath);
-  //设置签名有效时长
-  request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
+  PreSignatureStruct preSignatureStruct = new PreSignatureStruct();
+  preSignatureStruct.appid = "1250000000";//腾讯云账号 appid
+  preSignatureStruct.region = "ap-guangzhou"; //存储桶地域
+  preSignatureStruct.bucket = "example-1250000000"; //存储桶
+  preSignatureStruct.key = "exampleobject"; //对象键
+  preSignatureStruct.httpMethod = "GET"; //http 请求方法
+  preSignatureStruct.isHttps = true; //生成 https 请求URL
+  preSignatureStruct.signDurationSecond = 600; //请求签名时间为 600s
+  preSignatureStruct.headers = null;//签名中需要校验的header
+  preSignatureStruct.queryParameters = null; //签名中需要校验的URL中请求参数
+
+  string requestSignURL = cosXml.GenerateSignURL(preSignatureStruct); 
+
+  //载请求预签名 URL (使用永久密钥方式计算的签名 URL )
+  string localDir = System.IO.Path.GetTempPath();//本地文件夹
+  string localFileName = "my-local-temp-file"; //指定本地保存的文件名
+  GetObjectRequest request = new GetObjectRequest(null, null, localDir, localFileName);
+  //设置下载请求预签名 URL
+  request.RequestURLWithSign = requestSignURL;
   //设置进度回调
   request.SetCosProgressCallback(delegate (long completed, long total)
   {
     Console.WriteLine(String.Format("progress = {0:##.##}%", completed * 100.0 / total));
   });
   //执行请求
-  UploadPartResult result = cosXml.UploadPart(request);
+  GetObjectResult result = cosXml.GetObject(request);
   //请求成功
-  //获取返回分块的eTag,用于后续CompleteMultiUploads
-  string eTag = result.eTag;
   Console.WriteLine(result.GetResultInfo());
 }
 catch (COSXML.CosException.CosClientException clientEx)

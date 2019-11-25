@@ -39,7 +39,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -90,11 +90,12 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
-        //因为ACL+policy限制最多1000条，为避免acl达到上限，非必须情况不建议给对象单独设置ACL(对象默认继承bucket权限).
+        // 因为ACL+policy限制最多1000条，为避免acl达到上限，
+        // 非必须情况不建议给对象单独设置ACL(对象默认继承bucket权限).
         try
         {
           string bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
@@ -140,7 +141,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         

@@ -39,7 +39,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -84,7 +84,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -126,7 +126,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -139,7 +139,8 @@ namespace COSSample
           string srcPath = @"temp-source-file";//本地文件绝对路径
           uploadId = this.uploadId;
           File.WriteAllBytes(srcPath, new byte[1024]);
-          UploadPartRequest request = new UploadPartRequest(bucket, key, partNumber, uploadId, srcPath);
+          UploadPartRequest request = new UploadPartRequest(bucket, key, partNumber, 
+            uploadId, srcPath);
           //设置签名有效时长
           request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
           //设置进度回调
@@ -181,7 +182,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -228,7 +229,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -237,7 +238,8 @@ namespace COSSample
           string bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
           string key = "object4dotnet"; //对象在存储桶中的位置，即称对象键
           string uploadId = "example-uploadId"; //初始化分块上传返回的uploadId
-          CompleteMultipartUploadRequest request = new CompleteMultipartUploadRequest(bucket, key, uploadId);
+          CompleteMultipartUploadRequest request = new CompleteMultipartUploadRequest(bucket, 
+            key, uploadId);
           //设置签名有效时长
           request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
           //设置已上传的parts,必须有序，按照partNumber递增
@@ -272,7 +274,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         

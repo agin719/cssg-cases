@@ -39,7 +39,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -81,7 +81,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -129,7 +129,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -172,7 +172,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -222,7 +222,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         

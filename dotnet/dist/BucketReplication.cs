@@ -39,7 +39,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -48,7 +48,8 @@ namespace COSSample
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
         request.IsEnableVersionConfig(true); //true: 开启版本控制; false:暂停版本控制
-                                             // 使用同步方法
+        
+        // 使用同步方法
         try
         {
           PutBucketVersioningResult result = cosXml.PutBucketVersioning(request);
@@ -80,7 +81,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -89,14 +90,16 @@ namespace COSSample
         string subUin = "1278687956"; //发起者身份标示:SubUin 
         PutBucketReplicationRequest request = new PutBucketReplicationRequest(bucket);
         //设置 replication
-        PutBucketReplicationRequest.RuleStruct ruleStruct = new PutBucketReplicationRequest.RuleStruct();
+        PutBucketReplicationRequest.RuleStruct ruleStruct = 
+          new PutBucketReplicationRequest.RuleStruct();
         ruleStruct.id = "replication_01"; //用来标注具体 Rule 的名称
         ruleStruct.isEnable = true; //标识 Rule 是否生效 :true, 生效； false, 不生效
         ruleStruct.appid = "1253653367"; //appid
         ruleStruct.region = "ap-beijing"; //目标存储桶地域信息
         ruleStruct.bucket = "bucket-cssg-assist-1253653367"; //bucketName,不包含 '-appid' 
         ruleStruct.prefix = "34"; //前缀匹配策略
-        List<PutBucketReplicationRequest.RuleStruct> ruleStructs = new List<PutBucketReplicationRequest.RuleStruct>();
+        List<PutBucketReplicationRequest.RuleStruct> ruleStructs = 
+          new List<PutBucketReplicationRequest.RuleStruct>();
         ruleStructs.Add(ruleStruct);
         request.SetReplicationConfiguration(ownerUin, subUin, ruleStructs);
         
@@ -132,7 +135,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -170,7 +173,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -209,7 +212,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -260,7 +263,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         

@@ -39,7 +39,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -50,7 +50,8 @@ namespace COSSample
           //设置签名有效时长
           request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
           //设置跨域访问配置 CORS
-          COSXML.Model.Tag.CORSConfiguration.CORSRule corsRule = new COSXML.Model.Tag.CORSConfiguration.CORSRule();
+          COSXML.Model.Tag.CORSConfiguration.CORSRule corsRule = 
+            new COSXML.Model.Tag.CORSConfiguration.CORSRule();
           corsRule.id = "corsconfigureId";
           corsRule.maxAgeSeconds = 6000;
           corsRule.allowedOrigin = "http://cloud.tencent.com";
@@ -99,7 +100,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -118,13 +119,11 @@ namespace COSSample
         {
           //请求失败
           Console.WriteLine("CosClientException: " + clientEx);
-          Assert.Null(clientEx);
         }
         catch (COSXML.CosException.CosServerException serverEx)
         {
           //请求失败
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
-          Assert.Null(serverEx);
         }
       }
       public void OptionObject()
@@ -141,7 +140,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -163,13 +162,11 @@ namespace COSSample
         {
           //请求失败
           Console.WriteLine("CosClientException: " + clientEx);
-          Assert.Null(clientEx);
         }
         catch (COSXML.CosException.CosServerException serverEx)
         {
           //请求失败
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
-          Assert.Null(serverEx);
         }
       }
       public void DeleteBucketCors()
@@ -186,7 +183,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -229,7 +226,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -280,7 +277,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         

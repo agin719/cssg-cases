@@ -53,7 +53,8 @@ namespace COSSample
         string tmpSecretKey = "COS_SECRETKEY"; //"临时密钥 SecretKey";
         string tmpToken = "COS_TOKEN"; //"临时密钥 token";
         long tmpExpireTime = 1546862502;//临时密钥有效截止时间
-        cosCredentialProvider = new DefaultSessionQCloudCredentialProvider(tmpSecretId, tmpSecretKey, tmpExpireTime, tmpToken);
+        cosCredentialProvider = new DefaultSessionQCloudCredentialProvider(tmpSecretId, tmpSecretKey, 
+          tmpExpireTime, tmpToken);
         
         //初始化 CosXmlServer
         CosXmlServer cosXml = new CosXmlServer(config, cosCredentialProvider);

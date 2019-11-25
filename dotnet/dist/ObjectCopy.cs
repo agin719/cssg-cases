@@ -39,7 +39,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -49,8 +49,9 @@ namespace COSSample
           string sourceBucket = "bucket-cssg-test-1253653367"; //"源对象所在的存储桶
           string sourceRegion = "ap-guangzhou"; //源对象的存储桶所在的地域
           string sourceKey = "sourceObject"; //源对象键
-                                              //构造源对象属性
-          COSXML.Model.Tag.CopySourceStruct copySource = new CopySourceStruct(sourceAppid, sourceBucket, sourceRegion, sourceKey);
+          //构造源对象属性
+          CopySourceStruct copySource = new CopySourceStruct(sourceAppid, sourceBucket, 
+            sourceRegion, sourceKey);
         
           string bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
           string key = "object4dotnet"; //对象在存储桶中的位置，即称对象键
@@ -93,7 +94,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -138,7 +139,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -149,14 +150,16 @@ namespace COSSample
           string sourceRegion = "ap-guangzhou"; //源对象的存储桶所在的地域
           string sourceKey = "sourceObject"; //源对象键
                                               //构造源对象属性
-          COSXML.Model.Tag.CopySourceStruct copySource = new CopySourceStruct(sourceAppid, sourceBucket, sourceRegion, sourceKey);
+          COSXML.Model.Tag.CopySourceStruct copySource = new CopySourceStruct(sourceAppid, 
+            sourceBucket, sourceRegion, sourceKey);
         
           string bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
           string key = "object4dotnet"; //对象在存储桶中的位置，即称对象键
           string uploadId = "example-uploadId"; //初始化分块上传返回的uploadId
           int partNumber = 1; //分块编号，必须从1开始递增
           uploadId = this.uploadId;
-          UploadPartCopyRequest request = new UploadPartCopyRequest(bucket, key, partNumber, uploadId);
+          UploadPartCopyRequest request = new UploadPartCopyRequest(bucket, key, 
+            partNumber, uploadId);
           //设置签名有效时长
           request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
           //设置拷贝源
@@ -197,7 +200,7 @@ namespace COSSample
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
         long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-        secretKey, durationSecond);
+          secretKey, durationSecond);
         
         CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         
@@ -206,7 +209,8 @@ namespace COSSample
           string bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
           string key = "object4dotnet"; //对象在存储桶中的位置，即称对象键
           string uploadId = "example-uploadId"; //初始化分块上传返回的uploadId
-          CompleteMultipartUploadRequest request = new CompleteMultipartUploadRequest(bucket, key, uploadId);
+          CompleteMultipartUploadRequest request = new CompleteMultipartUploadRequest(bucket, 
+            key, uploadId);
           //设置签名有效时长
           request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
           //设置已上传的parts,必须有序，按照partNumber递增

@@ -14,10 +14,10 @@ jobs:
       dotnet: 2.2.402
       script:
       - cd dotnet
-      - cssg compile
+      # - cssg compile
       - dotnet restore
       - dotnet test
-      - cssg write
+      # - cssg write
     - language: objective-c
       podfile: Podfile 
       xcode_workspace: COS_iOS_Test.xcworkspace
