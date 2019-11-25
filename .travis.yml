@@ -7,27 +7,18 @@ before_install:
 - npm i -g cssg
 - gem install cocoapods -v '1.7.2'
 
-jobs:
-  include:
-    - language: csharp
-      mono: none
-      dotnet: 2.2.402
-      script:
-      - cd dotnet
-      # - cssg compile
-      - dotnet restore
-      - dotnet test
-      # - cssg write
-    - language: objective-c
-      podfile: Podfile 
-      xcode_workspace: COS_iOS_Test.xcworkspace
-      xcode_scheme: COS_iOS_Test
-      xcode_destination: platform=iOS Simulator,OS=11.3,name=iPhone X
-      install:
-      - cd iOS
-      - cssg compile
-      # - pod repo update
-      - pod install
-      after_success:
-      - cssg write
+# jobs:
+#   include:
+#     - language: objective-c
+#       podfile: Podfile 
+#       xcode_workspace: COS_iOS_Test.xcworkspace
+#       xcode_scheme: COS_iOS_Test
+#       xcode_destination: platform=iOS Simulator,OS=11.3,name=iPhone X
+#       install:
+#       - cd iOS
+#       # - cssg compile
+#       # - pod repo update
+#       - pod install
+#       # after_success:
+#       # - cssg write
 

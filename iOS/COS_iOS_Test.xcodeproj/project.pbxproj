@@ -15,10 +15,10 @@
 		7FE4A4CE237BF85400C5DDDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FE4A4CD237BF85400C5DDDA /* Assets.xcassets */; };
 		7FE4A4D1237BF85400C5DDDA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FE4A4CF237BF85400C5DDDA /* LaunchScreen.storyboard */; };
 		7FE4A4D4237BF85400C5DDDA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE4A4D3237BF85400C5DDDA /* main.m */; };
-		7FE4A4DE237BF85400C5DDDA /* COS_iOS_TestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE4A4DD237BF85400C5DDDA /* COS_iOS_TestTests.m */; };
 		A720F128237BFD1200C7E84A /* QCloudCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A720F127237BFD1200C7E84A /* QCloudCore.framework */; };
 		A720F12A237BFD1200C7E84A /* QCloudCOSXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A720F129237BFD1200C7E84A /* QCloudCOSXML.framework */; };
 		A75F545F238399FC0029CC8E /* key.json in Resources */ = {isa = PBXBuildFile; fileRef = A75F545E238399FC0029CC8E /* key.json */; };
+		A78A2EA9238BC60E00C71F4B /* Assembly.m in Sources */ = {isa = PBXBuildFile; fileRef = A78A2EA8238BC60E00C71F4B /* Assembly.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,11 +48,11 @@
 		7FE4A4D2237BF85400C5DDDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7FE4A4D3237BF85400C5DDDA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7FE4A4D9237BF85400C5DDDA /* COS_iOS_TestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = COS_iOS_TestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7FE4A4DD237BF85400C5DDDA /* COS_iOS_TestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = COS_iOS_TestTests.m; sourceTree = "<group>"; };
 		7FE4A4DF237BF85400C5DDDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A720F127237BFD1200C7E84A /* QCloudCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QCloudCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A720F129237BFD1200C7E84A /* QCloudCOSXML.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QCloudCOSXML.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A75F545E238399FC0029CC8E /* key.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = key.json; sourceTree = "<group>"; };
+		A78A2EA8238BC60E00C71F4B /* Assembly.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Assembly.m; sourceTree = "<group>"; };
 		C3F5B1A2016000B60E2D9018 /* Pods_COS_iOS_TestTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_COS_iOS_TestTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -129,8 +129,8 @@
 		7FE4A4DC237BF85400C5DDDA /* COS_iOS_TestTests */ = {
 			isa = PBXGroup;
 			children = (
-				7FE4A4DD237BF85400C5DDDA /* COS_iOS_TestTests.m */,
 				7FE4A4DF237BF85400C5DDDA /* Info.plist */,
+				A78A2EA8238BC60E00C71F4B /* Assembly.m */,
 			);
 			path = COS_iOS_TestTests;
 			sourceTree = "<group>";
@@ -306,7 +306,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FE4A4DE237BF85400C5DDDA /* COS_iOS_TestTests.m in Sources */,
+				A78A2EA9238BC60E00C71F4B /* Assembly.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

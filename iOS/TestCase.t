@@ -2,18 +2,18 @@
 #import <QCloudCOSXML/QCloudCOSXML.h>
 #import <SecretStorage.h>
 
-@interface {{name}}_Test : XCTestCase <QCloudSignatureProvider>
+@interface {{name}}Test : XCTestCase <QCloudSignatureProvider>
 
 @end
 
-@implementation {{name}}_Test
+@implementation {{name}}Test
 
 - (void)setUp {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+{{{setupBlock}}}
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+{{{teardownBlock}}}
 }
 
 - (void) signatureWithFields:(QCloudSignatureFields*)fileds
@@ -29,10 +29,16 @@
     continueBlock(signature, nil);
 }
 
-- (void)test {
-    XCTestExpectation* exp = [self expectationWithDescription:@"delete"];
-    {{{snippet}}}
-    [self waitForExpectationsWithTimeout:100 handler:nil];
+{{#steps}}
+- (void){{name}} {
+{{{snippet}}}
+}
+{{/steps}}
+
+- (void)test{{name}} {
+{{#steps}}
+[self {{name}}];
+{{/steps}}
 }
 
 @end
