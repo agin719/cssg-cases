@@ -18,16 +18,16 @@ jobs:
       - dotnet restore
       - dotnet test
       # - cssg write
-    - language: objective-c
-      podfile: Podfile 
-      xcode_workspace: COS_iOS_Test.xcworkspace
-      xcode_scheme: COS_iOS_Test
-      xcode_destination: platform=iOS Simulator,OS=11.3,name=iPhone X
-      install:
-      - cd iOS
-      - cssg compile
-      # - pod repo update
-      - pod install
-      after_success:
-      - cssg write
+    # - language: objective-c
+    #   podfile: Podfile 
+    #   xcode_workspace: COS_iOS_Test.xcworkspace
+    #   xcode_scheme: COS_iOS_Test
+    #   xcode_destination: platform=iOS Simulator,OS=11.3,name=iPhone X
+    #   install:
+    #   - cd iOS
+    #   - cssg compile
+    #   # - pod repo update
+    #   - pod install
+    #   after_success:
+    #   - cssg write
 
