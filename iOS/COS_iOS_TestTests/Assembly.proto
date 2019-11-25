@@ -14,6 +14,12 @@
 
 @implementation Assembly
 
+{{#top}}
+// .cssg-body-start: [{{name}}]
+{{{code}}}
+// .cssg-body-end
+{{/top}}
+
 {{#snippets}}
 - (void)method{{index}} {
     // .cssg-body-start: [{{name}}]

@@ -14,6 +14,99 @@
 
 @implementation Assembly
 
+// .cssg-body-start: [global-init]
+//AppDelegate.m
+//第一步：注册默认的cos服务
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
+    configuration.appID = @"APPID";
+    configuration.signatureProvider = self;
+    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
+    endpoint.regionName = @"ap-beijing";//服务地域名称，可用的地域请参考注释
+    configuration.endpoint = endpoint;
+    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
+    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
+}
+
+//第二步：实现QCloudSignatureProvider协议
+- (void) signatureWithFields:(QCloudSignatureFields*)fileds
+                     request:(QCloudBizHTTPRequest*)request
+                  urlRequest:(NSURLRequest*)urlRequst
+                   compelete:(QCloudHTTPAuthentationContinueBlock)continueBlock
+{
+    //实现签名的过程，我们推荐在服务器端实现签名的过程，具体请参考接下来的 “生成签名” 这一章。
+}
+
+// .cssg-body-end
+// .cssg-body-start: [global-init-signature-sts]
+- (void) signatureWithFields:(QCloudSignatureFields*)fileds
+                     request:(QCloudBizHTTPRequest*)request
+                  urlRequest:(NSURLRequest*)urlRequst
+                   compelete:(QCloudHTTPAuthentationContinueBlock)continueBlock
+{
+    /*向签名服务器请求临时的 Secret ID,Secret Key,Token*/
+    QCloudCredential* credential = [QCloudCredential new];
+    credential.secretID = @"AKIDHTVVaVR6e3";
+    credential.secretKey = @"PdkhT9e2rZCfy6";
+    credential.token = @"从 CAM 系统返回的 Token，为会话 ID"
+    /*强烈建议返回服务器时间作为签名的开始时间，用来避免由于用户手机本地时间偏差过大导致的签名不正确 */
+    credential.startDate = /*返回的服务器时间*/
+    credential.expiretionDate	 = /*签名过期时间*/
+    QCloudAuthentationV5Creator* creator = [[QCloudAuthentationV5Creator alloc] initWithCredential:credential];
+    QCloudSignature* signature =  [creator signatureForData:urlRequst];
+    continueBlock(signature, nil);
+}
+
+// .cssg-body-end
+// .cssg-body-start: [global-init-signature]
+- (void) signatureWithFields:(QCloudSignatureFields*)fileds
+                     request:(QCloudBizHTTPRequest*)request
+                  urlRequest:(NSMutableURLRequest*)urlRequst
+                   compelete:(QCloudHTTPAuthentationContinueBlock)continueBlock
+{
+    
+    QCloudCredential* credential = [QCloudCredential new];
+    credential.secretID = @"AKIDHTVVaVR6e3";
+    credential.secretKey = @"PdkhT9e2rZCfy6";
+    QCloudAuthentationV5Creator* creator = [[QCloudAuthentationV5Creator alloc] initWithCredential:credential];
+    QCloudSignature* signature =  [creator signatureForData:urlRequst];
+    continueBlock(signature, nil);
+}
+
+// .cssg-body-end
+// .cssg-body-start: [global-init-fence-queue]
+//AppDelegate.m
+- (void) fenceQueue:(QCloudCredentailFenceQueue * )queue requestCreatorWithContinue:(QCloudCredentailFenceQueueContinue)continueBlock
+{
+    QCloudCredential* credential = [QCloudCredential new];
+    //在这里可以同步过程从服务器获取临时签名需要的secretID,secretKey,expiretionDate和token参数
+    credential.secretID = @"AKIDHTVVaVR6e3";
+    credential.secretKey = @"PdkhT9e2rZCfy6";
+    /*强烈建议返回服务器时间作为签名的开始时间，用来避免由于用户手机本地时间偏差过大导致的签名不正确 */
+    credential.startDate =[NSDate dateWithTimeIntervalSince1970:@"返回的服务器时间"]
+    credential.experationDate = [NSDate dateWithTimeIntervalSince1970:1504183628];
+    credential.token = @"Token";
+    QCloudAuthentationV5Creator* creator = [[QCloudAuthentationV5Creator alloc] initWithCredential:credential];
+    continueBlock(creator, nil);
+}
+- (void) signatureWithFields:(QCloudSignatureFields*)fileds
+                     request:(QCloudBizHTTPRequest*)request
+                  urlRequest:(NSMutableURLRequest*)urlRequst
+                   compelete:(QCloudHTTPAuthentationContinueBlock)continueBlock
+{
+    [self.credentialFenceQueue performAction:^(QCloudAuthentationCreator *creator, NSError *error) {
+        if (error) {
+            continueBlock(nil, error);
+        } else {
+            QCloudSignature* signature =  [creator signatureForData:urlRequst];
+            continueBlock(signature, nil);
+        }
+    }];
+}
+
+
+// .cssg-body-end
+
 - (void)method1 {
     // .cssg-body-start: [get-service]
     XCTestExpectation* exp = [self expectationWithDescription:@"get-service"];
@@ -678,34 +771,6 @@
     [self waitForExpectationsWithTimeout:80 handler:nil];
     // .cssg-body-end
 }
-- (void)method38 {
-    // .cssg-body-start: [global-init]
-    XCTestExpectation* exp = [self expectationWithDescription:@"global-init"];
-    //AppDelegate.m
-    //第一步：注册默认的cos服务
-    - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-        QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-        configuration.appID = @"APPID";
-        configuration.signatureProvider = self;
-        QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-        endpoint.regionName = @"ap-beijing";//服务地域名称，可用的地域请参考注释
-        configuration.endpoint = endpoint;
-        [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-        [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-    }
-    
-    //第二步：实现QCloudSignatureProvider协议
-    - (void) signatureWithFields:(QCloudSignatureFields*)fileds
-request:(QCloudBizHTTPRequest*)request
-urlRequest:(NSURLRequest*)urlRequst
-compelete:(QCloudHTTPAuthentationContinueBlock)continueBlock
-    {
-        //实现签名的过程，我们推荐在服务器端实现签名的过程，具体请参考接下来的 “生成签名” 这一章。
-    }
-    
-    [self waitForExpectationsWithTimeout:80 handler:nil];
-    // .cssg-body-end
-}
 - (void)method43 {
     // .cssg-body-start: [get-object]
     XCTestExpectation* exp = [self expectationWithDescription:@"get-object"];
@@ -722,86 +787,6 @@ compelete:(QCloudHTTPAuthentationContinueBlock)continueBlock
         //下载过程中的进度
     }];
     [[QCloudCOSXMLService defaultCOSXML] GetObject:request];
-    
-    [self waitForExpectationsWithTimeout:80 handler:nil];
-    // .cssg-body-end
-}
-- (void)method45 {
-    // .cssg-body-start: [global-init-signature-sts]
-    XCTestExpectation* exp = [self expectationWithDescription:@"global-init-signature-sts"];
-    - (void) signatureWithFields:(QCloudSignatureFields*)fileds
-request:(QCloudBizHTTPRequest*)request
-urlRequest:(NSURLRequest*)urlRequst
-compelete:(QCloudHTTPAuthentationContinueBlock)continueBlock
-    {
-        /*向签名服务器请求临时的 Secret ID,Secret Key,Token*/
-        QCloudCredential* credential = [QCloudCredential new];
-        credential.secretID = @"AKIDHTVVaVR6e3";
-        credential.secretKey = @"PdkhT9e2rZCfy6";
-        credential.token = @"从 CAM 系统返回的 Token，为会话 ID"
-        /*强烈建议返回服务器时间作为签名的开始时间，用来避免由于用户手机本地时间偏差过大导致的签名不正确 */
-        credential.startDate = /*返回的服务器时间*/
-        credential.expiretionDate	 = /*签名过期时间*/
-        QCloudAuthentationV5Creator* creator = [[QCloudAuthentationV5Creator alloc] initWithCredential:credential];
-        QCloudSignature* signature =  [creator signatureForData:urlRequst];
-        continueBlock(signature, nil);
-    }
-    
-    [self waitForExpectationsWithTimeout:80 handler:nil];
-    // .cssg-body-end
-}
-- (void)method46 {
-    // .cssg-body-start: [global-init-signature]
-    XCTestExpectation* exp = [self expectationWithDescription:@"global-init-signature"];
-    - (void) signatureWithFields:(QCloudSignatureFields*)fileds
-request:(QCloudBizHTTPRequest*)request
-urlRequest:(NSMutableURLRequest*)urlRequst
-compelete:(QCloudHTTPAuthentationContinueBlock)continueBlock
-    {
-        
-        QCloudCredential* credential = [QCloudCredential new];
-        credential.secretID = @"AKIDHTVVaVR6e3";
-        credential.secretKey = @"PdkhT9e2rZCfy6";
-        QCloudAuthentationV5Creator* creator = [[QCloudAuthentationV5Creator alloc] initWithCredential:credential];
-        QCloudSignature* signature =  [creator signatureForData:urlRequst];
-        continueBlock(signature, nil);
-    }
-    
-    [self waitForExpectationsWithTimeout:80 handler:nil];
-    // .cssg-body-end
-}
-- (void)method47 {
-    // .cssg-body-start: [global-init-fence-queue]
-    XCTestExpectation* exp = [self expectationWithDescription:@"global-init-fence-queue"];
-    //AppDelegate.m
-    - (void) fenceQueue:(QCloudCredentailFenceQueue * )queue requestCreatorWithContinue:(QCloudCredentailFenceQueueContinue)continueBlock
-    {
-        QCloudCredential* credential = [QCloudCredential new];
-        //在这里可以同步过程从服务器获取临时签名需要的secretID,secretKey,expiretionDate和token参数
-        credential.secretID = @"AKIDHTVVaVR6e3";
-        credential.secretKey = @"PdkhT9e2rZCfy6";
-        /*强烈建议返回服务器时间作为签名的开始时间，用来避免由于用户手机本地时间偏差过大导致的签名不正确 */
-        credential.startDate =[NSDate dateWithTimeIntervalSince1970:@"返回的服务器时间"]
-        credential.experationDate = [NSDate dateWithTimeIntervalSince1970:1504183628];
-        credential.token = @"Token";
-        QCloudAuthentationV5Creator* creator = [[QCloudAuthentationV5Creator alloc] initWithCredential:credential];
-        continueBlock(creator, nil);
-    }
-    - (void) signatureWithFields:(QCloudSignatureFields*)fileds
-request:(QCloudBizHTTPRequest*)request
-urlRequest:(NSMutableURLRequest*)urlRequst
-compelete:(QCloudHTTPAuthentationContinueBlock)continueBlock
-    {
-        [self.credentialFenceQueue performAction:^(QCloudAuthentationCreator *creator, NSError *error) {
-            if (error) {
-                continueBlock(nil, error);
-            } else {
-                QCloudSignature* signature =  [creator signatureForData:urlRequst];
-                continueBlock(signature, nil);
-            }
-        }];
-    }
-    
     
     [self waitForExpectationsWithTimeout:80 handler:nil];
     // .cssg-body-end
