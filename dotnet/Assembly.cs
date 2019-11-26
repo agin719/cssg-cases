@@ -483,7 +483,7 @@ namespace COSSample
       ruleStruct.id = "replication_01"; //用来标注具体 Rule 的名称
       ruleStruct.isEnable = true; //标识 Rule 是否生效 :true, 生效； false, 不生效
       ruleStruct.appid = "{{appId}}"; //appid
-      ruleStruct.region = "{{assistBucketRegion}}"; //目标存储桶地域信息
+      ruleStruct.region = "{{replicationDestBucketRegion}}"; //目标存储桶地域信息
       ruleStruct.bucket = "{{{replicationDestBucket}}}"; //bucketName,不包含 '-appid' 
       ruleStruct.prefix = "34"; //前缀匹配策略
       List<PutBucketReplicationRequest.RuleStruct> ruleStructs = 
@@ -768,7 +768,7 @@ namespace COSSample
         string sourceAppid = "{{appId}}"; //账号 appid
         string sourceBucket = "{{{copySourceBucket}}}"; //"源对象所在的存储桶
         string sourceRegion = "{{region}}"; //源对象的存储桶所在的地域
-        string sourceKey = "sourceObject"; //源对象键
+        string sourceKey = "{{copySourceObject}}"; //源对象键
         //构造源对象属性
         CopySourceStruct copySource = new CopySourceStruct(sourceAppid, sourceBucket, 
           sourceRegion, sourceKey);
@@ -1037,7 +1037,7 @@ namespace COSSample
         string sourceAppid = "{{appId}}"; //账号 appid
         string sourceBucket = "{{{copySourceBucket}}}"; //"源对象所在的存储桶
         string sourceRegion = "{{region}}"; //源对象的存储桶所在的地域
-        string sourceKey = "sourceObject"; //源对象键
+        string sourceKey = "{{copySourceObject}}"; //源对象键
                                             //构造源对象属性
         COSXML.Model.Tag.CopySourceStruct copySource = new CopySourceStruct(sourceAppid, 
           sourceBucket, sourceRegion, sourceKey);

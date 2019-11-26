@@ -1,19 +1,27 @@
 #import <XCTest/XCTest.h>
 #import <QCloudCOSXML/QCloudCOSXML.h>
 #import <SecretStorage.h>
+#import <QCloudCOSXML/QCloudUploadPartRequest.h>
+#import <QCloudCOSXML/QCloudCompleteMultipartUploadRequest.h>
+#import <QCloudCOSXML/QCloudAbortMultipfartUploadRequest.h>
+#import <QCloudCOSXML/QCloudMultipartInfo.h>
+#import <QCloudCOSXML/QCloudCompleteMultipartUploadInfo.h>
 
 @interface {{name}}Test : XCTestCase <QCloudSignatureProvider>
+
+@property (nonatomic) NSString* uploadId;
+@property (nonatomic) NSMutableArray<QCloudMultipartInfo *> *parts;
 
 @end
 
 @implementation {{name}}Test
 
 - (void)setUp {
-{{{setupBlock}}}
+    {{{setupBlock}}}
 }
 
 - (void)tearDown {
-{{{teardownBlock}}}
+    {{{teardownBlock}}}
 }
 
 - (void) signatureWithFields:(QCloudSignatureFields*)fileds
@@ -22,8 +30,8 @@
                    compelete:(QCloudHTTPAuthentationContinueBlock)continueBlock
 {
     QCloudCredential* credential = [QCloudCredential new];
-    credential.secretID  = {{{secretId}}};
-    credential.secretKey = {{{secretKey}}};
+    credential.secretID  = [SecretStorage sharedInstance].secretID;
+    credential.secretKey = [SecretStorage sharedInstance].secretKey;
     QCloudAuthentationV5Creator* creator = [[QCloudAuthentationV5Creator alloc] initWithCredential:credential];
     QCloudSignature* signature =  [creator signatureForData:urlRequst];
     continueBlock(signature, nil);
@@ -31,14 +39,15 @@
 
 {{#steps}}
 - (void){{name}} {
-{{{snippet}}}
+    {{{snippet}}}
 }
+
 {{/steps}}
 
 - (void)test{{name}} {
-{{#steps}}
-[self {{name}}];
-{{/steps}}
+    {{#steps}}
+    [self {{name}}];
+    {{/steps}}
 }
 
 @end

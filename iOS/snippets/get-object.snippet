@@ -1,0 +1,29 @@
+QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
+configuration.appID = @"1250000000";
+// 签名提供者，这里假设由当前实例提供
+configuration.signatureProvider = self;
+QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
+endpoint.regionName = @"ap-guangzhou";
+endpoint.useHTTPS = YES;
+configuration.endpoint = endpoint;
+
+[QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
+[QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
+
+// 构建请求
+QCloudGetObjectRequest* request = [QCloudGetObjectRequest new];
+//设置下载的路径 URL，如果设置了，文件将会被下载到指定路径中。
+// 如果该参数没有设置，那么文件将会被下载至内存里，存放在在 finishBlock 的 	outputObject 里。
+request.downloadingURL = [NSURL URLWithString:QCloudTempFilePathWithExtension(@"downding")];
+request.object = @"exampleobject";
+request.bucket = @"example-1250000000";
+
+[request setFinishBlock:^(id outputObject, NSError *error) {
+    //可以从 outputObject 中获取 response 中 etag 或者自定义头部等信息
+}];
+[request setDownProcessBlock:^(int64_t bytesDownload, int64_t totalBytesDownload, 
+    int64_t totalBytesExpectedToDownload) {
+    //下载过程中的进度
+}];
+
+[[QCloudCOSXMLService defaultCOSXML] GetObject:request];

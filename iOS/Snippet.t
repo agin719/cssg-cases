@@ -10,4 +10,5 @@ configuration.endpoint = endpoint;
 [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
 [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
 
+// 构建请求
 {{{bodyBlock}}}

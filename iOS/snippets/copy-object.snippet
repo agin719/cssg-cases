@@ -1,0 +1,22 @@
+QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
+configuration.appID = @"1250000000";
+// 签名提供者，这里假设由当前实例提供
+configuration.signatureProvider = self;
+QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
+endpoint.regionName = @"ap-guangzhou";
+endpoint.useHTTPS = YES;
+configuration.endpoint = endpoint;
+
+[QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
+[QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
+
+// 构建请求
+QCloudPutObjectCopyRequest* request = [[QCloudPutObjectCopyRequest alloc] init];
+request.bucket = @"example-1250000000";
+request.object = @"exampleobject";
+//源对象所在的路径
+request.objectCopySource = @"source-1250000000.cos.ap-guangzhou.myqcloud.com/sourceObject";
+[request setFinishBlock:^(QCloudCopyObjectResult * _Nonnull result, NSError * _Nonnull error) {
+    // result 返回具体信息
+}];
+[[QCloudCOSXMLService defaultCOSXML]  PutObjectCopy:request];

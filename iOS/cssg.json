@@ -7,18 +7,32 @@
 
   "snippetTemplate": "Snippet.t",
   "testcaseTemplate": "TestCase.t",
+  "exclusiveTemplate": {
+    "global-init": "TestCaseDelegate.t",
+    "global-init-fence-queue": "TestCaseDelegate.t",
+    "global-init-signature-sts": "TestCaseDelegate.t",
+    "global-init-signature": "TestCaseDelegate.t"
+  },
+
+  "ignoreExpressionInDoc": [
+    "XCTestExpectation\\*\\s+exp\\s*=\\s*.+;",
+    "\\[exp\\s+fulfill\\];",
+    "\\[self\\s+waitForExpectationsWithTimeout:\\d+ handler:nil\\];",
+    "XCTAssertNotNil\\(.+\\);",
+    "XCTAssertNil\\(.+\\);",
+    ".+\\s*=\\s*self\\.uploadId;",
+    "self\\.parts\\s*=\\s*.+;",
+    "\\[self\\.parts\\s*.+\\];"
+  ],
 
   "macro4doc": {
     "secretId": "\"yourSecretId\"",
-    "secretKey": "\"yourSecretKey\"",
-    "region": "ap-guangzhou",
-    "appId": "1250000000",
-    "bucket": "example-1250000000"
+    "secretKey": "\"yourSecretKey\""
   },
   "macro4test": {
     "secretId": "[SecretStorage sharedInstance].secretID",
     "secretKey": "[SecretStorage sharedInstance].secretKey",
-    "appId": "1253653367",
-    "bucket": "bucket-4-csharp-test-1253653367"
+    "tempBucket": "bucket-cssg-ios-temp-1253653367",
+    "object": "object4iOS"
   }
 }

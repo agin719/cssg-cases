@@ -1,0 +1,29 @@
+QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
+configuration.appID = @"1250000000";
+// 签名提供者，这里假设由当前实例提供
+configuration.signatureProvider = self;
+QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
+endpoint.regionName = @"ap-guangzhou";
+endpoint.useHTTPS = YES;
+configuration.endpoint = endpoint;
+
+[QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
+[QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
+
+// 构建请求
+QCloudCompleteMultipartUploadRequest *completeRequst = [QCloudCompleteMultipartUploadRequest new];
+completeRequst.object = @"exampleobject";
+completeRequst.bucket = @"example-1250000000";
+//本次要查询的分块上传的uploadId,可从初始化分块上传的请求结果QCloudInitiateMultipartUploadResult中得到
+completeRequst.uploadId = @"example-uploadId";
+// 已上传分片的信息
+QCloudCompleteMultipartUploadInfo *partInfo = [QCloudCompleteMultipartUploadInfo new];
+partInfo.parts = self.parts;
+completeRequst.parts = partInfo;
+
+[completeRequst setFinishBlock:^(QCloudUploadObjectResult * _Nonnull result, 
+    NSError * _Nonnull error) {
+    //从 result 中获取上传结果
+}];
+
+[[QCloudCOSXMLService defaultCOSXML] CompleteMultipartUpload:completeRequst];

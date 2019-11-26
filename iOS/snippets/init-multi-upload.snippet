@@ -1,0 +1,23 @@
+QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
+configuration.appID = @"1250000000";
+// 签名提供者，这里假设由当前实例提供
+configuration.signatureProvider = self;
+QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
+endpoint.regionName = @"ap-guangzhou";
+endpoint.useHTTPS = YES;
+configuration.endpoint = endpoint;
+
+[QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
+[QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
+
+// 构建请求
+QCloudInitiateMultipartUploadRequest* initrequest = [QCloudInitiateMultipartUploadRequest new];
+initrequest.bucket = @"example-1250000000";
+initrequest.object = @"exampleobject";
+
+[initrequest setFinishBlock:^(QCloudInitiateMultipartUploadResult* outputObject, NSError *error) {
+    // 获取分片上传的 uploadId，后续的上传都需要这个 id，请保存起来后续使用
+    self.uploadId = outputObject.uploadId;
+}];
+
+[[QCloudCOSXMLService defaultCOSXML] InitiateMultipartUpload:initrequest];

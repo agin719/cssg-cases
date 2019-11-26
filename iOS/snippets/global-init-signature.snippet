@@ -1,0 +1,13 @@
+- (void) signatureWithFields:(QCloudSignatureFields*)fileds
+                     request:(QCloudBizHTTPRequest*)request
+                  urlRequest:(NSMutableURLRequest*)urlRequst
+                   compelete:(QCloudHTTPAuthentationContinueBlock)continueBlock
+{
+    
+    QCloudCredential* credential = [QCloudCredential new];
+    credential.secretID = @"COS_SECRETID";
+    credential.secretKey = @"COS_SECRETKEY";
+    QCloudAuthentationV5Creator* creator = [[QCloudAuthentationV5Creator alloc] initWithCredential:credential];
+    QCloudSignature* signature =  [creator signatureForData:urlRequst];
+    continueBlock(signature, nil);
+}
