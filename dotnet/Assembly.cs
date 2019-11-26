@@ -28,7 +28,7 @@ namespace COSSample
     CosXml cosXml = new CosXmlServer(null, null);
 
     // .cssg-body-start: [global-init-custom-credential-provider]
-    // 自定义方式提供密钥， 继承 QCloudCredentialProvider 并重写 GetQCloudCredentials() 方法
+    // 方式3: 自定义方式提供密钥， 继承 QCloudCredentialProvider 并重写 GetQCloudCredentials() 方法
     public class MyQCloudCredentialProvider : QCloudCredentialProvider
     {
       public override QCloudCredentials GetQCloudCredentials()
@@ -1038,7 +1038,7 @@ namespace COSSample
         string sourceBucket = "{{{copySourceBucket}}}"; //"源对象所在的存储桶
         string sourceRegion = "{{region}}"; //源对象的存储桶所在的地域
         string sourceKey = "{{copySourceObject}}"; //源对象键
-                                            //构造源对象属性
+        //构造源对象属性
         COSXML.Model.Tag.CopySourceStruct copySource = new CopySourceStruct(sourceAppid, 
           sourceBucket, sourceRegion, sourceKey);
 

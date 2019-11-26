@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 
 namespace COSSample
 {
-    // 自定义方式提供密钥， 继承 QCloudCredentialProvider 并重写 GetQCloudCredentials() 方法
+    // 方式3: 自定义方式提供密钥， 继承 QCloudCredentialProvider 并重写 GetQCloudCredentials() 方法
     public class MyQCloudCredentialProvider : QCloudCredentialProvider
     {
       public override QCloudCredentials GetQCloudCredentials()

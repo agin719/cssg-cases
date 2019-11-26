@@ -149,7 +149,7 @@ namespace COSSample
           string sourceBucket = "bucket-cssg-test-1253653367"; //"源对象所在的存储桶
           string sourceRegion = "ap-guangzhou"; //源对象的存储桶所在的地域
           string sourceKey = "sourceObject"; //源对象键
-                                              //构造源对象属性
+          //构造源对象属性
           COSXML.Model.Tag.CopySourceStruct copySource = new CopySourceStruct(sourceAppid, 
             sourceBucket, sourceRegion, sourceKey);
         
