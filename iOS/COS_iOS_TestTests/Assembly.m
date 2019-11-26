@@ -144,7 +144,7 @@
     // .cssg-body-start: [put-bucket-acl]
     XCTestExpectation* exp = [self expectationWithDescription:@"put-bucket-acl"];
     QCloudPutBucketACLRequest* putACL = [QCloudPutBucketACLRequest new];
-    NSString* appID = @"1131975903";//您的AppID
+    NSString* appID = @"1131975903";//授予全新的账号ID
     NSString *ownerIdentifier = [NSString stringWithFormat:@"qcs::cam::uin/%@:uin/%@", appID,
         appID];
     NSString *grantString = [NSString stringWithFormat:@"id=\"%@\"",ownerIdentifier];
