@@ -7,14 +7,14 @@
 #import <QCloudCOSXML/QCloudMultipartInfo.h>
 #import <QCloudCOSXML/QCloudCompleteMultipartUploadInfo.h>
 
-@interface SnippetAssemblyTest : XCTestCase <QCloudSignatureProvider>
+@interface SnippetEverythingTest : XCTestCase <QCloudSignatureProvider>
 
 @property (nonatomic) NSString* uploadId;
 @property (nonatomic) NSMutableArray<QCloudMultipartInfo *> *parts;
 
 @end
 
-@implementation SnippetAssemblyTest
+@implementation SnippetEverythingTest
 
 - (void)setUp {
     
@@ -1087,7 +1087,7 @@
 }
 
 
-- (void)testSnippetAssembly {
+- (void)testSnippetEverything {
 }
 
 @end
