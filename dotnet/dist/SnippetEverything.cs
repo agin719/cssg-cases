@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 
 namespace COSSample
 {
-    public class SnippetAssemblySample {
+    public class SnippetEverythingSample {
 
       string uploadId;
 
@@ -1842,7 +1842,7 @@ namespace COSSample
       }
 
       [Test()]
-      public void testSnippetAssembly() {
+      public void testSnippetEverything() {
       }
 
       [TearDown()]
