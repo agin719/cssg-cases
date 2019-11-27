@@ -1,0 +1,24 @@
+{
+  "language": "Android",
+  "sourcesRoot": ".",
+  "sourceExtension": ".java",
+  "docsRoot": "docs",
+  "docExtension": ".md",
+
+  "snippetTemplate": "Snippet.t",
+  "testcaseTemplate": "TestCase.t",
+  "exclusiveTemplate": {
+  },
+
+  "ignoreExpressionInDoc": [
+  ],
+
+  "macro4doc": {
+  },
+  "macro4test": {
+    "secretId": "[SecretStorage sharedInstance].secretID",
+    "secretKey": "[SecretStorage sharedInstance].secretKey",
+    "tempBucket": "bucket-cssg-ios-temp-1253653367",
+    "object": "object4iOS"
+  }
+}
