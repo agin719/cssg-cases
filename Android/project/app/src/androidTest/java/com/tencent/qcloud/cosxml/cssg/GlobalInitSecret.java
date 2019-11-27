@@ -33,7 +33,7 @@ import java.nio.charset.Charset;
 import java.io.*;
 
 @RunWith(AndroidJUnit4.class)
-public class {{name}} {
+public class GlobalInitSecret {
 
     private static Context context;
 
@@ -43,25 +43,39 @@ public class {{name}} {
 
     @BeforeClass public static void setUp() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        {{{setupBlock}}}
+        
     }
 
     @AfterClass public static void tearDown() {
-        {{{teardownBlock}}}
+        
     }
 
-    {{#steps}}
-    public void {{name}}()
+    public void GlobalInitSecret()
     {
-        {{{snippet}}}
+        String region = "存储桶所在的地域";
+        
+        //创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
+        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
+                .setRegion(region)
+                .isHttps(true) // 使用 https 请求, 默认 http 请求
+                .builder();
+        
+        String secretId = "COS_SECRETID"; //永久密钥 secretId
+        String secretKey ="COS_SECRETKEY"; //永久密钥 secretKey
+        
+        /**
+         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥。
+         * @parma secretId 永久密钥 secretId
+         * @param secretKey 永久密钥 secretKey
+         * @param keyDuration 密钥有效期,单位为秒
+         */
+        QCloudCredentialProvider credentialProvider = new ShortTimeCredentialProvider(secretId, secretKey, 300);
+        
+        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
+        
     }
-    {{/steps}}
 
-    @Test public void test{{name}}() {
-      {{^isDemo}}
-      {{#steps}}
-      {{name}}();
-      {{/steps}}
-      {{/isDemo}}
+    @Test public void testGlobalInitSecret() {
+      GlobalInitSecret();
     }
 }

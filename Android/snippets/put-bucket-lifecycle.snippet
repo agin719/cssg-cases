@@ -1,0 +1,58 @@
+CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
+       .isHttps(true) // 设置 Https 请求
+       .setRegion("ap-guangzhou") // 设置默认的存储桶地域
+       .builder();
+
+// 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
+HttpRequest<String> httpRequest = null;
+try {
+   httpRequest = new HttpRequest.Builder<String>()
+           .url(new URL("your_auth_server_url"))
+           .build();
+} catch (MalformedURLException e) {
+   e.printStackTrace();
+}
+QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
+CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
+
+String bucket = "example-1250000000"; //格式：BucketName-APPID
+PutBucketLifecycleRequest putBucketLifecycleRequest = new PutBucketLifecycleRequest(bucket);
+
+// 声明周期配置规则信息
+LifecycleConfiguration.Rule rule = new LifecycleConfiguration.Rule();
+rule.id = "Lifecycle ID";
+LifecycleConfiguration.Filter filter = new LifecycleConfiguration.Filter();
+filter.prefix = "prefix/";
+rule.filter = filter;
+rule.status = "Enabled or Disabled";
+LifecycleConfiguration.Transition transition = new LifecycleConfiguration.Transition();
+transition.days = 100;
+transition.storageClass = COSStorageClass.STANDARD.getStorageClass();
+putBucketLifecycleRequest.setRuleList(rule);
+//设置签名校验Host, 默认校验所有Header
+Set<String> headerKeys = new HashSet<>();
+headerKeys.add("Host");
+putBucketLifecycleRequest.setSignParamsAndHeaders(null, headerKeys);
+// 使用同步方法
+try {
+    PutBucketLifecycleResult putBucketLifecycleResult = cosXmlService.putBucketLifecycle(putBucketLifecycleRequest);
+} catch (CosXmlClientException e) {
+    e.printStackTrace();
+} catch (CosXmlServiceException e) {
+    e.printStackTrace();
+}
+
+// 使用异步回调请求
+cosXmlService.putBucketLifecycleAsync(putBucketLifecycleRequest, new CosXmlResultListener() {
+    @Override
+    public void onSuccess(CosXmlRequest request, CosXmlResult result) {
+        // todo Put Bucket Lifecycle success
+  PutBucketLifecycleResult putBucketLifecycleResult = (PutBucketLifecycleResult)result;
+    }
+
+    @Override
+    public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+        // todo Put Bucket Lifecycle failed because of CosXmlClientException or CosXmlServiceException...
+    }
+});
+

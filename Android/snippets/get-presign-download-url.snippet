@@ -1,0 +1,50 @@
+CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
+       .isHttps(true) // 设置 Https 请求
+       .setRegion("ap-guangzhou") // 设置默认的存储桶地域
+       .builder();
+
+// 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
+HttpRequest<String> httpRequest = null;
+try {
+   httpRequest = new HttpRequest.Builder<String>()
+           .url(new URL("your_auth_server_url"))
+           .build();
+} catch (MalformedURLException e) {
+   e.printStackTrace();
+}
+QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
+CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
+
+try {
+    String bucket = "example-1250000000"; //存储桶名称
+    String cosPath = "exampleobject"; //即对象在存储桶中的位置标识符。如 cosPath = "text.txt";
+    String method = "GET"; //请求 HTTP 方法.
+    PresignedUrlRequest presignedUrlRequest = new PresignedUrlRequest(bucket, cosPath);
+    presignedUrlRequest.setRequestMethod(method);
+
+    String urlWithSign = cosXmlService.getPresignedURL(presignedUrlRequest); //上传预签名 URL (使用永久密钥方式计算的签名 URL )
+
+    //String urlWithSign = cosXmlService.getPresignedURL(getObjectRequest)； //直接使用 GetObjectRequest
+
+    String savePath = Environment.getExternalStorageDirectory().getPath(); //本地路径
+    String saveFileName = "exampleobject"; //本地文件名
+    GetObjectRequest getObjectRequest = new GetObjectRequest(null, null, savePath, saveFileName);
+
+    //设置上传请求预签名 URL
+    getObjectRequest.setRequestURL(urlWithSign);
+    //设置进度回调
+    getObjectRequest.setProgressListener(new CosXmlProgressListener() {
+            @Override
+            public void onProgress(long progress, long max) {
+                    // todo Do something to update progress...
+            }
+    });
+         // 使用同步方法下载
+    GetObjectResult getObjectResult =cosXmlService.getObject(getObjectRequest);
+
+} catch (CosXmlClientException e) {
+    e.printStackTrace();
+} catch (CosXmlServiceException e) {
+    e.printStackTrace();
+}
+

@@ -33,7 +33,7 @@ import java.nio.charset.Charset;
 import java.io.*;
 
 @RunWith(AndroidJUnit4.class)
-public class {{name}} {
+public class GlobalInitCustom {
 
     private static Context context;
 
@@ -43,25 +43,32 @@ public class {{name}} {
 
     @BeforeClass public static void setUp() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        {{{setupBlock}}}
+        
     }
 
     @AfterClass public static void tearDown() {
-        {{{teardownBlock}}}
+        
     }
 
-    {{#steps}}
-    public void {{name}}()
+    public void GlobalInitCustom()
     {
-        {{{snippet}}}
+        String region = "存储桶所在的地域";
+        
+        //创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
+        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
+               .setRegion(region)
+              .isHttps(true) // 使用 https 请求, 默认 http 请求
+               .builder();
+        
+        /**
+         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥。
+         */
+        QCloudCredentialProvider credentialProvider = new MyCredentialProvider();
+        
+        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
     }
-    {{/steps}}
 
-    @Test public void test{{name}}() {
-      {{^isDemo}}
-      {{#steps}}
-      {{name}}();
-      {{/steps}}
-      {{/isDemo}}
+    @Test public void testGlobalInitCustom() {
+      GlobalInitCustom();
     }
 }

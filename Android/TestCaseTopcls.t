@@ -16,10 +16,7 @@ import com.tencent.cos.xml.transfer.*;
 import com.tencent.qcloud.core.auth.*;
 import com.tencent.qcloud.core.common.*;
 import com.tencent.qcloud.core.http.*;
-import com.tencent.cos.xml.model.service.*;
-import com.tencent.qcloud.cosxml.cssg.GlobalInitCustomProvider.MyCredentialProvider;
 
-import org.junit.Test;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -29,39 +26,11 @@ import android.util.Log;
 
 import java.net.*;
 import java.util.*;
-import java.nio.charset.Charset;
-import java.io.*;
 
-@RunWith(AndroidJUnit4.class)
+
 public class {{name}} {
 
-    private static Context context;
-
-    private static void assertError(Exception e) {
-        throw new RuntimeException(e.getMessage());
-    }
-
-    @BeforeClass public static void setUp() {
-        context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        {{{setupBlock}}}
-    }
-
-    @AfterClass public static void tearDown() {
-        {{{teardownBlock}}}
-    }
-
     {{#steps}}
-    public void {{name}}()
-    {
-        {{{snippet}}}
-    }
+    {{{snippet}}}
     {{/steps}}
-
-    @Test public void test{{name}}() {
-      {{^isDemo}}
-      {{#steps}}
-      {{name}}();
-      {{/steps}}
-      {{/isDemo}}
-    }
 }
