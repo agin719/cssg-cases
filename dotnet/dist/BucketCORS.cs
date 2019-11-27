@@ -86,6 +86,7 @@ namespace COSSample
         }
         Thread.Sleep(500);
       }
+      
       public void GetBucketCors()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -126,6 +127,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
         }
       }
+      
       public void OptionObject()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -169,6 +171,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
         }
       }
+      
       public void DeleteBucketCors()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -211,6 +214,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
 
       [SetUp()]
       public void setup() {

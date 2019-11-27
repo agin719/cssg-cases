@@ -69,6 +69,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
       public void PutObject()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -120,6 +121,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
       public void HeadObject()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -163,6 +165,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
       public void GetObject()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -247,6 +250,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
       public void DeleteObject()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -290,6 +294,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
       public void DeleteMultiObject()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -339,6 +344,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
       public void PostObject()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -389,6 +395,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
       public void RestoreObject()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -434,6 +441,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
         }
       }
+      
       public void GetPresignDownloadUrl()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -496,6 +504,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
       public void GetPresignUploadUrl()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -557,6 +566,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
 
       [SetUp()]
       public void setup() {

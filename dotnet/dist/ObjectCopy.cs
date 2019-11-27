@@ -80,6 +80,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
       public void InitMultiUpload()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -125,6 +126,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
       public void UploadPartCopy()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -186,6 +188,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
       public void CompleteMultiUpload()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -231,6 +234,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
         }
       }
+      
 
       [SetUp()]
       public void setup() {

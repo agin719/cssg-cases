@@ -26,8 +26,6 @@
   ],
 
   "macro4doc": {
-    "secretId": "\"yourSecretId\"",
-    "secretKey": "\"yourSecretKey\""
   },
   "macro4test": {
     "secretId": "[SecretStorage sharedInstance].secretID",

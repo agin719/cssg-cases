@@ -67,6 +67,7 @@ namespace COSSample
         }
         Thread.Sleep(500);
       }
+      
       public void GetBucketVersioning()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -105,6 +106,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
 
       [SetUp()]
       public void setup() {

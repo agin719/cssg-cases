@@ -67,6 +67,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
       public void PutBucketAcl()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -115,6 +116,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
       public void GetBucketAcl()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -157,6 +159,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
 
       [SetUp()]
       public void setup() {

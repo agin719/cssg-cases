@@ -30,6 +30,7 @@ namespace COSSample
       {
         {{{snippet}}}
       }
+      
       {{/steps}}
 
       [SetUp()]
@@ -39,9 +40,11 @@ namespace COSSample
 
       [Test()]
       public void test{{name}}() {
+        {{^isDemo}}
         {{#steps}}
         {{name}}();
         {{/steps}}
+        {{/isDemo}}
       }
 
       [TearDown()]
