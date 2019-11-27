@@ -70,6 +70,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
       public void ListMultiUpload()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -112,6 +113,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
       public void UploadPart()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -168,6 +170,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
       public void ListParts()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -215,6 +218,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
       public void CompleteMultiUpload()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -260,6 +264,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
         }
       }
+      
       public void AbortMultiUpload()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -302,6 +307,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
         }
       }
+      
 
       [SetUp()]
       public void setup() {

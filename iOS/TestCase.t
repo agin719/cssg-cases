@@ -45,9 +45,11 @@
 {{/steps}}
 
 - (void)test{{name}} {
+    {{^isDemo}}
     {{#steps}}
     [self {{name}}];
     {{/steps}}
+    {{/isDemo}}
 }
 
 @end

@@ -67,6 +67,7 @@ namespace COSSample
         }
         Thread.Sleep(500);
       }
+      
       public void PutBucketReplication()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -121,6 +122,7 @@ namespace COSSample
         }
         Thread.Sleep(500);
       }
+      
       public void GetBucketReplication()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -159,6 +161,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
       public void DeleteBucketReplication()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
@@ -197,6 +200,7 @@ namespace COSSample
           Assert.Null(serverEx);
         }
       }
+      
 
       [SetUp()]
       public void setup() {

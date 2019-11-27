@@ -59,6 +59,7 @@ namespace COSSample
         //初始化 CosXmlServer
         CosXmlServer cosXml = new CosXmlServer(config, cosCredentialProvider);
       }
+      
 
       [SetUp()]
       public void setup() {
