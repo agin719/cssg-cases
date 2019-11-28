@@ -37,9 +37,18 @@ public class ObjectACL {
 
     private static Context context;
 
-    private static void assertError(Exception e) {
-        throw new RuntimeException(e.getMessage());
+    private static void assertError(Exception e, boolean isMatch) {
+        if (!isMatch) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
+
+    private static void assertError(Exception e) {
+        assertError(e, false);
+    }
+
+    private String uploadId;
+    private String part1Etag;
 
     @BeforeClass public static void setUp() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -181,12 +190,12 @@ public class ObjectACL {
         
         //赋予被授权者读的权限
         ACLAccount readACLS = new ACLAccount();
-        readACLS.addAccount("OwnerUin", "OwnerUin");
+        readACLS.addAccount("1278687956", "1278687956");
         putObjectACLRequest.setXCOSGrantRead(readACLS);
         
         //赋予被授权者读写的权限
         ACLAccount writeandReadACLS = new ACLAccount();
-        writeandReadACLS.addAccount("OwnerUin", "OwnerUin");
+        writeandReadACLS.addAccount("1278687956", "1278687956");
         putObjectACLRequest.setXCOSGrantRead(writeandReadACLS);
         //设置签名校验Host, 默认校验所有Header
         Set<String> headerKeys = new HashSet<>();

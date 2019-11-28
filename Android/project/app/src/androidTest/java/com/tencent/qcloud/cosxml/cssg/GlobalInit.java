@@ -37,9 +37,18 @@ public class GlobalInit {
 
     private static Context context;
 
-    private static void assertError(Exception e) {
-        throw new RuntimeException(e.getMessage());
+    private static void assertError(Exception e, boolean isMatch) {
+        if (!isMatch) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
+
+    private static void assertError(Exception e) {
+        assertError(e, false);
+    }
+
+    private String uploadId;
+    private String part1Etag;
 
     @BeforeClass public static void setUp() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -52,7 +61,7 @@ public class GlobalInit {
 
     public void GlobalInit()
     {
-        String region = "存储桶所在的地域";
+        String region = "ap-guangzhou";
         
         CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
                 .setRegion(region)

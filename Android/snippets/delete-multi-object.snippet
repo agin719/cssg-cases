@@ -17,7 +17,7 @@ CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credenti
 
 String bucket = "example-1250000000"; //存储桶，格式：BucketName-APPID
 List<String> objectList = new ArrayList<String>();
-objectList.add("/exampleobject");//对象在存储桶中的位置标识符，即对象键
+objectList.add("exampleobject");//对象在存储桶中的位置标识符，即对象键
 
 DeleteMultiObjectRequest deleteMultiObjectRequest = new DeleteMultiObjectRequest(bucket, objectList);
 deleteMultiObjectRequest.setQuiet(true);

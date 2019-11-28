@@ -37,9 +37,18 @@ public class Object {
 
     private static Context context;
 
-    private static void assertError(Exception e) {
-        throw new RuntimeException(e.getMessage());
+    private static void assertError(Exception e, boolean isMatch) {
+        if (!isMatch) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
+
+    private static void assertError(Exception e) {
+        assertError(e, false);
+    }
+
+    private String uploadId;
+    private String part1Etag;
 
     @BeforeClass public static void setUp() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -449,7 +458,7 @@ public class Object {
         
         String bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
         List<String> objectList = new ArrayList<String>();
-        objectList.add("/object4Android");//对象在存储桶中的位置标识符，即对象键
+        objectList.add("object4Android");//对象在存储桶中的位置标识符，即对象键
         
         DeleteMultiObjectRequest deleteMultiObjectRequest = new DeleteMultiObjectRequest(bucket, objectList);
         deleteMultiObjectRequest.setQuiet(true);
@@ -584,7 +593,7 @@ public class Object {
             assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
-            assertError(e);
+            assertError(e, e.getStatusCode() == 405);
         }
         
         // 使用异步回调请求
@@ -636,7 +645,7 @@ public class Object {
         
             String savePath = Environment.getExternalStorageDirectory().getPath(); //本地路径
             String saveFileName = "object4Android"; //本地文件名
-            GetObjectRequest getObjectRequest = new GetObjectRequest(null, null, savePath, saveFileName);
+            GetObjectRequest getObjectRequest = new GetObjectRequest("bucket-cssg-test-1253653367", "object4Android", savePath, saveFileName);
         
             //设置上传请求预签名 URL
             getObjectRequest.setRequestURL(urlWithSign);
@@ -682,7 +691,7 @@ public class Object {
         
         try {
         
-         String bucket = "bucket-cssg-test-1253653367"; //存储桶名称
+         String bucket = "bucket-cssg-android-temp-1253653367"; //存储桶名称
          String cosPath = "object4Android"; //即对象在存储桶中的位置标识符。如 cosPath = "text.txt";
          String method = "PUT"; //请求 HTTP 方法.
          PresignedUrlRequest presignedUrlRequest = new PresignedUrlRequest(bucket, cosPath){
@@ -699,7 +708,7 @@ public class Object {
          //String urlWithSign = cosXmlService.getPresignedURL(putObjectRequest)； //直接使用PutObjectRequest
         
          String srcPath = Environment.getExternalStorageDirectory().getPath() + "/object4Android";
-         PutObjectRequest putObjectRequest = new PutObjectRequest(null, null, srcPath);
+         PutObjectRequest putObjectRequest = new PutObjectRequest("bucket-cssg-test-1253653367", "object4Android", srcPath);
          //设置上传请求预签名 URL
          putObjectRequest.setRequestURL(urlWithSign);
          //设置进度回调

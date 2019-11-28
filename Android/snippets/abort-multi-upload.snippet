@@ -17,7 +17,7 @@ CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credenti
 
 String bucket = "example-1250000000"; //格式：BucketName-APPID
 String cosPath = "exampleobject"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
-String uploadId = "初始化分片返回的 uploadId";
+String uploadId = "example-uploadId";
 
 AbortMultiUploadRequest abortMultiUploadRequest = new AbortMultiUploadRequest(bucket, cosPath, uploadId);
 //设置签名校验Host, 默认校验所有Header
@@ -31,6 +31,7 @@ try {
     e.printStackTrace();
 } catch (CosXmlServiceException e) {
     e.printStackTrace();
+    //
 }
 
 // 使用异步回调请求

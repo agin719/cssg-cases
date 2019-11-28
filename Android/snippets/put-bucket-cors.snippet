@@ -45,8 +45,8 @@ headers.add("content-type");
 corsRule.allowedHeader = headers;
 
 List<String> exposeHeaders = new LinkedList<>();
-headers.add("x-cos-metha-1");
-corsRule.exposeHeader = headers;
+exposeHeaders.add("x-cos-meta-1");
+corsRule.exposeHeader = exposeHeaders;
 
 //设置跨域访问配置信息
 putBucketCORSRequest.addCORSRule(corsRule);

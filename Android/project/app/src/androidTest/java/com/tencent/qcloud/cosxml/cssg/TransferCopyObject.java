@@ -37,9 +37,18 @@ public class TransferCopyObject {
 
     private static Context context;
 
-    private static void assertError(Exception e) {
-        throw new RuntimeException(e.getMessage());
+    private static void assertError(Exception e, boolean isMatch) {
+        if (!isMatch) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
+
+    private static void assertError(Exception e) {
+        assertError(e, false);
+    }
+
+    private String uploadId;
+    private String part1Etag;
 
     @BeforeClass public static void setUp() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -70,10 +79,10 @@ public class TransferCopyObject {
         credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600); // for ut
         CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
         
-        String sourceAppid = "1250000000"; //账号 appid
-        String sourceBucket = "sourcebucket-1250000000"; //"源对象所在的存储桶
-        String sourceRegion = "ap-beijing"; //源对象的存储桶所在的地域
-        String sourceCosPath = "source-object4Android"; //源对象的对象键
+        String sourceAppid = ""; //账号 appid
+        String sourceBucket = "bucket-cssg-test-1253653367"; //"源对象所在的存储桶
+        String sourceRegion = "ap-guangzhou"; //源对象的存储桶所在的地域
+        String sourceCosPath = ""; //源对象的对象键
         //构造源对象属性
         CopyObjectRequest.CopySourceStruct copySourceStruct = new CopyObjectRequest.CopySourceStruct(sourceAppid, sourceBucket, sourceRegion, sourceCosPath);
         

@@ -17,7 +17,7 @@ CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credenti
 
 String bucket = "example-1250000000"; //存储桶，格式：BucketName-APPID
 String cosPath = "exampleobject"; //对象在存储桶中的位置标识符，即对象键。
-String uploadId ="xxxxxxxx"; //初始化分片上传返回的 uploadId
+String uploadId ="example-uploadId"; //初始化分片上传返回的 uploadId
 int partNumber = 1; //分片块编号，必须从1开始递增
 String srcPath = Environment.getExternalStorageDirectory().getPath() + "/exampleobject"; //本地文件绝对路径
 UploadPartRequest uploadPartRequest = new UploadPartRequest(bucket, cosPath, partNumber, srcPath, uploadId);
@@ -37,7 +37,6 @@ uploadPartRequest.setSignParamsAndHeaders(null, headerKeys);
 try {
     UploadPartResult uploadPartResult = cosXmlService.uploadPart(uploadPartRequest);
     String eTag = uploadPartResult.eTag; // 获取分片块的 eTag
-
 } catch (CosXmlClientException e) {
     e.printStackTrace();
 } catch (CosXmlServiceException e) {

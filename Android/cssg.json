@@ -13,7 +13,11 @@
 
   "ignoreExpressionInDoc": [
     "credentialProvider = new ShortTimeCredentialProvider.* for ut",
-    "assertError().*"
+    "assertError().*",
+    "this.uploadId = uploadId;",
+    "uploadId = this.uploadId;",
+    "this.part1Etag = eTag;",
+    "etag = this.part1Etag;"
   ],
 
   "compileDist": "project/app/src/androidTest/java/com/tencent/qcloud/cosxml/cssg/",

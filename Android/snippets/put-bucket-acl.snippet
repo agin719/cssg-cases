@@ -23,17 +23,17 @@ putBucketACLRequest.setXCOSACL("public-read");
 
 //赋予被授权者读的权限
 ACLAccount readACLS = new ACLAccount();
-readACLS.addAccount("OwnerUin", "SubUin");
+readACLS.addAccount("100000000001", "100000000001");
 putBucketACLRequest.setXCOSGrantRead(readACLS);
 
 //赋予被授权者写的权限
 ACLAccount writeACLS = new ACLAccount();
-writeACLS.addAccount("OwnerUin", "SubUin");
+writeACLS.addAccount("100000000001", "100000000001");
 putBucketACLRequest.setXCOSGrantRead(writeACLS);
 
 //赋予被授权者读写的权限
 ACLAccount writeandReadACLS = new ACLAccount();
-writeandReadACLS.addAccount("OwnerUin", "SubUin");
+writeandReadACLS.addAccount("100000000001", "100000000001");
 putBucketACLRequest.setXCOSGrantRead(writeandReadACLS);
 //设置签名校验Host, 默认校验所有Header
 Set<String> headerKeys = new HashSet<>();

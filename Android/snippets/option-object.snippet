@@ -17,9 +17,9 @@ CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credenti
 
 String bucket = "example-1250000000"; //存储桶名称，格式：BucketName-APPID
 String cosPath = "exampleobject"; //对象位于存储桶中的位置标识符，即对象键
-String origin = "http://cloud.tencent.com";
-String accessMthod = "PUT";
-OptionObjectRequest optionObjectRequest = new OptionObjectRequest(bucket, cosPath, origin, accessMthod);
+String origin = "https://cloud.tencent.com";
+String accessMethod = "PUT";
+OptionObjectRequest optionObjectRequest = new OptionObjectRequest(bucket, cosPath, origin, accessMethod);
 //设置签名校验Host, 默认校验所有Header
 Set<String> headerKeys = new HashSet<>();
 headerKeys.add("Host");

@@ -37,9 +37,18 @@ public class GlobalInitCustom {
 
     private static Context context;
 
-    private static void assertError(Exception e) {
-        throw new RuntimeException(e.getMessage());
+    private static void assertError(Exception e, boolean isMatch) {
+        if (!isMatch) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
+
+    private static void assertError(Exception e) {
+        assertError(e, false);
+    }
+
+    private String uploadId;
+    private String part1Etag;
 
     @BeforeClass public static void setUp() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -52,7 +61,7 @@ public class GlobalInitCustom {
 
     public void GlobalInitCustom()
     {
-        String region = "存储桶所在的地域";
+        String region = "ap-guangzhou";
         
         //创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
         CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()

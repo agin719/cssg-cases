@@ -37,9 +37,18 @@ public class SnippetAssembly {
 
     private static Context context;
 
-    private static void assertError(Exception e) {
-        throw new RuntimeException(e.getMessage());
+    private static void assertError(Exception e, boolean isMatch) {
+        if (!isMatch) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
+
+    private static void assertError(Exception e) {
+        assertError(e, false);
+    }
+
+    private String uploadId;
+    private String part1Etag;
 
     @BeforeClass public static void setUp() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -52,7 +61,7 @@ public class SnippetAssembly {
 
     public void GlobalInit()
     {
-        String region = "存储桶所在的地域";
+        String region = "ap-guangzhou";
         
         CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
                 .setRegion(region)
@@ -82,7 +91,7 @@ public class SnippetAssembly {
     }
     public void GlobalInitCustom()
     {
-        String region = "存储桶所在的地域";
+        String region = "ap-guangzhou";
         
         //创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
         CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
@@ -99,7 +108,7 @@ public class SnippetAssembly {
     }
     public void GlobalInitSecret()
     {
-        String region = "存储桶所在的地域";
+        String region = "ap-guangzhou";
         
         //创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
         CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
@@ -188,7 +197,7 @@ public class SnippetAssembly {
         QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
         CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
         
-        String bucket = "";
+        String bucket = "example-1250000000";
         PutBucketRequest putBucketRequest = new PutBucketRequest(bucket);
         
         //定义存储桶的 ACL 属性。有效值：private，public-read-write，public-read；默认值：private
@@ -196,17 +205,17 @@ public class SnippetAssembly {
         
         //赋予被授权者读的权限
         ACLAccount readACLS = new ACLAccount();
-        readACLS.addAccount("OwnerUin", "SubUin");
+        readACLS.addAccount("100000000001", "100000000001");
         putBucketRequest.setXCOSGrantRead(readACLS);
         
         //赋予被授权者写的权限
         ACLAccount writeACLS = new ACLAccount();
-        writeACLS.addAccount("OwnerUin", "SubUin");
+        writeACLS.addAccount("100000000001", "100000000001");
         putBucketRequest.setXCOSGrantRead(writeACLS);
         
         //赋予被授权者读写的权限
         ACLAccount writeandReadACLS = new ACLAccount();
-        writeandReadACLS.addAccount("OwnerUin", "SubUin");
+        writeandReadACLS.addAccount("100000000001", "100000000001");
         putBucketRequest.setXCOSGrantRead(writeandReadACLS);
         //设置签名校验Host, 默认校验所有Header
         Set<String> headerKeys = new HashSet<>();
@@ -361,17 +370,17 @@ public class SnippetAssembly {
         
         //赋予被授权者读的权限
         ACLAccount readACLS = new ACLAccount();
-        readACLS.addAccount("OwnerUin", "SubUin");
+        readACLS.addAccount("100000000001", "100000000001");
         putBucketACLRequest.setXCOSGrantRead(readACLS);
         
         //赋予被授权者写的权限
         ACLAccount writeACLS = new ACLAccount();
-        writeACLS.addAccount("OwnerUin", "SubUin");
+        writeACLS.addAccount("100000000001", "100000000001");
         putBucketACLRequest.setXCOSGrantRead(writeACLS);
         
         //赋予被授权者读写的权限
         ACLAccount writeandReadACLS = new ACLAccount();
-        writeandReadACLS.addAccount("OwnerUin", "SubUin");
+        writeandReadACLS.addAccount("100000000001", "100000000001");
         putBucketACLRequest.setXCOSGrantRead(writeandReadACLS);
         //设置签名校验Host, 默认校验所有Header
         Set<String> headerKeys = new HashSet<>();
@@ -501,8 +510,8 @@ public class SnippetAssembly {
         corsRule.allowedHeader = headers;
         
         List<String> exposeHeaders = new LinkedList<>();
-        headers.add("x-cos-metha-1");
-        corsRule.exposeHeader = headers;
+        exposeHeaders.add("x-cos-meta-1");
+        corsRule.exposeHeader = exposeHeaders;
         
         //设置跨域访问配置信息
         putBucketCORSRequest.addCORSRule(corsRule);
@@ -662,10 +671,11 @@ public class SnippetAssembly {
         LifecycleConfiguration.Filter filter = new LifecycleConfiguration.Filter();
         filter.prefix = "prefix/";
         rule.filter = filter;
-        rule.status = "Enabled or Disabled";
+        rule.status = "Enabled";
         LifecycleConfiguration.Transition transition = new LifecycleConfiguration.Transition();
         transition.days = 100;
         transition.storageClass = COSStorageClass.STANDARD.getStorageClass();
+        rule.transition = transition;
         putBucketLifecycleRequest.setRuleList(rule);
         //设置签名校验Host, 默认校验所有Header
         Set<String> headerKeys = new HashSet<>();
@@ -915,16 +925,15 @@ public class SnippetAssembly {
         CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
         
         String bucket = "example-1250000000"; //格式：BucketName-APPID
-        String ownerUin = "OwnerUin"; //发起者身份标示:OwnerUin
-        String subUin = "SubUin"; //发起者身份标示:SubUin
+        String ownerUin = "100000000001"; //发起者身份标示:OwnerUin
+        String subUin = "100000000001"; //发起者身份标示:SubUin
         PutBucketReplicationRequest putBucketReplicationRequest = new PutBucketReplicationRequest(bucket);
         putBucketReplicationRequest.setReplicationConfigurationWithRole(ownerUin, subUin);
         PutBucketReplicationRequest.RuleStruct ruleStruct = new PutBucketReplicationRequest.RuleStruct();
         ruleStruct.id = "replication_01"; //用来标注具体 Rule 的名称
         ruleStruct.isEnable = true; //标识 Rule 是否生效 :true, 生效； false, 不生效
-        ruleStruct.appid = "1250000000"; //appid
-        ruleStruct.region = Region.AP_Beijing.getRegion(); //目标存储桶地域信息
-        ruleStruct.bucket = "example-1250000000";  // 目标存储桶
+        ruleStruct.region = "ap-beijing"; //目标存储桶地域信息
+        ruleStruct.bucket = "destinationbucket-1250000000";  // 目标存储桶
         ruleStruct.prefix = "34"; //前缀匹配策略，
         putBucketReplicationRequest.setReplicationConfigurationWithRule(ruleStruct);
         //设置签名校验Host, 默认校验所有Header
@@ -1437,9 +1446,9 @@ public class SnippetAssembly {
         
         String bucket = "example-1250000000"; //存储桶名称，格式：BucketName-APPID
         String cosPath = "exampleobject"; //对象位于存储桶中的位置标识符，即对象键
-        String origin = "http://cloud.tencent.com";
-        String accessMthod = "PUT";
-        OptionObjectRequest optionObjectRequest = new OptionObjectRequest(bucket, cosPath, origin, accessMthod);
+        String origin = "https://cloud.tencent.com";
+        String accessMethod = "PUT";
+        OptionObjectRequest optionObjectRequest = new OptionObjectRequest(bucket, cosPath, origin, accessMethod);
         //设置签名校验Host, 默认校验所有Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
@@ -1488,34 +1497,23 @@ public class SnippetAssembly {
         QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
         CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
         
-        //具体步骤：
-        // 1. 调用 cosXmlService.initMultipartUpload(InitMultipartUploadRequest) 初始化分片,请参考 [InitMultipartUploadRequest 初始化分片](#InitMultipartUploadRequest)。
-        // 2. 调用 cosXmlService.copyObject(UploadPartCopyRequest) 完成分片复制。
-        // 3. 调用 cosXmlService.completeMultiUpload(CompleteMultiUploadRequest) 完成分片复制,请参考 [CompleteMultiUploadRequest 完成分片复制](#CompleteMultiUploadRequest)。
-        
         String sourceAppid = "1250000000"; //账号 appid
-        String sourceBucket = "sourcebucket-1250000000"; //"源对象所在的存储桶
-        String sourceRegion = "ap-beijing"; //源对象的存储桶所在的地域
-        String sourceCosPath = "source-exampleobject"; //源对象键
+        String sourceBucket = "source-1250000000"; //"源对象所在的存储桶
+        String sourceRegion = "ap-guangzhou"; //源对象的存储桶所在的地域
+        String sourceCosPath = "sourceObject"; //源对象键
         //构造源对象属性
         CopyObjectRequest.CopySourceStruct copySourceStruct = new CopyObjectRequest.CopySourceStruct(sourceAppid, sourceBucket, sourceRegion, sourceCosPath);
-        
         String bucket = "example-1250000000"; //存储桶，格式：BucketName-APPID
-        String cosPath = "exampleobject"; //对象在存储桶中的位置标识符，即对象键。
+        String cosPath = "exampleobject"; //对象在存储桶中的位置标识符，即对象键
         
-        String uploadId = "初始化分片的uploadId";
-        int partNumber = 1; //分片编号
-        long start = 0;//复制源对象的开始位置
-        long end = 100; //复制源对象的结束位置
-        
-        UploadPartCopyRequest uploadPartCopyRequest = new UploadPartCopyRequest(bucket, cosPath, partNumber,  uploadId, copySourceStruct, start, end);
+        CopyObjectRequest copyObjectRequest = new CopyObjectRequest(bucket, cosPath, copySourceStruct);
         //设置签名校验Host, 默认校验所有Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
-        uploadPartCopyRequest.setSignParamsAndHeaders(null, headerKeys);
+        copyObjectRequest.setSignParamsAndHeaders(null, headerKeys);
         // 使用同步方法
         try {
-            UploadPartCopyResult uploadPartCopyResult = cosXmlService.copyObject(uploadPartCopyRequest);
+            CopyObjectResult copyObjectResult = cosXmlService.copyObject(copyObjectRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
         } catch (CosXmlServiceException e) {
@@ -1523,11 +1521,11 @@ public class SnippetAssembly {
         }
         
         // 使用异步回调请求
-        cosXmlService.copyObjectAsync(uploadPartCopyRequest, new CosXmlResultListener() {
+        cosXmlService.copyObjectAsync(copyObjectRequest, new CosXmlResultListener() {
             @Override
             public void onSuccess(CosXmlRequest request, CosXmlResult result) {
                 // todo Copy Object success
-          UploadPartCopyResult uploadPartCopyResult  = (UploadPartCopyResult)result;
+          CopyObjectResult copyObjectResult  = (CopyObjectResult)result;
             }
         
             @Override
@@ -1611,7 +1609,7 @@ public class SnippetAssembly {
         
         String bucket = "example-1250000000"; //存储桶，格式：BucketName-APPID
         List<String> objectList = new ArrayList<String>();
-        objectList.add("/exampleobject");//对象在存储桶中的位置标识符，即对象键
+        objectList.add("exampleobject");//对象在存储桶中的位置标识符，即对象键
         
         DeleteMultiObjectRequest deleteMultiObjectRequest = new DeleteMultiObjectRequest(bucket, objectList);
         deleteMultiObjectRequest.setQuiet(true);
@@ -1767,7 +1765,7 @@ public class SnippetAssembly {
         
         String bucket = "example-1250000000"; //格式：BucketName-APPID
         String cosPath = "exampleobject"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
-        String uploadId = "初始化分片返回的 uploadId";
+        String uploadId = "example-uploadId";
         
         ListPartsRequest listPartsRequest = new ListPartsRequest(bucket, cosPath, uploadId);
         //设置签名校验Host, 默认校验所有Header
@@ -1820,7 +1818,7 @@ public class SnippetAssembly {
         
         String bucket = "example-1250000000"; //存储桶，格式：BucketName-APPID
         String cosPath = "exampleobject"; //对象在存储桶中的位置标识符，即对象键。
-        String uploadId ="xxxxxxxx"; //初始化分片上传返回的 uploadId
+        String uploadId ="example-uploadId"; //初始化分片上传返回的 uploadId
         int partNumber = 1; //分片块编号，必须从1开始递增
         String srcPath = Environment.getExternalStorageDirectory().getPath() + "/exampleobject"; //本地文件绝对路径
         UploadPartRequest uploadPartRequest = new UploadPartRequest(bucket, cosPath, partNumber, srcPath, uploadId);
@@ -1840,7 +1838,6 @@ public class SnippetAssembly {
         try {
             UploadPartResult uploadPartResult = cosXmlService.uploadPart(uploadPartRequest);
             String eTag = uploadPartResult.eTag; // 获取分片块的 eTag
-        
         } catch (CosXmlClientException e) {
             e.printStackTrace();
         } catch (CosXmlServiceException e) {
@@ -1858,6 +1855,76 @@ public class SnippetAssembly {
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
                 // todo Upload Part failed because of CosXmlClientException or CosXmlServiceException...
+            }
+        });
+        
+        
+    }
+    public void UploadPartCopy()
+    {
+        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
+               .isHttps(true) // 设置 Https 请求
+               .setRegion("ap-guangzhou") // 设置默认的存储桶地域
+               .builder();
+        
+        // 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
+        HttpRequest<String> httpRequest = null;
+        try {
+           httpRequest = new HttpRequest.Builder<String>()
+                   .url(new URL("your_auth_server_url"))
+                   .build();
+        } catch (MalformedURLException e) {
+           e.printStackTrace();
+        }
+        QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
+        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
+        
+        //具体步骤：
+        // 1. 调用 cosXmlService.initMultipartUpload(InitMultipartUploadRequest) 初始化分片,请参考 [InitMultipartUploadRequest 初始化分片](#InitMultipartUploadRequest)。
+        // 2. 调用 cosXmlService.copyObject(UploadPartCopyRequest) 完成分片复制。
+        // 3. 调用 cosXmlService.completeMultiUpload(CompleteMultiUploadRequest) 完成分片复制,请参考 [CompleteMultiUploadRequest 完成分片复制](#CompleteMultiUploadRequest)。
+        
+        String sourceAppid = "1250000000"; //账号 appid
+        String sourceBucket = "source-1250000000"; //"源对象所在的存储桶
+        String sourceRegion = "ap-guangzhou"; //源对象的存储桶所在的地域
+        String sourceCosPath = "sourceObject"; //源对象键
+        //构造源对象属性
+        CopyObjectRequest.CopySourceStruct copySourceStruct = new CopyObjectRequest.CopySourceStruct(sourceAppid, sourceBucket, sourceRegion, sourceCosPath);
+        
+        String bucket = "example-1250000000"; //存储桶，格式：BucketName-APPID
+        String cosPath = "exampleobject"; //对象在存储桶中的位置标识符，即对象键。
+        
+        String uploadId = "example-uploadId";
+        int partNumber = 1; //分片编号
+        long start = 0;//复制源对象的开始位置
+        long end = 100; //复制源对象的结束位置
+        
+        UploadPartCopyRequest uploadPartCopyRequest = new UploadPartCopyRequest(bucket, cosPath, partNumber,  uploadId, copySourceStruct, start, end);
+        //设置签名校验Host, 默认校验所有Header
+        Set<String> headerKeys = new HashSet<>();
+        headerKeys.add("Host");
+        uploadPartCopyRequest.setSignParamsAndHeaders(null, headerKeys);
+        // 使用同步方法
+        try {
+            UploadPartCopyResult uploadPartCopyResult = cosXmlService.copyObject(uploadPartCopyRequest);
+            String eTag = uploadPartCopyResult.copyObject.eTag;
+        } catch (CosXmlClientException e) {
+            e.printStackTrace();
+        } catch (CosXmlServiceException e) {
+            e.printStackTrace();
+        }
+        
+        // 使用异步回调请求
+        cosXmlService.copyObjectAsync(uploadPartCopyRequest, new CosXmlResultListener() {
+            @Override
+            public void onSuccess(CosXmlRequest request, CosXmlResult result) {
+                // todo Copy Object success
+          UploadPartCopyResult uploadPartCopyResult  = (UploadPartCopyResult)result;
+            }
+        
+            @Override
+            public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+                // todo Copy Object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
         
@@ -1884,9 +1951,9 @@ public class SnippetAssembly {
         
         String bucket = "example-1250000000"; //格式：BucketName-APPID
         String cosPath = "exampleobject"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
-        String uploadId = "初始化分片返回的 uploadId";
+        String uploadId = "example-uploadId";
         int partNumber = 1;
-        String etag = "编号为 partNumber 对应分片上传结束返回的 etag ";
+        String etag = "etag";
         Map<Integer, String> partNumberAndETag = new HashMap<>();
         partNumberAndETag.put(partNumber, etag);
         
@@ -1941,7 +2008,7 @@ public class SnippetAssembly {
         
         String bucket = "example-1250000000"; //格式：BucketName-APPID
         String cosPath = "exampleobject"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
-        String uploadId = "初始化分片返回的 uploadId";
+        String uploadId = "example-uploadId";
         
         AbortMultiUploadRequest abortMultiUploadRequest = new AbortMultiUploadRequest(bucket, cosPath, uploadId);
         //设置签名校验Host, 默认校验所有Header
@@ -1955,6 +2022,7 @@ public class SnippetAssembly {
             e.printStackTrace();
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            //
         }
         
         // 使用异步回调请求
@@ -2054,12 +2122,12 @@ public class SnippetAssembly {
         
         //赋予被授权者读的权限
         ACLAccount readACLS = new ACLAccount();
-        readACLS.addAccount("OwnerUin", "OwnerUin");
+        readACLS.addAccount("100000000001", "100000000001");
         putObjectACLRequest.setXCOSGrantRead(readACLS);
         
         //赋予被授权者读写的权限
         ACLAccount writeandReadACLS = new ACLAccount();
-        writeandReadACLS.addAccount("OwnerUin", "OwnerUin");
+        writeandReadACLS.addAccount("100000000001", "100000000001");
         putObjectACLRequest.setXCOSGrantRead(writeandReadACLS);
         //设置签名校验Host, 默认校验所有Header
         Set<String> headerKeys = new HashSet<>();
@@ -2336,10 +2404,10 @@ public class SnippetAssembly {
         QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
         CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
         
-        String sourceAppid = "1250000000"; //账号 appid
-        String sourceBucket = "sourcebucket-1250000000"; //"源对象所在的存储桶
-        String sourceRegion = "ap-beijing"; //源对象的存储桶所在的地域
-        String sourceCosPath = "source-exampleobject"; //源对象的对象键
+        String sourceAppid = ""; //账号 appid
+        String sourceBucket = "source-1250000000"; //"源对象所在的存储桶
+        String sourceRegion = "ap-guangzhou"; //源对象的存储桶所在的地域
+        String sourceCosPath = ""; //源对象的对象键
         //构造源对象属性
         CopyObjectRequest.CopySourceStruct copySourceStruct = new CopyObjectRequest.CopySourceStruct(sourceAppid, sourceBucket, sourceRegion, sourceCosPath);
         
@@ -2427,7 +2495,7 @@ public class SnippetAssembly {
          //String urlWithSign = cosXmlService.getPresignedURL(putObjectRequest)； //直接使用PutObjectRequest
         
          String srcPath = Environment.getExternalStorageDirectory().getPath() + "/exampleobject";
-         PutObjectRequest putObjectRequest = new PutObjectRequest(null, null, srcPath);
+         PutObjectRequest putObjectRequest = new PutObjectRequest("example-1250000000", "exampleobject", srcPath);
          //设置上传请求预签名 URL
          putObjectRequest.setRequestURL(urlWithSign);
          //设置进度回调
@@ -2479,7 +2547,7 @@ public class SnippetAssembly {
         
             String savePath = Environment.getExternalStorageDirectory().getPath(); //本地路径
             String saveFileName = "exampleobject"; //本地文件名
-            GetObjectRequest getObjectRequest = new GetObjectRequest(null, null, savePath, saveFileName);
+            GetObjectRequest getObjectRequest = new GetObjectRequest("example-1250000000", "exampleobject", savePath, saveFileName);
         
             //设置上传请求预签名 URL
             getObjectRequest.setRequestURL(urlWithSign);

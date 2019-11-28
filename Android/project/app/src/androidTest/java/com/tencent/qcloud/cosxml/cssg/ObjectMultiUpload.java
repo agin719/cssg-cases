@@ -37,9 +37,18 @@ public class ObjectMultiUpload {
 
     private static Context context;
 
-    private static void assertError(Exception e) {
-        throw new RuntimeException(e.getMessage());
+    private static void assertError(Exception e, boolean isMatch) {
+        if (!isMatch) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
+
+    private static void assertError(Exception e) {
+        assertError(e, false);
+    }
+
+    private String uploadId;
+    private String part1Etag;
 
     @BeforeClass public static void setUp() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -82,6 +91,7 @@ public class ObjectMultiUpload {
         try {
             InitMultipartUploadResult initMultipartUploadResult = cosXmlService.initMultipartUpload(initMultipartUploadRequest);
             String uploadId =initMultipartUploadResult.initMultipartUpload.uploadId;
+            this.uploadId = uploadId;
         } catch (CosXmlClientException e) {
             e.printStackTrace();
             assertError(e);
@@ -180,7 +190,8 @@ public class ObjectMultiUpload {
         
         String bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
         String cosPath = "object4Android"; //对象在存储桶中的位置标识符，即对象键。
-        String uploadId ="xxxxxxxx"; //初始化分片上传返回的 uploadId
+        String uploadId ="example-uploadId"; //初始化分片上传返回的 uploadId
+        uploadId = this.uploadId;
         int partNumber = 1; //分片块编号，必须从1开始递增
         String srcPath = Environment.getExternalStorageDirectory().getPath() + "/object4Android"; //本地文件绝对路径
         UploadPartRequest uploadPartRequest = new UploadPartRequest(bucket, cosPath, partNumber, srcPath, uploadId);
@@ -200,7 +211,7 @@ public class ObjectMultiUpload {
         try {
             UploadPartResult uploadPartResult = cosXmlService.uploadPart(uploadPartRequest);
             String eTag = uploadPartResult.eTag; // 获取分片块的 eTag
-        
+            this.part1Etag = eTag;
         } catch (CosXmlClientException e) {
             e.printStackTrace();
             assertError(e);
@@ -247,7 +258,8 @@ public class ObjectMultiUpload {
         
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
         String cosPath = "object4Android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
-        String uploadId = "初始化分片返回的 uploadId";
+        String uploadId = "example-uploadId";
+        uploadId = this.uploadId;
         
         ListPartsRequest listPartsRequest = new ListPartsRequest(bucket, cosPath, uploadId);
         //设置签名校验Host, 默认校验所有Header
@@ -303,9 +315,11 @@ public class ObjectMultiUpload {
         
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
         String cosPath = "object4Android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
-        String uploadId = "初始化分片返回的 uploadId";
+        String uploadId = "example-uploadId";
+        uploadId = this.uploadId;
         int partNumber = 1;
-        String etag = "编号为 partNumber 对应分片上传结束返回的 etag ";
+        String etag = "etag";
+        etag = this.part1Etag;
         Map<Integer, String> partNumberAndETag = new HashMap<>();
         partNumberAndETag.put(partNumber, etag);
         
@@ -363,7 +377,8 @@ public class ObjectMultiUpload {
         
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
         String cosPath = "object4Android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
-        String uploadId = "初始化分片返回的 uploadId";
+        String uploadId = "example-uploadId";
+        uploadId = this.uploadId;
         
         AbortMultiUploadRequest abortMultiUploadRequest = new AbortMultiUploadRequest(bucket, cosPath, uploadId);
         //设置签名校验Host, 默认校验所有Header
@@ -378,7 +393,7 @@ public class ObjectMultiUpload {
             assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
-            assertError(e);
+            // assertError(e);
         }
         
         // 使用异步回调请求

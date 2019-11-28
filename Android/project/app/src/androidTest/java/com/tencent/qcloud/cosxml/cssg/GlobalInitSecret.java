@@ -37,9 +37,18 @@ public class GlobalInitSecret {
 
     private static Context context;
 
-    private static void assertError(Exception e) {
-        throw new RuntimeException(e.getMessage());
+    private static void assertError(Exception e, boolean isMatch) {
+        if (!isMatch) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
+
+    private static void assertError(Exception e) {
+        assertError(e, false);
+    }
+
+    private String uploadId;
+    private String part1Etag;
 
     @BeforeClass public static void setUp() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -52,7 +61,7 @@ public class GlobalInitSecret {
 
     public void GlobalInitSecret()
     {
-        String region = "存储桶所在的地域";
+        String region = "ap-guangzhou";
         
         //创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
         CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
@@ -60,8 +69,8 @@ public class GlobalInitSecret {
                 .isHttps(true) // 使用 https 请求, 默认 http 请求
                 .builder();
         
-        String secretId = "COS_SECRETID"; //永久密钥 secretId
-        String secretKey ="COS_SECRETKEY"; //永久密钥 secretKey
+        String secretId = "BuildConfig.COS_SECRET_ID"; //永久密钥 secretId
+        String secretKey ="BuildConfig.COS_SECRET_KEY"; //永久密钥 secretKey
         
         /**
          * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥。

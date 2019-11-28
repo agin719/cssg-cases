@@ -34,7 +34,7 @@ try {
  //String urlWithSign = cosXmlService.getPresignedURL(putObjectRequest)； //直接使用PutObjectRequest
 
  String srcPath = Environment.getExternalStorageDirectory().getPath() + "/exampleobject";
- PutObjectRequest putObjectRequest = new PutObjectRequest(null, null, srcPath);
+ PutObjectRequest putObjectRequest = new PutObjectRequest("example-1250000000", "exampleobject", srcPath);
  //设置上传请求预签名 URL
  putObjectRequest.setRequestURL(urlWithSign);
  //设置进度回调

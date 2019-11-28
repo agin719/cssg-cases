@@ -28,7 +28,7 @@ try {
 
     String savePath = Environment.getExternalStorageDirectory().getPath(); //本地路径
     String saveFileName = "exampleobject"; //本地文件名
-    GetObjectRequest getObjectRequest = new GetObjectRequest(null, null, savePath, saveFileName);
+    GetObjectRequest getObjectRequest = new GetObjectRequest("example-1250000000", "exampleobject", savePath, saveFileName);
 
     //设置上传请求预签名 URL
     getObjectRequest.setRequestURL(urlWithSign);

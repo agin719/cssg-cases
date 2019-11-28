@@ -38,8 +38,8 @@ public class GlobalInitCustomProvider {
             // 首先从您的临时密钥服务器获取包含了签名信息的响应
     
             // 然后解析响应，获取密钥信息
-            String tmpSecretId = "COS_SECRETID"; //临时密钥 secretId
-            String tmpSecretKey = "COS_SECRETKEY"; //临时密钥 secretKey
+            String tmpSecretId = "BuildConfig.COS_SECRET_ID"; //临时密钥 secretId
+            String tmpSecretKey = "BuildConfig.COS_SECRET_KEY"; //临时密钥 secretKey
             String sessionToken = "TOKEN"; //临时密钥 Token
             long expiredTime = 1556183496L;//临时密钥有效截止时间戳，单位是秒
     

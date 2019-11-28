@@ -17,9 +17,9 @@ CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credenti
 
 String bucket = "example-1250000000"; //格式：BucketName-APPID
 String cosPath = "exampleobject"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
-String uploadId = "初始化分片返回的 uploadId";
+String uploadId = "example-uploadId";
 int partNumber = 1;
-String etag = "编号为 partNumber 对应分片上传结束返回的 etag ";
+String etag = "etag";
 Map<Integer, String> partNumberAndETag = new HashMap<>();
 partNumberAndETag.put(partNumber, etag);
 
