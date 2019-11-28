@@ -8,21 +8,11 @@
 #import <QCloudCOSXML/QCloudCompleteMultipartUploadInfo.h>
 
 @interface GetServiceTest : XCTestCase <QCloudSignatureProvider>
-
 @property (nonatomic) NSString* uploadId;
 @property (nonatomic) NSMutableArray<QCloudMultipartInfo *> *parts;
-
 @end
 
 @implementation GetServiceTest
-
-- (void)setUp {
-    
-}
-
-- (void)tearDown {
-    
-}
 
 - (void) signatureWithFields:(QCloudSignatureFields*)fileds
                      request:(QCloudBizHTTPRequest*)request
@@ -38,19 +28,6 @@
 }
 
 - (void)GetService {
-    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-    configuration.appID = @"1253653367";
-    // 签名提供者，这里假设由当前实例提供
-    configuration.signatureProvider = self;
-    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-    endpoint.regionName = @"ap-guangzhou";
-    endpoint.useHTTPS = YES;
-    configuration.endpoint = endpoint;
-    
-    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-    
-    // 构建请求
     XCTestExpectation* exp = [self expectationWithDescription:@"get-service"];
     QCloudGetServiceRequest* request = [[QCloudGetServiceRequest alloc] init];
     [request setFinishBlock:^(QCloudListAllMyBucketsResult* result, NSError* error) {
@@ -62,6 +39,24 @@
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
+
+- (void)setUp {
+    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
+    configuration.appID = @"1253653367";
+    // 签名提供者，这里假设由当前实例提供
+    configuration.signatureProvider = self;
+    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
+    endpoint.regionName = @"ap-guangzhou";
+    endpoint.useHTTPS = YES;
+    configuration.endpoint = endpoint;
+
+    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
+    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
+
+}
+
+- (void)tearDown {
+}
 
 - (void)testGetService {
     [self GetService];

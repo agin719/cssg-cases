@@ -28,14 +28,14 @@ namespace COSSample
     CosXml cosXml = new CosXmlServer(null, null);
 
     // .cssg-body-start: [global-init-custom-credential-provider]
-    // 方式3: 自定义方式提供密钥， 继承 QCloudCredentialProvider 并重写 GetQCloudCredentials() 方法
+    //方式3: 自定义方式提供密钥， 继承 QCloudCredentialProvider 并重写 GetQCloudCredentials() 方法
     public class MyQCloudCredentialProvider : QCloudCredentialProvider
     {
       public override QCloudCredentials GetQCloudCredentials()
       {
         string secretId = "COS_SECRETID"; //密钥 SecretId
         string secretKey = "COS_SECRETKEY"; //密钥 SecretKey
-        //密钥有效时间, 精确到秒，例如 1546862502;1546863102
+        //密钥有效时间, 精确到秒，例如1546862502;1546863102
         string keyTime = "SECRET_STARTTIME;SECRET_ENDTIME"; 
         return new QCloudCredentials(secretId, secretKey, keyTime);
       }
@@ -46,6 +46,26 @@ namespace COSSample
       }
     }
     // .cssg-body-end
+
+    public void test40() {
+      // .cssg-body-start: [global-header]
+      CosXmlConfig config = new CosXmlConfig.Builder()
+        .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
+        .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
+        .IsHttps(true)  //设置默认 HTTPS 请求
+        .SetAppid("{{{appId}}}") //设置腾讯云账户的账户标识 APPID
+        .SetRegion("{{{region}}}") //设置一个默认的存储桶地域
+        .Build();
+
+      string secretId = ">>{{{secretId}}}<<";   //云 API 密钥 SecretId
+      string secretKey = ">>{{{secretKey}}}<<"; //云 API 密钥 SecretKey
+      long durationSecond = 600;          //每次请求签名有效时长，单位为秒
+      QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
+        secretKey, durationSecond);
+
+      CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
+      // .cssg-body-end
+    }
 
     public void test0()
     {
@@ -474,17 +494,17 @@ namespace COSSample
     {
       // .cssg-body-start: [put-bucket-replication]
       string bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
-      string ownerUin = "{{uin}}"; //发起者身份标示:OwnerUin 
-      string subUin = "{{uin}}"; //发起者身份标示:SubUin 
+      string ownerUin = "{{uin}}"; //发起者身份标示: OwnerUin
+      string subUin = "{{uin}}"; //发起者身份标示: SubUin
       PutBucketReplicationRequest request = new PutBucketReplicationRequest(bucket);
       //设置 replication
       PutBucketReplicationRequest.RuleStruct ruleStruct = 
         new PutBucketReplicationRequest.RuleStruct();
       ruleStruct.id = "replication_01"; //用来标注具体 Rule 的名称
       ruleStruct.isEnable = true; //标识 Rule 是否生效 :true, 生效； false, 不生效
-      ruleStruct.appid = "{{appId}}"; //appid
+      ruleStruct.appid = "{{appId}}"; //APPID
       ruleStruct.region = "{{replicationDestBucketRegion}}"; //目标存储桶地域信息
-      ruleStruct.bucket = "{{{replicationDestBucket}}}"; //bucketName,不包含 '-appid' 
+      ruleStruct.bucket = "{{{replicationDestBucket}}}"; //格式：BucketName-APPID
       ruleStruct.prefix = "34"; //前缀匹配策略
       List<PutBucketReplicationRequest.RuleStruct> ruleStructs = 
         new List<PutBucketReplicationRequest.RuleStruct>();
@@ -596,7 +616,10 @@ namespace COSSample
         string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
         string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
         string srcPath = @"temp-source-file";//本地文件绝对路径
-        File.WriteAllBytes(srcPath, new byte[1024]);
+        if (!File.Exists(srcPath)) {
+          // 如果不存在目标文件，创建一个临时的测试文件
+          File.WriteAllBytes(srcPath, new byte[1024]);
+        }
 
         PutObjectRequest request = new PutObjectRequest(bucket, key, srcPath);
         //设置签名有效时长
@@ -633,7 +656,10 @@ namespace COSSample
         string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
         string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
         string srcPath = @"temp-source-file";//本地文件绝对路径
-        File.WriteAllBytes(srcPath, new byte[1024]);
+        if (!File.Exists(srcPath)) {
+          // 如果不存在目标文件，创建一个临时的测试文件
+          File.WriteAllBytes(srcPath, new byte[1024]);
+        }
         PostObjectRequest request = new PostObjectRequest(bucket, key, srcPath);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -923,6 +949,7 @@ namespace COSSample
       // .cssg-body-end
     }
     string uploadId;
+    string etag;
     public void test27()
     {
       // .cssg-body-start: [init-multi-upload]
@@ -998,7 +1025,10 @@ namespace COSSample
         int partNumber = 1; //分块编号，必须从1开始递增
         string srcPath = @"temp-source-file";//本地文件绝对路径
         uploadId = this.uploadId;
-        File.WriteAllBytes(srcPath, new byte[1024]);
+        if (!File.Exists(srcPath)) {
+          // 如果不存在目标文件，创建一个临时的测试文件
+          File.WriteAllBytes(srcPath, new byte[1024]);
+        }
         UploadPartRequest request = new UploadPartRequest(bucket, key, partNumber, 
           uploadId, srcPath);
         //设置签名有效时长
@@ -1012,7 +1042,7 @@ namespace COSSample
         UploadPartResult result = cosXml.UploadPart(request);
         //请求成功
         //获取返回分块的eTag,用于后续CompleteMultiUploads
-        string eTag = result.eTag;
+        this.etag = result.eTag;
         Console.WriteLine(result.GetResultInfo());
       }
       catch (COSXML.CosException.CosClientException clientEx)
@@ -1059,7 +1089,7 @@ namespace COSSample
         UploadPartCopyResult result = cosXml.PartCopy(request);
         //请求成功
         //获取返回分块的eTag,用于后续CompleteMultiUploads
-        string eTag = result.copyObject.eTag;
+        this.etag = result.copyObject.eTag;
         Console.WriteLine(result.GetResultInfo());
       }
       catch (COSXML.CosException.CosClientException clientEx)
@@ -1084,12 +1114,16 @@ namespace COSSample
         string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
         string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
         string uploadId = "{{{uploadId}}}"; //初始化分块上传返回的uploadId
+        uploadId = this.uploadId;
         CompleteMultipartUploadRequest request = new CompleteMultipartUploadRequest(bucket, 
           key, uploadId);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
         //设置已上传的parts,必须有序，按照partNumber递增
-        request.SetPartNumberAndETag(1, "partNumber1 eTag");
+        // request.SetPartNumberAndETag(1, "Example Etag");
+        string etag = "example etag";
+        etag = this.etag;
+        request.SetPartNumberAndETag(1, etag);
         //执行请求
         CompleteMultipartUploadResult result = cosXml.CompleteMultiUpload(request);
         //请求成功
@@ -1099,11 +1133,13 @@ namespace COSSample
       {
         //请求失败
         Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
       // .cssg-body-end
     }
@@ -1115,6 +1151,7 @@ namespace COSSample
         string bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
         string key = "{{{object}}}"; //对象在存储桶中的位置，即称对象键
         string uploadId = "{{{uploadId}}}"; //初始化分块上传返回的uploadId
+        uploadId = this.uploadId;
         AbortMultipartUploadRequest request = new AbortMultipartUploadRequest(bucket, key, uploadId);
         //设置签名有效时长
         request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -1127,11 +1164,13 @@ namespace COSSample
       {
         //请求失败
         Console.WriteLine("CosClientException: " + clientEx);
+        Assert.Null(clientEx);
       }
       catch (COSXML.CosException.CosServerException serverEx)
       {
         //请求失败
         Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+        Assert.Null(serverEx);
       }
       // .cssg-body-end
     }
@@ -1239,21 +1278,21 @@ namespace COSSample
       string appid = "{{appId}}";//设置腾讯云账户的账户标识 APPID
       string region = "{{region}}"; //设置一个默认的存储桶地域
       CosXmlConfig config = new CosXmlConfig.Builder()
-        .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位 毫秒 ，默认 45000ms
-        .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位 毫秒 ，默认 45000ms
-        .IsHttps(true)  //设置默认 https 请求
+        .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
+        .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
+        .IsHttps(true)  //设置默认 HTTPS 请求
         .SetAppid(appid)  //设置腾讯云账户的账户标识 APPID
         .SetRegion(region)  //设置一个默认的存储桶地域
         .SetDebugLog(true)  //显示日志
         .Build();  //创建 CosXmlConfig 对象
 
-      //初始化 QCloudCredentialProvider ，SDK中提供了3种方式：永久密钥 、 临时密钥  、 自定义 
+      //初始化 QCloudCredentialProvider，COS SDK 中提供了3种方式：永久密钥、临时密钥、自定义
       QCloudCredentialProvider cosCredentialProvider = null;
 
       //方式1， 永久密钥
       string secretId = "COS_SECRETID"; //"云 API 密钥 SecretId";
       string secretKey = "COS_SECRETKEY"; //"云 API 密钥 SecretKey";
-      long durationSecond = 600;  // 每次请求签名有效时长,单位为 秒
+      long durationSecond = 600;  //每次请求签名有效时长，单位为秒
       cosCredentialProvider = new DefaultQCloudCredentialProvider(secretId, secretKey, durationSecond);
 
       //方式2， 临时密钥
@@ -1275,17 +1314,17 @@ namespace COSSample
       try
       {
         PreSignatureStruct preSignatureStruct = new PreSignatureStruct();
-        preSignatureStruct.appid = "{{appId}}";//腾讯云账号 appid
+        preSignatureStruct.appid = "{{appId}}";//腾讯云账号 APPID
         preSignatureStruct.region = "{{region}}"; //存储桶地域
         preSignatureStruct.bucket = "{{{persistBucket}}}"; //存储桶
         preSignatureStruct.key = "{{{object}}}"; //对象键
-        preSignatureStruct.httpMethod = "PUT"; //http 请求方法
-        preSignatureStruct.isHttps = true; //生成 https 请求URL
+        preSignatureStruct.httpMethod = "PUT"; //HTTP 请求方法
+        preSignatureStruct.isHttps = true; //生成 HTTPS 请求 URL
         preSignatureStruct.signDurationSecond = 600; //请求签名时间为 600s
-        preSignatureStruct.headers = null;//签名中需要校验的header
-        preSignatureStruct.queryParameters = null; //签名中需要校验的URL中请求参数
+        preSignatureStruct.headers = null;//签名中需要校验的 header
+        preSignatureStruct.queryParameters = null; //签名中需要校验的 URL 中请求参数
 
-        //上传预签名 URL (使用永久密钥方式计算的签名 URL )
+        //上传预签名 URL (使用永久密钥方式计算的签名 URL)
         string requestSignURL = cosXml.GenerateSignURL(preSignatureStruct);
 
         string srcPath = @"temp-source-file";//本地文件绝地路径
@@ -1322,19 +1361,19 @@ namespace COSSample
       try
       {
         PreSignatureStruct preSignatureStruct = new PreSignatureStruct();
-        preSignatureStruct.appid = "{{appId}}";//腾讯云账号 appid
+        preSignatureStruct.appid = "{{appId}}";//腾讯云账号 APPID
         preSignatureStruct.region = "{{region}}"; //存储桶地域
         preSignatureStruct.bucket = "{{{persistBucket}}}"; //存储桶
         preSignatureStruct.key = "{{{object}}}"; //对象键
-        preSignatureStruct.httpMethod = "GET"; //http 请求方法
-        preSignatureStruct.isHttps = true; //生成 https 请求URL
-        preSignatureStruct.signDurationSecond = 600; //请求签名时间为 600s
-        preSignatureStruct.headers = null;//签名中需要校验的header
-        preSignatureStruct.queryParameters = null; //签名中需要校验的URL中请求参数
+        preSignatureStruct.httpMethod = "GET"; //HTTP 请求方法
+        preSignatureStruct.isHttps = true; //生成 HTTPS 请求 URL
+        preSignatureStruct.signDurationSecond = 600; //请求签名时间为600s
+        preSignatureStruct.headers = null;//签名中需要校验的 header
+        preSignatureStruct.queryParameters = null; //签名中需要校验的 URL 中请求参数
 
         string requestSignURL = cosXml.GenerateSignURL(preSignatureStruct); 
 
-        //载请求预签名 URL (使用永久密钥方式计算的签名 URL )
+        //下载请求预签名 URL (使用永久密钥方式计算的签名 URL)
         string localDir = System.IO.Path.GetTempPath();//本地文件夹
         string localFileName = "my-local-temp-file"; //指定本地保存的文件名
         GetObjectRequest request = new GetObjectRequest(null, null, localDir, localFileName);

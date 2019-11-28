@@ -8,21 +8,11 @@
 #import <QCloudCOSXML/QCloudCompleteMultipartUploadInfo.h>
 
 @interface TransferUploadObjectTest : XCTestCase <QCloudSignatureProvider>
-
 @property (nonatomic) NSString* uploadId;
 @property (nonatomic) NSMutableArray<QCloudMultipartInfo *> *parts;
-
 @end
 
 @implementation TransferUploadObjectTest
-
-- (void)setUp {
-    
-}
-
-- (void)tearDown {
-    
-}
 
 - (void) signatureWithFields:(QCloudSignatureFields*)fileds
                      request:(QCloudBizHTTPRequest*)request
@@ -38,22 +28,9 @@
 }
 
 - (void)TransferUploadObject {
-    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-    configuration.appID = @"1253653367";
-    // 签名提供者，这里假设由当前实例提供
-    configuration.signatureProvider = self;
-    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-    endpoint.regionName = @"ap-guangzhou";
-    endpoint.useHTTPS = YES;
-    configuration.endpoint = endpoint;
-    
-    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-    
-    // 构建请求
     XCTestExpectation* exp = [self expectationWithDescription:@"transfer-upload-object"];
     QCloudCOSXMLUploadObjectRequest* put = [QCloudCOSXMLUploadObjectRequest new];
-    put.object = @"object4iOS";
+    put.object = @"object4ios";
     put.bucket = @"bucket-cssg-test-1253653367";
     put.body = [@"testFileContent" dataUsingEncoding:NSUTF8StringEncoding];
     //设置一些上传的参数
@@ -90,6 +67,24 @@
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
+
+- (void)setUp {
+    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
+    configuration.appID = @"1253653367";
+    // 签名提供者，这里假设由当前实例提供
+    configuration.signatureProvider = self;
+    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
+    endpoint.regionName = @"ap-guangzhou";
+    endpoint.useHTTPS = YES;
+    configuration.endpoint = endpoint;
+
+    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
+    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
+
+}
+
+- (void)tearDown {
+}
 
 - (void)testTransferUploadObject {
     [self TransferUploadObject];

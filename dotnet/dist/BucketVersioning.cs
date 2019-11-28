@@ -23,104 +23,20 @@ namespace COSSample
 {
     public class BucketVersioningSample {
 
-      string uploadId;
 
-      public void PutBucketVersioning()
+      public void PutBucket()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
-          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒 ，默认 45000ms
-          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒 ，默认 45000ms
-          .IsHttps(true)  //设置默认 https 请求
+          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
+          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
+          .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1253653367") //设置腾讯云账户的账户标识 APPID
           .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = Environment.GetEnvironmentVariable("COS_KEY");   //云 API 密钥 SecretId
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
-        long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
-        QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-          secretKey, durationSecond);
-        
-        CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
-        
-        string bucket = "bucket-cssg-dotnet-temp-1253653367"; //格式：BucketName-APPID
-        PutBucketVersioningRequest request = new PutBucketVersioningRequest(bucket);
-        //设置签名有效时长
-        request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
-        request.IsEnableVersionConfig(true); //true: 开启版本控制; false:暂停版本控制
-        
-        // 使用同步方法
-        try
-        {
-          PutBucketVersioningResult result = cosXml.PutBucketVersioning(request);
-          Console.WriteLine(result.GetResultInfo());
-        }
-        catch (COSXML.CosException.CosClientException clientEx)
-        {
-          Console.WriteLine("CosClientException: " + clientEx);
-          Assert.Null(clientEx);
-        }
-        catch (COSXML.CosException.CosServerException serverEx)
-        {
-          Console.WriteLine("CosServerException: " + serverEx.GetInfo());
-          Assert.Null(serverEx);
-        }
-        Thread.Sleep(500);
-      }
-      
-      public void GetBucketVersioning()
-      {
-        CosXmlConfig config = new CosXmlConfig.Builder()
-          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒 ，默认 45000ms
-          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒 ，默认 45000ms
-          .IsHttps(true)  //设置默认 https 请求
-          .SetAppid("1253653367") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
-          .Build();
-        
-        string secretId = Environment.GetEnvironmentVariable("COS_KEY");   //云 API 密钥 SecretId
-        string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
-        long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
-        QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-          secretKey, durationSecond);
-        
-        CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
-        
-        string bucket = "bucket-cssg-dotnet-temp-1253653367"; //格式：BucketName-APPID
-        GetBucketVersioningRequest request = new GetBucketVersioningRequest(bucket);
-        
-        // 使用同步方法
-        try
-        {
-          GetBucketVersioningResult result = cosXml.GetBucketVersioning(request);
-          Console.WriteLine(result.GetResultInfo());
-        }
-        catch (COSXML.CosException.CosClientException clientEx)
-        {
-          Console.WriteLine("CosClientException: " + clientEx);
-          Assert.Null(clientEx);
-        }
-        catch (COSXML.CosException.CosServerException serverEx)
-        {
-          Console.WriteLine("CosServerException: " + serverEx.GetInfo());
-          Assert.Null(serverEx);
-        }
-      }
-      
-
-      [SetUp()]
-      public void setup() {
-        CosXmlConfig config = new CosXmlConfig.Builder()
-          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒 ，默认 45000ms
-          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒 ，默认 45000ms
-          .IsHttps(true)  //设置默认 https 请求
-          .SetAppid("1253653367") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
-          .Build();
-        
-        string secretId = Environment.GetEnvironmentVariable("COS_KEY");   //云 API 密钥 SecretId
-        string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
-        long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
+        long durationSecond = 600;          //每次请求签名有效时长，单位为秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
           secretKey, durationSecond);
         
@@ -149,27 +65,103 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-      }
+      }   
 
-      [Test()]
-      public void testBucketVersioning() {
-        PutBucketVersioning();
-        GetBucketVersioning();
-      }
-
-      [TearDown()]
-      public void teardown() {
+      public void PutBucketVersioning()
+      {
         CosXmlConfig config = new CosXmlConfig.Builder()
-          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒 ，默认 45000ms
-          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒 ，默认 45000ms
-          .IsHttps(true)  //设置默认 https 请求
+          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
+          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
+          .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1253653367") //设置腾讯云账户的账户标识 APPID
           .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = Environment.GetEnvironmentVariable("COS_KEY");   //云 API 密钥 SecretId
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
-        long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
+        long durationSecond = 600;          //每次请求签名有效时长，单位为秒
+        QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
+          secretKey, durationSecond);
+        
+        CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
+        
+        string bucket = "bucket-cssg-dotnet-temp-1253653367"; //格式：BucketName-APPID
+        PutBucketVersioningRequest request = new PutBucketVersioningRequest(bucket);
+        //设置签名有效时长
+        request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
+        request.IsEnableVersionConfig(true); //true: 开启版本控制; false:暂停版本控制
+        
+        // 使用同步方法
+        try
+        {
+          PutBucketVersioningResult result = cosXml.PutBucketVersioning(request);
+          Console.WriteLine(result.GetResultInfo());
+        }
+        catch (COSXML.CosException.CosClientException clientEx)
+        {
+          Console.WriteLine("CosClientException: " + clientEx);
+          Assert.Null(clientEx);
+        }
+        catch (COSXML.CosException.CosServerException serverEx)
+        {
+          Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+          Assert.Null(serverEx);
+        }
+        Thread.Sleep(500);
+      }   
+
+      public void GetBucketVersioning()
+      {
+        CosXmlConfig config = new CosXmlConfig.Builder()
+          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
+          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
+          .IsHttps(true)  //设置默认 HTTPS 请求
+          .SetAppid("1253653367") //设置腾讯云账户的账户标识 APPID
+          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .Build();
+        
+        string secretId = Environment.GetEnvironmentVariable("COS_KEY");   //云 API 密钥 SecretId
+        string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
+        long durationSecond = 600;          //每次请求签名有效时长，单位为秒
+        QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
+          secretKey, durationSecond);
+        
+        CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
+        
+        string bucket = "bucket-cssg-dotnet-temp-1253653367"; //格式：BucketName-APPID
+        GetBucketVersioningRequest request = new GetBucketVersioningRequest(bucket);
+        
+        // 使用同步方法
+        try
+        {
+          GetBucketVersioningResult result = cosXml.GetBucketVersioning(request);
+          Console.WriteLine(result.GetResultInfo());
+        }
+        catch (COSXML.CosException.CosClientException clientEx)
+        {
+          Console.WriteLine("CosClientException: " + clientEx);
+          Assert.Null(clientEx);
+        }
+        catch (COSXML.CosException.CosServerException serverEx)
+        {
+          Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+          Assert.Null(serverEx);
+        }
+      }   
+
+      public void DeleteBucket()
+      {
+        CosXmlConfig config = new CosXmlConfig.Builder()
+          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
+          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
+          .IsHttps(true)  //设置默认 HTTPS 请求
+          .SetAppid("1253653367") //设置腾讯云账户的账户标识 APPID
+          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .Build();
+        
+        string secretId = Environment.GetEnvironmentVariable("COS_KEY");   //云 API 密钥 SecretId
+        string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
+        long durationSecond = 600;          //每次请求签名有效时长，单位为秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
           secretKey, durationSecond);
         
@@ -196,6 +188,22 @@ namespace COSSample
           //请求失败
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
         }
+      }   
+
+      [SetUp()]
+      public void setup() {
+        PutBucket();
+      }
+
+      [Test()]
+      public void testBucketVersioning() {
+        PutBucketVersioning();
+        GetBucketVersioning();
+      }
+
+      [TearDown()]
+      public void teardown() {
+        DeleteBucket();
       }
     }
 }

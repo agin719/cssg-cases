@@ -8,21 +8,11 @@
 #import <QCloudCOSXML/QCloudCompleteMultipartUploadInfo.h>
 
 @interface ObjectMultiUploadTest : XCTestCase <QCloudSignatureProvider>
-
 @property (nonatomic) NSString* uploadId;
 @property (nonatomic) NSMutableArray<QCloudMultipartInfo *> *parts;
-
 @end
 
 @implementation ObjectMultiUploadTest
-
-- (void)setUp {
-    
-}
-
-- (void)tearDown {
-    
-}
 
 - (void) signatureWithFields:(QCloudSignatureFields*)fileds
                      request:(QCloudBizHTTPRequest*)request
@@ -38,23 +28,10 @@
 }
 
 - (void)InitMultiUpload {
-    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-    configuration.appID = @"1253653367";
-    // 签名提供者，这里假设由当前实例提供
-    configuration.signatureProvider = self;
-    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-    endpoint.regionName = @"ap-guangzhou";
-    endpoint.useHTTPS = YES;
-    configuration.endpoint = endpoint;
-    
-    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-    
-    // 构建请求
     XCTestExpectation* exp = [self expectationWithDescription:@"init-multi-upload"];
     QCloudInitiateMultipartUploadRequest* initrequest = [QCloudInitiateMultipartUploadRequest new];
     initrequest.bucket = @"bucket-cssg-test-1253653367";
-    initrequest.object = @"object4iOS";
+    initrequest.object = @"object4ios";
     
     [initrequest setFinishBlock:^(QCloudInitiateMultipartUploadResult* outputObject, NSError *error) {
         // 获取分片上传的 uploadId，后续的上传都需要这个 id，请保存起来后续使用
@@ -68,19 +45,6 @@
 }
 
 - (void)ListMultiUpload {
-    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-    configuration.appID = @"1253653367";
-    // 签名提供者，这里假设由当前实例提供
-    configuration.signatureProvider = self;
-    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-    endpoint.regionName = @"ap-guangzhou";
-    endpoint.useHTTPS = YES;
-    configuration.endpoint = endpoint;
-    
-    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-    
-    // 构建请求
     XCTestExpectation* exp = [self expectationWithDescription:@"list-multi-upload"];
     QCloudListBucketMultipartUploadsRequest* uploads = [QCloudListBucketMultipartUploadsRequest new];
     uploads.bucket = @"bucket-cssg-test-1253653367";
@@ -97,23 +61,10 @@
 }
 
 - (void)UploadPart {
-    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-    configuration.appID = @"1253653367";
-    // 签名提供者，这里假设由当前实例提供
-    configuration.signatureProvider = self;
-    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-    endpoint.regionName = @"ap-guangzhou";
-    endpoint.useHTTPS = YES;
-    configuration.endpoint = endpoint;
-    
-    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-    
-    // 构建请求
     XCTestExpectation* exp = [self expectationWithDescription:@"upload-part"];
     QCloudUploadPartRequest* request = [QCloudUploadPartRequest new];
     request.bucket = @"bucket-cssg-test-1253653367";
-    request.object = @"object4iOS";
+    request.object = @"object4ios";
     request.partNumber = 1;
     //标识本次分块上传的 ID；使用 Initiate Multipart Upload 接口初始化分块上传时会得到一个 uploadId
     // 该 ID 不但唯一标识这一分块数据，也标识了这分块数据在整个文件内的相对位置
@@ -143,22 +94,9 @@
 }
 
 - (void)ListParts {
-    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-    configuration.appID = @"1253653367";
-    // 签名提供者，这里假设由当前实例提供
-    configuration.signatureProvider = self;
-    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-    endpoint.regionName = @"ap-guangzhou";
-    endpoint.useHTTPS = YES;
-    configuration.endpoint = endpoint;
-    
-    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-    
-    // 构建请求
     XCTestExpectation* exp = [self expectationWithDescription:@"list-parts"];
     QCloudListMultipartRequest* request = [QCloudListMultipartRequest new];
-    request.object = @"object4iOS";
+    request.object = @"object4ios";
     request.bucket = @"bucket-cssg-test-1253653367";
     // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
     request.uploadId = @"example-uploadId"; 
@@ -176,22 +114,9 @@
 }
 
 - (void)CompleteMultiUpload {
-    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-    configuration.appID = @"1253653367";
-    // 签名提供者，这里假设由当前实例提供
-    configuration.signatureProvider = self;
-    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-    endpoint.regionName = @"ap-guangzhou";
-    endpoint.useHTTPS = YES;
-    configuration.endpoint = endpoint;
-    
-    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-    
-    // 构建请求
     XCTestExpectation* exp = [self expectationWithDescription:@"complete-multi-upload"];
     QCloudCompleteMultipartUploadRequest *completeRequst = [QCloudCompleteMultipartUploadRequest new];
-    completeRequst.object = @"object4iOS";
+    completeRequst.object = @"object4ios";
     completeRequst.bucket = @"bucket-cssg-test-1253653367";
     //本次要查询的分块上传的uploadId,可从初始化分块上传的请求结果QCloudInitiateMultipartUploadResult中得到
     completeRequst.uploadId = @"example-uploadId";
@@ -213,22 +138,9 @@
 }
 
 - (void)AbortMultiUpload {
-    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-    configuration.appID = @"1253653367";
-    // 签名提供者，这里假设由当前实例提供
-    configuration.signatureProvider = self;
-    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-    endpoint.regionName = @"ap-guangzhou";
-    endpoint.useHTTPS = YES;
-    configuration.endpoint = endpoint;
-    
-    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-    
-    // 构建请求
     XCTestExpectation* exp = [self expectationWithDescription:@"abort-multi-upload"];
     QCloudAbortMultipfartUploadRequest *abortRequest = [QCloudAbortMultipfartUploadRequest new];
-    abortRequest.object = @"object4iOS";
+    abortRequest.object = @"object4ios";
     abortRequest.bucket = @"bucket-cssg-test-1253653367";
     //本次要查询的分块上传的uploadId,可从初始化分块上传的请求结果QCloudInitiateMultipartUploadResult中得到
     abortRequest.uploadId = @"example-uploadId";
@@ -236,7 +148,7 @@
     
     [abortRequest setFinishBlock:^(id outputObject, NSError *error) {
         //可以从 outputObject 中获取 response 中 etag 或者自定义头部等信息
-        XCTAssertNotNil(error);
+        XCTAssertNil(error);
         [exp fulfill];
     }];
     
@@ -245,12 +157,32 @@
 }
 
 
+- (void)setUp {
+    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
+    configuration.appID = @"1253653367";
+    // 签名提供者，这里假设由当前实例提供
+    configuration.signatureProvider = self;
+    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
+    endpoint.regionName = @"ap-guangzhou";
+    endpoint.useHTTPS = YES;
+    configuration.endpoint = endpoint;
+
+    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
+    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
+
+}
+
+- (void)tearDown {
+}
+
 - (void)testObjectMultiUpload {
     [self InitMultiUpload];
     [self ListMultiUpload];
     [self UploadPart];
     [self ListParts];
     [self CompleteMultiUpload];
+    [self InitMultiUpload];
+    [self UploadPart];
     [self AbortMultiUpload];
 }
 

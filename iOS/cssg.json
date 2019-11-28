@@ -1,21 +1,12 @@
 {
-  "language": "iOS",
+  "language": "ios",
   "sourcesRoot": "COS_iOS_TestTests/",
   "sourceExtension": ".m",
-  "docsRoot": "docs",
-  "docExtension": ".md",
 
-  "snippetTemplate": "Snippet.t",
   "testcaseTemplate": "TestCase.t",
-  "exclusiveTemplate": {
-    "global-init": "TestCaseDelegate.t",
-    "global-init-fence-queue": "TestCaseDelegate.t",
-    "global-init-signature-sts": "TestCaseDelegate.t",
-    "global-init-signature": "TestCaseDelegate.t"
-  },
 
   "ignoreExpressionInDoc": [
-    "XCTestExpectation\\*\\s+exp\\s*=\\s*.+;",
+    "XCTestExpectation\\*\\s+exp\\s*=\\s*.+;\\r\\n",
     "\\[exp\\s+fulfill\\];",
     "\\[self\\s+waitForExpectationsWithTimeout:\\d+ handler:nil\\];",
     "XCTAssertNotNil\\(.+\\);",
@@ -29,8 +20,17 @@
   },
   "macro4test": {
     "secretId": "[SecretStorage sharedInstance].secretID",
-    "secretKey": "[SecretStorage sharedInstance].secretKey",
-    "tempBucket": "bucket-cssg-ios-temp-1253653367",
-    "object": "object4iOS"
+    "secretKey": "[SecretStorage sharedInstance].secretKey"
+  },
+  "testGroup": {
+    "global-init": {
+      "defines": [
+        "global-init",
+        "global-init-fence-queue",
+        "global-init-signature",
+        "global-init-signature-sts"
+      ],
+      "isDefine": true
+    }
   }
 }

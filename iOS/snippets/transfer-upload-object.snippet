@@ -1,19 +1,7 @@
-QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-configuration.appID = @"1250000000";
-// 签名提供者，这里假设由当前实例提供
-configuration.signatureProvider = self;
-QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-endpoint.regionName = @"ap-guangzhou";
-endpoint.useHTTPS = YES;
-configuration.endpoint = endpoint;
-
-[QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-[QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-
-// 构建请求
+XCTestExpectation* exp = [self expectationWithDescription:@"transfer-upload-object"];
 QCloudCOSXMLUploadObjectRequest* put = [QCloudCOSXMLUploadObjectRequest new];
 put.object = @"exampleobject";
-put.bucket = @"example-1250000000";
+put.bucket = @"examplebucket-1250000000";
 put.body = [@"testFileContent" dataUsingEncoding:NSUTF8StringEncoding];
 //设置一些上传的参数
 put.initMultipleUploadFinishBlock = ^(QCloudInitiateMultipartUploadResult * multipleUploadInitResult, 
@@ -30,6 +18,8 @@ put.initMultipleUploadFinishBlock = ^(QCloudInitiateMultipartUploadResult * mult
 }];
 [put setFinishBlock:^(id outputObject, NSError* error) {
     //可以从 outputObject 中获取 response 中 etag 或者自定义头部等信息
+    XCTAssertNotNil(error);
+    [exp fulfill];
 }];
 
 [[QCloudCOSTransferMangerService defaultCOSTransferManager] UploadObject:put];
@@ -44,3 +34,4 @@ if (resumeData) {
 }
 //生成的用于恢复上传的请求可以直接上传
 [[QCloudCOSTransferMangerService defaultCOSTransferManager] UploadObject:request];
+[self waitForExpectationsWithTimeout:80 handler:nil];

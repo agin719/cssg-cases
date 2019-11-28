@@ -1,12 +1,16 @@
 {
+  "docsRoot": "docs",
+  "docExtension": ".md",
+  "compileDist": "dist",
+
   "macro4doc": {
     "secretId": "COS_SECRETID",
     "secretKey": "COS_SECRETKEY",
     "appId": "1250000000",
     "uin": "100000000001",
     "region": "ap-guangzhou",
-    "persistBucket": "example-1250000000",
-    "tempBucket": "example-1250000000",
+    "persistBucket": "examplebucket-1250000000",
+    "tempBucket": "examplebucket-1250000000",
     "copySourceBucket": "source-1250000000",
     "copySourceObject": "sourceObject",
     "replicationDestBucket":"destinationbucket-1250000000",
@@ -23,10 +27,17 @@
     "copySourceObject": "sourceObject",
     "replicationDestBucket":"bucket-cssg-assist-1253653367",
     "replicationDestBucketRegion": "ap-beijing",
-    "uploadId": "example-uploadId"
+    "uploadId": "example-uploadId",
+    "tempBucket": "bucket-cssg-${config.language}-temp-1253653367",
+    "object": "object4${config.language}"
   },
+
   "globalInitNamePrefix": "global-init",
-  "group": {
+  "globalHeaderName": "global-header",
+
+  "methodsCategory": ["setup", "steps", "teardown"],
+
+  "testGroup": {
     "bucket-ACL": {
       "setup": ["put-bucket"],
       "steps": [
@@ -83,36 +94,49 @@
         "delete-bucket"
       ]
     },
-    "object-ACL": [
-      "put-object",
-      "put-object-acl",
-      "get-object-acl"
-    ],
-    "object": [
-      "get-bucket",
-      "put-object",
-      "head-object",
-      "get-object",
-      "delete-object",
-      "delete-multi-object",
-      "post-object",
-      "restore-object",
-      "get-presign-download-url",
-      "get-presign-upload-url"
-    ],
-    "object-multi-upload": [
-      "init-multi-upload",
-      "list-multi-upload",
-      "upload-part",
-      "list-parts",
-      "complete-multi-upload",
-      "abort-multi-upload"
-    ],
-    "object-copy": [
-      "copy-object",
-      "init-multi-upload",
-      "upload-part-copy",
-      "complete-multi-upload"
-    ]
+    "object-ACL": {
+      "steps": [
+        "put-object",
+        "put-object-acl",
+        "get-object-acl"
+      ]
+    },
+    "object": {
+      "steps": [
+        "get-bucket",
+        "put-object",
+        "head-object",
+        "get-object",
+        "delete-object",
+        "delete-multi-object",
+        "post-object",
+        "restore-object",
+        "get-presign-download-url",
+        "get-presign-upload-url"
+      ]
+    },
+    "object-multi-upload": {
+      "steps": [
+        "init-multi-upload",
+        "list-multi-upload",
+        "upload-part",
+        "list-parts",
+        "complete-multi-upload",
+  
+        "init-multi-upload",
+        "upload-part",
+        "abort-multi-upload"
+      ],
+      "isMultiUpload": true
+    },
+    "object-copy": {
+      "steps": [
+        "copy-object",
+        "init-multi-upload",
+        "upload-part-copy",
+        "complete-multi-upload"
+      ],
+      "isMultiUpload": true
+    }
   }
 }

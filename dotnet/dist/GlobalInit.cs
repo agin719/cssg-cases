@@ -23,7 +23,6 @@ namespace COSSample
 {
     public class GlobalInitSample {
 
-      string uploadId;
 
       public void GlobalInit()
       {
@@ -31,21 +30,21 @@ namespace COSSample
         string appid = "1253653367";//设置腾讯云账户的账户标识 APPID
         string region = "ap-guangzhou"; //设置一个默认的存储桶地域
         CosXmlConfig config = new CosXmlConfig.Builder()
-          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位 毫秒 ，默认 45000ms
-          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位 毫秒 ，默认 45000ms
-          .IsHttps(true)  //设置默认 https 请求
+          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
+          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
+          .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid(appid)  //设置腾讯云账户的账户标识 APPID
           .SetRegion(region)  //设置一个默认的存储桶地域
           .SetDebugLog(true)  //显示日志
           .Build();  //创建 CosXmlConfig 对象
         
-        //初始化 QCloudCredentialProvider ，SDK中提供了3种方式：永久密钥 、 临时密钥  、 自定义 
+        //初始化 QCloudCredentialProvider，COS SDK 中提供了3种方式：永久密钥、临时密钥、自定义
         QCloudCredentialProvider cosCredentialProvider = null;
         
         //方式1， 永久密钥
         string secretId = "COS_SECRETID"; //"云 API 密钥 SecretId";
         string secretKey = "COS_SECRETKEY"; //"云 API 密钥 SecretKey";
-        long durationSecond = 600;  // 每次请求签名有效时长,单位为 秒
+        long durationSecond = 600;  //每次请求签名有效时长，单位为秒
         cosCredentialProvider = new DefaultQCloudCredentialProvider(secretId, secretKey, durationSecond);
         
         //方式2， 临时密钥
@@ -58,12 +57,10 @@ namespace COSSample
         
         //初始化 CosXmlServer
         CosXmlServer cosXml = new CosXmlServer(config, cosCredentialProvider);
-      }
-      
+      }   
 
       [SetUp()]
       public void setup() {
-        
       }
 
       [Test()]
@@ -73,7 +70,6 @@ namespace COSSample
 
       [TearDown()]
       public void teardown() {
-        
       }
     }
 }

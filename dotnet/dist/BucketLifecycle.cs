@@ -23,21 +23,63 @@ namespace COSSample
 {
     public class BucketLifecycleSample {
 
-      string uploadId;
 
-      public void PutBucketLifecycle()
+      public void PutBucket()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
-          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒 ，默认 45000ms
-          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒 ，默认 45000ms
-          .IsHttps(true)  //设置默认 https 请求
+          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
+          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
+          .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1253653367") //设置腾讯云账户的账户标识 APPID
           .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = Environment.GetEnvironmentVariable("COS_KEY");   //云 API 密钥 SecretId
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
-        long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
+        long durationSecond = 600;          //每次请求签名有效时长，单位为秒
+        QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
+          secretKey, durationSecond);
+        
+        CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
+        
+        try
+        {
+          string bucket = "bucket-cssg-dotnet-temp-1253653367"; //格式：BucketName-APPID
+          PutBucketRequest request = new PutBucketRequest(bucket);
+          //设置签名有效时长
+          request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
+          //执行请求
+          PutBucketResult result = cosXml.PutBucket(request);
+          //请求成功
+          Console.WriteLine(result.GetResultInfo());
+        }
+        catch (COSXML.CosException.CosClientException clientEx)
+        {
+          //请求失败
+          Console.WriteLine("CosClientException: " + clientEx);
+          Assert.Null(clientEx);
+        }
+        catch (COSXML.CosException.CosServerException serverEx)
+        {
+          //请求失败
+          Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+          Assert.Null(serverEx);
+        }
+      }   
+
+      public void PutBucketLifecycle()
+      {
+        CosXmlConfig config = new CosXmlConfig.Builder()
+          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
+          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
+          .IsHttps(true)  //设置默认 HTTPS 请求
+          .SetAppid("1253653367") //设置腾讯云账户的账户标识 APPID
+          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .Build();
+        
+        string secretId = Environment.GetEnvironmentVariable("COS_KEY");   //云 API 密钥 SecretId
+        string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
+        long durationSecond = 600;          //每次请求签名有效时长，单位为秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
           secretKey, durationSecond);
         
@@ -81,21 +123,21 @@ namespace COSSample
           Assert.Null(serverEx);
         }
         Thread.Sleep(500);
-      }
-      
+      }   
+
       public void GetBucketLifecycle()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
-          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒 ，默认 45000ms
-          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒 ，默认 45000ms
-          .IsHttps(true)  //设置默认 https 请求
+          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
+          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
+          .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1253653367") //设置腾讯云账户的账户标识 APPID
           .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = Environment.GetEnvironmentVariable("COS_KEY");   //云 API 密钥 SecretId
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
-        long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
+        long durationSecond = 600;          //每次请求签名有效时长，单位为秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
           secretKey, durationSecond);
         
@@ -124,21 +166,21 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-      }
-      
+      }   
+
       public void DeleteBucketLifecycle()
       {
         CosXmlConfig config = new CosXmlConfig.Builder()
-          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒 ，默认 45000ms
-          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒 ，默认 45000ms
-          .IsHttps(true)  //设置默认 https 请求
+          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
+          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
+          .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1253653367") //设置腾讯云账户的账户标识 APPID
           .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = Environment.GetEnvironmentVariable("COS_KEY");   //云 API 密钥 SecretId
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
-        long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
+        long durationSecond = 600;          //每次请求签名有效时长，单位为秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
           secretKey, durationSecond);
         
@@ -167,72 +209,21 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-      }
-      
+      }   
 
-      [SetUp()]
-      public void setup() {
+      public void DeleteBucket()
+      {
         CosXmlConfig config = new CosXmlConfig.Builder()
-          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒 ，默认 45000ms
-          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒 ，默认 45000ms
-          .IsHttps(true)  //设置默认 https 请求
+          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
+          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
+          .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1253653367") //设置腾讯云账户的账户标识 APPID
           .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = Environment.GetEnvironmentVariable("COS_KEY");   //云 API 密钥 SecretId
         string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
-        long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
-        QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
-          secretKey, durationSecond);
-        
-        CosXml cosXml = new CosXmlServer(config, qCloudCredentialProvider);
-        
-        try
-        {
-          string bucket = "bucket-cssg-dotnet-temp-1253653367"; //格式：BucketName-APPID
-          PutBucketRequest request = new PutBucketRequest(bucket);
-          //设置签名有效时长
-          request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
-          //执行请求
-          PutBucketResult result = cosXml.PutBucket(request);
-          //请求成功
-          Console.WriteLine(result.GetResultInfo());
-        }
-        catch (COSXML.CosException.CosClientException clientEx)
-        {
-          //请求失败
-          Console.WriteLine("CosClientException: " + clientEx);
-          Assert.Null(clientEx);
-        }
-        catch (COSXML.CosException.CosServerException serverEx)
-        {
-          //请求失败
-          Console.WriteLine("CosServerException: " + serverEx.GetInfo());
-          Assert.Null(serverEx);
-        }
-      }
-
-      [Test()]
-      public void testBucketLifecycle() {
-        PutBucketLifecycle();
-        GetBucketLifecycle();
-        DeleteBucketLifecycle();
-      }
-
-      [TearDown()]
-      public void teardown() {
-        CosXmlConfig config = new CosXmlConfig.Builder()
-          .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒 ，默认 45000ms
-          .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒 ，默认 45000ms
-          .IsHttps(true)  //设置默认 https 请求
-          .SetAppid("1253653367") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
-          .Build();
-        
-        string secretId = Environment.GetEnvironmentVariable("COS_KEY");   //云 API 密钥 SecretId
-        string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //云 API 密钥 SecretKey
-        long durationSecond = 600;          //每次请求签名有效时长,单位为 秒
+        long durationSecond = 600;          //每次请求签名有效时长，单位为秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId, 
           secretKey, durationSecond);
         
@@ -259,6 +250,23 @@ namespace COSSample
           //请求失败
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
         }
+      }   
+
+      [SetUp()]
+      public void setup() {
+        PutBucket();
+      }
+
+      [Test()]
+      public void testBucketLifecycle() {
+        PutBucketLifecycle();
+        GetBucketLifecycle();
+        DeleteBucketLifecycle();
+      }
+
+      [TearDown()]
+      public void teardown() {
+        DeleteBucket();
       }
     }
 }

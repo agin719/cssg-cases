@@ -8,21 +8,11 @@
 #import <QCloudCOSXML/QCloudCompleteMultipartUploadInfo.h>
 
 @interface ObjectTest : XCTestCase <QCloudSignatureProvider>
-
 @property (nonatomic) NSString* uploadId;
 @property (nonatomic) NSMutableArray<QCloudMultipartInfo *> *parts;
-
 @end
 
 @implementation ObjectTest
-
-- (void)setUp {
-    
-}
-
-- (void)tearDown {
-    
-}
 
 - (void) signatureWithFields:(QCloudSignatureFields*)fileds
                      request:(QCloudBizHTTPRequest*)request
@@ -38,19 +28,6 @@
 }
 
 - (void)GetBucket {
-    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-    configuration.appID = @"1253653367";
-    // 签名提供者，这里假设由当前实例提供
-    configuration.signatureProvider = self;
-    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-    endpoint.regionName = @"ap-guangzhou";
-    endpoint.useHTTPS = YES;
-    configuration.endpoint = endpoint;
-    
-    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-    
-    // 构建请求
     XCTestExpectation* exp = [self expectationWithDescription:@"get-bucket"];
     QCloudGetBucketRequest* request = [QCloudGetBucketRequest new];
     request.bucket = @"bucket-cssg-test-1253653367";
@@ -67,22 +44,9 @@
 }
 
 - (void)PutObject {
-    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-    configuration.appID = @"1253653367";
-    // 签名提供者，这里假设由当前实例提供
-    configuration.signatureProvider = self;
-    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-    endpoint.regionName = @"ap-guangzhou";
-    endpoint.useHTTPS = YES;
-    configuration.endpoint = endpoint;
-    
-    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-    
-    // 构建请求
     XCTestExpectation* exp = [self expectationWithDescription:@"put-object"];
     QCloudPutObjectRequest* put = [QCloudPutObjectRequest new];
-    put.object = @"object4iOS";
+    put.object = @"object4ios";
     put.bucket = @"bucket-cssg-test-1253653367";
     put.body =  [@"testFileContent" dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -97,22 +61,9 @@
 }
 
 - (void)HeadObject {
-    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-    configuration.appID = @"1253653367";
-    // 签名提供者，这里假设由当前实例提供
-    configuration.signatureProvider = self;
-    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-    endpoint.regionName = @"ap-guangzhou";
-    endpoint.useHTTPS = YES;
-    configuration.endpoint = endpoint;
-    
-    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-    
-    // 构建请求
     XCTestExpectation* exp = [self expectationWithDescription:@"head-object"];
     QCloudHeadObjectRequest* headerRequest = [QCloudHeadObjectRequest new];
-    headerRequest.object = @"object4iOS";
+    headerRequest.object = @"object4ios";
     headerRequest.bucket = @"bucket-cssg-test-1253653367";
     
     [headerRequest setFinishBlock:^(NSDictionary* result, NSError *error) {
@@ -126,25 +77,12 @@
 }
 
 - (void)GetObject {
-    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-    configuration.appID = @"1253653367";
-    // 签名提供者，这里假设由当前实例提供
-    configuration.signatureProvider = self;
-    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-    endpoint.regionName = @"ap-guangzhou";
-    endpoint.useHTTPS = YES;
-    configuration.endpoint = endpoint;
-    
-    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-    
-    // 构建请求
     XCTestExpectation* exp = [self expectationWithDescription:@"get-object"];
     QCloudGetObjectRequest* request = [QCloudGetObjectRequest new];
     //设置下载的路径 URL，如果设置了，文件将会被下载到指定路径中。
     // 如果该参数没有设置，那么文件将会被下载至内存里，存放在在 finishBlock 的 	outputObject 里。
     request.downloadingURL = [NSURL URLWithString:QCloudTempFilePathWithExtension(@"downding")];
-    request.object = @"object4iOS";
+    request.object = @"object4ios";
     request.bucket = @"bucket-cssg-test-1253653367";
     
     [request setFinishBlock:^(id outputObject, NSError *error) {
@@ -162,23 +100,10 @@
 }
 
 - (void)DeleteObject {
-    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-    configuration.appID = @"1253653367";
-    // 签名提供者，这里假设由当前实例提供
-    configuration.signatureProvider = self;
-    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-    endpoint.regionName = @"ap-guangzhou";
-    endpoint.useHTTPS = YES;
-    configuration.endpoint = endpoint;
-    
-    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-    
-    // 构建请求
     XCTestExpectation* exp = [self expectationWithDescription:@"delete-object"];
     QCloudDeleteObjectRequest* deleteObjectRequest = [QCloudDeleteObjectRequest new];
     deleteObjectRequest.bucket = @"bucket-cssg-test-1253653367";
-    deleteObjectRequest.object = @"object4iOS";
+    deleteObjectRequest.object = @"object4ios";
     
     [deleteObjectRequest setFinishBlock:^(id outputObject, NSError *error) {
         //可以从 outputObject 中获取 response 中 etag 或者自定义头部等信息
@@ -191,25 +116,12 @@
 }
 
 - (void)DeleteMultiObject {
-    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-    configuration.appID = @"1253653367";
-    // 签名提供者，这里假设由当前实例提供
-    configuration.signatureProvider = self;
-    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-    endpoint.regionName = @"ap-guangzhou";
-    endpoint.useHTTPS = YES;
-    configuration.endpoint = endpoint;
-    
-    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-    
-    // 构建请求
     XCTestExpectation* exp = [self expectationWithDescription:@"delete-multi-object"];
     QCloudDeleteMultipleObjectRequest* delteRequest = [QCloudDeleteMultipleObjectRequest new];
     delteRequest.bucket = @"bucket-cssg-test-1253653367";
     
     QCloudDeleteObjectInfo* deletedObject0 = [QCloudDeleteObjectInfo new];
-    deletedObject0.key = @"object4iOS";
+    deletedObject0.key = @"object4ios";
     
     QCloudDeleteInfo* deleteInfo = [QCloudDeleteInfo new];
     deleteInfo.quiet = NO;
@@ -227,23 +139,10 @@
 }
 
 - (void)RestoreObject {
-    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-    configuration.appID = @"1253653367";
-    // 签名提供者，这里假设由当前实例提供
-    configuration.signatureProvider = self;
-    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-    endpoint.regionName = @"ap-guangzhou";
-    endpoint.useHTTPS = YES;
-    configuration.endpoint = endpoint;
-    
-    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-    
-    // 构建请求
     XCTestExpectation* exp = [self expectationWithDescription:@"restore-object"];
     QCloudPostObjectRestoreRequest *req = [QCloudPostObjectRestoreRequest new];
     req.bucket = @"bucket-cssg-test-1253653367";
-    req.object = @"object4iOS";
+    req.object = @"object4ios";
     req.restoreRequest.days  = 10;
     req.restoreRequest.CASJobParameters.tier =QCloudCASTierStandard;
     
@@ -257,24 +156,11 @@
 }
 
 - (void)GetPresignDownloadUrl {
-    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-    configuration.appID = @"1253653367";
-    // 签名提供者，这里假设由当前实例提供
-    configuration.signatureProvider = self;
-    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-    endpoint.regionName = @"ap-guangzhou";
-    endpoint.useHTTPS = YES;
-    configuration.endpoint = endpoint;
-    
-    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-    
-    // 构建请求
     XCTestExpectation* exp = [self expectationWithDescription:@"get-presign-download-url"];
     QCloudGetPresignedURLRequest* getPresignedURLRequest = [[QCloudGetPresignedURLRequest alloc] init];
     getPresignedURLRequest.bucket = @"bucket-cssg-test-1253653367";
     getPresignedURLRequest.HTTPMethod = @"GET";
-    getPresignedURLRequest.object = @"object4iOS";
+    getPresignedURLRequest.object = @"object4ios";
     
     [getPresignedURLRequest setFinishBlock:^(QCloudGetPresignedURLResult * _Nonnull result, NSError * _Nonnull error) {
         XCTAssertNil(error);
@@ -286,6 +172,24 @@
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
+
+- (void)setUp {
+    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
+    configuration.appID = @"1253653367";
+    // 签名提供者，这里假设由当前实例提供
+    configuration.signatureProvider = self;
+    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
+    endpoint.regionName = @"ap-guangzhou";
+    endpoint.useHTTPS = YES;
+    configuration.endpoint = endpoint;
+
+    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
+    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
+
+}
+
+- (void)tearDown {
+}
 
 - (void)testObject {
     [self GetBucket];

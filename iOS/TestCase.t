@@ -7,22 +7,27 @@
 #import <QCloudCOSXML/QCloudMultipartInfo.h>
 #import <QCloudCOSXML/QCloudCompleteMultipartUploadInfo.h>
 
-@interface {{name}}Test : XCTestCase <QCloudSignatureProvider>
-
-@property (nonatomic) NSString* uploadId;
-@property (nonatomic) NSMutableArray<QCloudMultipartInfo *> *parts;
-
+{{#isDefine}}
+{{#defines}}
+@interface {{name}}Test : NSObject
+@property (nonatomic) QCloudCredentailFenceQueue* credentialFenceQueue;
 @end
 
 @implementation {{name}}Test
 
-- (void)setUp {
-    {{{setupBlock}}}
-}
+    {{{snippet}}}
 
-- (void)tearDown {
-    {{{teardownBlock}}}
-}
+@end
+
+{{/defines}}
+{{/isDefine}}
+{{^isDefine}}
+@interface {{name}}Test : XCTestCase <QCloudSignatureProvider>
+@property (nonatomic) NSString* uploadId;
+@property (nonatomic) NSMutableArray<QCloudMultipartInfo *> *parts;
+@end
+
+@implementation {{name}}Test
 
 - (void) signatureWithFields:(QCloudSignatureFields*)fileds
                      request:(QCloudBizHTTPRequest*)request
@@ -37,19 +42,44 @@
     continueBlock(signature, nil);
 }
 
-{{#steps}}
+{{#methods}}
 - (void){{name}} {
     {{{snippet}}}
 }
 
-{{/steps}}
+{{/methods}}
+
+{{^isDemo}}
+- (void)setUp {
+    QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
+    configuration.appID = @"{{appId}}";
+    // 签名提供者，这里假设由当前实例提供
+    configuration.signatureProvider = self;
+    QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
+    endpoint.regionName = @"{{region}}";
+    endpoint.useHTTPS = YES;
+    configuration.endpoint = endpoint;
+
+    [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
+    [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
+
+    {{#setup}}
+    [self {{name}}];
+    {{/setup}}
+}
+
+- (void)tearDown {
+    {{#teardown}}
+    [self {{name}}];
+    {{/teardown}}
+}
 
 - (void)test{{name}} {
-    {{^isDemo}}
     {{#steps}}
     [self {{name}}];
     {{/steps}}
-    {{/isDemo}}
 }
+{{/isDemo}}
 
 @end
+{{/isDefine}}

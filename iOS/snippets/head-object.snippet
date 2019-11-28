@@ -1,19 +1,6 @@
-QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-configuration.appID = @"1250000000";
-// 签名提供者，这里假设由当前实例提供
-configuration.signatureProvider = self;
-QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-endpoint.regionName = @"ap-guangzhou";
-endpoint.useHTTPS = YES;
-configuration.endpoint = endpoint;
-
-[QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-[QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-
-// 构建请求
 QCloudHeadObjectRequest* headerRequest = [QCloudHeadObjectRequest new];
 headerRequest.object = @"exampleobject";
-headerRequest.bucket = @"example-1250000000";
+headerRequest.bucket = @"examplebucket-1250000000";
 
 [headerRequest setFinishBlock:^(NSDictionary* result, NSError *error) {
     // result 返回具体信息
