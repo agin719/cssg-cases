@@ -1,0 +1,91 @@
+CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
+       .isHttps(true) // 设置 Https 请求
+       .setRegion("ap-guangzhou") // 设置默认的存储桶地域
+       .builder();
+
+// 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
+HttpRequest<String> httpRequest = null;
+try {
+   httpRequest = new HttpRequest.Builder<String>()
+           .url(new URL("your_auth_server_url"))
+           .build();
+} catch (MalformedURLException e) {
+   e.printStackTrace();
+}
+QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
+CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
+
+String bucket = "example-1250000000"; //存储桶，格式：BucketName-APPID
+String cosPath = "exampleobject"; //对象位于存储桶中的位置标识符，即对象键。如 cosPath = "text.txt";
+String srcPath = Environment.getExternalStorageDirectory().getPath() + "/exampleobject";//"本地文件的绝对路径";
+PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, cosPath, srcPath);
+
+putObjectRequest.setProgressListener(new CosXmlProgressListener() {
+    @Override
+    public void onProgress(long progress, long max) {
+        // todo Do something to update progress...
+    }
+});
+//设置签名校验Host, 默认校验所有Header
+Set<String> headerKeys = new HashSet<>();
+headerKeys.add("Host");
+putObjectRequest.setSignParamsAndHeaders(null, headerKeys);
+// 使用同步方法上传
+try {
+    PutObjectResult putObjectResult = cosXmlService.putObject(putObjectRequest);
+} catch (CosXmlClientException e) {
+    e.printStackTrace();
+} catch (CosXmlServiceException e) {
+    e.printStackTrace();
+}
+
+// 使用异步回调上传
+cosXmlService.putObjectAsync(putObjectRequest, new CosXmlResultListener() {
+    @Override
+    public void onSuccess(CosXmlRequest cosXmlRequest, CosXmlResult result) {
+        // todo Put object success...
+  PutObjectResult putObjectResult = (PutObjectResult)result;
+    }
+
+    @Override
+    public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+        // todo Put object failed because of CosXmlClientException or CosXmlServiceException...
+    }
+});
+
+
+//上传字节数组
+byte[] data = "this is a test".getBytes(Charset.forName("UTF-8"));
+putObjectRequest = new PutObjectRequest(bucket, cosPath, data);
+putObjectRequest.setProgressListener(new CosXmlProgressListener() {
+    @Override
+    public void onProgress(long progress, long max) {
+        // todo Do something to update progress...
+    }
+});
+try {
+    PutObjectResult putObjectResult = cosXmlService.putObject(putObjectRequest);
+} catch (CosXmlClientException e) {
+    e.printStackTrace();
+} catch (CosXmlServiceException e) {
+    e.printStackTrace();
+}
+
+
+//上传字节流
+InputStream inputStream = new ByteArrayInputStream("this is a test".getBytes(Charset.forName("UTF-8")));
+putObjectRequest = new PutObjectRequest(bucket, cosPath, inputStream);
+putObjectRequest.setProgressListener(new CosXmlProgressListener() {
+    @Override
+    public void onProgress(long progress, long max) {
+        // todo Do something to update progress...
+    }
+});
+try {
+    PutObjectResult putObjectResult = cosXmlService.putObject(putObjectRequest);
+} catch (CosXmlClientException e) {
+    e.printStackTrace();
+} catch (CosXmlServiceException e) {
+    e.printStackTrace();
+}
+
