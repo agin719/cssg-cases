@@ -1,4 +1,3 @@
-XCTestExpectation* exp = [self expectationWithDescription:@"transfer-copy-object"];
 QCloudCOSXMLCopyObjectRequest* request = [[QCloudCOSXMLCopyObjectRequest alloc] init];
 
 request.bucket = @"examplebucket-1250000000";//目的<BucketName-APPID>，需要是公有读或者在当前账号有权限
@@ -11,10 +10,7 @@ request.sourceRegion= @"ap-guangzhou";//来源的地域
 
 [request setFinishBlock:^(QCloudCopyObjectResult* result, NSError* error) {
     //可以从 outputObject 中获取 response 中 etag 或者自定义头部等信息
-    XCTAssertNil(error);
-    [exp fulfill];
 }];
 
 //注意如果是跨地域复制，这里使用的 transferManager 所在的 region 必须为目标桶所在的 region
 [[QCloudCOSTransferMangerService defaultCOSTransferManager] CopyObject:request];
-[self waitForExpectationsWithTimeout:80 handler:nil];

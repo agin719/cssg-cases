@@ -137,6 +137,26 @@
         "complete-multi-upload"
       ],
       "isMultiUpload": true
+    },
+    "get-service": {
+      "steps": [
+        "get-service"
+      ]
+    },
+    "transfer-upload-object": {
+      "steps": [
+        "transfer-upload-object"
+      ]
+    },
+    "transfer-download-object": {
+      "steps": [
+        "transfer-download-object"
+      ]
+    },
+    "transfer-copy-object": {
+      "steps": [
+        "transfer-copy-object"
+      ]
     }
   }
 }

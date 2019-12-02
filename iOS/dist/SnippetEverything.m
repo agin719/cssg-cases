@@ -27,6 +27,14 @@
     continueBlock(signature, nil);
 }
 
+- (void)GetService {
+    QCloudGetServiceRequest* request = [[QCloudGetServiceRequest alloc] init];
+    [request setFinishBlock:^(QCloudListAllMyBucketsResult* result, NSError* error) {
+        //从result中获取返回信息
+    }];
+    [[QCloudCOSXMLService defaultCOSXML] GetService:request];
+}
+
 - (void)PutBucket {
     QCloudPutBucketRequest* request = [QCloudPutBucketRequest new];
     request.bucket = @"examplebucket-1250000000"; //additional actions after finishing
@@ -232,6 +240,61 @@
         //可以从 outputObject 中获取服务器返回的header信息
     }];
     [[QCloudCOSXMLService defaultCOSXML] DeleteBucketReplication:request];
+}
+
+- (void)TransferUploadObject {
+    QCloudCOSXMLUploadObjectRequest* put = [QCloudCOSXMLUploadObjectRequest new];
+    put.object = @"exampleobject";
+    put.bucket = @"examplebucket-1250000000";
+    put.body = [@"testFileContent" dataUsingEncoding:NSUTF8StringEncoding];
+    //设置一些上传的参数
+    put.initMultipleUploadFinishBlock = ^(QCloudInitiateMultipartUploadResult * multipleUploadInitResult, 
+        QCloudCOSXMLUploadObjectResumeData resumeData) {
+        //在初始化分块上传完成以后会回调该block，在这里可以获取 resumeData，
+        //并且可以通过 resumeData 生成一个分块上传的请求
+        QCloudCOSXMLUploadObjectRequest* request = [QCloudCOSXMLUploadObjectRequest 
+            requestWithRequestData:resumeData];
+    };
+    [put setSendProcessBlock:^(int64_t bytesSent, int64_t totalBytesSent, 
+        int64_t totalBytesExpectedToSend) {
+        NSLog(@"upload %lld totalSend %lld aim %lld", bytesSent, totalBytesSent, 
+            totalBytesExpectedToSend);
+    }];
+    [put setFinishBlock:^(id outputObject, NSError* error) {
+        //可以从 outputObject 中获取 response 中 etag 或者自定义头部等信息
+    }];
+    
+    [[QCloudCOSTransferMangerService defaultCOSTransferManager] UploadObject:put];
+    
+    //•••在完成了初始化，并且上传没有完成前
+    NSError* error;
+    //这里是主动调用取消，并且产生 resumetData 的例子
+    QCloudCOSXMLUploadObjectResumeData resumeData = [put cancelByProductingResumeData:&error];
+    QCloudCOSXMLUploadObjectRequest* request = nil;
+    if (resumeData) {
+        request = [QCloudCOSXMLUploadObjectRequest requestWithRequestData:resumeData];
+    }
+    //生成的用于恢复上传的请求可以直接上传
+    [[QCloudCOSTransferMangerService defaultCOSTransferManager] UploadObject:request];
+}
+
+- (void)TransferCopyObject {
+    QCloudCOSXMLCopyObjectRequest* request = [[QCloudCOSXMLCopyObjectRequest alloc] init];
+    
+    request.bucket = @"examplebucket-1250000000";//目的<BucketName-APPID>，需要是公有读或者在当前账号有权限
+    request.object = @"exampleobject";//目的文件名称
+    //文件来源<BucketName-APPID>，需要是公有读或者在当前账号有权限
+    request.sourceBucket = @"source-1250000000";
+    request.sourceObject = @"sourceObject";//源文件名称
+    request.sourceAPPID = @"1250000000";//源文件的appid
+    request.sourceRegion= @"ap-guangzhou";//来源的地域
+    
+    [request setFinishBlock:^(QCloudCopyObjectResult* result, NSError* error) {
+        //可以从 outputObject 中获取 response 中 etag 或者自定义头部等信息
+    }];
+    
+    //注意如果是跨地域复制，这里使用的 transferManager 所在的 region 必须为目标桶所在的 region
+    [[QCloudCOSTransferMangerService defaultCOSTransferManager] CopyObject:request];
 }
 
 - (void)GetBucket {

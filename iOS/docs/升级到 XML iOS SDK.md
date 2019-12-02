@@ -69,8 +69,7 @@ COSClient *client= [[COSClient alloc] initWithAppId:appId withRegion:@“sh”];
 >?示例代码中给出的是通过使用临时密钥的方式获取签名：强烈建议返回服务器时间作为签名的开始时间，用来避免由于用户手机本地时间偏差过大导致的签名不正确
 
 [//]: # (.cssg-snippet-global-init)
-```objective-c
-//AppDelegate.m
+```objective-c//AppDelegate.m
 //第一步：注册默认的cos服务
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
@@ -89,8 +88,7 @@ COSClient *client= [[COSClient alloc] initWithAppId:appId withRegion:@“sh”];
 ```
 
 [//]: # (.cssg-snippet-global-init-fence-queue)
-```objective-c
-//AppDelegate.m
+```objective-c//AppDelegate.m
 
 // 这里定义一个成员变量 @property (nonatomic) QCloudCredentailFenceQueue* credentialFenceQueue;
 
@@ -192,23 +190,9 @@ API 变化有以下三点：
 使用 `QCloudCOSTransferMangerService`上传的示例代码：
 
 [//]: # (.cssg-snippet-transfer-upload-object)
-```objective-c
-QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
-configuration.appID = @"1250000000";
-// 签名提供者，这里假设由当前实例提供
-configuration.signatureProvider = self;
-QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-endpoint.regionName = @"ap-guangzhou";
-endpoint.useHTTPS = YES;
-configuration.endpoint = endpoint;
-
-[QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
-[QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
-
-// 构建请求
-QCloudCOSXMLUploadObjectRequest* put = [QCloudCOSXMLUploadObjectRequest new];
+```objective-cQCloudCOSXMLUploadObjectRequest* put = [QCloudCOSXMLUploadObjectRequest new];
 put.object = @"exampleobject";
-put.bucket = @"example-1250000000";
+put.bucket = @"examplebucket-1250000000";
 put.body = [@"testFileContent" dataUsingEncoding:NSUTF8StringEncoding];
 //设置一些上传的参数
 put.initMultipleUploadFinishBlock = ^(QCloudInitiateMultipartUploadResult * multipleUploadInitResult, 
