@@ -1,20 +1,3 @@
-CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-       .isHttps(true) // 设置 Https 请求
-       .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-       .builder();
-
-// 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-HttpRequest<String> httpRequest = null;
-try {
-   httpRequest = new HttpRequest.Builder<String>()
-           .url(new URL("your_auth_server_url"))
-           .build();
-} catch (MalformedURLException e) {
-   e.printStackTrace();
-}
-QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-
 // 初始化 TransferConfig
 TransferConfig transferConfig = new TransferConfig.Builder().build();
 
@@ -29,9 +12,9 @@ transferConfig = new TransferConfig.Builder()
 //初始化 TransferManager
 TransferManager transferManager = new TransferManager(cosXmlService, transferConfig);
 
-String bucket = "example-1250000000"; //存储桶，格式：BucketName-APPID
+String bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
 String cosPath = "exampleobject"; //对象在存储桶中的位置标识符，即称对象键
-String srcPath = Environment.getExternalStorageDirectory().getPath() + "/exampleobject";//"本地文件的绝对路径";
+String srcPath = new File(context.getExternalCacheDir(), "exampleobject").toString();//"本地文件的绝对路径";
 String uploadId = null; //若存在初始化分片上传的 UploadId，则赋值对应的uploadId值用于续传;否则，赋值null。
 //上传对象
 COSXMLUploadTask cosxmlUploadTask = transferManager.upload(bucket, cosPath, srcPath, uploadId);
@@ -94,4 +77,3 @@ cosxmlUploadTask.pause();
 
 //恢复上传
 cosxmlUploadTask.resume();
-

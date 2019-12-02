@@ -1,15 +1,11 @@
 {
-  "language": "Android",
+  "language": "android",
   "sourcesRoot": "./project/app/src/main/java/com/tencent/qcloud/cosxml/cssg/",
   "sourceExtension": ".java",
   "docsRoot": "docs",
   "docExtension": ".md",
 
-  "snippetTemplate": "Snippet.t",
   "testcaseTemplate": "TestCase.t",
-  "exclusiveTemplate": {
-      "global-init-custom-provider": "TestCaseTopcls.t"
-  },
 
   "ignoreExpressionInDoc": [
     "credentialProvider = new ShortTimeCredentialProvider.* for ut",
@@ -23,12 +19,16 @@
   "compileDist": "project/app/src/androidTest/java/com/tencent/qcloud/cosxml/cssg/",
 
   "macro4doc": {
-      "signUrl": "your_auth_server_url"
   },
   "macro4test": {
     "secretId": "BuildConfig.COS_SECRET_ID",
-    "secretKey": "BuildConfig.COS_SECRET_KEY",
-    "tempBucket": "bucket-cssg-android-temp-1253653367",
-    "object": "object4Android"
+    "secretKey": "BuildConfig.COS_SECRET_KEY"
+  },
+  "testGroup": {
+    "init-custom-provider": {
+      "defines": [
+        "global-init-custom-provider"
+      ]
+    }
   }
 }

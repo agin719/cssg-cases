@@ -17,11 +17,11 @@ import com.tencent.qcloud.core.auth.*;
 import com.tencent.qcloud.core.common.*;
 import com.tencent.qcloud.core.http.*;
 import com.tencent.cos.xml.model.service.*;
-import com.tencent.qcloud.cosxml.cssg.GlobalInitCustomProvider.MyCredentialProvider;
+import com.tencent.qcloud.cosxml.cssg.InitCustomProvider.MyCredentialProvider;
 
 import org.junit.Test;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 import android.content.Context;
@@ -35,7 +35,8 @@ import java.io.*;
 @RunWith(AndroidJUnit4.class)
 public class Object {
 
-    private static Context context;
+    private Context context;
+    private CosXmlService cosXmlService;
 
     private static void assertError(Exception e, boolean isMatch) {
         if (!isMatch) {
@@ -50,35 +51,8 @@ public class Object {
     private String uploadId;
     private String part1Etag;
 
-    @BeforeClass public static void setUp() {
-        context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        
-    }
-
-    @AfterClass public static void tearDown() {
-        
-    }
-
-    public void GetBucket()
+    private void GetBucket()
     {
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-               .isHttps(true) // 设置 Https 请求
-               .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-               .builder();
-        
-        // 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-        HttpRequest<String> httpRequest = null;
-        try {
-           httpRequest = new HttpRequest.Builder<String>()
-                   .url(new URL(""))
-                   .build();
-        } catch (MalformedURLException e) {
-           e.printStackTrace();
-        }
-        QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-        credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600); // for ut
-        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
         String bucketName = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID;
         GetBucketRequest getBucketRequest = new GetBucketRequest(bucketName);
         
@@ -161,31 +135,12 @@ public class Object {
             getBucketRequest.setMarker(nextMarker);
         } while (getBucketResult.listBucket.isTruncated);
         
-        
     }
-    public void PutObject()
+    private void PutObject()
     {
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-               .isHttps(true) // 设置 Https 请求
-               .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-               .builder();
-        
-        // 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-        HttpRequest<String> httpRequest = null;
-        try {
-           httpRequest = new HttpRequest.Builder<String>()
-                   .url(new URL(""))
-                   .build();
-        } catch (MalformedURLException e) {
-           e.printStackTrace();
-        }
-        QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-        credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600); // for ut
-        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
         String bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
-        String cosPath = "object4Android"; //对象位于存储桶中的位置标识符，即对象键。如 cosPath = "text.txt";
-        String srcPath = Environment.getExternalStorageDirectory().getPath() + "/object4Android";//"本地文件的绝对路径";
+        String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键。如 cosPath = "text.txt";
+        String srcPath = new File(context.getExternalCacheDir(), "object4android").toString();//"本地文件的绝对路径";
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, cosPath, srcPath);
         
         putObjectRequest.setProgressListener(new CosXmlProgressListener() {
@@ -263,30 +218,11 @@ public class Object {
             assertError(e);
         }
         
-        
     }
-    public void HeadObject()
+    private void HeadObject()
     {
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-               .isHttps(true) // 设置 Https 请求
-               .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-               .builder();
-        
-        // 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-        HttpRequest<String> httpRequest = null;
-        try {
-           httpRequest = new HttpRequest.Builder<String>()
-                   .url(new URL(""))
-                   .build();
-        } catch (MalformedURLException e) {
-           e.printStackTrace();
-        }
-        QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-        credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600); // for ut
-        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
         String bucket = bucket = "bucket-cssg-test-1253653367"; //存储桶名称，格式：BucketName-APPID
-        String cosPath = "object4Android"; //对象位于存储桶中的位置标识符，即对象键
+        String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键
         HeadObjectRequest headObjectRequest = new HeadObjectRequest(bucket, cosPath);
         //设置签名校验Host, 默认校验所有Header
         Set<String> headerKeys = new HashSet<>();
@@ -317,30 +253,11 @@ public class Object {
             }
         });
         
-        
     }
-    public void GetObject()
+    private void GetObject()
     {
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-               .isHttps(true) // 设置 Https 请求
-               .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-               .builder();
-        
-        // 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-        HttpRequest<String> httpRequest = null;
-        try {
-           httpRequest = new HttpRequest.Builder<String>()
-                   .url(new URL(""))
-                   .build();
-        } catch (MalformedURLException e) {
-           e.printStackTrace();
-        }
-        QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-        credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600); // for ut
-        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
         String bucket = "bucket-cssg-test-1253653367"; //存储桶名称，格式：BucketName-APPID
-        String cosPath = "object4Android"; //对象位于存储桶中的位置标识符，即对象键
+        String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键
         String savePath = Environment.getExternalStorageDirectory().getPath();//本地路径
         
         GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, cosPath, savePath);
@@ -379,30 +296,11 @@ public class Object {
             }
         });
         
-        
     }
-    public void DeleteObject()
+    private void DeleteObject()
     {
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-               .isHttps(true) // 设置 Https 请求
-               .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-               .builder();
-        
-        // 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-        HttpRequest<String> httpRequest = null;
-        try {
-           httpRequest = new HttpRequest.Builder<String>()
-                   .url(new URL(""))
-                   .build();
-        } catch (MalformedURLException e) {
-           e.printStackTrace();
-        }
-        QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-        credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600); // for ut
-        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
         String bucket = "bucket-cssg-test-1253653367"; //存储桶名称，格式：BucketName-APPID
-        String cosPath = "object4Android"; //对象在存储桶中的位置标识符，即对象键
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键
         
         DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(bucket, cosPath);
         //设置签名校验Host, 默认校验所有Header
@@ -434,31 +332,12 @@ public class Object {
             }
         });
         
-        
     }
-    public void DeleteMultiObject()
+    private void DeleteMultiObject()
     {
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-               .isHttps(true) // 设置 Https 请求
-               .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-               .builder();
-        
-        // 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-        HttpRequest<String> httpRequest = null;
-        try {
-           httpRequest = new HttpRequest.Builder<String>()
-                   .url(new URL(""))
-                   .build();
-        } catch (MalformedURLException e) {
-           e.printStackTrace();
-        }
-        QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-        credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600); // for ut
-        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
         String bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
         List<String> objectList = new ArrayList<String>();
-        objectList.add("object4Android");//对象在存储桶中的位置标识符，即对象键
+        objectList.add("object4android");//对象在存储桶中的位置标识符，即对象键
         
         DeleteMultiObjectRequest deleteMultiObjectRequest = new DeleteMultiObjectRequest(bucket, objectList);
         deleteMultiObjectRequest.setQuiet(true);
@@ -491,31 +370,12 @@ public class Object {
             }
         });
         
-        
     }
-    public void PostObject()
+    private void PostObject()
     {
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-               .isHttps(true) // 设置 Https 请求
-               .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-               .builder();
-        
-        // 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-        HttpRequest<String> httpRequest = null;
-        try {
-           httpRequest = new HttpRequest.Builder<String>()
-                   .url(new URL(""))
-                   .build();
-        } catch (MalformedURLException e) {
-           e.printStackTrace();
-        }
-        QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-        credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600); // for ut
-        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
         String bucket = "bucket-cssg-test-1253653367"; //存储桶名称，格式：BucketName-APPID
-        String cosPath = "object4Android"; //对象位于存储桶中的位置标识符，即对象键。如 cosPath = "text.txt";
-        String srcPath = Environment.getExternalStorageDirectory().getPath() + "/object4Android";//"本地文件的绝对路径";
+        String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键。如 cosPath = "text.txt";
+        String srcPath = new File(context.getExternalCacheDir(), "object4android").toString();//"本地文件的绝对路径";
         
         PostObjectRequest postObjectRequest = new PostObjectRequest(bucket, cosPath, srcPath);
         
@@ -554,30 +414,11 @@ public class Object {
             }
         });
         
-        
     }
-    public void RestoreObject()
+    private void RestoreObject()
     {
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-               .isHttps(true) // 设置 Https 请求
-               .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-               .builder();
-        
-        // 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-        HttpRequest<String> httpRequest = null;
-        try {
-           httpRequest = new HttpRequest.Builder<String>()
-                   .url(new URL(""))
-                   .build();
-        } catch (MalformedURLException e) {
-           e.printStackTrace();
-        }
-        QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-        credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600); // for ut
-        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
-        String cosPath = "object4Android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
         RestoreRequest restoreRequest = new RestoreRequest(bucket, cosPath);
         restoreRequest.setExpireDays(5); // 保留 5天
         restoreRequest.setTier(RestoreConfigure.Tier.Standard); // 标准恢复模式
@@ -610,31 +451,12 @@ public class Object {
             }
         });
         
-        
     }
-    public void GetPresignDownloadUrl()
+    private void GetPresignDownloadUrl()
     {
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-               .isHttps(true) // 设置 Https 请求
-               .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-               .builder();
-        
-        // 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-        HttpRequest<String> httpRequest = null;
-        try {
-           httpRequest = new HttpRequest.Builder<String>()
-                   .url(new URL(""))
-                   .build();
-        } catch (MalformedURLException e) {
-           e.printStackTrace();
-        }
-        QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-        credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600); // for ut
-        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
         try {
             String bucket = "bucket-cssg-test-1253653367"; //存储桶名称
-            String cosPath = "object4Android"; //即对象在存储桶中的位置标识符。如 cosPath = "text.txt";
+            String cosPath = "object4android"; //即对象在存储桶中的位置标识符。如 cosPath = "text.txt";
             String method = "GET"; //请求 HTTP 方法.
             PresignedUrlRequest presignedUrlRequest = new PresignedUrlRequest(bucket, cosPath);
             presignedUrlRequest.setRequestMethod(method);
@@ -644,8 +466,8 @@ public class Object {
             //String urlWithSign = cosXmlService.getPresignedURL(getObjectRequest)； //直接使用 GetObjectRequest
         
             String savePath = Environment.getExternalStorageDirectory().getPath(); //本地路径
-            String saveFileName = "object4Android"; //本地文件名
-            GetObjectRequest getObjectRequest = new GetObjectRequest("bucket-cssg-test-1253653367", "object4Android", savePath, saveFileName);
+            String saveFileName = "object4android"; //本地文件名
+            GetObjectRequest getObjectRequest = new GetObjectRequest("bucket-cssg-test-1253653367", "object4android", savePath, saveFileName);
         
             //设置上传请求预签名 URL
             getObjectRequest.setRequestURL(urlWithSign);
@@ -667,32 +489,13 @@ public class Object {
             assertError(e);
         }
         
-        
     }
-    public void GetPresignUploadUrl()
+    private void GetPresignUploadUrl()
     {
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-               .isHttps(true) // 设置 Https 请求
-               .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-               .builder();
-        
-        // 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-        HttpRequest<String> httpRequest = null;
-        try {
-           httpRequest = new HttpRequest.Builder<String>()
-                   .url(new URL(""))
-                   .build();
-        } catch (MalformedURLException e) {
-           e.printStackTrace();
-        }
-        QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-        credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600); // for ut
-        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
         try {
         
          String bucket = "bucket-cssg-android-temp-1253653367"; //存储桶名称
-         String cosPath = "object4Android"; //即对象在存储桶中的位置标识符。如 cosPath = "text.txt";
+         String cosPath = "object4android"; //即对象在存储桶中的位置标识符。如 cosPath = "text.txt";
          String method = "PUT"; //请求 HTTP 方法.
          PresignedUrlRequest presignedUrlRequest = new PresignedUrlRequest(bucket, cosPath){
              @Override
@@ -707,8 +510,8 @@ public class Object {
         
          //String urlWithSign = cosXmlService.getPresignedURL(putObjectRequest)； //直接使用PutObjectRequest
         
-         String srcPath = Environment.getExternalStorageDirectory().getPath() + "/object4Android";
-         PutObjectRequest putObjectRequest = new PutObjectRequest("bucket-cssg-test-1253653367", "object4Android", srcPath);
+         String srcPath = new File(context.getExternalCacheDir(), "object4android").toString();
+         PutObjectRequest putObjectRequest = new PutObjectRequest("bucket-cssg-test-1253653367", "object4android", srcPath);
          //设置上传请求预签名 URL
          putObjectRequest.setRequestURL(urlWithSign);
          //设置进度回调
@@ -728,19 +531,47 @@ public class Object {
             assertError(e);
         }
         
-        
+    }
+
+    private void initService() {
+        context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
+            .isHttps(true)
+            .setRegion("ap-guangzhou")
+            .builder();
+
+        QCloudCredentialProvider credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600);
+        cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
+
+        try {
+            File srcFile = new File(context.getExternalCacheDir(), "object4android");
+            if (!srcFile.exists() && srcFile.createNewFile()) {
+                RandomAccessFile raf = new RandomAccessFile(srcFile, "rw");
+                raf.setLength(10);
+                raf.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Before public void setUp() {
+        initService();
+    }
+
+    @After public void tearDown() {
     }
 
     @Test public void testObject() {
-      GetBucket();
-      PutObject();
-      HeadObject();
-      GetObject();
-      DeleteObject();
-      DeleteMultiObject();
-      PostObject();
-      RestoreObject();
-      GetPresignDownloadUrl();
-      GetPresignUploadUrl();
+        GetBucket();
+        PutObject();
+        HeadObject();
+        GetObject();
+        DeleteObject();
+        DeleteMultiObject();
+        PostObject();
+        RestoreObject();
+        GetPresignDownloadUrl();
+        GetPresignUploadUrl();
     }
 }

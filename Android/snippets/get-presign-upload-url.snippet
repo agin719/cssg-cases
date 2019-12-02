@@ -1,23 +1,6 @@
-CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-       .isHttps(true) // 设置 Https 请求
-       .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-       .builder();
-
-// 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-HttpRequest<String> httpRequest = null;
-try {
-   httpRequest = new HttpRequest.Builder<String>()
-           .url(new URL("your_auth_server_url"))
-           .build();
-} catch (MalformedURLException e) {
-   e.printStackTrace();
-}
-QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-
 try {
 
- String bucket = "example-1250000000"; //存储桶名称
+ String bucket = "examplebucket-1250000000"; //存储桶名称
  String cosPath = "exampleobject"; //即对象在存储桶中的位置标识符。如 cosPath = "text.txt";
  String method = "PUT"; //请求 HTTP 方法.
  PresignedUrlRequest presignedUrlRequest = new PresignedUrlRequest(bucket, cosPath){
@@ -33,8 +16,8 @@ try {
 
  //String urlWithSign = cosXmlService.getPresignedURL(putObjectRequest)； //直接使用PutObjectRequest
 
- String srcPath = Environment.getExternalStorageDirectory().getPath() + "/exampleobject";
- PutObjectRequest putObjectRequest = new PutObjectRequest("example-1250000000", "exampleobject", srcPath);
+ String srcPath = new File(context.getExternalCacheDir(), "exampleobject").toString();
+ PutObjectRequest putObjectRequest = new PutObjectRequest("examplebucket-1250000000", "exampleobject", srcPath);
  //设置上传请求预签名 URL
  putObjectRequest.setRequestURL(urlWithSign);
  //设置进度回调
@@ -51,4 +34,3 @@ try {
 } catch (CosXmlServiceException e) {
  e.printStackTrace();
 }
-

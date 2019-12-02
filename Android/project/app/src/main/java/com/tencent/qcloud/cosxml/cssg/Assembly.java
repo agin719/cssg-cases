@@ -122,6 +122,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.io.File;
 
 
 public class Assembly {
@@ -1027,7 +1028,7 @@ public class Assembly {
         // .cssg-body-start: [put-object]
         String bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
         String cosPath = "{{{object}}}"; //对象位于存储桶中的位置标识符，即对象键。如 cosPath = "text.txt";
-        String srcPath = Environment.getExternalStorageDirectory().getPath() + "/{{{object}}}";//"本地文件的绝对路径";
+        String srcPath = new File(context.getExternalCacheDir(), "{{{object}}}").toString();//"本地文件的绝对路径";
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, cosPath, srcPath);
 
         putObjectRequest.setProgressListener(new CosXmlProgressListener() {
@@ -1112,7 +1113,7 @@ public class Assembly {
         // .cssg-body-start: [post-object]
         String bucket = "{{{persistBucket}}}"; //存储桶名称，格式：BucketName-APPID
         String cosPath = "{{{object}}}"; //对象位于存储桶中的位置标识符，即对象键。如 cosPath = "text.txt";
-        String srcPath = Environment.getExternalStorageDirectory().getPath() + "/{{{object}}}";//"本地文件的绝对路径";
+        String srcPath = new File(context.getExternalCacheDir(), "{{{object}}}").toString();//"本地文件的绝对路径";
 
         PostObjectRequest postObjectRequest = new PostObjectRequest(bucket, cosPath, srcPath);
 
@@ -1519,7 +1520,7 @@ public class Assembly {
         String uploadId ="{{{uploadId}}}"; //初始化分片上传返回的 uploadId
         uploadId = this.uploadId;
         int partNumber = 1; //分片块编号，必须从1开始递增
-        String srcPath = Environment.getExternalStorageDirectory().getPath() + "/{{{object}}}"; //本地文件绝对路径
+        String srcPath = new File(context.getExternalCacheDir(), "{{{object}}}").toString(); //本地文件绝对路径
         UploadPartRequest uploadPartRequest = new UploadPartRequest(bucket, cosPath, partNumber, srcPath, uploadId);
 
         uploadPartRequest.setProgressListener(new CosXmlProgressListener() {
@@ -1850,7 +1851,7 @@ public class Assembly {
 
         String bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
         String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即称对象键
-        String srcPath = Environment.getExternalStorageDirectory().getPath() + "/{{{object}}}";//"本地文件的绝对路径";
+        String srcPath = new File(context.getExternalCacheDir(), "{{{object}}}").toString();//"本地文件的绝对路径";
         String uploadId = null; //若存在初始化分片上传的 UploadId，则赋值对应的uploadId值用于续传;否则，赋值null。
         //上传对象
         COSXMLUploadTask cosxmlUploadTask = transferManager.upload(bucket, cosPath, srcPath, uploadId);
@@ -2052,7 +2053,7 @@ public class Assembly {
 
         	//String urlWithSign = cosXmlService.getPresignedURL(putObjectRequest)； //直接使用PutObjectRequest
 
-        	String srcPath = Environment.getExternalStorageDirectory().getPath() + "/{{{object}}}";
+        	String srcPath = new File(context.getExternalCacheDir(), "{{{object}}}").toString();
         	PutObjectRequest putObjectRequest = new PutObjectRequest("{{{persistBucket}}}", "{{{object}}}", srcPath);
         	//设置上传请求预签名 URL
         	putObjectRequest.setRequestURL(urlWithSign);

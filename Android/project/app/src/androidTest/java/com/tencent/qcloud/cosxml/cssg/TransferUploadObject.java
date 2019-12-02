@@ -17,11 +17,11 @@ import com.tencent.qcloud.core.auth.*;
 import com.tencent.qcloud.core.common.*;
 import com.tencent.qcloud.core.http.*;
 import com.tencent.cos.xml.model.service.*;
-import com.tencent.qcloud.cosxml.cssg.GlobalInitCustomProvider.MyCredentialProvider;
+import com.tencent.qcloud.cosxml.cssg.InitCustomProvider.MyCredentialProvider;
 
 import org.junit.Test;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 import android.content.Context;
@@ -35,7 +35,8 @@ import java.io.*;
 @RunWith(AndroidJUnit4.class)
 public class TransferUploadObject {
 
-    private static Context context;
+    private Context context;
+    private CosXmlService cosXmlService;
 
     private static void assertError(Exception e, boolean isMatch) {
         if (!isMatch) {
@@ -50,35 +51,8 @@ public class TransferUploadObject {
     private String uploadId;
     private String part1Etag;
 
-    @BeforeClass public static void setUp() {
-        context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        
-    }
-
-    @AfterClass public static void tearDown() {
-        
-    }
-
-    public void TransferUploadObject()
+    private void TransferUploadObject()
     {
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-               .isHttps(true) // 设置 Https 请求
-               .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-               .builder();
-        
-        // 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-        HttpRequest<String> httpRequest = null;
-        try {
-           httpRequest = new HttpRequest.Builder<String>()
-                   .url(new URL(""))
-                   .build();
-        } catch (MalformedURLException e) {
-           e.printStackTrace();
-        }
-        QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-        credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600); // for ut
-        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
         // 初始化 TransferConfig
         TransferConfig transferConfig = new TransferConfig.Builder().build();
         
@@ -94,8 +68,8 @@ public class TransferUploadObject {
         TransferManager transferManager = new TransferManager(cosXmlService, transferConfig);
         
         String bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
-        String cosPath = "object4Android"; //对象在存储桶中的位置标识符，即称对象键
-        String srcPath = Environment.getExternalStorageDirectory().getPath() + "/object4Android";//"本地文件的绝对路径";
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即称对象键
+        String srcPath = new File(context.getExternalCacheDir(), "object4android").toString();//"本地文件的绝对路径";
         String uploadId = null; //若存在初始化分片上传的 UploadId，则赋值对应的uploadId值用于续传;否则，赋值null。
         //上传对象
         COSXMLUploadTask cosxmlUploadTask = transferManager.upload(bucket, cosPath, srcPath, uploadId);
@@ -159,10 +133,38 @@ public class TransferUploadObject {
         //恢复上传
         cosxmlUploadTask.resume();
         
-        
+    }
+
+    private void initService() {
+        context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
+            .isHttps(true)
+            .setRegion("ap-guangzhou")
+            .builder();
+
+        QCloudCredentialProvider credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600);
+        cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
+
+        try {
+            File srcFile = new File(context.getExternalCacheDir(), "object4android");
+            if (!srcFile.exists() && srcFile.createNewFile()) {
+                RandomAccessFile raf = new RandomAccessFile(srcFile, "rw");
+                raf.setLength(10);
+                raf.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Before public void setUp() {
+        initService();
+    }
+
+    @After public void tearDown() {
     }
 
     @Test public void testTransferUploadObject() {
-      TransferUploadObject();
+        TransferUploadObject();
     }
 }

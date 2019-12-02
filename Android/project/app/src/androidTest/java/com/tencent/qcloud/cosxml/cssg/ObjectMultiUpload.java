@@ -17,11 +17,11 @@ import com.tencent.qcloud.core.auth.*;
 import com.tencent.qcloud.core.common.*;
 import com.tencent.qcloud.core.http.*;
 import com.tencent.cos.xml.model.service.*;
-import com.tencent.qcloud.cosxml.cssg.GlobalInitCustomProvider.MyCredentialProvider;
+import com.tencent.qcloud.cosxml.cssg.InitCustomProvider.MyCredentialProvider;
 
 import org.junit.Test;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 import android.content.Context;
@@ -35,7 +35,8 @@ import java.io.*;
 @RunWith(AndroidJUnit4.class)
 public class ObjectMultiUpload {
 
-    private static Context context;
+    private Context context;
+    private CosXmlService cosXmlService;
 
     private static void assertError(Exception e, boolean isMatch) {
         if (!isMatch) {
@@ -50,37 +51,10 @@ public class ObjectMultiUpload {
     private String uploadId;
     private String part1Etag;
 
-    @BeforeClass public static void setUp() {
-        context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        
-    }
-
-    @AfterClass public static void tearDown() {
-        
-    }
-
-    public void InitMultiUpload()
+    private void InitMultiUpload()
     {
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-               .isHttps(true) // 设置 Https 请求
-               .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-               .builder();
-        
-        // 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-        HttpRequest<String> httpRequest = null;
-        try {
-           httpRequest = new HttpRequest.Builder<String>()
-                   .url(new URL(""))
-                   .build();
-        } catch (MalformedURLException e) {
-           e.printStackTrace();
-        }
-        QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-        credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600); // for ut
-        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
-        String cosPath = "object4Android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
         
         InitMultipartUploadRequest initMultipartUploadRequest = new InitMultipartUploadRequest(bucket, cosPath);
         //设置签名校验Host, 默认校验所有Header
@@ -113,28 +87,9 @@ public class ObjectMultiUpload {
             }
         });
         
-        
     }
-    public void ListMultiUpload()
+    private void ListMultiUpload()
     {
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-               .isHttps(true) // 设置 Https 请求
-               .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-               .builder();
-        
-        // 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-        HttpRequest<String> httpRequest = null;
-        try {
-           httpRequest = new HttpRequest.Builder<String>()
-                   .url(new URL(""))
-                   .build();
-        } catch (MalformedURLException e) {
-           e.printStackTrace();
-        }
-        QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-        credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600); // for ut
-        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
         ListMultiUploadsRequest listMultiUploadsRequest = new ListMultiUploadsRequest(bucket);
         //设置签名校验Host, 默认校验所有Header
@@ -166,34 +121,15 @@ public class ObjectMultiUpload {
             }
         });
         
-        
     }
-    public void UploadPart()
+    private void UploadPart()
     {
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-               .isHttps(true) // 设置 Https 请求
-               .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-               .builder();
-        
-        // 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-        HttpRequest<String> httpRequest = null;
-        try {
-           httpRequest = new HttpRequest.Builder<String>()
-                   .url(new URL(""))
-                   .build();
-        } catch (MalformedURLException e) {
-           e.printStackTrace();
-        }
-        QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-        credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600); // for ut
-        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
         String bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
-        String cosPath = "object4Android"; //对象在存储桶中的位置标识符，即对象键。
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。
         String uploadId ="example-uploadId"; //初始化分片上传返回的 uploadId
         uploadId = this.uploadId;
         int partNumber = 1; //分片块编号，必须从1开始递增
-        String srcPath = Environment.getExternalStorageDirectory().getPath() + "/object4Android"; //本地文件绝对路径
+        String srcPath = new File(context.getExternalCacheDir(), "object4android").toString(); //本地文件绝对路径
         UploadPartRequest uploadPartRequest = new UploadPartRequest(bucket, cosPath, partNumber, srcPath, uploadId);
         
         uploadPartRequest.setProgressListener(new CosXmlProgressListener() {
@@ -234,30 +170,11 @@ public class ObjectMultiUpload {
             }
         });
         
-        
     }
-    public void ListParts()
+    private void ListParts()
     {
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-               .isHttps(true) // 设置 Https 请求
-               .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-               .builder();
-        
-        // 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-        HttpRequest<String> httpRequest = null;
-        try {
-           httpRequest = new HttpRequest.Builder<String>()
-                   .url(new URL(""))
-                   .build();
-        } catch (MalformedURLException e) {
-           e.printStackTrace();
-        }
-        QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-        credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600); // for ut
-        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
-        String cosPath = "object4Android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
         String uploadId = "example-uploadId";
         uploadId = this.uploadId;
         
@@ -291,30 +208,11 @@ public class ObjectMultiUpload {
             }
         });
         
-        
     }
-    public void CompleteMultiUpload()
+    private void CompleteMultiUpload()
     {
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-               .isHttps(true) // 设置 Https 请求
-               .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-               .builder();
-        
-        // 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-        HttpRequest<String> httpRequest = null;
-        try {
-           httpRequest = new HttpRequest.Builder<String>()
-                   .url(new URL(""))
-                   .build();
-        } catch (MalformedURLException e) {
-           e.printStackTrace();
-        }
-        QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-        credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600); // for ut
-        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
-        String cosPath = "object4Android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
         String uploadId = "example-uploadId";
         uploadId = this.uploadId;
         int partNumber = 1;
@@ -353,30 +251,11 @@ public class ObjectMultiUpload {
             }
         });
         
-        
     }
-    public void AbortMultiUpload()
+    private void AbortMultiUpload()
     {
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-               .isHttps(true) // 设置 Https 请求
-               .setRegion("ap-guangzhou") // 设置默认的存储桶地域
-               .builder();
-        
-        // 构建一个从临时密钥服务器拉取临时密钥的 Http 请求
-        HttpRequest<String> httpRequest = null;
-        try {
-           httpRequest = new HttpRequest.Builder<String>()
-                   .url(new URL(""))
-                   .build();
-        } catch (MalformedURLException e) {
-           e.printStackTrace();
-        }
-        QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(httpRequest);
-        credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600); // for ut
-        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
-        String cosPath = "object4Android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
         String uploadId = "example-uploadId";
         uploadId = this.uploadId;
         
@@ -410,15 +289,45 @@ public class ObjectMultiUpload {
             }
         });
         
-        
+    }
+
+    private void initService() {
+        context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
+            .isHttps(true)
+            .setRegion("ap-guangzhou")
+            .builder();
+
+        QCloudCredentialProvider credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600);
+        cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
+
+        try {
+            File srcFile = new File(context.getExternalCacheDir(), "object4android");
+            if (!srcFile.exists() && srcFile.createNewFile()) {
+                RandomAccessFile raf = new RandomAccessFile(srcFile, "rw");
+                raf.setLength(10);
+                raf.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Before public void setUp() {
+        initService();
+    }
+
+    @After public void tearDown() {
     }
 
     @Test public void testObjectMultiUpload() {
-      InitMultiUpload();
-      ListMultiUpload();
-      UploadPart();
-      ListParts();
-      CompleteMultiUpload();
-      AbortMultiUpload();
+        InitMultiUpload();
+        ListMultiUpload();
+        UploadPart();
+        ListParts();
+        CompleteMultiUpload();
+        InitMultiUpload();
+        UploadPart();
+        AbortMultiUpload();
     }
 }
