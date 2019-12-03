@@ -1,0 +1,18 @@
+let exception = XCTestExpectation.init(description: "getObject exception");
+let getObject = QCloudGetObjectRequest.init();
+getObject.bucket = "examplebucket-1250000000";
+getObject.object = "exampleobject";
+getObject.downloadingURL = URL.init(string: NSTemporaryDirectory())!.appendingPathComponent(getObject.object);
+getObject.finishBlock = {(result,error) in
+    if error != nil{
+        print(error!);
+    }else{
+        print(result!);
+    }
+    exception .fulfill();
+};
+getObject.downProcessBlock = {(bytesDownload, totalBytesDownload,  totalBytesExpectedToDownload) in
+    print("totalBytesDownload:\(totalBytesDownload) totalBytesExpectedToDownload:\(totalBytesExpectedToDownload)");
+}
+QCloudCOSXMLService.defaultCOSXML().getObject(getObject);
+self.wait(for: [exception], timeout: 100);

@@ -1,0 +1,38 @@
+{
+  "language": "swift",
+  "sourcesRoot": "COS_Swift_TestTests/",
+  "sourceExtension": ".swift",
+
+  "testcaseTemplate": "TestCase.t",
+
+  "snippetNameCommonPrefix": "swift-",
+
+  "ignoreExpressionInDoc": [
+    "XCTestExpectation\\*\\s+exp\\s*=\\s*.+;\\r\\n",
+    "\\[exp\\s+fulfill\\];",
+    "\\[self\\s+waitForExpectationsWithTimeout:\\d+ handler:nil\\];",
+    "XCTAssertNotNil\\(.+\\);",
+    "XCTAssertNil\\(.+\\);",
+    ".+\\s*=\\s*self\\.uploadId;",
+    "self\\.parts\\s*=\\s*.+;",
+    "\\[self\\.parts\\s*.+\\];"
+  ],
+
+  "macro4doc": {
+  },
+  "macro4test": {
+    "secretId": "SecretStorage.shared.secretID",
+    "secretKey": "SecretStorage.shared.secretID.secretKey"
+  },
+  "testGroup": {
+    "global-init": {
+      "defines": [
+        "global-init",
+        "global-init-fence-queue",
+        "global-init-signature",
+        "global-init-signature-sts"
+      ],
+      "isDefine": true
+    }
+  }
+}

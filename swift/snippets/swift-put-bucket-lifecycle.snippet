@@ -1,0 +1,34 @@
+let exception = XCTestExpectation.init(description: "putBucketLifecycle exception");
+let putBucketLifecycleReq = QCloudPutBucketLifecycleRequest.init();
+putBucketLifecycleReq.bucket = "examplebucket-1250000000";
+
+let config = QCloudLifecycleConfiguration.init();
+
+let rule = QCloudLifecycleRule.init();
+rule.identifier = "swift";
+rule.status = .enabled;
+
+let fileter = QCloudLifecycleRuleFilter.init();
+fileter.prefix = "0";
+
+rule.filter = fileter;
+
+let transition = QCloudLifecycleTransition.init();
+transition.days = 100;
+transition.storageClass = .standardIA;
+
+rule.transition = transition;
+
+putBucketLifecycleReq.lifeCycle = config;
+putBucketLifecycleReq.lifeCycle.rules = [rule];
+
+putBucketLifecycleReq.finishBlock = {(result,error) in
+    if error != nil{
+        print(error!);
+    }else{
+        print(result!);
+    }
+    exception .fulfill();
+}
+QCloudCOSXMLService.defaultCOSXML().putBucketLifecycle(putBucketLifecycleReq);
+self.wait(for: [exception], timeout: 100);

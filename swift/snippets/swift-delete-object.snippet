@@ -1,0 +1,14 @@
+let exception = XCTestExpectation.init(description: "deleteObject exception");
+let deleteObject = QCloudDeleteObjectRequest.init();
+deleteObject.bucket = "examplebucket-1250000000";
+deleteObject.object = "exampleobject";
+deleteObject.finishBlock = {(result,error)in
+    if error != nil{
+        print(error!);
+    }else{
+        print(result!);
+    }
+    exception .fulfill();
+}
+QCloudCOSXMLService.defaultCOSXML().deleteObject(deleteObject);
+self.wait(for: [exception], timeout: 100);

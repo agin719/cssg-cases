@@ -1,0 +1,13 @@
+let exception = XCTestExpectation.init(description: "getBucketACL exception");
+let getBucketACLReq = QCloudGetBucketACLRequest.init();
+getBucketACLReq.bucket = "examplebucket-1250000000";
+getBucketACLReq.setFinish { (result, error) in
+    if error != nil{
+        print(error!);
+    }else{
+        print(result!);
+    }
+    exception .fulfill();
+}
+QCloudCOSXMLService.defaultCOSXML().getBucketACL(getBucketACLReq)
+self.wait(for: [exception], timeout: 100);

@@ -1,0 +1,19 @@
+let exception = XCTestExpectation.init(description: "putBucketVersioning exception");
+let putBucketVersioning = QCloudPutBucketVersioningRequest.init();
+putBucketVersioning.bucket = "examplebucket-1250000000";
+
+let config = QCloudBucketVersioningConfiguration.init();
+config.status = .enabled;
+
+putBucketVersioning.configuration = config;
+
+putBucketVersioning.finishBlock = {(result,error) in
+    if error != nil{
+        print(error!);
+    }else{
+        print(result!);
+    }
+    exception.fulfill();
+}
+QCloudCOSXMLService.defaultCOSXML().putBucketVersioning(putBucketVersioning);
+self.wait(for: [exception], timeout: 100);

@@ -1,0 +1,13 @@
+let exception = XCTestExpectation.init(description: "getBucketReplication exception");
+let getBucketReplication = QCloudGetBucketReplicationRequest.init();
+getBucketReplication.bucket = "examplebucket-1250000000";
+getBucketReplication.setFinish { (config, error) in
+    if error != nil{
+        print(error!);
+    }else{
+        print(config!);
+    }
+    exception .fulfill();
+}
+QCloudCOSXMLService.defaultCOSXML().getBucketReplication(getBucketReplication);
+self.wait(for: [exception], timeout: 100);

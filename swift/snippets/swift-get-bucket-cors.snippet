@@ -1,0 +1,13 @@
+let exception = XCTestExpectation.init(description: "getBucketCors exception");
+let  getBucketCorsRes = QCloudGetBucketCORSRequest.init();
+getBucketCorsRes.bucket = "examplebucket-1250000000";
+getBucketCorsRes.setFinish { (corsConfig, error) in
+    if error != nil{
+        print(error!);
+    }else{
+        print(corsConfig!);
+    }
+    exception .fulfill();
+}
+QCloudCOSXMLService.defaultCOSXML().getBucketCORS(getBucketCorsRes);
+self.wait(for: [exception], timeout: 100);

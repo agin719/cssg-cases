@@ -1,0 +1,14 @@
+let exception = XCTestExpectation.init(description: "getBucket exception");
+let getBucketReq = QCloudGetBucketRequest.init();
+getBucketReq.bucket = "examplebucket-1250000000";
+getBucketReq.maxKeys = 1000;
+getBucketReq.setFinish { (result, error) in
+    if error != nil{
+        print(error!);
+    }else{
+        print( result!.commonPrefixes);
+    }
+    exception .fulfill();
+}
+QCloudCOSXMLService.defaultCOSXML().getBucket(getBucketReq);
+self.wait(for: [exception], timeout: 100);

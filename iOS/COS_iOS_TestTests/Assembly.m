@@ -60,7 +60,7 @@
     credential.startDate = [[[NSDateFormatter alloc] init] dateFromString:@"start-time"];
     credential.experationDate = [[[NSDateFormatter alloc] init] dateFromString:@"expire-time"];
     credential.token = @"COS_TOKEN";
-    QCloudAuthentationV5Creator* creator = [[QCloudAuthentationV5Creator alloc] 
+    QCloudAuthentationV5Creator* creator = [[QCloudAuthentationV5Creator alloc]
         initWithCredential:credential];
     continueBlock(creator, nil);
 }
@@ -171,7 +171,7 @@
         XCTAssertNil(error);
         [exp fulfill];
     }];
-    
+
     [[QCloudCOSXMLService defaultCOSXML] GetBucketACL:getBucketACl];
     [self waitForExpectationsWithTimeout:80 handler:nil];
     // .cssg-body-end
@@ -182,7 +182,7 @@
     XCTestExpectation* exp = [self expectationWithDescription:@"put-bucket-cors"];
     QCloudPutBucketCORSRequest* putCORS = [QCloudPutBucketCORSRequest new];
     QCloudCORSConfiguration* cors = [QCloudCORSConfiguration new];
-    
+
     QCloudCORSRule* rule = [QCloudCORSRule new];
     rule.identifier = @"sdk";
     rule.allowedHeader = @[@"origin",@"host",@"accept",@"content-type",@"authorization"];
@@ -209,13 +209,13 @@
     XCTestExpectation* exp = [self expectationWithDescription:@"get-bucket-cors"];
     QCloudGetBucketCORSRequest* corsReqeust = [QCloudGetBucketCORSRequest new];
     corsReqeust.bucket = @"{{tempBucket}}";
-    
+
     [corsReqeust setFinishBlock:^(QCloudCORSConfiguration * _Nonnull result, NSError * _Nonnull error) {
         //CORS设置封装在result中。
         XCTAssertNil(error);
         [exp fulfill];
     }];
-    
+
     [[QCloudCOSXMLService defaultCOSXML] GetBucketCORS:corsReqeust];
     [self waitForExpectationsWithTimeout:80 handler:nil];
     // .cssg-body-end
@@ -241,7 +241,7 @@
     XCTestExpectation* exp = [self expectationWithDescription:@"put-bucket-lifecycle"];
     QCloudPutBucketLifecycleRequest* request = [QCloudPutBucketLifecycleRequest new];
     request.bucket = @"{{tempBucket}}";
-    __block QCloudLifecycleConfiguration* lifecycleConfiguration = [[QCloudLifecycleConfiguration 
+    __block QCloudLifecycleConfiguration* lifecycleConfiguration = [[QCloudLifecycleConfiguration
         alloc] init];
     QCloudLifecycleRule* rule = [[QCloudLifecycleRule alloc] init];
     rule.identifier = @"identifier";
@@ -249,7 +249,7 @@
     QCloudLifecycleRuleFilter* filter = [[QCloudLifecycleRuleFilter alloc] init];
     filter.prefix = @"0";
     rule.filter = filter;
-    
+
     QCloudLifecycleTransition* transition = [[QCloudLifecycleTransition alloc] init];
     transition.days = 100;
     transition.storageClass = QCloudCOSStorageStandardIA;
@@ -303,11 +303,11 @@
     // 开启版本控制
     QCloudPutBucketVersioningRequest* request = [[QCloudPutBucketVersioningRequest alloc] init];
     request.bucket =@"{{tempBucket}}";
-    QCloudBucketVersioningConfiguration* versioningConfiguration = 
+    QCloudBucketVersioningConfiguration* versioningConfiguration =
         [[QCloudBucketVersioningConfiguration alloc] init];
     request.configuration = versioningConfiguration;
     versioningConfiguration.status = QCloudCOSBucketVersioningStatusEnabled;
-    
+
     [request setFinishBlock:^(id outputObject, NSError* error) {
         //可以从 outputObject 中获取服务器返回的header信息
         XCTAssertNil(error);
@@ -339,14 +339,14 @@
     XCTestExpectation* exp = [self expectationWithDescription:@"put-bucket-replication"];
     QCloudPutBucketReplicationRequest* request = [[QCloudPutBucketReplicationRequest alloc] init];
     request.bucket = @"{{tempBucket}}";
-    QCloudBucketReplicationConfiguation* replConfiguration = [[QCloudBucketReplicationConfiguation 
+    QCloudBucketReplicationConfiguation* replConfiguration = [[QCloudBucketReplicationConfiguation
         alloc] init];
     replConfiguration.role = @"qcs::cam::uin/{{uin}}:uin/{{uin}}";
     QCloudBucketReplicationRule* rule = [[QCloudBucketReplicationRule alloc] init];
-    
+
     rule.identifier = @"identifier";
     rule.status = QCloudCOSXMLStatusEnabled;
-    
+
     QCloudBucketReplicationDestination* destination = [[QCloudBucketReplicationDestination alloc] init];
     NSString* destinationBucket = @"{{{replicationDestBucket}}}";
     NSString* region = @"{{replicationDestBucketRegion}}";
@@ -406,26 +406,26 @@
     put.bucket = @"{{persistBucket}}";
     put.body = [@"testFileContent" dataUsingEncoding:NSUTF8StringEncoding];
     //设置一些上传的参数
-    put.initMultipleUploadFinishBlock = ^(QCloudInitiateMultipartUploadResult * multipleUploadInitResult, 
+    put.initMultipleUploadFinishBlock = ^(QCloudInitiateMultipartUploadResult * multipleUploadInitResult,
         QCloudCOSXMLUploadObjectResumeData resumeData) {
         //在初始化分块上传完成以后会回调该block，在这里可以获取 resumeData，
         //并且可以通过 resumeData 生成一个分块上传的请求
-        QCloudCOSXMLUploadObjectRequest* request = [QCloudCOSXMLUploadObjectRequest 
+        QCloudCOSXMLUploadObjectRequest* request = [QCloudCOSXMLUploadObjectRequest
             requestWithRequestData:resumeData];
     };
-    [put setSendProcessBlock:^(int64_t bytesSent, int64_t totalBytesSent, 
+    [put setSendProcessBlock:^(int64_t bytesSent, int64_t totalBytesSent,
         int64_t totalBytesExpectedToSend) {
-        NSLog(@"upload %lld totalSend %lld aim %lld", bytesSent, totalBytesSent, 
+        NSLog(@"upload %lld totalSend %lld aim %lld", bytesSent, totalBytesSent,
             totalBytesExpectedToSend);
     }];
-    [put setFinishBlock:^(id outputObject, NSError* error) {
-        //可以从 outputObject 中获取 response 中 etag 或者自定义头部等信息
+    [put setFinishBlock:^((QCloudUploadObjectResult *result, NSError* error) {
+        //可以从result获取结果
         XCTAssertNotNil(error);
         [exp fulfill];
     }];
-    
+
     [[QCloudCOSTransferMangerService defaultCOSTransferManager] UploadObject:put];
-    
+
     //•••在完成了初始化，并且上传没有完成前
     NSError* error;
     //这里是主动调用取消，并且产生 resumetData 的例子
@@ -508,7 +508,7 @@
     QCloudHeadObjectRequest* headerRequest = [QCloudHeadObjectRequest new];
     headerRequest.object = @"{{object}}";
     headerRequest.bucket = @"{{persistBucket}}";
-    
+
     [headerRequest setFinishBlock:^(NSDictionary* result, NSError *error) {
         // result 返回具体信息
         XCTAssertNil(error);
@@ -535,7 +535,7 @@
         XCTAssertNil(error);
         [exp fulfill];
     }];
-    [request setDownProcessBlock:^(int64_t bytesDownload, int64_t totalBytesDownload, 
+    [request setDownProcessBlock:^(int64_t bytesDownload, int64_t totalBytesDownload,
         int64_t totalBytesExpectedToDownload) {
         //下载过程中的进度
     }];
@@ -560,7 +560,7 @@
         XCTAssertNil(error);
         [exp fulfill];
     }];
-    
+
     [[QCloudCOSXMLService defaultCOSXML] OptionsObject:request];
     [self waitForExpectationsWithTimeout:80 handler:nil];
     // .cssg-body-end
@@ -607,10 +607,10 @@
     XCTestExpectation* exp = [self expectationWithDescription:@"delete-multi-object"];
     QCloudDeleteMultipleObjectRequest* delteRequest = [QCloudDeleteMultipleObjectRequest new];
     delteRequest.bucket = @"{{persistBucket}}";
-    
+
     QCloudDeleteObjectInfo* deletedObject0 = [QCloudDeleteObjectInfo new];
     deletedObject0.key = @"{{object}}";
-    
+
     QCloudDeleteInfo* deleteInfo = [QCloudDeleteInfo new];
     deleteInfo.quiet = NO;
     deleteInfo.objects = @[deletedObject0];
@@ -706,10 +706,10 @@
     request.bucket = @"{{persistBucket}}";
     request.object = @"{{object}}";
     //  源文件 URL 路径，可以通过 versionid 子资源指定历史版本
-    request.source = @"{{{copySourceBucket}}}.cos.{{region}}.myqcloud.com/{{copySourceObject}}"; 
+    request.source = @"{{{copySourceBucket}}}.cos.{{region}}.myqcloud.com/{{copySourceObject}}";
     // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
-    request.uploadID = @"{{uploadId}}"; 
-    request.uploadID = self.uploadId; 
+    request.uploadID = @"{{uploadId}}";
+    request.uploadID = self.uploadId;
     request.partNumber = 1; // 标志当前分块的序号
 
     [request setFinishBlock:^(QCloudCopyObjectResult* result, NSError* error) {
@@ -735,7 +735,7 @@
     request.object = @"{{object}}";
     request.bucket = @"{{persistBucket}}";
     // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
-    request.uploadId = @"{{uploadId}}"; 
+    request.uploadId = @"{{uploadId}}";
     request.uploadId = self.uploadId;
 
     [request setFinishBlock:^(QCloudListPartsResult * _Nonnull result,
@@ -744,7 +744,7 @@
         XCTAssertNil(error);
         [exp fulfill];
     }];
-    
+
     [[QCloudCOSXMLService defaultCOSXML] ListMultipart:request];
     [self waitForExpectationsWithTimeout:80 handler:nil];
     // .cssg-body-end
@@ -764,7 +764,7 @@
     partInfo.parts = self.parts;
     completeRequst.parts = partInfo;
 
-    [completeRequst setFinishBlock:^(QCloudUploadObjectResult * _Nonnull result, 
+    [completeRequst setFinishBlock:^(QCloudUploadObjectResult * _Nonnull result,
         NSError * _Nonnull error) {
         //从 result 中获取上传结果
         XCTAssertNil(error);
@@ -829,7 +829,7 @@
         XCTAssertNil(error);
         [exp fulfill];
     }];
-    
+
     [[QCloudCOSXMLService defaultCOSXML] PutObjectACL:request];
     [self waitForExpectationsWithTimeout:80 handler:nil];
     // .cssg-body-end
@@ -860,7 +860,7 @@
     getPresignedURLRequest.bucket = @"{{persistBucket}}";
     getPresignedURLRequest.HTTPMethod = @"GET";
     getPresignedURLRequest.object = @"{{object}}";
-    
+
     [getPresignedURLRequest setFinishBlock:^(QCloudGetPresignedURLResult * _Nonnull result, NSError * _Nonnull error) {
         XCTAssertNil(error);
         NSString* presignedURL = result.presienedURL;
@@ -871,5 +871,5 @@
     [self waitForExpectationsWithTimeout:80 handler:nil];
      // .cssg-body-end
 }
-     
+
 @end

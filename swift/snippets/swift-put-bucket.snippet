@@ -1,0 +1,13 @@
+let exception = XCTestExpectation.init(description: "putBucket exception");
+let putBucketReq = QCloudPutBucketRequest.init();
+putBucketReq.bucket = "examplebucket-1250000000";
+putBucketReq.finishBlock = {(result,error) in
+    if error != nil {
+        print(error!);
+    } else {
+        print(result!);
+    }
+    exception .fulfill();
+}
+QCloudCOSXMLService.defaultCOSXML().putBucket(putBucketReq);
+self.wait(for: [exception], timeout: 100);

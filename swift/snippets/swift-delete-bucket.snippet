@@ -1,0 +1,13 @@
+let exception = XCTestExpectation.init(description: "deleteBucket exception");
+let deleteBucketReq = QCloudDeleteBucketRequest.init();
+deleteBucketReq.bucket = "examplebucket-1250000000";
+deleteBucketReq.finishBlock = {(result,error) in
+    if error != nil{
+        print(error!);
+    }else{
+        print(result!);
+    }
+    exception .fulfill();
+}
+QCloudCOSXMLService.defaultCOSXML().deleteBucket(deleteBucketReq);
+self.wait(for: [exception], timeout: 100);

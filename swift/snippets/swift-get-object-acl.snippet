@@ -1,0 +1,15 @@
+let exception = XCTestExpectation.init(description: "getObjectACL exception");
+let getObjectACL = QCloudGetObjectACLRequest.init();
+getObjectACL.bucket = "examplebucket-1250000000";
+getObjectACL.object = "exampleobject";
+getObjectACL.setFinish { (result, error) in
+    if error != nil{
+        print(error!)
+    }else{
+        //可以从 result的accessControlList中获取对象的 acl
+        print(result!.accessControlList);
+    }
+    exception .fulfill();
+}
+QCloudCOSXMLService.defaultCOSXML().getObjectACL(getObjectACL);
+self.wait(for: [exception], timeout: 100);

@@ -1,0 +1,17 @@
+let exception = XCTestExpectation.init(description: "optionsObject exception");
+let optionsObject = QCloudOptionsObjectRequest.init();
+optionsObject.object = "exampleobject";
+optionsObject.origin = "http://www.qcloud.com";
+optionsObject.accessControlRequestMethod = "GET";
+optionsObject.accessControlRequestHeaders = "origin";
+optionsObject.bucket = "examplebucket-1250000000";
+optionsObject.finishBlock = {(result,error) in
+    if error != nil{
+        print(error!);
+    }else{
+        print(result!);
+    }
+    exception .fulfill();
+}
+QCloudCOSXMLService.defaultCOSXML().optionsObject(optionsObject);
+self.wait(for: [exception], timeout: 100);

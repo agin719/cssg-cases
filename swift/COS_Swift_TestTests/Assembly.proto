@@ -1,0 +1,33 @@
+//
+//  Assembly.m
+//
+//  Copyright © 2019 tencentyun.com. All rights reserved.
+//
+
+#import <XCTest/XCTest.h>
+#import <QCloudCOSXML/QCloudCOSXML.h>
+
+// cssg-snippet-lang: [iOS]
+@interface Assembly : XCTestCase <QCloudSignatureProvider>
+
+@end
+
+@implementation Assembly
+
+{{#top}}
+// .cssg-body-start: [{{name}}]
+{{{code}}}
+// .cssg-body-end
+{{/top}}
+
+{{#snippets}}
+- (void)method{{index}} {
+    // .cssg-body-start: [{{name}}]
+    XCTestExpectation* exp = [self expectationWithDescription:@"{{name}}"];
+    {{{code}}}
+    [self waitForExpectationsWithTimeout:80 handler:nil];
+    // .cssg-body-end
+}
+{{/snippets}}
+
+@end

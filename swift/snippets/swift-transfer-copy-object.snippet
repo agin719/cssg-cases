@@ -1,0 +1,17 @@
+let copyRequest =  QCloudCOSXMLCopyObjectRequest.init();
+copyRequest.bucket = "examplebucket-1250000000";//目的<BucketName-APPID>，需要是公有读或者在当前账号有权限
+copyRequest.object = "exampleobject";//目的文件名称
+//文件来源<BucketName-APPID>，需要是公有读或者在当前账号有权限
+copyRequest.sourceBucket = "source-1250000000";
+copyRequest.sourceObject = "sourceObject";//源文件名称
+copyRequest.sourceAPPID = "1250000000";//源文件的appid
+copyRequest.sourceRegion = "ap-guangzhou";//来源的地域
+copyRequest.setFinish { (copyResult, error) in
+    if error != nil{
+        print(error!);
+    }else{
+        print(copyResult!);
+    }
+}
+//注意如果是跨地域复制，这里使用的 transferManager 所在的 region 必须为目标桶所在的 region
+QCloudCOSTransferMangerService.defaultCOSTransferManager().copyObject(copyRequest);

@@ -1,0 +1,14 @@
+let exception = XCTestExpectation.init(description: "headObject exception");
+let headObject = QCloudHeadObjectRequest.init();
+headObject.bucket = "examplebucket-1250000000";
+headObject.object  = "exampleobject";
+headObject.finishBlock =  {(result,error) in
+    if error != nil{
+        print(error!);
+    }else{
+        print(result!);
+    }
+    exception .fulfill();
+}
+QCloudCOSXMLService.defaultCOSXML().headObject(headObject);
+self.wait(for: [exception], timeout: 100);

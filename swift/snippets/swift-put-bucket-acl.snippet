@@ -1,0 +1,17 @@
+let exception = XCTestExpectation.init(description: "putBucketACL exception");
+let putBucketACLReq = QCloudPutBucketACLRequest.init();
+putBucketACLReq.bucket = "examplebucket-1250000000";
+let appTD = "1131975903";//授予全新的账号ID
+let ownerIdentifier = "qcs::cam::uin/\(appTD):uin/\(appTD)";
+let grantString = "id=\"\(ownerIdentifier)\"";
+putBucketACLReq.grantWrite = grantString;
+putBucketACLReq.finishBlock = {(result,error) in
+    if error != nil{
+        print(error!);
+    }else{
+        print(result!);
+    }
+    exception .fulfill();
+}
+QCloudCOSXMLService.defaultCOSXML().putBucketACL(putBucketACLReq);
+self.wait(for: [exception], timeout: 100);

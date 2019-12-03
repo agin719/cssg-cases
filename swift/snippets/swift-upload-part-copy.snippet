@@ -1,0 +1,27 @@
+let exception = XCTestExpectation.init(description: "uploadPartCopy exception");
+let req = QCloudUploadPartCopyRequest.init();
+req.bucket = "examplebucket-1250000000";
+req.object = "exampleobject";
+//  源文件 URL 路径，可以通过 versionid 子资源指定历史版本
+req.source = "source-1250000000.cos.ap-guangzhou.myqcloud.com/sourceObject";
+// 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
+req.uploadID = "example-uploadId";
+if self.uploadId != nil {
+    req.uploadID = self.uploadId!;
+}
+
+//// 标志当前分块的序号
+req.partNumber = 1;
+req.setFinish { (result, error) in
+    if error != nil{
+        print(error!);
+    }else{
+        let mutipartInfo = QCloudMultipartInfo.init();
+        //获取所复制分片的 etag
+        mutipartInfo.eTag = result!.eTag;
+        mutipartInfo.partNumber = "1";
+    }
+      exception .fulfill();
+}
+QCloudCOSXMLService.defaultCOSXML().uploadPartCopy(req);
+self.wait(for: [exception], timeout: 100);

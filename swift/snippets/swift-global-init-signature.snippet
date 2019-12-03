@@ -1,0 +1,9 @@
+
+func signature(with fileds: QCloudSignatureFields!, request: QCloudBizHTTPRequest!, urlRequest urlRequst: NSMutableURLRequest!, compelete continueBlock: QCloudHTTPAuthentationContinueBlock!) {
+    let cre = QCloudCredential.init();
+    cre.secretID = "COS_SECRETID";
+    cre.secretKey = "COS_SECRETKEY";
+    let auth = QCloudAuthentationV5Creator.init(credential: cre);
+    let signature = auth?.signature(forData: urlRequst)
+    continueBlock(signature,nil);
+}

@@ -1,0 +1,13 @@
+let exception = XCTestExpectation.init(description: "get service exception");
+let getServiceReq = QCloudGetServiceRequest.init();
+getServiceReq.setFinish{(result,error) in
+    if result == nil {
+        print(error!);
+    } else {
+        //从result中获取返回信息
+        print(result!);
+    }
+    exception .fulfill();
+}
+QCloudCOSXMLService.defaultCOSXML().getService(getServiceReq);
+self.wait(for: [exception], timeout: 100);

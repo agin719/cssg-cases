@@ -1,0 +1,13 @@
+let exception = XCTestExpectation.init(description: "deleteBucketCors exception");
+let deleteBucketCorsRequest = QCloudDeleteBucketCORSRequest.init();
+deleteBucketCorsRequest.bucket = "examplebucket-1250000000";
+deleteBucketCorsRequest.finishBlock = {(result,error) in
+    if error != nil{
+        print(error!);
+    }else{
+        print(result!);
+    }
+    exception .fulfill();
+}
+QCloudCOSXMLService.defaultCOSXML().deleteBucketCORS(deleteBucketCorsRequest);
+self.wait(for: [exception], timeout: 100);

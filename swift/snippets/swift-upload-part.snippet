@@ -1,0 +1,33 @@
+let exception = XCTestExpectation.init(description: "uploadPart exception");
+
+let uploadPart = QCloudUploadPartRequest<AnyObject>.init();
+uploadPart.bucket = "examplebucket-1250000000";
+uploadPart.object = "exampleobject";
+uploadPart.partNumber = 1;
+//标识本次分块上传的 ID；使用 Initiate Multipart Upload 接口初始化分块上传时会得到一个 uploadId
+// 该 ID 不但唯一标识这一分块数据，也标识了这分块数据在整个文件内的相对位置
+uploadPart.uploadId = "example-uploadId";
+if self.uploadId != nil {
+     uploadPart.uploadId = self.uploadId!;
+}
+
+let dataBody:NSData? = "wrwrwrwrwrwwrwrwrwrwrwwrwrwrwrwrwwrwrwrwrwrwwrwrwrwrwrwwrwrwrwrwrwwrwrwrwrwrwwrwrwrwrwrwwrwrwrwrwrwwrwrwrwrwrwwrwrwrwrwrwwrwrwrwrwrwwrwrwrwrwrw".data(using: .utf8) as NSData?;
+uploadPart.body = dataBody!;
+uploadPart.setFinish { (result, error) in
+    if error != nil{
+        print(error!);
+    }else{
+        let mutipartInfo = QCloudMultipartInfo.init();
+        //获取所上传分片的 etag
+        mutipartInfo.eTag = result!.eTag;
+        mutipartInfo.partNumber = "1";
+    }
+      exception .fulfill();
+}
+uploadPart.sendProcessBlock = {(bytesSent,totalBytesSent,totalBytesExpectedToSend) in
+    //上传进度信息
+    print("totalBytesSent:\(totalBytesSent) totalBytesExpectedToSend:\(totalBytesExpectedToSend)");
+    
+}
+QCloudCOSXMLService.defaultCOSXML().uploadPart(uploadPart);
+self.wait(for: [exception], timeout: 100);
