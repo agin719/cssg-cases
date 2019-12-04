@@ -28,7 +28,7 @@
 
 // .cssg-body-start: [global-init]
 //AppDelegate.m
-//第一步：注册默认的cos服务
+//第一步：注册默认的 COS 服务
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
     configuration.appID = @"{{appId}}";
@@ -41,19 +41,19 @@
     return YES;
 }
 
-//第二步：实现QCloudSignatureProvider协议
-//实现签名的过程，我们推荐在服务器端实现签名的过程，具体请参考接下来的 “生成签名” 这一章。
+//第二步：实现 QCloudSignatureProvider 协议
+//实现签名的过程，我们推荐在服务器端实现签名的过程，详情请参考接下来的 “生成签名” 这一章。
 // .cssg-body-end
 
 // .cssg-body-start: [global-init-fence-queue]
 //AppDelegate.m
 
-// 这里定义一个成员变量 @property (nonatomic) QCloudCredentailFenceQueue* credentialFenceQueue;
+//这里定义一个成员变量 @property (nonatomic) QCloudCredentailFenceQueue* credentialFenceQueue;
 
 - (void) fenceQueue:(QCloudCredentailFenceQueue * )queue requestCreatorWithContinue:(QCloudCredentailFenceQueueContinue)continueBlock
 {
     QCloudCredential* credential = [QCloudCredential new];
-    //在这里可以同步过程从服务器获取临时签名需要的secretID,secretKey,expiretionDate和token参数
+    //在这里可以同步过程从服务器获取临时签名需要的 secretID，secretKey，expiretionDate 和 token 参数
     credential.secretID = @"COS_SECRETID";
     credential.secretKey = @"COS_SECRETKEY";
     /*强烈建议返回服务器时间作为签名的开始时间，用来避免由于用户手机本地时间偏差过大导致的签名不正确 */
@@ -86,7 +86,7 @@
     XCTestExpectation* exp = [self expectationWithDescription:@"get-service"];
     QCloudGetServiceRequest* request = [[QCloudGetServiceRequest alloc] init];
     [request setFinishBlock:^(QCloudListAllMyBucketsResult* result, NSError* error) {
-        //从result中获取返回信息
+        //从 result 中获取返回信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -116,7 +116,7 @@
     QCloudHeadBucketRequest* request = [QCloudHeadBucketRequest new];
     request.bucket = @"{{tempBucket}}";
     [request setFinishBlock:^(id outputObject, NSError* error) {
-        //可以从 outputObject 中获取服务器返回的header信息
+        //可以从 outputObject 中获取服务器返回的 header 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -131,7 +131,7 @@
     QCloudDeleteBucketRequest* request = [[QCloudDeleteBucketRequest alloc ] init];
     request.bucket = @"{{tempBucket}}";  //存储桶名称，命名格式：BucketName-APPID
     [request setFinishBlock:^(id outputObject,NSError*error) {
-        //可以从 outputObject 中获取服务器返回的header信息
+        //可以从 outputObject 中获取服务器返回的 header 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -144,14 +144,14 @@
     // .cssg-body-start: [put-bucket-acl]
     XCTestExpectation* exp = [self expectationWithDescription:@"put-bucket-acl"];
     QCloudPutBucketACLRequest* putACL = [QCloudPutBucketACLRequest new];
-    NSString* appID = @"1131975903";//授予全新的账号ID
+    NSString* appID = @"1131975903";//授予全新的账号 ID
     NSString *ownerIdentifier = [NSString stringWithFormat:@"qcs::cam::uin/%@:uin/%@", appID,
         appID];
     NSString *grantString = [NSString stringWithFormat:@"id=\"%@\"",ownerIdentifier];
     putACL.grantFullControl = grantString;
     putACL.bucket = @"{{tempBucket}}";
     [putACL setFinishBlock:^(id outputObject, NSError *error) {
-        //可以从 outputObject 中获取服务器返回的header信息
+        //可以从 outputObject 中获取服务器返回的 header 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -167,7 +167,7 @@
     QCloudGetBucketACLRequest* getBucketACl = [QCloudGetBucketACLRequest new];
     getBucketACl.bucket = @"{{tempBucket}}";
     [getBucketACl setFinishBlock:^(QCloudACLPolicy * _Nonnull result, NSError * _Nonnull error) {
-        //QCloudACLPolicy中包含了 Bucket 的 ACL 信息。
+        //QCloudACLPolicy 中包含了 Bucket 的 ACL 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -194,7 +194,7 @@
     putCORS.corsConfiguration = cors;
     putCORS.bucket = @"{{tempBucket}}";
     [putCORS setFinishBlock:^(id outputObject, NSError *error) {
-        //可以从 outputObject 中获取服务器返回的header信息
+        //可以从 outputObject 中获取服务器返回的 header 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -211,7 +211,7 @@
     corsReqeust.bucket = @"{{tempBucket}}";
 
     [corsReqeust setFinishBlock:^(QCloudCORSConfiguration * _Nonnull result, NSError * _Nonnull error) {
-        //CORS设置封装在result中。
+        //CORS 设置封装在 result 中
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -227,7 +227,7 @@
     QCloudDeleteBucketCORSRequest* deleteCORS = [QCloudDeleteBucketCORSRequest new];
     deleteCORS.bucket = @"{{tempBucket}}";
     [deleteCORS setFinishBlock:^(id outputObject, NSError *error) {
-        //可以从 outputObject 中获取服务器返回的header信息
+        //可以从 outputObject 中获取服务器返回的 header 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -257,7 +257,7 @@
     request.lifeCycle = lifecycleConfiguration;
     request.lifeCycle.rules = @[rule];
     [request setFinishBlock:^(id outputObject, NSError* error) {
-        //可以从 outputObject 中获取服务器返回的header信息
+        //可以从 outputObject 中获取服务器返回的 header 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -288,7 +288,7 @@
     QCloudDeleteBucketLifeCycleRequest* request = [[QCloudDeleteBucketLifeCycleRequest alloc ] init];
     request.bucket = @"{{tempBucket}}";
     [request setFinishBlock:^(QCloudLifecycleConfiguration* deleteResult, NSError* deleteError) {
-        // deleteResult 返回删除结果
+        //deleteResult 返回删除结果
         XCTAssertNil(deleteError);
         [exp fulfill];
     }];
@@ -300,7 +300,7 @@
 - (void)method13 {
     // .cssg-body-start: [put-bucket-versioning]
     XCTestExpectation* exp = [self expectationWithDescription:@"put-bucket-versioning"];
-    // 开启版本控制
+    //开启版本控制
     QCloudPutBucketVersioningRequest* request = [[QCloudPutBucketVersioningRequest alloc] init];
     request.bucket =@"{{tempBucket}}";
     QCloudBucketVersioningConfiguration* versioningConfiguration =
@@ -309,7 +309,7 @@
     versioningConfiguration.status = QCloudCOSBucketVersioningStatusEnabled;
 
     [request setFinishBlock:^(id outputObject, NSError* error) {
-        //可以从 outputObject 中获取服务器返回的header信息
+        //可以从 outputObject 中获取服务器返回的 header 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -357,7 +357,7 @@
     request.configuation = replConfiguration;
 
     [request setFinishBlock:^(id outputObject, NSError* error) {
-        //可以从 outputObject 中获取服务器返回的header信息
+        //可以从 outputObject 中获取服务器返回的 header 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -389,7 +389,7 @@
     request.bucket = @"{{tempBucket}}";
 
     [request setFinishBlock:^(id outputObject, NSError* error) {
-        //可以从 outputObject 中获取服务器返回的header信息
+        //可以从 outputObject 中获取服务器返回的 header 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -408,7 +408,7 @@
     //设置一些上传的参数
     put.initMultipleUploadFinishBlock = ^(QCloudInitiateMultipartUploadResult * multipleUploadInitResult,
         QCloudCOSXMLUploadObjectResumeData resumeData) {
-        //在初始化分块上传完成以后会回调该block，在这里可以获取 resumeData，
+        //在初始化分块上传完成以后会回调该 block，在这里可以获取 resumeData，
         //并且可以通过 resumeData 生成一个分块上传的请求
         QCloudCOSXMLUploadObjectRequest* request = [QCloudCOSXMLUploadObjectRequest
             requestWithRequestData:resumeData];
@@ -419,7 +419,7 @@
             totalBytesExpectedToSend);
     }];
     [put setFinishBlock:^(QCloudUploadObjectResult *result, NSError* error) {
-        //可以从result获取结果
+        //可以从 result 获取结果
         XCTAssertNotNil(error);
         [exp fulfill];
     }];
@@ -445,12 +445,12 @@
     XCTestExpectation* exp = [self expectationWithDescription:@"transfer-copy-object"];
     QCloudCOSXMLCopyObjectRequest* request = [[QCloudCOSXMLCopyObjectRequest alloc] init];
 
-    request.bucket = @"{{persistBucket}}";//目的<BucketName-APPID>，需要是公有读或者在当前账号有权限
+    request.bucket = @"{{persistBucket}}";//目的 <BucketName-APPID>，需要是公有读或者在当前账号有权限
     request.object = @"{{object}}";//目的文件名称
-    //文件来源<BucketName-APPID>，需要是公有读或者在当前账号有权限
+    //文件来源 <BucketName-APPID>，需要是公有读或者在当前账号有权限
     request.sourceBucket = @"{{{copySourceBucket}}}";
     request.sourceObject = @"{{copySourceObject}}";//源文件名称
-    request.sourceAPPID = @"{{appId}}";//源文件的appid
+    request.sourceAPPID = @"{{appId}}";//源文件的 APPID
     request.sourceRegion= @"{{region}}";//来源的地域
 
     [request setFinishBlock:^(QCloudCopyObjectResult* result, NSError* error) {
@@ -524,8 +524,8 @@
     // .cssg-body-start: [get-object]
     XCTestExpectation* exp = [self expectationWithDescription:@"get-object"];
     QCloudGetObjectRequest* request = [QCloudGetObjectRequest new];
-    //设置下载的路径 URL，如果设置了，文件将会被下载到指定路径中。
-    // 如果该参数没有设置，那么文件将会被下载至内存里，存放在在 finishBlock 的 	outputObject 里。
+    //设置下载的路径 URL，如果设置了，文件将会被下载到指定路径中
+    //如果未设置该参数，那么文件将会被下载至内存里，存放在在 finishBlock 的 outputObject 里
     request.downloadingURL = [NSURL URLWithString:QCloudTempFilePathWithExtension(@"downding")];
     request.object = @"{{object}}";
     request.bucket = @"{{persistBucket}}";
@@ -575,7 +575,7 @@
     //源对象所在的路径
     request.objectCopySource = @"{{{copySourceBucket}}}.cos.{{region}}.myqcloud.com/{{copySourceObject}}";
     [request setFinishBlock:^(QCloudCopyObjectResult * _Nonnull result, NSError * _Nonnull error) {
-        // result 返回具体信息
+        //result 返回具体信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -653,7 +653,7 @@
     initrequest.object = @"{{object}}";
 
     [initrequest setFinishBlock:^(QCloudInitiateMultipartUploadResult* outputObject, NSError *error) {
-        // 获取分片上传的 uploadId，后续的上传都需要这个 id，请保存起来后续使用
+        //获取分片上传的 uploadId，后续的上传都需要这个 ID，请保存以备后续使用
         self.uploadId = outputObject.uploadId;
         XCTAssertNil(error);
         [exp fulfill];
@@ -672,16 +672,16 @@
     request.object = @"{{object}}";
     request.partNumber = 1;
     //标识本次分块上传的 ID；使用 Initiate Multipart Upload 接口初始化分块上传时会得到一个 uploadId
-    // 该 ID 不但唯一标识这一分块数据，也标识了这分块数据在整个文件内的相对位置
+    //该 ID 不但唯一标识这一分块数据，也标识了这分块数据在整个文件内的相对位置
     request.uploadId = @"{{uploadId}}";
     request.uploadId = self.uploadId;
-    //上传的数据：支持NSData*，NSURL(本地url)和QCloudFileOffsetBody *三种类型
+    //上传的数据：支持 NSData*，NSURL(本地 URL) 和 QCloudFileOffsetBody * 三种类型
     request.body = [@"testFileContent" dataUsingEncoding:NSUTF8StringEncoding];
 
     [request setSendProcessBlock:^(int64_t bytesSent,
                                    int64_t totalBytesSent,
                                    int64_t totalBytesExpectedToSend) {
-        // 上传进度信息
+        //上传进度信息
     }];
     [request setFinishBlock:^(QCloudUploadPartResult* outputObject, NSError *error) {
         XCTAssertNil(error);
@@ -705,9 +705,9 @@
     QCloudUploadPartCopyRequest* request = [[QCloudUploadPartCopyRequest alloc] init];
     request.bucket = @"{{persistBucket}}";
     request.object = @"{{object}}";
-    //  源文件 URL 路径，可以通过 versionid 子资源指定历史版本
+    //源文件 URL 路径，可以通过 versionid 子资源指定历史版本
     request.source = @"{{{copySourceBucket}}}.cos.{{region}}.myqcloud.com/{{copySourceObject}}";
-    // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
+    //在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
     request.uploadID = @"{{uploadId}}";
     request.uploadID = self.uploadId;
     request.partNumber = 1; // 标志当前分块的序号
@@ -734,7 +734,7 @@
     QCloudListMultipartRequest* request = [QCloudListMultipartRequest new];
     request.object = @"{{object}}";
     request.bucket = @"{{persistBucket}}";
-    // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
+    //在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
     request.uploadId = @"{{uploadId}}";
     request.uploadId = self.uploadId;
 
@@ -756,10 +756,10 @@
     QCloudCompleteMultipartUploadRequest *completeRequst = [QCloudCompleteMultipartUploadRequest new];
     completeRequst.object = @"{{object}}";
     completeRequst.bucket = @"{{persistBucket}}";
-    //本次要查询的分块上传的uploadId,可从初始化分块上传的请求结果QCloudInitiateMultipartUploadResult中得到
+    //本次要查询的分块上传的 uploadId，可从初始化分块上传的请求结果 QCloudInitiateMultipartUploadResult 中得到
     completeRequst.uploadId = @"{{uploadId}}";
     completeRequst.uploadId = self.uploadId;
-    // 已上传分片的信息
+    //已上传分片的信息
     QCloudCompleteMultipartUploadInfo *partInfo = [QCloudCompleteMultipartUploadInfo new];
     partInfo.parts = self.parts;
     completeRequst.parts = partInfo;
@@ -782,7 +782,7 @@
     QCloudAbortMultipfartUploadRequest *abortRequest = [QCloudAbortMultipfartUploadRequest new];
     abortRequest.object = @"{{object}}";
     abortRequest.bucket = @"{{persistBucket}}";
-    //本次要查询的分块上传的uploadId,可从初始化分块上传的请求结果QCloudInitiateMultipartUploadResult中得到
+    //本次要查询的分块上传的 uploadId，可从初始化分块上传的请求结果 QCloudInitiateMultipartUploadResult 中得到
     abortRequest.uploadId = @"{{uploadId}}";
     abortRequest.uploadId = self.uploadId;
 
