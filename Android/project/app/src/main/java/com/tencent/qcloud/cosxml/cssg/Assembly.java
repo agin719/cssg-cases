@@ -148,13 +148,13 @@ public class Assembly {
 
         CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
                 .setRegion(region)
-	            .isHttps(true) // 使用 https 请求, 默认 http 请求
+	            .isHttps(true) // 使用 HTTPS 请求，默认为 HTTP 请求
                 .builder();
 
         /**
-         * 获取授权服务的 url 地址
+         * 获取授权服务的 URL 地址
          */
-        URL url = null; // 后台授权服务的 url 地址
+        URL url = null; // 后台授权服务的 URL 地址
         try {
             url = new URL("your_auth_server_url");
         } catch (MalformedURLException e) {
@@ -163,7 +163,7 @@ public class Assembly {
         }
 
         /**
-         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥。
+         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥
          */
         QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(new HttpRequest.Builder<String>()
                 .url(url)
@@ -203,14 +203,14 @@ public class Assembly {
         // .cssg-body-start: [global-init-custom]
         String region = "{{{region}}}";
 
-        //创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
+        // 创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
         CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
                .setRegion(region)
-        	     .isHttps(true) // 使用 https 请求, 默认 http 请求
+        	   .isHttps(true) // 使用 HTTPS 请求, 默认为 HTTP 请求
                .builder();
 
         /**
-         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥。
+         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥
          */
         QCloudCredentialProvider credentialProvider = new MyCredentialProvider();
 
@@ -222,20 +222,20 @@ public class Assembly {
         // .cssg-body-start: [global-init-secret]
         String region = "{{{region}}}";
 
-        //创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
+        // 创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
         CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
                 .setRegion(region)
-                .isHttps(true) // 使用 https 请求, 默认 http 请求
+                .isHttps(true) // 使用 HTTPS 请求, 默认为 HTTP 请求
                 .builder();
 
         String secretId = "{{{secretId}}}"; //永久密钥 secretId
         String secretKey ="{{{secretKey}}}"; //永久密钥 secretKey
 
         /**
-         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥。
+         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥
          * @parma secretId 永久密钥 secretId
          * @param secretKey 永久密钥 secretKey
-         * @param keyDuration 密钥有效期,单位为秒
+         * @param keyDuration 密钥有效期，单位为秒
          */
         QCloudCredentialProvider credentialProvider = new ShortTimeCredentialProvider(secretId, secretKey, 300);
 
@@ -247,7 +247,7 @@ public class Assembly {
     public void method2() {
         // .cssg-body-start: [get-service]
         GetServiceRequest getServiceRequest = new GetServiceRequest();
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         getServiceRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -282,28 +282,28 @@ public class Assembly {
         String bucket = "{{{tempBucket}}}";
         PutBucketRequest putBucketRequest = new PutBucketRequest(bucket);
 
-        //定义存储桶的 ACL 属性。有效值：private，public-read-write，public-read；默认值：private
+        // 定义存储桶的 ACL 属性。有效值：private，public-read-write，public-read；默认值：private
         putBucketRequest.setXCOSACL("private");
 
-        //赋予被授权者读的权限
+        // 赋予被授权者读的权限
         ACLAccount readACLS = new ACLAccount();
         readACLS.addAccount("{{{uin}}}", "{{{uin}}}");
         putBucketRequest.setXCOSGrantRead(readACLS);
 
-        //赋予被授权者写的权限
+        // 赋予被授权者写的权限
         ACLAccount writeACLS = new ACLAccount();
         writeACLS.addAccount("{{{uin}}}", "{{{uin}}}");
         putBucketRequest.setXCOSGrantRead(writeACLS);
 
-        //赋予被授权者读写的权限
+        // 赋予被授权者读写的权限
         ACLAccount writeandReadACLS = new ACLAccount();
         writeandReadACLS.addAccount("{{{uin}}}", "{{{uin}}}");
         putBucketRequest.setXCOSGrantRead(writeandReadACLS);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         putBucketRequest.setSignParamsAndHeaders(null, headerKeys);
-        //使用同步方法
+        // 使用同步方法
         try {
             PutBucketResult putBucketResult = cosXmlService.putBucket(putBucketRequest);
         } catch (CosXmlClientException e) {
@@ -334,11 +334,11 @@ public class Assembly {
         // .cssg-body-start: [head-bucket]
         String bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         HeadBucketRequest headBucketRequest = new HeadBucketRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         headBucketRequest.setSignParamsAndHeaders(null, headerKeys);
-        //使用同步方法
+        // 使用同步方法
         try {
             HeadBucketResult headBucketResult = cosXmlService.headBucket(headBucketRequest);
         } catch (CosXmlClientException e) {
@@ -369,7 +369,7 @@ public class Assembly {
         // .cssg-body-start: [delete-bucket]
         String bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         DeleteBucketRequest deleteBucketRequest = new DeleteBucketRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         deleteBucketRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -405,24 +405,24 @@ public class Assembly {
         String bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         PutBucketACLRequest putBucketACLRequest = new PutBucketACLRequest(bucket);
 
-        //设置 bucket 访问权限
+        // 设置 bucket 访问权限
         putBucketACLRequest.setXCOSACL("public-read");
 
-        //赋予被授权者读的权限
+        // 赋予被授权者读的权限
         ACLAccount readACLS = new ACLAccount();
         readACLS.addAccount("{{{uin}}}", "{{{uin}}}");
         putBucketACLRequest.setXCOSGrantRead(readACLS);
 
-        //赋予被授权者写的权限
+        // 赋予被授权者写的权限
         ACLAccount writeACLS = new ACLAccount();
         writeACLS.addAccount("{{{uin}}}", "{{{uin}}}");
         putBucketACLRequest.setXCOSGrantRead(writeACLS);
 
-        //赋予被授权者读写的权限
+        // 赋予被授权者读写的权限
         ACLAccount writeandReadACLS = new ACLAccount();
         writeandReadACLS.addAccount("{{{uin}}}", "{{{uin}}}");
         putBucketACLRequest.setXCOSGrantRead(writeandReadACLS);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         putBucketACLRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -458,7 +458,7 @@ public class Assembly {
         // .cssg-body-start: [get-bucket-acl]
         String bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         GetBucketACLRequest getBucketACLRequest = new GetBucketACLRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         getBucketACLRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -498,9 +498,9 @@ public class Assembly {
         /**
          * CORSConfiguration.cORSRule: 跨域访问配置信息
          * corsRule.id： 配置规则的 ID
-         * corsRule.allowedOrigin: 允许的访问来源，支持通配符 * , 格式为：协议://域名[:端口]，如：http://www.qq.com
+         * corsRule.allowedOrigin: 允许的访问来源，支持通配符 *，格式为：协议://域名[:端口]，例如：http://www.qq.com
          * corsRule.maxAgeSeconds: 设置 OPTIONS 请求得到结果的有效期
-         * corsRule.allowedMethod: 允许的 HTTP 操作，如：GET，PUT，HEAD，POST，DELETE
+         * corsRule.allowedMethod: 允许的 HTTP 操作，例如：GET，PUT，HEAD，POST，DELETE
          * corsRule.allowedHeader：在发送 OPTIONS 请求时告知服务端，接下来的请求可以使用哪些自定义的 HTTP 请求头部，支持通配符 *
          * corsRule.exposeHeader： 设置浏览器可以接收到的来自服务端的自定义头部信息
          */
@@ -525,10 +525,10 @@ public class Assembly {
         exposeHeaders.add("x-cos-meta-1");
         corsRule.exposeHeader = exposeHeaders;
 
-        //设置跨域访问配置信息
+        // 设置跨域访问配置信息
         putBucketCORSRequest.addCORSRule(corsRule);
 
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         putBucketCORSRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -564,11 +564,11 @@ public class Assembly {
         // .cssg-body-start: [get-bucket-cors]
         String bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         GetBucketCORSRequest getBucketCORSRequest = new GetBucketCORSRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         getBucketCORSRequest.setSignParamsAndHeaders(null, headerKeys);
-        //使用同步方法
+        // 使用同步方法
         try {
             GetBucketCORSResult getBucketCORSResult = cosXmlService.getBucketCORS(getBucketCORSRequest);
         } catch (CosXmlClientException e) {
@@ -599,7 +599,7 @@ public class Assembly {
         // .cssg-body-start: [delete-bucket-cors]
         String bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         DeleteBucketCORSRequest deleteBucketCORSRequest = new DeleteBucketCORSRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         deleteBucketCORSRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -647,7 +647,7 @@ public class Assembly {
         transition.storageClass = COSStorageClass.STANDARD.getStorageClass();
         rule.transition = transition;
         putBucketLifecycleRequest.setRuleList(rule);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         putBucketLifecycleRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -683,7 +683,7 @@ public class Assembly {
         // .cssg-body-start: [get-bucket-lifecycle]
         String bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         GetBucketLifecycleRequest getBucketLifecycleRequest = new GetBucketLifecycleRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         getBucketLifecycleRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -719,11 +719,11 @@ public class Assembly {
         // .cssg-body-start: [delete-bucket-lifecycle]
         String bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         DeleteBucketLifecycleRequest deleteBucketLifecycleRequest = new DeleteBucketLifecycleRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         deleteBucketLifecycleRequest.setSignParamsAndHeaders(null, headerKeys);
-        //使用同步方法
+        // 使用同步方法
         try {
             DeleteBucketLifecycleResult deleteBucketLifecycleResult = cosXmlService.deleteBucketLifecycle(deleteBucketLifecycleRequest);
 
@@ -756,8 +756,8 @@ public class Assembly {
         // .cssg-body-start: [put-bucket-versioning]
         String bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         PutBucketVersioningRequest putBucketVersioningRequest = new PutBucketVersioningRequest(bucket);
-        putBucketVersioningRequest.setEnableVersion(true); //true: 开启版本控制; false:暂停版本控制
-        //设置签名校验Host, 默认校验所有Header
+        putBucketVersioningRequest.setEnableVersion(true); //true：开启版本控制; false：暂停版本控制
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         putBucketVersioningRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -792,7 +792,7 @@ public class Assembly {
         // .cssg-body-start: [get-bucket-versioning]
         String bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         GetBucketVersioningRequest getBucketVersioningRequest = new GetBucketVersioningRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         getBucketVersioningRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -825,18 +825,18 @@ public class Assembly {
     public void method16() {
         // .cssg-body-start: [put-bucket-replication]
         String bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
-        String ownerUin = "{{{uin}}}"; //发起者身份标示:OwnerUin
-        String subUin = "{{{uin}}}"; //发起者身份标示:SubUin
+        String ownerUin = "{{{uin}}}"; //发起者身份标示：OwnerUin
+        String subUin = "{{{uin}}}"; //发起者身份标示：SubUin
         PutBucketReplicationRequest putBucketReplicationRequest = new PutBucketReplicationRequest(bucket);
         putBucketReplicationRequest.setReplicationConfigurationWithRole(ownerUin, subUin);
         PutBucketReplicationRequest.RuleStruct ruleStruct = new PutBucketReplicationRequest.RuleStruct();
         ruleStruct.id = "replication_01"; //用来标注具体 Rule 的名称
-        ruleStruct.isEnable = true; //标识 Rule 是否生效 :true, 生效； false, 不生效
+        ruleStruct.isEnable = true; //标识 Rule 是否生效。true：生效；false：不生效
         ruleStruct.region = "{{{replicationDestBucketRegion}}}"; //目标存储桶地域信息
         ruleStruct.bucket = "{{{replicationDestBucket}}}";  // 目标存储桶
         ruleStruct.prefix = "34"; //前缀匹配策略，
         putBucketReplicationRequest.setReplicationConfigurationWithRule(ruleStruct);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         putBucketReplicationRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -870,7 +870,7 @@ public class Assembly {
         // .cssg-body-start: [get-bucket-replication]
         String bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         GetBucketReplicationRequest getBucketReplicationRequest = new GetBucketReplicationRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        //设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         getBucketReplicationRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -905,7 +905,7 @@ public class Assembly {
         // .cssg-body-start: [delete-bucket-replication]
         String bucket = "{{{tempBucket}}}"; //格式：BucketName-APPID
         DeleteBucketReplicationRequest deleteBucketReplicationRequest = new DeleteBucketReplicationRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         deleteBucketReplicationRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -993,9 +993,9 @@ public class Assembly {
 
         // prefix 表示列出的 object 的 key 以 prefix 开始
         getBucketRequest.setPrefix("images/");
-        // delimiter 表示分隔符, 设置为 / 表示列出当前目录下的 object, 设置为空表示列出所有的 object
+        // delimiter 表示分隔符，设置为 / 表示列出当前目录下的 object, 设置为空表示列出所有的 object
         getBucketRequest.setDelimiter("/");
-        // 设置最大遍历出多少个对象, 一次 listobject 最大支持1000
+        // 设置最大遍历出多少个对象，一次 listobject 最大支持1000
         getBucketRequest.setMaxKeys(100);
         GetBucketResult getBucketResult = null;
         do {
@@ -1010,7 +1010,7 @@ public class Assembly {
                 assertError(e);
                 return;
             }
-            // commonPrefixs 表示表示被 delimiter 截断的路径, 例如 delimter 设置为 /, commonPrefixs 则表示子目录的路径
+            // commonPrefixs 表示表示被 delimiter 截断的路径，例如 delimter 设置为 /，commonPrefixs 则表示子目录的路径
             List<ListBucket.CommonPrefixes> commonPrefixs = getBucketResult.listBucket.commonPrefixesList;
 
             // contents 表示列出的 object 列表
@@ -1026,7 +1026,7 @@ public class Assembly {
     public void method20() {
         // .cssg-body-start: [put-object]
         String bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
-        String cosPath = "{{{object}}}"; //对象位于存储桶中的位置标识符，即对象键。如 cosPath = "text.txt";
+        String cosPath = "{{{object}}}"; //对象位于存储桶中的位置标识符，即对象键。例如 cosPath = "text.txt";
         String srcPath = new File(context.getExternalCacheDir(), "{{{object}}}").toString();//"本地文件的绝对路径";
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, cosPath, srcPath);
 
@@ -1036,7 +1036,7 @@ public class Assembly {
                 // todo Do something to update progress...
             }
         });
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         putObjectRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -1066,7 +1066,7 @@ public class Assembly {
         });
 
 
-        //上传字节数组
+        // 上传字节数组
         byte[] data = "this is a test".getBytes(Charset.forName("UTF-8"));
         putObjectRequest = new PutObjectRequest(bucket, cosPath, data);
         putObjectRequest.setProgressListener(new CosXmlProgressListener() {
@@ -1086,7 +1086,7 @@ public class Assembly {
         }
 
 
-        //上传字节流
+        // 上传字节流
         InputStream inputStream = new ByteArrayInputStream("this is a test".getBytes(Charset.forName("UTF-8")));
         putObjectRequest = new PutObjectRequest(bucket, cosPath, inputStream);
         putObjectRequest.setProgressListener(new CosXmlProgressListener() {
@@ -1111,7 +1111,7 @@ public class Assembly {
     public void method21() {
         // .cssg-body-start: [post-object]
         String bucket = "{{{persistBucket}}}"; //存储桶名称，格式：BucketName-APPID
-        String cosPath = "{{{object}}}"; //对象位于存储桶中的位置标识符，即对象键。如 cosPath = "text.txt";
+        String cosPath = "{{{object}}}"; //对象位于存储桶中的位置标识符，即对象键。例如 cosPath = "text.txt";
         String srcPath = new File(context.getExternalCacheDir(), "{{{object}}}").toString();//"本地文件的绝对路径";
 
         PostObjectRequest postObjectRequest = new PostObjectRequest(bucket, cosPath, srcPath);
@@ -1122,7 +1122,7 @@ public class Assembly {
                 // todo Do something to update progress...
             }
         });
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         postObjectRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -1159,11 +1159,11 @@ public class Assembly {
         String bucket = bucket = "{{{persistBucket}}}"; //存储桶名称，格式：BucketName-APPID
         String cosPath = "{{{object}}}"; //对象位于存储桶中的位置标识符，即对象键
         HeadObjectRequest headObjectRequest = new HeadObjectRequest(bucket, cosPath);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         headObjectRequest.setSignParamsAndHeaders(null, headerKeys);
-        //使用同步方法
+        // 使用同步方法
         try {
             HeadObjectResult headObjectResult = cosXmlService.headObject(headObjectRequest);
         } catch (CosXmlClientException e) {
@@ -1195,7 +1195,7 @@ public class Assembly {
         // .cssg-body-start: [get-object]
         String bucket = "{{{persistBucket}}}"; //存储桶名称，格式：BucketName-APPID
         String cosPath = "{{{object}}}"; //对象位于存储桶中的位置标识符，即对象键
-        String savePath = context.getExternalCacheDir().toString();//本地路径
+        String savePath = context.getExternalCacheDir().toString(); //本地路径
 
         GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, cosPath, savePath);
         getObjectRequest.setProgressListener(new CosXmlProgressListener() {
@@ -1204,11 +1204,11 @@ public class Assembly {
                 // todo Do something to update progress...
             }
         });
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         getObjectRequest.setSignParamsAndHeaders(null, headerKeys);
-        //使用同步方法下载
+        // 使用同步方法下载
         try {
             GetObjectResult getObjectResult =cosXmlService.getObject(getObjectRequest);
         } catch (CosXmlClientException e) {
@@ -1243,7 +1243,7 @@ public class Assembly {
         String origin = "https://cloud.tencent.com";
         String accessMethod = "PUT";
         OptionObjectRequest optionObjectRequest = new OptionObjectRequest(bucket, cosPath, origin, accessMethod);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         optionObjectRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -1277,17 +1277,17 @@ public class Assembly {
 
     public void method25() {
         // .cssg-body-start: [copy-object]
-        String sourceAppid = "{{{appId}}}"; //账号 appid
-        String sourceBucket = "{{{copySourceBucket}}}"; //"源对象所在的存储桶
+        String sourceAppid = "{{{appId}}}"; //账号 APPID
+        String sourceBucket = "{{{copySourceBucket}}}"; //源对象所在的存储桶
         String sourceRegion = "{{{region}}}"; //源对象的存储桶所在的地域
         String sourceCosPath = "{{{copySourceObject}}}"; //源对象键
-        //构造源对象属性
+        // 构造源对象属性
         CopyObjectRequest.CopySourceStruct copySourceStruct = new CopyObjectRequest.CopySourceStruct(sourceAppid, sourceBucket, sourceRegion, sourceCosPath);
         String bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
         String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键
 
         CopyObjectRequest copyObjectRequest = new CopyObjectRequest(bucket, cosPath, copySourceStruct);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         copyObjectRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -1325,7 +1325,7 @@ public class Assembly {
         String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键
 
         DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(bucket, cosPath);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         deleteObjectRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -1361,11 +1361,11 @@ public class Assembly {
         // .cssg-body-start: [delete-multi-object]
         String bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
         List<String> objectList = new ArrayList<String>();
-        objectList.add("{{{object}}}");//对象在存储桶中的位置标识符，即对象键
+        objectList.add("{{{object}}}"); //对象在存储桶中的位置标识符，即对象键
 
         DeleteMultiObjectRequest deleteMultiObjectRequest = new DeleteMultiObjectRequest(bucket, objectList);
         deleteMultiObjectRequest.setQuiet(true);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         deleteMultiObjectRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -1401,7 +1401,7 @@ public class Assembly {
         // .cssg-body-start: [list-multi-upload]
         String bucket = "{{{persistBucket}}}"; //格式：BucketName-APPID
         ListMultiUploadsRequest listMultiUploadsRequest = new ListMultiUploadsRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         listMultiUploadsRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -1436,10 +1436,10 @@ public class Assembly {
     public void method29() {
         // .cssg-body-start: [init-multi-upload]
         String bucket = "{{{persistBucket}}}"; //格式：BucketName-APPID
-        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
 
         InitMultipartUploadRequest initMultipartUploadRequest = new InitMultipartUploadRequest(bucket, cosPath);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         initMultipartUploadRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -1475,12 +1475,12 @@ public class Assembly {
     public void method30() {
         // .cssg-body-start: [list-parts]
         String bucket = "{{{persistBucket}}}"; //格式：BucketName-APPID
-        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         String uploadId = "{{{uploadId}}}";
         uploadId = this.uploadId;
 
         ListPartsRequest listPartsRequest = new ListPartsRequest(bucket, cosPath, uploadId);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         listPartsRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -1515,10 +1515,10 @@ public class Assembly {
     public void method31() {
         // .cssg-body-start: [upload-part]
         String bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
-        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键。
-        String uploadId ="{{{uploadId}}}"; //初始化分片上传返回的 uploadId
+        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键
+        String uploadId ="{{{uploadId}}}"; //初始化分块上传返回的 uploadId
         uploadId = this.uploadId;
-        int partNumber = 1; //分片块编号，必须从1开始递增
+        int partNumber = 1; //分块块编号，必须从1开始递增
         String srcPath = new File(context.getExternalCacheDir(), "{{{object}}}").toString(); //本地文件绝对路径
         UploadPartRequest uploadPartRequest = new UploadPartRequest(bucket, cosPath, partNumber, srcPath, uploadId);
 
@@ -1529,14 +1529,14 @@ public class Assembly {
                 Log.w("TEST","progress =" + (long)result + "%");
             }
         });
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         uploadPartRequest.setSignParamsAndHeaders(null, headerKeys);
         //使用同步方法上传
         try {
             UploadPartResult uploadPartResult = cosXmlService.uploadPart(uploadPartRequest);
-            String eTag = uploadPartResult.eTag; // 获取分片块的 eTag
+            String eTag = uploadPartResult.eTag; //获取分块块的 eTag
             this.part1Etag = eTag;
         } catch (CosXmlClientException e) {
             e.printStackTrace();
@@ -1566,28 +1566,28 @@ public class Assembly {
     public void method32() {
         // .cssg-body-start: [upload-part-copy]
         //具体步骤：
-        // 1. 调用 cosXmlService.initMultipartUpload(InitMultipartUploadRequest) 初始化分片,请参考 [InitMultipartUploadRequest 初始化分片](#InitMultipartUploadRequest)。
-        // 2. 调用 cosXmlService.copyObject(UploadPartCopyRequest) 完成分片复制。
-        // 3. 调用 cosXmlService.completeMultiUpload(CompleteMultiUploadRequest) 完成分片复制,请参考 [CompleteMultiUploadRequest 完成分片复制](#CompleteMultiUploadRequest)。
+        // 1. 调用 cosXmlService.initMultipartUpload(InitMultipartUploadRequest) 初始化分块,请参考 [InitMultipartUploadRequest 初始化分块](#InitMultipartUploadRequest)。
+        // 2. 调用 cosXmlService.copyObject(UploadPartCopyRequest) 完成分块复制。
+        // 3. 调用 cosXmlService.completeMultiUpload(CompleteMultiUploadRequest) 完成分块复制,请参考 [CompleteMultiUploadRequest 完成分块复制](#CompleteMultiUploadRequest)。
 
-        String sourceAppid = "{{{appId}}}"; //账号 appid
-        String sourceBucket = "{{{copySourceBucket}}}"; //"源对象所在的存储桶
+        String sourceAppid = "{{{appId}}}"; //账号 APPID
+        String sourceBucket = "{{{copySourceBucket}}}"; //源对象所在的存储桶
         String sourceRegion = "{{{region}}}"; //源对象的存储桶所在的地域
         String sourceCosPath = "{{{copySourceObject}}}"; //源对象键
-        //构造源对象属性
+        // 构造源对象属性
         CopyObjectRequest.CopySourceStruct copySourceStruct = new CopyObjectRequest.CopySourceStruct(sourceAppid, sourceBucket, sourceRegion, sourceCosPath);
 
         String bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
-        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键。
+        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键
 
         String uploadId = "{{{uploadId}}}";
         uploadId = this.uploadId;
-        int partNumber = 1; //分片编号
-        long start = 0;//复制源对象的开始位置
+        int partNumber = 1; //分块编号
+        long start = 0; //复制源对象的开始位置
         long end = 100; //复制源对象的结束位置
 
         UploadPartCopyRequest uploadPartCopyRequest = new UploadPartCopyRequest(bucket, cosPath, partNumber,  uploadId, copySourceStruct, start, end);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         uploadPartCopyRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -1624,7 +1624,7 @@ public class Assembly {
     public void method33() {
         // .cssg-body-start: [complete-multi-upload]
         String bucket = "{{{persistBucket}}}"; //格式：BucketName-APPID
-        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         String uploadId = "{{{uploadId}}}";
         uploadId = this.uploadId;
         int partNumber = 1;
@@ -1634,7 +1634,7 @@ public class Assembly {
         partNumberAndETag.put(partNumber, etag);
 
         CompleteMultiUploadRequest completeMultiUploadRequest = new CompleteMultiUploadRequest(bucket, cosPath, uploadId, partNumberAndETag);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         completeMultiUploadRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -1669,12 +1669,12 @@ public class Assembly {
     public void method34() {
         // .cssg-body-start: [abort-multi-upload]
         String bucket = "{{{persistBucket}}}"; //格式：BucketName-APPID
-        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         String uploadId = "{{{uploadId}}}";
         uploadId = this.uploadId;
 
         AbortMultiUploadRequest abortMultiUploadRequest = new AbortMultiUploadRequest(bucket, cosPath, uploadId);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         abortMultiUploadRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -1709,11 +1709,11 @@ public class Assembly {
     public void method35() {
         // .cssg-body-start: [restore-object]
         String bucket = "{{{persistBucket}}}"; //格式：BucketName-APPID
-        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         RestoreRequest restoreRequest = new RestoreRequest(bucket, cosPath);
-        restoreRequest.setExpireDays(5); // 保留 5天
+        restoreRequest.setExpireDays(5); // 保留5天
         restoreRequest.setTier(RestoreConfigure.Tier.Standard); // 标准恢复模式
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         restoreRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -1748,22 +1748,22 @@ public class Assembly {
     public void method36() {
         // .cssg-body-start: [put-object-acl]
         String bucket = "{{{persistBucket}}}"; //格式：BucketName-APPID
-        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         PutObjectACLRequest putObjectACLRequest = new PutObjectACLRequest(bucket, cosPath);
 
-        //设置 bucket 访问权限
+        // 设置 bucket 访问权限
         putObjectACLRequest.setXCOSACL("public-read");
 
-        //赋予被授权者读的权限
+        // 赋予被授权者读的权限
         ACLAccount readACLS = new ACLAccount();
         readACLS.addAccount("{{{uin}}}", "{{{uin}}}");
         putObjectACLRequest.setXCOSGrantRead(readACLS);
 
-        //赋予被授权者读写的权限
+        // 赋予被授权者读写的权限
         ACLAccount writeandReadACLS = new ACLAccount();
         writeandReadACLS.addAccount("{{{uin}}}", "{{{uin}}}");
         putObjectACLRequest.setXCOSGrantRead(writeandReadACLS);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         putObjectACLRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -1798,9 +1798,9 @@ public class Assembly {
     public void method37() {
         // .cssg-body-start: [get-object-acl]
         String bucket = "{{{persistBucket}}}"; //格式：BucketName-APPID
-        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         GetObjectACLRequest getBucketACLRequest = new GetObjectACLRequest(bucket, cosPath);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         getBucketACLRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -1837,22 +1837,22 @@ public class Assembly {
         // 初始化 TransferConfig
         TransferConfig transferConfig = new TransferConfig.Builder().build();
 
-        /*若有特殊要求，则可以如下进行初始化定制。如限定当对象 >= 2M 时，启用分片上传，且分片上传的分片大小为 1M, 当源对象大于 5M 时启用分片复制，且分片复制的大小为 5M。*/
+        /*若有特殊要求，则可以如下进行初始化定制。例如限定当对象 >= 2M 时，启用分块上传，且分块上传的分块大小为1M，当源对象大于5M时启用分块复制，且分块复制的大小为5M。*/
         transferConfig = new TransferConfig.Builder()
-                .setDividsionForCopy(5 * 1024 * 1024) // 是否启用分片复制的最小对象大小
-                .setSliceSizeForCopy(5 * 1024 * 1024) //分片复制时的分片大小
-                .setDivisionForUpload(2 * 1024 * 1024) // 是否启用分片上传的最小对象大小
-                .setSliceSizeForUpload(1024 * 1024) //分片上传时的分片大小
+                .setDividsionForCopy(5 * 1024 * 1024) // 是否启用分块复制的最小对象大小
+                .setSliceSizeForCopy(5 * 1024 * 1024) // 分块复制时的分块大小
+                .setDivisionForUpload(2 * 1024 * 1024) // 是否启用分块上传的最小对象大小
+                .setSliceSizeForUpload(1024 * 1024) // 分块上传时的分块大小
                 .build();
 
-        //初始化 TransferManager
+        // 初始化 TransferManager
         TransferManager transferManager = new TransferManager(cosXmlService, transferConfig);
 
         String bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
         String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即称对象键
-        String srcPath = new File(context.getExternalCacheDir(), "{{{object}}}").toString();//"本地文件的绝对路径";
-        String uploadId = null; //若存在初始化分片上传的 UploadId，则赋值对应的uploadId值用于续传;否则，赋值null。
-        //上传对象
+        String srcPath = new File(context.getExternalCacheDir(), "{{{object}}}").toString(); //本地文件的绝对路径
+        String uploadId = null; //若存在初始化分块上传的 UploadId，则赋值对应的 uploadId 值用于续传；否则，赋值 null
+        // 上传对象
         COSXMLUploadTask cosxmlUploadTask = transferManager.upload(bucket, cosPath, srcPath, uploadId);
 
         /**
@@ -1900,7 +1900,7 @@ public class Assembly {
         若有特殊要求，则可以如下操作：
          PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, cosPath, srcPath);
          putObjectRequest.setRegion(region); //设置存储桶所在的地域
-         putObjectRequest.setNeedMD5(true); //是否启用Md5校验
+         putObjectRequest.setNeedMD5(true); //是否启用 Md5 校验
          COSXMLUploadTask cosxmlUploadTask = transferManager.upload(putObjectRequest, uploadId);
         */
 
@@ -1922,8 +1922,8 @@ public class Assembly {
         Context applicationContext = context.getApplicationContext(); // application context
         String bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
         String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即称对象键
-        String savePathDir = context.getExternalCacheDir().toString();//本地目录路径
-        String savedFileName = "{{{object}}}";//本地保存的文件名，若不填（null）,则与cos上的文件名一样
+        String savePathDir = context.getExternalCacheDir().toString(); //本地目录路径
+        String savedFileName = "{{{object}}}";//本地保存的文件名，若不填（null），则与 COS 上的文件名一样
         //下载对象
         TransferConfig transferConfig = new TransferConfig.Builder().build();
         //初始化 TransferManager
@@ -1950,7 +1950,7 @@ public class Assembly {
                         Log.d("TEST",  "Failed: " + (exception == null ? serviceException.getMessage() : exception.toString()));
                     }
                 });
-        //设置任务状态回调, 可以查看任务过程
+        //设置任务状态回调，可以查看任务过程
         cosxmlDownloadTask.setTransferStateListener(new TransferStateListener() {
                     @Override
                     public void onStateChanged(TransferState state) {
@@ -1978,15 +1978,15 @@ public class Assembly {
 
     public void method40() {
         // .cssg-body-start: [transfer-copy-object]
-        String sourceAppid = "{{{appid}}}"; //账号 appid
-        String sourceBucket = "{{{copySourceBucket}}}"; //"源对象所在的存储桶
+        String sourceAppid = "{{{appid}}}"; //账号 APPID
+        String sourceBucket = "{{{copySourceBucket}}}"; //源对象所在的存储桶
         String sourceRegion = "{{{region}}}"; //源对象的存储桶所在的地域
         String sourceCosPath = "{{{sourceObject}}}"; //源对象的对象键
         //构造源对象属性
         CopyObjectRequest.CopySourceStruct copySourceStruct = new CopyObjectRequest.CopySourceStruct(sourceAppid, sourceBucket, sourceRegion, sourceCosPath);
 
         String bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
-        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键。
+        String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即对象键
 
         TransferConfig transferConfig = new TransferConfig.Builder().build();
         //初始化 TransferManager
@@ -2037,12 +2037,12 @@ public class Assembly {
         try {
 
         	String bucket = "{{{tempBucket}}}"; //存储桶名称
-        	String cosPath = "{{{object}}}"; //即对象在存储桶中的位置标识符。如 cosPath = "text.txt";
-        	String method = "PUT"; //请求 HTTP 方法.
+        	String cosPath = "{{{object}}}"; //即对象在存储桶中的位置标识符。例如 cosPath = "text.txt";
+        	String method = "PUT"; //请求 HTTP 方法
         	PresignedUrlRequest presignedUrlRequest = new PresignedUrlRequest(bucket, cosPath){
         	    @Override
                 public RequestBodySerializer getRequestBody() throws CosXmlClientException {
-                    //用于计算 put 等需要带上  body 的请求的签名URL
+                    //用于计算 put 等需要带上 body 的请求的签名 URL
                     return RequestBodySerializer.string("text/plain", "this is test");
                  }
             };
@@ -2080,7 +2080,7 @@ public class Assembly {
         // .cssg-body-start: [get-presign-download-url]
         try {
             String bucket = "{{{persistBucket}}}"; //存储桶名称
-            String cosPath = "{{{object}}}"; //即对象在存储桶中的位置标识符。如 cosPath = "text.txt";
+            String cosPath = "{{{object}}}"; //即对象在存储桶中的位置标识符。例如 cosPath = "text.txt";
             String method = "GET"; //请求 HTTP 方法.
             PresignedUrlRequest presignedUrlRequest = new PresignedUrlRequest(bucket, cosPath);
             presignedUrlRequest.setRequestMethod(method);
@@ -2093,9 +2093,9 @@ public class Assembly {
             String saveFileName = "{{{object}}}"; //本地文件名
             GetObjectRequest getObjectRequest = new GetObjectRequest("{{{persistBucket}}}", "{{{object}}}", savePath, saveFileName);
 
-            //设置上传请求预签名 URL
+            // 设置上传请求预签名 URL
             getObjectRequest.setRequestURL(urlWithSign);
-            //设置进度回调
+            // 设置进度回调
             getObjectRequest.setProgressListener(new CosXmlProgressListener() {
                     @Override
                     public void onProgress(long progress, long max) {
