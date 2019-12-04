@@ -51,7 +51,7 @@ class Assembly: XCTestCase,QCloudSignatureProvider,QCloudCredentailFenceQueueDel
     
     // .cssg-body-start: [swift-global-init]
     //AppDelegate.m
-    //第一步：注册默认的cos服务
+    //第一步：注册默认的 COS 服务
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let config = QCloudServiceConfiguration.init();
@@ -67,8 +67,8 @@ class Assembly: XCTestCase,QCloudSignatureProvider,QCloudCredentailFenceQueueDel
     }
     
     
-    //第二步：实现QCloudSignatureProvider协议
-    //实现签名的过程，我们推荐在服务器端实现签名的过程，具体请参考接下来的 “生成签名” 这一章。
+    //第二步：实现 QCloudSignatureProvider 协议
+    //实现签名的过程，我们推荐在服务器端实现签名的过程，详情请参考接下来的 “生成签名” 这一章。
     // .cssg-body-end
     
     // .cssg-body-start: [swift-global-init-fence-queue]
@@ -78,7 +78,7 @@ class Assembly: XCTestCase,QCloudSignatureProvider,QCloudCredentailFenceQueueDel
     
     func fenceQueue(_ queue: QCloudCredentailFenceQueue!, requestCreatorWithContinue continueBlock: QCloudCredentailFenceQueueContinue!) {
         let cre = QCloudCredential.init();
-        //在这里可以同步过程从服务器获取临时签名需要的secretID,secretKey,expiretionDate和token参数
+        //在这里可以同步过程从服务器获取临时签名需要的 secretID，secretKey，expiretionDate 和 token 参数
         cre.secretID = "COS_SECRETID";
         cre.secretKey = "COS_SECRETKEY";
         cre.token = "COS_TOKEN";
@@ -111,7 +111,7 @@ class Assembly: XCTestCase,QCloudSignatureProvider,QCloudCredentailFenceQueueDel
             if result == nil {
                 print(error!);
             } else {
-                //从result中获取返回信息
+                //从 result 中获取返回信息
                 print(result!);
             }
             exception .fulfill();
@@ -186,7 +186,7 @@ func method5() {
     let exception = XCTestExpectation.init(description: "putBucketACL exception");
     let putBucketACLReq = QCloudPutBucketACLRequest.init();
     putBucketACLReq.bucket = "{{tempBucket}}";
-    let appTD = "1131975903";//授予全新的账号ID
+    let appTD = "1131975903";//授予全新的账号 ID
     let ownerIdentifier = "qcs::cam::uin/\(appTD):uin/\(appTD)";
     let grantString = "id=\"\(ownerIdentifier)\"";
     putBucketACLReq.grantWrite = grantString;
@@ -510,9 +510,9 @@ func method18() {
     uploadRequest.body = dataBody!;
     uploadRequest.bucket = "{{persistBucket}}";
     uploadRequest.object = "{{object}}";
-    //设置一些上传的参数
+    //设置上传参数
     uploadRequest.initMultipleUploadFinishBlock = {(multipleUploadInitResult,resumeData) in
-        //在初始化分块上传完成以后会回调该block，在这里可以获取 resumeData，并且可以通过 resumeData 生成一个分块上传的请求
+        //在初始化分块上传完成以后会回调该 block，在这里可以获取 resumeData，并且可以通过 resumeData 生成一个分块上传的请求
         let resumeUploadRequest = QCloudCOSXMLUploadObjectRequest<AnyObject>.init(request: resumeData as Data?);
     }
     uploadRequest.sendProcessBlock = {(bytesSent , totalBytesSent , totalBytesExpectedToSend) in
@@ -524,7 +524,7 @@ func method18() {
         if error != nil{
             print(error!)
         }else{
-            ////从result中获取请求的结果
+            //从 result 中获取请求的结果
             print(result!);
         }
         exception.fulfill();
@@ -557,12 +557,12 @@ func method18() {
 func method19() {
     // .cssg-body-start: [swift-transfer-copy-object]
     let copyRequest =  QCloudCOSXMLCopyObjectRequest.init();
-    copyRequest.bucket = "{{persistBucket}}";//目的<BucketName-APPID>，需要是公有读或者在当前账号有权限
+    copyRequest.bucket = "{{persistBucket}}";//目的 <BucketName-APPID>，需要是公有读或者在当前账号有权限
     copyRequest.object = "{{object}}";//目的文件名称
-    //文件来源<BucketName-APPID>，需要是公有读或者在当前账号有权限
+    //文件来源 <BucketName-APPID>，需要是公有读或者在当前账号有权限
     copyRequest.sourceBucket = "{{{copySourceBucket}}}";
     copyRequest.sourceObject = "{{copySourceObject}}";//源文件名称
-    copyRequest.sourceAPPID = "{{appId}}";//源文件的appid
+    copyRequest.sourceAPPID = "{{appId}}";//源文件的 APPID
     copyRequest.sourceRegion = "{{region}}";//来源的地域
     copyRequest.setFinish { (copyResult, error) in
         if error != nil{
@@ -798,7 +798,7 @@ func method29() {
         if error != nil{
             print(error!);
         }else{
-            //获取分片上传的 uploadId，后续的上传都需要这个 id，请保存起来后续使用
+            //获取分片上传的 uploadId，后续的上传都需要这个 ID，请保存以备后续使用
             self.uploadId = result!.uploadId;
             print(result!.uploadId);
         }
@@ -818,7 +818,7 @@ func method30() {
     uploadPart.object = "{{object}}";
     uploadPart.partNumber = 1;
     //标识本次分块上传的 ID；使用 Initiate Multipart Upload 接口初始化分块上传时会得到一个 uploadId
-    // 该 ID 不但唯一标识这一分块数据，也标识了这分块数据在整个文件内的相对位置
+    //该 ID 不但唯一标识这一分块数据，也标识了这分块数据在整个文件内的相对位置
     uploadPart.uploadId = "{{uploadId}}";
     if self.uploadId != nil {
          uploadPart.uploadId = self.uploadId!;
@@ -855,15 +855,15 @@ func method31() {
     let req = QCloudUploadPartCopyRequest.init();
     req.bucket = "{{persistBucket}}";
     req.object = "{{object}}";
-    //  源文件 URL 路径，可以通过 versionid 子资源指定历史版本
+    //源文件 URL 路径，可以通过 versionid 子资源指定历史版本
     req.source = "{{{copySourceBucket}}}.cos.{{region}}.myqcloud.com/{{copySourceObject}}";
-    // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
+    //在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
     req.uploadID = "{{uploadId}}";
     if self.uploadId != nil {
         req.uploadID = self.uploadId!;
     }
     
-    //// 标志当前分块的序号
+    //标志当前分块的序号
     req.partNumber = 1;
     req.setFinish { (result, error) in
         XCTAssertNil(error);
@@ -889,7 +889,7 @@ func method32()  {
     let req = QCloudListMultipartRequest.init();
     req.object = "{{object}}";
     req.bucket = "{{persistBucket}}";
-    // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID
+    //在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
     req.uploadId = "{{uploadId}}";
     if self.uploadId != nil {
         req.uploadId = self.uploadId!;
@@ -917,14 +917,14 @@ func method33()  {
     let  complete = QCloudCompleteMultipartUploadRequest.init();
     complete.bucket = "{{persistBucket}}";
     complete.object = "{{object}}";
-    ////本次要查询的分块上传的uploadId,可从初始化分块上传的请求结果QCloudInitiateMultipartUploadResult中得到
+    //本次要查询的分块上传的 uploadId，可从初始化分块上传的请求结果 QCloudInitiateMultipartUploadResult 中得到
     complete.uploadId = "{{uploadId}}";
     if self.uploadId != nil {
         complete.uploadId = self.uploadId!;
     }
     
     
-    // 已上传分片的信息
+    //已上传分片的信息
     let completeInfo = QCloudCompleteMultipartUploadInfo.init();
     if self.parts == nil {
         print("没有要完成的分片");
@@ -955,7 +955,7 @@ func method34(){
     let abort = QCloudAbortMultipfartUploadRequest.init();
     abort.bucket = "{{persistBucket}}";
     abort.object = "{{object}}";
-    //本次要查询的分块上传的uploadId,可从初始化分块上传的请求结果QCloudInitiateMultipartUploadResult中得到
+    //本次要查询的分块上传的 uploadId，可从初始化分块上传的请求结果 QCloudInitiateMultipartUploadResult 中得到
     abort.uploadId = "{{uploadId}}";
     if self.uploadId != nil {
         abort.uploadId = self.uploadId!;
@@ -1037,7 +1037,7 @@ func method37() {
         if error != nil{
             print(error!)
         }else{
-            //可以从 result的accessControlList中获取对象的 acl
+            //可以从 result 的 accessControlList 中获取对象的 ACL
             print(result!.accessControlList);
         }
         exception .fulfill();
