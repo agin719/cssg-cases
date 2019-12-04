@@ -3,19 +3,18 @@
   "sourcesRoot": "COS_Swift_TestTests/",
   "sourceExtension": ".swift",
 
+  "docRoot": "iOS SDK/",
+
   "testcaseTemplate": "TestCase.t",
 
   "snippetNameCommonPrefix": "swift-",
 
   "ignoreExpressionInDoc": [
-    "XCTestExpectation\\*\\s+exp\\s*=\\s*.+;\\r\\n",
-    "\\[exp\\s+fulfill\\];",
-    "\\[self\\s+waitForExpectationsWithTimeout:\\d+ handler:nil\\];",
+    "let\\s+exception\\s+=\\s+XCTestExpectation\\.init\\(description:\\s*.+\\);\\r\\n",
+    "exception\\s+\\.fulfill\\(\\);\\r\\n",
+    "self\\.wait\\(for:\\s*\\[exception\\],\\s*timeout:\\s*.+\\);",
     "XCTAssertNotNil\\(.+\\);",
-    "XCTAssertNil\\(.+\\);",
-    ".+\\s*=\\s*self\\.uploadId;",
-    "self\\.parts\\s*=\\s*.+;",
-    "\\[self\\.parts\\s*.+\\];"
+    "XCTAssertNil\\(.+\\);"
   ],
 
   "macro4doc": {

@@ -52,7 +52,7 @@
         credential.startDate = [[[NSDateFormatter alloc] init] dateFromString:@"start-time"];
         credential.experationDate = [[[NSDateFormatter alloc] init] dateFromString:@"expire-time"];
         credential.token = @"COS_TOKEN";
-        QCloudAuthentationV5Creator* creator = [[QCloudAuthentationV5Creator alloc] 
+        QCloudAuthentationV5Creator* creator = [[QCloudAuthentationV5Creator alloc]
             initWithCredential:credential];
         continueBlock(creator, nil);
     }

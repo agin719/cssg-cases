@@ -1,4 +1,3 @@
-let exception = XCTestExpectation.init(description: "putBucketReplication exception");
 let putBucketReplication = QCloudPutBucketReplicationRequest.init();
 putBucketReplication.bucket = "examplebucket-1250000000";
 
@@ -29,4 +28,3 @@ putBucketReplication.finishBlock = {(result,error) in
         exception.fulfill();
 }
 QCloudCOSXMLService.defaultCOSXML().putBucketRelication(putBucketReplication);
-self.wait(for: [exception], timeout: 100);

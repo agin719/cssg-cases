@@ -1,4 +1,3 @@
-let exception = XCTestExpectation.init(description: "putObjectACl exception");
 let getPresign  = QCloudGetPresignedURLRequest.init();
 getPresign.bucket = "examplebucket-1250000000" ;
 getPresign.httpMethod = "GET";
@@ -6,8 +5,5 @@ getPresign.object = "exampleobject";
 getPresign.setFinish { (result, error) in
     if error == nil{
         print(result?.presienedURL as Any);
-    }
-    exception .fulfill();
-}
+    }}
 QCloudCOSXMLService.defaultCOSXML().getPresignedURL(getPresign);
-self.wait(for: [exception], timeout: 100);

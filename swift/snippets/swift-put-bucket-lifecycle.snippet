@@ -1,4 +1,3 @@
-let exception = XCTestExpectation.init(description: "putBucketLifecycle exception");
 let putBucketLifecycleReq = QCloudPutBucketLifecycleRequest.init();
 putBucketLifecycleReq.bucket = "examplebucket-1250000000";
 
@@ -27,8 +26,5 @@ putBucketLifecycleReq.finishBlock = {(result,error) in
         print(error!);
     }else{
         print(result!);
-    }
-    exception .fulfill();
-}
+    }}
 QCloudCOSXMLService.defaultCOSXML().putBucketLifecycle(putBucketLifecycleReq);
-self.wait(for: [exception], timeout: 100);

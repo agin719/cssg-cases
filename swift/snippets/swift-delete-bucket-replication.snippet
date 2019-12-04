@@ -1,4 +1,3 @@
-let exception = XCTestExpectation.init(description: "deleteBucketReplication exception");
 let deleteBucketReplication = QCloudDeleteBucketReplicationRequest.init();
 deleteBucketReplication.bucket = "examplebucket-1250000000";
 deleteBucketReplication.finishBlock = {(result,error) in
@@ -10,4 +9,3 @@ deleteBucketReplication.finishBlock = {(result,error) in
     exception.fulfill();
 }
 QCloudCOSXMLService.defaultCOSXML().deleteBucketReplication(deleteBucketReplication);
-self.wait(for: [exception], timeout: 100);

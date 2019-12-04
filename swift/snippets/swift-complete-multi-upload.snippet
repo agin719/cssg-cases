@@ -1,4 +1,3 @@
-let exception = XCTestExpectation.init(description: "complete exception");
 let  complete = QCloudCompleteMultipartUploadRequest.init();
 complete.bucket = "examplebucket-1250000000";
 complete.object = "exampleobject";
@@ -24,8 +23,5 @@ complete.setFinish { (result, error) in
     }else{
         //从 result 中获取上传结果
         print(result!);
-    }
-    exception .fulfill();
-}
+    }}
 QCloudCOSXMLService.defaultCOSXML().completeMultipartUpload(complete);
-self.wait(for: [exception], timeout: 100);

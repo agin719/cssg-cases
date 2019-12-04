@@ -3,6 +3,8 @@
   "sourcesRoot": "COS_iOS_TestTests/",
   "sourceExtension": ".m",
 
+  "docRoot": "iOS SDK/",
+
   "testcaseTemplate": "TestCase.t",
 
   "ignoreExpressionInDoc": [

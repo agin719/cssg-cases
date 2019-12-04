@@ -45,7 +45,7 @@
     // 开启版本控制
     QCloudPutBucketVersioningRequest* request = [[QCloudPutBucketVersioningRequest alloc] init];
     request.bucket =@"bucket-cssg-ios-temp-1253653367";
-    QCloudBucketVersioningConfiguration* versioningConfiguration = 
+    QCloudBucketVersioningConfiguration* versioningConfiguration =
         [[QCloudBucketVersioningConfiguration alloc] init];
     request.configuration = versioningConfiguration;
     versioningConfiguration.status = QCloudCOSBucketVersioningStatusEnabled;
@@ -63,7 +63,7 @@
     XCTestExpectation* exp = [self expectationWithDescription:@"put-bucket-replication"];
     QCloudPutBucketReplicationRequest* request = [[QCloudPutBucketReplicationRequest alloc] init];
     request.bucket = @"bucket-cssg-ios-temp-1253653367";
-    QCloudBucketReplicationConfiguation* replConfiguration = [[QCloudBucketReplicationConfiguation 
+    QCloudBucketReplicationConfiguation* replConfiguration = [[QCloudBucketReplicationConfiguation
         alloc] init];
     replConfiguration.role = @"qcs::cam::uin/1278687956:uin/1278687956";
     QCloudBucketReplicationRule* rule = [[QCloudBucketReplicationRule alloc] init];

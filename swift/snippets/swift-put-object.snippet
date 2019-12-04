@@ -1,4 +1,3 @@
-let exception = XCTestExpectation.init(description: "putObject exception");
 let putObject = QCloudPutObjectRequest<AnyObject>.init();
 putObject.bucket = "examplebucket-1250000000";
 let dataBody:NSData? = "wrwrwrwrwrw".data(using: .utf8) as NSData?;
@@ -9,8 +8,5 @@ putObject.finishBlock = {(result,error) in
         print(error!);
     }else{
         print(result!);
-    }
-    exception .fulfill();
-}
+    }}
 QCloudCOSXMLService.defaultCOSXML().putObject(putObject);
-self.wait(for: [exception], timeout: 100);

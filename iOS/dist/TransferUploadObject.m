@@ -34,20 +34,20 @@
     put.bucket = @"bucket-cssg-test-1253653367";
     put.body = [@"testFileContent" dataUsingEncoding:NSUTF8StringEncoding];
     //设置一些上传的参数
-    put.initMultipleUploadFinishBlock = ^(QCloudInitiateMultipartUploadResult * multipleUploadInitResult, 
+    put.initMultipleUploadFinishBlock = ^(QCloudInitiateMultipartUploadResult * multipleUploadInitResult,
         QCloudCOSXMLUploadObjectResumeData resumeData) {
         //在初始化分块上传完成以后会回调该block，在这里可以获取 resumeData，
         //并且可以通过 resumeData 生成一个分块上传的请求
-        QCloudCOSXMLUploadObjectRequest* request = [QCloudCOSXMLUploadObjectRequest 
+        QCloudCOSXMLUploadObjectRequest* request = [QCloudCOSXMLUploadObjectRequest
             requestWithRequestData:resumeData];
     };
-    [put setSendProcessBlock:^(int64_t bytesSent, int64_t totalBytesSent, 
+    [put setSendProcessBlock:^(int64_t bytesSent, int64_t totalBytesSent,
         int64_t totalBytesExpectedToSend) {
-        NSLog(@"upload %lld totalSend %lld aim %lld", bytesSent, totalBytesSent, 
+        NSLog(@"upload %lld totalSend %lld aim %lld", bytesSent, totalBytesSent,
             totalBytesExpectedToSend);
     }];
-    [put setFinishBlock:^(id outputObject, NSError* error) {
-        //可以从 outputObject 中获取 response 中 etag 或者自定义头部等信息
+    [put setFinishBlock:^(QCloudUploadObjectResult *result, NSError* error) {
+        //可以从result获取结果
         XCTAssertNotNil(error);
         [exp fulfill];
     }];

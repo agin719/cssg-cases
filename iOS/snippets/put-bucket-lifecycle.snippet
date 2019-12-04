@@ -1,6 +1,6 @@
 QCloudPutBucketLifecycleRequest* request = [QCloudPutBucketLifecycleRequest new];
 request.bucket = @"examplebucket-1250000000";
-__block QCloudLifecycleConfiguration* lifecycleConfiguration = [[QCloudLifecycleConfiguration 
+__block QCloudLifecycleConfiguration* lifecycleConfiguration = [[QCloudLifecycleConfiguration
     alloc] init];
 QCloudLifecycleRule* rule = [[QCloudLifecycleRule alloc] init];
 rule.identifier = @"identifier";

@@ -9,7 +9,7 @@ try {
 
     //String urlWithSign = cosXmlService.getPresignedURL(getObjectRequest)； //直接使用 GetObjectRequest
 
-    String savePath = Environment.getExternalStorageDirectory().getPath(); //本地路径
+    String savePath = context.getExternalCacheDir().toString(); //本地路径
     String saveFileName = "exampleobject"; //本地文件名
     GetObjectRequest getObjectRequest = new GetObjectRequest("examplebucket-1250000000", "exampleobject", savePath, saveFileName);
 

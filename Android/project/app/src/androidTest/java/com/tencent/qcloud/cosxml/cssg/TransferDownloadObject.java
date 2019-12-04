@@ -1,6 +1,5 @@
 package com.tencent.qcloud.cosxml.cssg;
 
-import android.os.Environment;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.InstrumentationRegistry;
 
@@ -56,7 +55,7 @@ public class TransferDownloadObject {
         Context applicationContext = context.getApplicationContext(); // application context
         String bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
         String cosPath = "object4android"; //对象在存储桶中的位置标识符，即称对象键
-        String savePathDir = Environment.getExternalStorageDirectory().getPath();//本地目录路径
+        String savePathDir = context.getExternalCacheDir().toString();//本地目录路径
         String savedFileName = "object4android";//本地保存的文件名，若不填（null）,则与cos上的文件名一样
         //下载对象
         TransferConfig transferConfig = new TransferConfig.Builder().build();

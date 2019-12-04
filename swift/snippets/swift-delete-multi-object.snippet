@@ -1,4 +1,3 @@
-let exception = XCTestExpectation.init(description: "mutipleDel exception");
 let mutipleDel = QCloudDeleteMultipleObjectRequest.init();
 mutipleDel.bucket = "examplebucket-1250000000";
 
@@ -17,8 +16,5 @@ mutipleDel.setFinish { (result, error) in
         print(error!);
     }else{
         print(result!);
-    }
-    exception .fulfill();
-}
+    }}
 QCloudCOSXMLService.defaultCOSXML().deleteMultipleObject(mutipleDel);
-self.wait(for: [exception], timeout: 100);

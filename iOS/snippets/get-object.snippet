@@ -8,7 +8,7 @@ request.bucket = @"examplebucket-1250000000";
 [request setFinishBlock:^(id outputObject, NSError *error) {
     //可以从 outputObject 中获取 response 中 etag 或者自定义头部等信息
 }];
-[request setDownProcessBlock:^(int64_t bytesDownload, int64_t totalBytesDownload, 
+[request setDownProcessBlock:^(int64_t bytesDownload, int64_t totalBytesDownload,
     int64_t totalBytesExpectedToDownload) {
     //下载过程中的进度
 }];

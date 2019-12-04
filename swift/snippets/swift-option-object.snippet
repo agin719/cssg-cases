@@ -1,4 +1,3 @@
-let exception = XCTestExpectation.init(description: "optionsObject exception");
 let optionsObject = QCloudOptionsObjectRequest.init();
 optionsObject.object = "exampleobject";
 optionsObject.origin = "http://www.qcloud.com";
@@ -10,8 +9,5 @@ optionsObject.finishBlock = {(result,error) in
         print(error!);
     }else{
         print(result!);
-    }
-    exception .fulfill();
-}
+    }}
 QCloudCOSXMLService.defaultCOSXML().optionsObject(optionsObject);
-self.wait(for: [exception], timeout: 100);

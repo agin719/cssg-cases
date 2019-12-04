@@ -3,6 +3,9 @@
   "docExtension": ".md",
   "compileDist": "dist",
 
+  "docsRemoteRepo": "https://github.com/tencentyun/qcloud-documents.git",
+  "docRelativePath": "/product/存储与CDN/对象存储 4.0/SDK文档",
+
   "macro4doc": {
     "secretId": "COS_SECRETID",
     "secretKey": "COS_SECRETKEY",

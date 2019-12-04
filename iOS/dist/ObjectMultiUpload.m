@@ -99,7 +99,7 @@
     request.object = @"object4ios";
     request.bucket = @"bucket-cssg-test-1253653367";
     // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
-    request.uploadId = @"example-uploadId"; 
+    request.uploadId = @"example-uploadId";
     request.uploadId = self.uploadId;
     
     [request setFinishBlock:^(QCloudListPartsResult * _Nonnull result,
@@ -126,7 +126,7 @@
     partInfo.parts = self.parts;
     completeRequst.parts = partInfo;
     
-    [completeRequst setFinishBlock:^(QCloudUploadObjectResult * _Nonnull result, 
+    [completeRequst setFinishBlock:^(QCloudUploadObjectResult * _Nonnull result,
         NSError * _Nonnull error) {
         //从 result 中获取上传结果
         XCTAssertNil(error);

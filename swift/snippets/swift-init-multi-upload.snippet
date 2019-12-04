@@ -1,4 +1,3 @@
-let exception = XCTestExpectation.init(description: "initRequest exception");
 let initRequest = QCloudInitiateMultipartUploadRequest.init();
 initRequest.bucket = "examplebucket-1250000000";
 initRequest.object = "exampleobject";
@@ -9,8 +8,5 @@ initRequest.setFinish { (result, error) in
         //获取分片上传的 uploadId，后续的上传都需要这个 id，请保存起来后续使用
         self.uploadId = result!.uploadId;
         print(result!.uploadId);
-    }
-    exception .fulfill();
-}
+    }}
 QCloudCOSXMLService.defaultCOSXML().initiateMultipartUpload(initRequest);
-self.wait(for: [exception], timeout: 100);

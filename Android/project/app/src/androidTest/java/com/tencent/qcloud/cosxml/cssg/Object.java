@@ -1,6 +1,5 @@
 package com.tencent.qcloud.cosxml.cssg;
 
-import android.os.Environment;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.InstrumentationRegistry;
 
@@ -258,7 +257,7 @@ public class Object {
     {
         String bucket = "bucket-cssg-test-1253653367"; //存储桶名称，格式：BucketName-APPID
         String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键
-        String savePath = Environment.getExternalStorageDirectory().getPath();//本地路径
+        String savePath = context.getExternalCacheDir().toString();//本地路径
         
         GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, cosPath, savePath);
         getObjectRequest.setProgressListener(new CosXmlProgressListener() {
@@ -465,7 +464,7 @@ public class Object {
         
             //String urlWithSign = cosXmlService.getPresignedURL(getObjectRequest)； //直接使用 GetObjectRequest
         
-            String savePath = Environment.getExternalStorageDirectory().getPath(); //本地路径
+            String savePath = context.getExternalCacheDir().toString(); //本地路径
             String saveFileName = "object4android"; //本地文件名
             GetObjectRequest getObjectRequest = new GetObjectRequest("bucket-cssg-test-1253653367", "object4android", savePath, saveFileName);
         

@@ -1,6 +1,5 @@
 package com.tencent.qcloud.cosxml.cssg;
 
-import android.os.Environment;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.InstrumentationRegistry;
 

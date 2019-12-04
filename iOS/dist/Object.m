@@ -90,7 +90,7 @@
         XCTAssertNil(error);
         [exp fulfill];
     }];
-    [request setDownProcessBlock:^(int64_t bytesDownload, int64_t totalBytesDownload, 
+    [request setDownProcessBlock:^(int64_t bytesDownload, int64_t totalBytesDownload,
         int64_t totalBytesExpectedToDownload) {
         //下载过程中的进度
     }];

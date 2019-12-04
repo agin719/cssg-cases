@@ -8,7 +8,7 @@ QCloudCompleteMultipartUploadInfo *partInfo = [QCloudCompleteMultipartUploadInfo
 partInfo.parts = self.parts;
 completeRequst.parts = partInfo;
 
-[completeRequst setFinishBlock:^(QCloudUploadObjectResult * _Nonnull result, 
+[completeRequst setFinishBlock:^(QCloudUploadObjectResult * _Nonnull result,
     NSError * _Nonnull error) {
     //从 result 中获取上传结果
 }];

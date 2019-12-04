@@ -1,6 +1,6 @@
 String bucket = "examplebucket-1250000000"; //存储桶名称，格式：BucketName-APPID
 String cosPath = "exampleobject"; //对象位于存储桶中的位置标识符，即对象键
-String savePath = Environment.getExternalStorageDirectory().getPath();//本地路径
+String savePath = context.getExternalCacheDir().toString();//本地路径
 
 GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, cosPath, savePath);
 getObjectRequest.setProgressListener(new CosXmlProgressListener() {

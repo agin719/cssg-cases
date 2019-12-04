@@ -131,7 +131,7 @@
 - (void)PutBucketLifecycle {
     QCloudPutBucketLifecycleRequest* request = [QCloudPutBucketLifecycleRequest new];
     request.bucket = @"examplebucket-1250000000";
-    __block QCloudLifecycleConfiguration* lifecycleConfiguration = [[QCloudLifecycleConfiguration 
+    __block QCloudLifecycleConfiguration* lifecycleConfiguration = [[QCloudLifecycleConfiguration
         alloc] init];
     QCloudLifecycleRule* rule = [[QCloudLifecycleRule alloc] init];
     rule.identifier = @"identifier";
@@ -175,7 +175,7 @@
     // 开启版本控制
     QCloudPutBucketVersioningRequest* request = [[QCloudPutBucketVersioningRequest alloc] init];
     request.bucket =@"examplebucket-1250000000";
-    QCloudBucketVersioningConfiguration* versioningConfiguration = 
+    QCloudBucketVersioningConfiguration* versioningConfiguration =
         [[QCloudBucketVersioningConfiguration alloc] init];
     request.configuration = versioningConfiguration;
     versioningConfiguration.status = QCloudCOSBucketVersioningStatusEnabled;
@@ -199,7 +199,7 @@
 - (void)PutBucketReplication {
     QCloudPutBucketReplicationRequest* request = [[QCloudPutBucketReplicationRequest alloc] init];
     request.bucket = @"examplebucket-1250000000";
-    QCloudBucketReplicationConfiguation* replConfiguration = [[QCloudBucketReplicationConfiguation 
+    QCloudBucketReplicationConfiguation* replConfiguration = [[QCloudBucketReplicationConfiguation
         alloc] init];
     replConfiguration.role = @"qcs::cam::uin/100000000001:uin/100000000001";
     QCloudBucketReplicationRule* rule = [[QCloudBucketReplicationRule alloc] init];
@@ -248,20 +248,20 @@
     put.bucket = @"examplebucket-1250000000";
     put.body = [@"testFileContent" dataUsingEncoding:NSUTF8StringEncoding];
     //设置一些上传的参数
-    put.initMultipleUploadFinishBlock = ^(QCloudInitiateMultipartUploadResult * multipleUploadInitResult, 
+    put.initMultipleUploadFinishBlock = ^(QCloudInitiateMultipartUploadResult * multipleUploadInitResult,
         QCloudCOSXMLUploadObjectResumeData resumeData) {
         //在初始化分块上传完成以后会回调该block，在这里可以获取 resumeData，
         //并且可以通过 resumeData 生成一个分块上传的请求
-        QCloudCOSXMLUploadObjectRequest* request = [QCloudCOSXMLUploadObjectRequest 
+        QCloudCOSXMLUploadObjectRequest* request = [QCloudCOSXMLUploadObjectRequest
             requestWithRequestData:resumeData];
     };
-    [put setSendProcessBlock:^(int64_t bytesSent, int64_t totalBytesSent, 
+    [put setSendProcessBlock:^(int64_t bytesSent, int64_t totalBytesSent,
         int64_t totalBytesExpectedToSend) {
-        NSLog(@"upload %lld totalSend %lld aim %lld", bytesSent, totalBytesSent, 
+        NSLog(@"upload %lld totalSend %lld aim %lld", bytesSent, totalBytesSent,
             totalBytesExpectedToSend);
     }];
-    [put setFinishBlock:^(id outputObject, NSError* error) {
-        //可以从 outputObject 中获取 response 中 etag 或者自定义头部等信息
+    [put setFinishBlock:^(QCloudUploadObjectResult *result, NSError* error) {
+        //可以从result获取结果
     }];
     
     [[QCloudCOSTransferMangerService defaultCOSTransferManager] UploadObject:put];
@@ -345,7 +345,7 @@
     [request setFinishBlock:^(id outputObject, NSError *error) {
         //可以从 outputObject 中获取 response 中 etag 或者自定义头部等信息
     }];
-    [request setDownProcessBlock:^(int64_t bytesDownload, int64_t totalBytesDownload, 
+    [request setDownProcessBlock:^(int64_t bytesDownload, int64_t totalBytesDownload,
         int64_t totalBytesExpectedToDownload) {
         //下载过程中的进度
     }];
@@ -467,9 +467,9 @@
     request.bucket = @"examplebucket-1250000000";
     request.object = @"exampleobject";
     //  源文件 URL 路径，可以通过 versionid 子资源指定历史版本
-    request.source = @"source-1250000000.cos.ap-guangzhou.myqcloud.com/sourceObject"; 
+    request.source = @"source-1250000000.cos.ap-guangzhou.myqcloud.com/sourceObject";
     // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
-    request.uploadID = @"example-uploadId"; 
+    request.uploadID = @"example-uploadId";
     request.partNumber = 1; // 标志当前分块的序号
     
     [request setFinishBlock:^(QCloudCopyObjectResult* result, NSError* error) {
@@ -508,7 +508,7 @@
     partInfo.parts = self.parts;
     completeRequst.parts = partInfo;
     
-    [completeRequst setFinishBlock:^(QCloudUploadObjectResult * _Nonnull result, 
+    [completeRequst setFinishBlock:^(QCloudUploadObjectResult * _Nonnull result,
         NSError * _Nonnull error) {
         //从 result 中获取上传结果
     }];

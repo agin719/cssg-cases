@@ -66,10 +66,10 @@
     request.bucket = @"bucket-cssg-test-1253653367";
     request.object = @"object4ios";
     //  源文件 URL 路径，可以通过 versionid 子资源指定历史版本
-    request.source = @"bucket-cssg-test-1253653367.cos.ap-guangzhou.myqcloud.com/sourceObject"; 
+    request.source = @"bucket-cssg-test-1253653367.cos.ap-guangzhou.myqcloud.com/sourceObject";
     // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
-    request.uploadID = @"example-uploadId"; 
-    request.uploadID = self.uploadId; 
+    request.uploadID = @"example-uploadId";
+    request.uploadID = self.uploadId;
     request.partNumber = 1; // 标志当前分块的序号
     
     [request setFinishBlock:^(QCloudCopyObjectResult* result, NSError* error) {
@@ -100,7 +100,7 @@
     partInfo.parts = self.parts;
     completeRequst.parts = partInfo;
     
-    [completeRequst setFinishBlock:^(QCloudUploadObjectResult * _Nonnull result, 
+    [completeRequst setFinishBlock:^(QCloudUploadObjectResult * _Nonnull result,
         NSError * _Nonnull error) {
         //从 result 中获取上传结果
         XCTAssertNil(error);

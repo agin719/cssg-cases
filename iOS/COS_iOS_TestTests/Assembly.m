@@ -418,7 +418,7 @@
         NSLog(@"upload %lld totalSend %lld aim %lld", bytesSent, totalBytesSent,
             totalBytesExpectedToSend);
     }];
-    [put setFinishBlock:^((QCloudUploadObjectResult *result, NSError* error) {
+    [put setFinishBlock:^(QCloudUploadObjectResult *result, NSError* error) {
         //可以从result获取结果
         XCTAssertNotNil(error);
         [exp fulfill];

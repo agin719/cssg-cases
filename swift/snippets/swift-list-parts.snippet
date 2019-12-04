@@ -1,4 +1,3 @@
-let exception = XCTestExpectation.init(description: "listParts exception");
 let req = QCloudListMultipartRequest.init();
 req.object = "exampleobject";
 req.bucket = "examplebucket-1250000000";
@@ -13,9 +12,6 @@ req.setFinish { (result, error) in
     }else{
         //从 result 中获取已上传分片信息
         print(result!);
-    }
-    exception .fulfill();
-}
+    }}
 
 QCloudCOSXMLService.defaultCOSXML().listMultipart(req);
-self.wait(for: [exception], timeout: 100);

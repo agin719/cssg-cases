@@ -2,8 +2,8 @@
   "language": "dotnet",
   "sourcesRoot": ".",
   "sourceExtension": ".cs",
-  "docsRoot": "docs",
-  "docExtension": ".md",
+
+  "docRoot": ".NET SDK/",
 
   "testcaseTemplate": "TestCase.t",
   "ignoreExpressionInDoc": [

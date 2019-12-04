@@ -1,4 +1,3 @@
-let exception = XCTestExpectation.init(description: "uploadPart exception");
 
 let uploadPart = QCloudUploadPartRequest<AnyObject>.init();
 uploadPart.bucket = "examplebucket-1250000000";
@@ -21,13 +20,10 @@ uploadPart.setFinish { (result, error) in
         //获取所上传分片的 etag
         mutipartInfo.eTag = result!.eTag;
         mutipartInfo.partNumber = "1";
-    }
-      exception .fulfill();
-}
+    }}
 uploadPart.sendProcessBlock = {(bytesSent,totalBytesSent,totalBytesExpectedToSend) in
     //上传进度信息
     print("totalBytesSent:\(totalBytesSent) totalBytesExpectedToSend:\(totalBytesExpectedToSend)");
     
 }
 QCloudCOSXMLService.defaultCOSXML().uploadPart(uploadPart);
-self.wait(for: [exception], timeout: 100);

@@ -44,7 +44,7 @@
     XCTestExpectation* exp = [self expectationWithDescription:@"put-bucket-lifecycle"];
     QCloudPutBucketLifecycleRequest* request = [QCloudPutBucketLifecycleRequest new];
     request.bucket = @"bucket-cssg-ios-temp-1253653367";
-    __block QCloudLifecycleConfiguration* lifecycleConfiguration = [[QCloudLifecycleConfiguration 
+    __block QCloudLifecycleConfiguration* lifecycleConfiguration = [[QCloudLifecycleConfiguration
         alloc] init];
     QCloudLifecycleRule* rule = [[QCloudLifecycleRule alloc] init];
     rule.identifier = @"identifier";

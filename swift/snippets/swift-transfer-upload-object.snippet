@@ -1,4 +1,3 @@
-let exception = XCTestExpectation.init(description: "transfer-upload-object exception");
 let uploadRequest = QCloudCOSXMLUploadObjectRequest<AnyObject>.init();
 let dataBody:NSData? = "wrwrwrwrwrw".data(using: .utf8) as NSData?;
 uploadRequest.body = dataBody!;
@@ -40,6 +39,3 @@ do {
     print("resumeData 为空");
     return;
 }
- 
-
-self.wait(for: [exception], timeout: 100);

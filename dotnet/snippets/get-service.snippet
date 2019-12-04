@@ -28,11 +28,9 @@ catch (COSXML.CosException.CosClientException clientEx)
 {
   //请求失败
   Console.WriteLine("CosClientException: " + clientEx);
-  Assert.Null(clientEx);
 }
 catch (COSXML.CosException.CosServerException serverEx)
 {
   //请求失败
   Console.WriteLine("CosServerException: " + serverEx.GetInfo());
-  Assert.Null(serverEx);
 }

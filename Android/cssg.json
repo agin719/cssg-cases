@@ -2,8 +2,8 @@
   "language": "android",
   "sourcesRoot": "./project/app/src/main/java/com/tencent/qcloud/cosxml/cssg/",
   "sourceExtension": ".java",
-  "docsRoot": "docs",
-  "docExtension": ".md",
+
+  "docRoot": "Android SDK/",
 
   "testcaseTemplate": "TestCase.t",
 

@@ -1,4 +1,3 @@
-let exception = XCTestExpectation.init(description: "abort exception");
 let abort = QCloudAbortMultipfartUploadRequest.init();
 abort.bucket = "examplebucket-1250000000";
 abort.object = "exampleobject";
@@ -14,9 +13,6 @@ abort.finishBlock = {(result,error)in
     }else{
         //可以从 outputObject 中获取 response 中 etag 或者自定义头部等信息
         print(result!);
-    }
-    exception .fulfill();
-    
+    }    
 }
 QCloudCOSXMLService.defaultCOSXML().abortMultipfartUpload(abort);
-self.wait(for: [exception], timeout: 100);

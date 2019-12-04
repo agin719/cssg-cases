@@ -1,4 +1,3 @@
-let exception = XCTestExpectation.init(description: "putBucketVersioning exception");
 let putBucketVersioning = QCloudPutBucketVersioningRequest.init();
 putBucketVersioning.bucket = "examplebucket-1250000000";
 
@@ -16,4 +15,3 @@ putBucketVersioning.finishBlock = {(result,error) in
     exception.fulfill();
 }
 QCloudCOSXMLService.defaultCOSXML().putBucketVersioning(putBucketVersioning);
-self.wait(for: [exception], timeout: 100);

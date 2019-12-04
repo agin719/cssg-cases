@@ -2,9 +2,9 @@ QCloudUploadPartCopyRequest* request = [[QCloudUploadPartCopyRequest alloc] init
 request.bucket = @"examplebucket-1250000000";
 request.object = @"exampleobject";
 //  源文件 URL 路径，可以通过 versionid 子资源指定历史版本
-request.source = @"source-1250000000.cos.ap-guangzhou.myqcloud.com/sourceObject"; 
+request.source = @"source-1250000000.cos.ap-guangzhou.myqcloud.com/sourceObject";
 // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
-request.uploadID = @"example-uploadId"; 
+request.uploadID = @"example-uploadId";
 request.partNumber = 1; // 标志当前分块的序号
 
 [request setFinishBlock:^(QCloudCopyObjectResult* result, NSError* error) {

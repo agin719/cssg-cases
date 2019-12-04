@@ -1,7 +1,6 @@
 package com.tencent.qcloud.cosxml.cssg;
 
 import android.content.Context;
-import android.os.Environment;
 import android.util.Log;
 
 import com.tencent.cos.xml.CosXmlService;
@@ -1196,7 +1195,7 @@ public class Assembly {
         // .cssg-body-start: [get-object]
         String bucket = "{{{persistBucket}}}"; //存储桶名称，格式：BucketName-APPID
         String cosPath = "{{{object}}}"; //对象位于存储桶中的位置标识符，即对象键
-        String savePath = Environment.getExternalStorageDirectory().getPath();//本地路径
+        String savePath = context.getExternalCacheDir().toString();//本地路径
 
         GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, cosPath, savePath);
         getObjectRequest.setProgressListener(new CosXmlProgressListener() {
@@ -1923,7 +1922,7 @@ public class Assembly {
         Context applicationContext = context.getApplicationContext(); // application context
         String bucket = "{{{persistBucket}}}"; //存储桶，格式：BucketName-APPID
         String cosPath = "{{{object}}}"; //对象在存储桶中的位置标识符，即称对象键
-        String savePathDir = Environment.getExternalStorageDirectory().getPath();//本地目录路径
+        String savePathDir = context.getExternalCacheDir().toString();//本地目录路径
         String savedFileName = "{{{object}}}";//本地保存的文件名，若不填（null）,则与cos上的文件名一样
         //下载对象
         TransferConfig transferConfig = new TransferConfig.Builder().build();
@@ -2090,7 +2089,7 @@ public class Assembly {
 
             //String urlWithSign = cosXmlService.getPresignedURL(getObjectRequest)； //直接使用 GetObjectRequest
 
-            String savePath = Environment.getExternalStorageDirectory().getPath(); //本地路径
+            String savePath = context.getExternalCacheDir().toString(); //本地路径
             String saveFileName = "{{{object}}}"; //本地文件名
             GetObjectRequest getObjectRequest = new GetObjectRequest("{{{persistBucket}}}", "{{{object}}}", savePath, saveFileName);
 

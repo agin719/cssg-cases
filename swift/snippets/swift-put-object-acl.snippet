@@ -1,4 +1,3 @@
-let exception = XCTestExpectation.init(description: "putObjectACl exception");
 let putObjectACl = QCloudPutObjectACLRequest.init();
 putObjectACl.bucket = "examplebucket-1250000000";
 putObjectACl.object = "exampleobject";
@@ -10,8 +9,5 @@ putObjectACl.finishBlock = {(result,error)in
     }else{
         //可以从 outputObject 中获取 response 中 etag 或者自定义头部等信息
         print(result!);
-    }
-    exception .fulfill();
-}
+    }}
 QCloudCOSXMLService.defaultCOSXML().putObjectACL(putObjectACl);
-self.wait(for: [exception], timeout: 100);

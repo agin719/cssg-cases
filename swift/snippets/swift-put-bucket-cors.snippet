@@ -1,4 +1,3 @@
-let exception = XCTestExpectation.init(description: "putBucketCors exception");
 let putBucketCorsReq = QCloudPutBucketCORSRequest.init();
 
 let corsConfig = QCloudCORSConfiguration.init();
@@ -20,9 +19,6 @@ putBucketCorsReq.finishBlock = {(result,error) in
         print(error!);
     }else{
         print(result!);
-    }
-    exception .fulfill();
-}
+    }}
 
 QCloudCOSXMLService.defaultCOSXML().putBucketCORS(putBucketCorsReq);
-self.wait(for: [exception], timeout: 100);

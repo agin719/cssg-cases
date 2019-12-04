@@ -1,7 +1,7 @@
 // 开启版本控制
 QCloudPutBucketVersioningRequest* request = [[QCloudPutBucketVersioningRequest alloc] init];
 request.bucket =@"examplebucket-1250000000";
-QCloudBucketVersioningConfiguration* versioningConfiguration = 
+QCloudBucketVersioningConfiguration* versioningConfiguration =
     [[QCloudBucketVersioningConfiguration alloc] init];
 request.configuration = versioningConfiguration;
 versioningConfiguration.status = QCloudCOSBucketVersioningStatusEnabled;

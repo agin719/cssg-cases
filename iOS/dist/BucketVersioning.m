@@ -45,7 +45,7 @@
     // 开启版本控制
     QCloudPutBucketVersioningRequest* request = [[QCloudPutBucketVersioningRequest alloc] init];
     request.bucket =@"bucket-cssg-ios-temp-1253653367";
-    QCloudBucketVersioningConfiguration* versioningConfiguration = 
+    QCloudBucketVersioningConfiguration* versioningConfiguration =
         [[QCloudBucketVersioningConfiguration alloc] init];
     request.configuration = versioningConfiguration;
     versioningConfiguration.status = QCloudCOSBucketVersioningStatusEnabled;

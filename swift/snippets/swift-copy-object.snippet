@@ -1,4 +1,3 @@
-let exception = XCTestExpectation.init(description: "getBucket exception");
 let putObjectCopy = QCloudPutObjectCopyRequest.init();
 putObjectCopy.bucket = "examplebucket-1250000000";
 putObjectCopy.object = "exampleobject";
@@ -8,8 +7,5 @@ putObjectCopy.setFinish { (result, error) in
         print(error!);
     }else{
         print(result!);
-    }
-    exception .fulfill();
-}
+    }}
 QCloudCOSXMLService.defaultCOSXML().putObjectCopy(putObjectCopy);
-self.wait(for: [exception], timeout: 100);

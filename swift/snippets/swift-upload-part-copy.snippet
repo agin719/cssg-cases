@@ -1,4 +1,3 @@
-let exception = XCTestExpectation.init(description: "uploadPartCopy exception");
 let req = QCloudUploadPartCopyRequest.init();
 req.bucket = "examplebucket-1250000000";
 req.object = "exampleobject";
@@ -20,8 +19,5 @@ req.setFinish { (result, error) in
         //获取所复制分片的 etag
         mutipartInfo.eTag = result!.eTag;
         mutipartInfo.partNumber = "1";
-    }
-      exception .fulfill();
-}
+    }}
 QCloudCOSXMLService.defaultCOSXML().uploadPartCopy(req);
-self.wait(for: [exception], timeout: 100);
