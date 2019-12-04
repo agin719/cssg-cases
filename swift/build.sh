@@ -1,7 +1,8 @@
 #!/bin/sh
 
 cssg compile
-pod install
+pod repo update
+pod update --no-repo-update
 
 xcodebuild \
   -workspace COS_Swift_Test.xcworkspace \

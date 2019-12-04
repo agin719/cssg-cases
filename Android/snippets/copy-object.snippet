@@ -1,6 +1,6 @@
 String sourceAppid = "1250000000"; //账号 appid
 String sourceBucket = "source-1250000000"; //"源对象所在的存储桶
-String sourceRegion = "ap-guangzhou"; //源对象的存储桶所在的地域
+String sourceRegion = "COS_REGION"; //源对象的存储桶所在的地域
 String sourceCosPath = "sourceObject"; //源对象键
 //构造源对象属性
 CopyObjectRequest.CopySourceStruct copySourceStruct = new CopyObjectRequest.CopySourceStruct(sourceAppid, sourceBucket, sourceRegion, sourceCosPath);

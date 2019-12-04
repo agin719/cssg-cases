@@ -11,7 +11,5 @@ putBucketVersioning.finishBlock = {(result,error) in
         print(error!);
     }else{
         print(result!);
-    }
-    exception.fulfill();
-}
+    }}
 QCloudCOSXMLService.defaultCOSXML().putBucketVersioning(putBucketVersioning);

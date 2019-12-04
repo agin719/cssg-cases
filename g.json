@@ -11,7 +11,7 @@
     "secretKey": "COS_SECRETKEY",
     "appId": "1250000000",
     "uin": "100000000001",
-    "region": "ap-guangzhou",
+    "region": "COS_REGION",
     "persistBucket": "examplebucket-1250000000",
     "tempBucket": "examplebucket-1250000000",
     "copySourceBucket": "source-1250000000",

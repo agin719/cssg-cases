@@ -31,7 +31,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -71,7 +71,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -112,7 +112,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -153,7 +153,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -194,7 +194,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -241,7 +241,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -282,7 +282,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -341,7 +341,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -382,7 +382,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -423,7 +423,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -478,7 +478,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -519,7 +519,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -560,7 +560,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -600,7 +600,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -637,7 +637,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -689,7 +689,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -726,7 +726,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -763,7 +763,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -806,7 +806,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -859,7 +859,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -911,7 +911,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -953,7 +953,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -1034,7 +1034,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -1049,7 +1049,7 @@ namespace COSSample
         {
           string sourceAppid = "1250000000"; //账号 appid
           string sourceBucket = "source-1250000000"; //"源对象所在的存储桶
-          string sourceRegion = "ap-guangzhou"; //源对象的存储桶所在的地域
+          string sourceRegion = "COS_REGION"; //源对象的存储桶所在的地域
           string sourceKey = "sourceObject"; //源对象键
           //构造源对象属性
           CopySourceStruct copySource = new CopySourceStruct(sourceAppid, sourceBucket, 
@@ -1088,7 +1088,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -1132,7 +1132,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -1174,7 +1174,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -1222,7 +1222,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -1263,7 +1263,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -1306,7 +1306,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -1351,7 +1351,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -1407,7 +1407,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -1422,7 +1422,7 @@ namespace COSSample
         {
           string sourceAppid = "1250000000"; //账号 appid
           string sourceBucket = "source-1250000000"; //"源对象所在的存储桶
-          string sourceRegion = "ap-guangzhou"; //源对象的存储桶所在的地域
+          string sourceRegion = "COS_REGION"; //源对象的存储桶所在的地域
           string sourceKey = "sourceObject"; //源对象键
           //构造源对象属性
           COSXML.Model.Tag.CopySourceStruct copySource = new CopySourceStruct(sourceAppid, 
@@ -1465,7 +1465,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -1513,7 +1513,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -1556,7 +1556,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -1602,7 +1602,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -1652,7 +1652,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -1694,7 +1694,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -1709,7 +1709,7 @@ namespace COSSample
         {
           PreSignatureStruct preSignatureStruct = new PreSignatureStruct();
           preSignatureStruct.appid = "1250000000";//腾讯云账号 APPID
-          preSignatureStruct.region = "ap-guangzhou"; //存储桶地域
+          preSignatureStruct.region = "COS_REGION"; //存储桶地域
           preSignatureStruct.bucket = "examplebucket-1250000000"; //存储桶
           preSignatureStruct.key = "exampleobject"; //对象键
           preSignatureStruct.httpMethod = "PUT"; //HTTP 请求方法
@@ -1754,7 +1754,7 @@ namespace COSSample
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
           .IsHttps(true)  //设置默认 HTTPS 请求
           .SetAppid("1250000000") //设置腾讯云账户的账户标识 APPID
-          .SetRegion("ap-guangzhou") //设置一个默认的存储桶地域
+          .SetRegion("COS_REGION") //设置一个默认的存储桶地域
           .Build();
         
         string secretId = "COS_SECRETID";   //云 API 密钥 SecretId
@@ -1769,7 +1769,7 @@ namespace COSSample
         {
           PreSignatureStruct preSignatureStruct = new PreSignatureStruct();
           preSignatureStruct.appid = "1250000000";//腾讯云账号 APPID
-          preSignatureStruct.region = "ap-guangzhou"; //存储桶地域
+          preSignatureStruct.region = "COS_REGION"; //存储桶地域
           preSignatureStruct.bucket = "examplebucket-1250000000"; //存储桶
           preSignatureStruct.key = "exampleobject"; //对象键
           preSignatureStruct.httpMethod = "GET"; //HTTP 请求方法

@@ -17,9 +17,7 @@ uploadRequest.setFinish { (result, error) in
     }else{
         ////从result中获取请求的结果
         print(result!);
-    }
-    exception.fulfill();
-}
+    }}
 
 QCloudCOSTransferMangerService.defaultCOSTransferManager().uploadObject(uploadRequest);
 

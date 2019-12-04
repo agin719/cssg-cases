@@ -287,7 +287,7 @@
     request.sourceBucket = @"source-1250000000";
     request.sourceObject = @"sourceObject";//源文件名称
     request.sourceAPPID = @"1250000000";//源文件的appid
-    request.sourceRegion= @"ap-guangzhou";//来源的地域
+    request.sourceRegion= @"COS_REGION";//来源的地域
     
     [request setFinishBlock:^(QCloudCopyObjectResult* result, NSError* error) {
         //可以从 outputObject 中获取 response 中 etag 或者自定义头部等信息
@@ -373,7 +373,7 @@
     request.bucket = @"examplebucket-1250000000";
     request.object = @"exampleobject";
     //源对象所在的路径
-    request.objectCopySource = @"source-1250000000.cos.ap-guangzhou.myqcloud.com/sourceObject";
+    request.objectCopySource = @"source-1250000000.cos.COS_REGION.myqcloud.com/sourceObject";
     [request setFinishBlock:^(QCloudCopyObjectResult * _Nonnull result, NSError * _Nonnull error) {
         // result 返回具体信息
     }];
@@ -467,7 +467,7 @@
     request.bucket = @"examplebucket-1250000000";
     request.object = @"exampleobject";
     //  源文件 URL 路径，可以通过 versionid 子资源指定历史版本
-    request.source = @"source-1250000000.cos.ap-guangzhou.myqcloud.com/sourceObject";
+    request.source = @"source-1250000000.cos.COS_REGION.myqcloud.com/sourceObject";
     // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
     request.uploadID = @"example-uploadId";
     request.partNumber = 1; // 标志当前分块的序号

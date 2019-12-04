@@ -327,8 +327,6 @@ func method10() {
     putBucketLifecycleReq.lifeCycle.rules = [rule];
     
     putBucketLifecycleReq.finishBlock = {(result,error) in
-        XCTAssertNil(error);
-        XCTAssertNotNil(result);
         if error != nil{
             print(error!);
         }else{
@@ -347,8 +345,6 @@ func method11() {
     let getBucketLifeCycle = QCloudGetBucketLifecycleRequest.init();
     getBucketLifeCycle.bucket = "{{tempBucket}}";
     getBucketLifeCycle.setFinish { (config, error) in
-        XCTAssertNil(error);
-        XCTAssertNotNil(config);
         if error != nil{
             print(error!);
         }else{

@@ -5,7 +5,7 @@
     configuration.appID = @"1250000000";
     configuration.signatureProvider = self;
     QCloudCOSXMLEndPoint* endpoint = [[QCloudCOSXMLEndPoint alloc] init];
-    endpoint.regionName = @"ap-guangzhou";//服务地域名称，可用的地域请参考注释
+    endpoint.regionName = @"COS_REGION";//服务地域名称，可用的地域请参考注释
     configuration.endpoint = endpoint;
     [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
     [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];

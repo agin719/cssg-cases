@@ -6,7 +6,7 @@ request.object = @"exampleobject";//目的文件名称
 request.sourceBucket = @"source-1250000000";
 request.sourceObject = @"sourceObject";//源文件名称
 request.sourceAPPID = @"1250000000";//源文件的appid
-request.sourceRegion= @"ap-guangzhou";//来源的地域
+request.sourceRegion= @"COS_REGION";//来源的地域
 
 [request setFinishBlock:^(QCloudCopyObjectResult* result, NSError* error) {
     //可以从 outputObject 中获取 response 中 etag 或者自定义头部等信息

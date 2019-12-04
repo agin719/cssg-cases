@@ -5,7 +5,5 @@ deleteBucketReplication.finishBlock = {(result,error) in
         print(error!);
     }else{
         print(result!);
-    }
-    exception.fulfill();
-}
+    }}
 QCloudCOSXMLService.defaultCOSXML().deleteBucketReplication(deleteBucketReplication);

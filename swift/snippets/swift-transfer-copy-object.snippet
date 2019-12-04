@@ -5,7 +5,7 @@ copyRequest.object = "exampleobject";//目的文件名称
 copyRequest.sourceBucket = "source-1250000000";
 copyRequest.sourceObject = "sourceObject";//源文件名称
 copyRequest.sourceAPPID = "1250000000";//源文件的appid
-copyRequest.sourceRegion = "ap-guangzhou";//来源的地域
+copyRequest.sourceRegion = "COS_REGION";//来源的地域
 copyRequest.setFinish { (copyResult, error) in
     if error != nil{
         print(error!);

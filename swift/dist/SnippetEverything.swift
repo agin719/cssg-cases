@@ -212,9 +212,7 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
               print(error!);
           }else{
               print(result!);
-          }
-          exception.fulfill();
-      };
+          }};
       QCloudCOSXMLService.defaultCOSXML().deleteBucketLifeCycle(deleteBucketLifeCycle);
     }
 
@@ -233,9 +231,7 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
               print(error!);
           }else{
               print(result!);
-          }
-          exception.fulfill();
-      }
+          }}
       QCloudCOSXMLService.defaultCOSXML().putBucketVersioning(putBucketVersioning);
     }
 
@@ -280,9 +276,7 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
                   print(error!);
               }else{
                   print(result!);
-              }
-              exception.fulfill();
-      }
+              }}
       QCloudCOSXMLService.defaultCOSXML().putBucketRelication(putBucketReplication);
     }
 
@@ -308,9 +302,7 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
               print(error!);
           }else{
               print(result!);
-          }
-          exception.fulfill();
-      }
+          }}
       QCloudCOSXMLService.defaultCOSXML().deleteBucketReplication(deleteBucketReplication);
     }
 
@@ -335,9 +327,7 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
           }else{
               ////从result中获取请求的结果
               print(result!);
-          }
-          exception.fulfill();
-      }
+          }}
       
       QCloudCOSTransferMangerService.defaultCOSTransferManager().uploadObject(uploadRequest);
       
@@ -368,7 +358,7 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
       copyRequest.sourceBucket = "source-1250000000";
       copyRequest.sourceObject = "sourceObject";//源文件名称
       copyRequest.sourceAPPID = "1250000000";//源文件的appid
-      copyRequest.sourceRegion = "ap-guangzhou";//来源的地域
+      copyRequest.sourceRegion = "COS_REGION";//来源的地域
       copyRequest.setFinish { (copyResult, error) in
           if error != nil{
               print(error!);
@@ -464,7 +454,7 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
       let putObjectCopy = QCloudPutObjectCopyRequest.init();
       putObjectCopy.bucket = "examplebucket-1250000000";
       putObjectCopy.object = "exampleobject";
-      putObjectCopy.objectCopySource = "source-1250000000.cos.ap-guangzhou.myqcloud.com/sourceObject";
+      putObjectCopy.objectCopySource = "source-1250000000.cos.COS_REGION.myqcloud.com/sourceObject";
       putObjectCopy.setFinish { (result, error) in
           if error != nil{
               print(error!);
@@ -581,7 +571,7 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
       req.bucket = "examplebucket-1250000000";
       req.object = "exampleobject";
       //  源文件 URL 路径，可以通过 versionid 子资源指定历史版本
-      req.source = "source-1250000000.cos.ap-guangzhou.myqcloud.com/sourceObject";
+      req.source = "source-1250000000.cos.COS_REGION.myqcloud.com/sourceObject";
       // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
       req.uploadID = "example-uploadId";
       if self.uploadId != nil {
