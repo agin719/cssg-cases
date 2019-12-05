@@ -635,7 +635,7 @@
     uploads.maxUploads = 100;
 
     [uploads setFinishBlock:^(QCloudListMultipartUploadsResult* result, NSError *error) {
-        //可以从 result 中返回分片信息
+        //可以从 result 中返回分块信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -653,7 +653,7 @@
     initrequest.object = @"{{object}}";
 
     [initrequest setFinishBlock:^(QCloudInitiateMultipartUploadResult* outputObject, NSError *error) {
-        //获取分片上传的 uploadId，后续的上传都需要这个 ID，请保存以备后续使用
+        //获取分块上传的 uploadId，后续的上传都需要这个 ID，请保存以备后续使用
         self.uploadId = outputObject.uploadId;
         XCTAssertNil(error);
         [exp fulfill];
@@ -686,7 +686,7 @@
     [request setFinishBlock:^(QCloudUploadPartResult* outputObject, NSError *error) {
         XCTAssertNil(error);
         QCloudMultipartInfo *part = [QCloudMultipartInfo new];
-        //获取所上传分片的 etag
+        //获取所上传分块的 etag
         part.eTag = outputObject.eTag;
         part.partNumber = @"1";
         self.parts = [NSMutableArray new];
@@ -715,7 +715,7 @@
     [request setFinishBlock:^(QCloudCopyObjectResult* result, NSError* error) {
         XCTAssertNil(error);
         QCloudMultipartInfo *part = [QCloudMultipartInfo new];
-        //获取所复制分片的 etag
+        //获取所复制分块的 etag
         part.eTag = result.eTag;
         part.partNumber = @"1";
         self.parts = [NSMutableArray new];
@@ -740,7 +740,7 @@
 
     [request setFinishBlock:^(QCloudListPartsResult * _Nonnull result,
                               NSError * _Nonnull error) {
-        //从 result 中获取已上传分片信息
+        //从 result 中获取已上传分块信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -759,7 +759,7 @@
     //本次要查询的分块上传的 uploadId，可从初始化分块上传的请求结果 QCloudInitiateMultipartUploadResult 中得到
     completeRequst.uploadId = @"{{uploadId}}";
     completeRequst.uploadId = self.uploadId;
-    //已上传分片的信息
+    //已上传分块的信息
     QCloudCompleteMultipartUploadInfo *partInfo = [QCloudCompleteMultipartUploadInfo new];
     partInfo.parts = self.parts;
     completeRequst.parts = partInfo;
