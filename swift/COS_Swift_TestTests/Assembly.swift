@@ -798,7 +798,7 @@ func method29() {
         if error != nil{
             print(error!);
         }else{
-            //获取分片上传的 uploadId，后续的上传都需要这个 ID，请保存以备后续使用
+            //获取分块上传的 uploadId，后续的上传都需要这个 ID，请保存以备后续使用
             self.uploadId = result!.uploadId;
             print(result!.uploadId);
         }
@@ -833,7 +833,7 @@ func method30() {
             print(error!);
         }else{
             let mutipartInfo = QCloudMultipartInfo.init();
-            //获取所上传分片的 etag
+            //获取所上传分块的 etag
             mutipartInfo.eTag = result!.eTag;
             mutipartInfo.partNumber = "1";
         }
@@ -872,7 +872,7 @@ func method31() {
             print(error!);
         }else{
             let mutipartInfo = QCloudMultipartInfo.init();
-            //获取所复制分片的 etag
+            //获取所复制分块的 etag
             mutipartInfo.eTag = result!.eTag;
             mutipartInfo.partNumber = "1";
         }
@@ -900,7 +900,7 @@ func method32()  {
         if error != nil{
             print(error!);
         }else{
-            //从 result 中获取已上传分片信息
+            //从 result 中获取已上传分块信息
             print(result!);
         }
         exception .fulfill();
@@ -924,10 +924,10 @@ func method33()  {
     }
     
     
-    //已上传分片的信息
+    //已上传分块的信息
     let completeInfo = QCloudCompleteMultipartUploadInfo.init();
     if self.parts == nil {
-        print("没有要完成的分片");
+        print("没有要完成的分块");
         return;
     }
    
