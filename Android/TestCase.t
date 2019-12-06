@@ -63,24 +63,8 @@ public class {{name}} {
     {{^isDemo}}
     private void initService() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-            .isHttps(true)
-            .setRegion("{{{region}}}")
-            .builder();
-
-        QCloudCredentialProvider credentialProvider = new ShortTimeCredentialProvider({{{secretId}}}, {{{secretKey}}}, 3600);
-        cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-
-        try {
-            File srcFile = new File(context.getExternalCacheDir(), "object4android");
-            if (!srcFile.exists() && srcFile.createNewFile()) {
-                RandomAccessFile raf = new RandomAccessFile(srcFile, "rw");
-                raf.setLength(10);
-                raf.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        {{{initSnippet}}}
+        this.cosXmlService = cosXmlService;
     }
 
     @Before public void setUp() {

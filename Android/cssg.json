@@ -1,29 +1,34 @@
 {
   "language": "android",
-  "sourcesRoot": "./project/app/src/main/java/com/tencent/qcloud/cosxml/cssg/",
-  "sourceExtension": ".java",
-
   "docRoot": "Android SDK/",
-
   "testcaseTemplate": "TestCase.t",
-
-  "ignoreExpressionInDoc": [
-    "credentialProvider = new ShortTimeCredentialProvider.* for ut",
-    "assertError().*",
-    "this.uploadId = uploadId;",
-    "uploadId = this.uploadId;",
-    "this.part1Etag = eTag;",
-    "etag = this.part1Etag;"
-  ],
-
+  "sourceExtension": ".java",
   "compileDist": "project/app/src/androidTest/java/com/tencent/qcloud/cosxml/cssg/",
 
+  "initSnippetName": "global-init-secret",
+
   "macro4doc": {
+    "secretId": "\"${g.secretId}\"",
+    "secretKey": "\"${g.secretKey}\""
   },
+
   "macro4test": {
     "secretId": "BuildConfig.COS_SECRET_ID",
-    "secretKey": "BuildConfig.COS_SECRET_KEY"
+    "secretKey": "BuildConfig.COS_SECRET_KEY",
+    "uploadId": "this.uploadId",
+    "eTag": "this.part1Etag"
   },
+
+  "beforeRun": {
+    "insert": [
+      {
+        "expression": "assertError(e);",
+        "target": "e.printStackTrace();",
+        "anchor": "below"
+      }
+    ]
+  },
+
   "testGroup": {
     "init-custom-provider": {
       "defines": [

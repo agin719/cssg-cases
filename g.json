@@ -1,5 +1,4 @@
 {
-  "docsRoot": "docs",
   "docExtension": ".md",
   "compileDist": "dist",
 
@@ -9,29 +8,31 @@
   "macro4doc": {
     "secretId": "COS_SECRETID",
     "secretKey": "COS_SECRETKEY",
+
     "appId": "1250000000",
     "uin": "100000000001",
     "region": "COS_REGION",
-    "persistBucket": "examplebucket-1250000000",
-    "tempBucket": "examplebucket-1250000000",
-    "copySourceBucket": "source-1250000000",
+    "persistBucket": "examplebucket-",
+    "tempBucket": "examplebucket-",
+    "copySourceBucket": "source-",
     "copySourceObject": "sourceObject",
-    "replicationDestBucket":"destinationbucket-1250000000",
+    "replicationDestBucket":"destinationbucket-",
     "replicationDestBucketRegion": "ap-beijing",
     "object": "exampleobject",
+
+    "eTag": "exampleEtag",
     "uploadId": "example-uploadId"
   },
   "macro4test": {
     "appId": "1253653367",
     "uin": "1278687956",
-    "persistBucket": "bucket-cssg-test-1253653367",
     "region": "ap-guangzhou",
-    "copySourceBucket":"bucket-cssg-test-1253653367",
+    "persistBucket": "bucket-cssg-test-",
+    "tempBucket": "bucket-cssg-${config.language}-temp-",
+    "copySourceBucket":"bucket-cssg-test-",
     "copySourceObject": "sourceObject",
-    "replicationDestBucket":"bucket-cssg-assist-1253653367",
+    "replicationDestBucket":"bucket-cssg-assist-",
     "replicationDestBucketRegion": "ap-beijing",
-    "uploadId": "example-uploadId",
-    "tempBucket": "bucket-cssg-${config.language}-temp-1253653367",
     "object": "object4${config.language}"
   },
 

@@ -64,13 +64,10 @@ public class ObjectMultiUpload {
         try {
             InitMultipartUploadResult initMultipartUploadResult = cosXmlService.initMultipartUpload(initMultipartUploadRequest);
             String uploadId =initMultipartUploadResult.initMultipartUpload.uploadId;
-            this.uploadId = uploadId;
         } catch (CosXmlClientException e) {
             e.printStackTrace();
-            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
-            assertError(e);
         }
         
         // 使用异步方法请求
@@ -86,6 +83,7 @@ public class ObjectMultiUpload {
             }
         });
         
+        
     }
     private void ListMultiUpload()
     {
@@ -100,10 +98,8 @@ public class ObjectMultiUpload {
             ListMultiUploadsResult listMultiUploadsResult = cosXmlService.listMultiUploads(listMultiUploadsRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
-            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
-            assertError(e);
         }
         
         // 使用异步回调请求
@@ -120,13 +116,13 @@ public class ObjectMultiUpload {
             }
         });
         
+        
     }
     private void UploadPart()
     {
         String bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
         String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键
-        String uploadId ="example-uploadId"; //初始化分块上传返回的 uploadId
-        uploadId = this.uploadId;
+        String uploadId ="this.uploadId"; //初始化分块上传返回的 uploadId
         int partNumber = 1; //分块块编号，必须从1开始递增
         String srcPath = new File(context.getExternalCacheDir(), "object4android").toString(); //本地文件绝对路径
         UploadPartRequest uploadPartRequest = new UploadPartRequest(bucket, cosPath, partNumber, srcPath, uploadId);
@@ -146,13 +142,10 @@ public class ObjectMultiUpload {
         try {
             UploadPartResult uploadPartResult = cosXmlService.uploadPart(uploadPartRequest);
             String eTag = uploadPartResult.eTag; //获取分块块的 eTag
-            this.part1Etag = eTag;
         } catch (CosXmlClientException e) {
             e.printStackTrace();
-            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
-            assertError(e);
         }
         
         
@@ -169,13 +162,13 @@ public class ObjectMultiUpload {
             }
         });
         
+        
     }
     private void ListParts()
     {
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
         String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
-        String uploadId = "example-uploadId";
-        uploadId = this.uploadId;
+        String uploadId = "this.uploadId";
         
         ListPartsRequest listPartsRequest = new ListPartsRequest(bucket, cosPath, uploadId);
         // 设置签名校验 Host，默认校验所有 Header
@@ -188,10 +181,8 @@ public class ObjectMultiUpload {
             ListParts listParts = listPartsResult.listParts;
         } catch (CosXmlClientException e) {
             e.printStackTrace();
-            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
-            assertError(e);
         }
         
         // 使用异步回调请求
@@ -207,16 +198,15 @@ public class ObjectMultiUpload {
             }
         });
         
+        
     }
     private void CompleteMultiUpload()
     {
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
         String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
-        String uploadId = "example-uploadId";
-        uploadId = this.uploadId;
+        String uploadId = "this.uploadId";
         int partNumber = 1;
         String etag = "etag";
-        etag = this.part1Etag;
         Map<Integer, String> partNumberAndETag = new HashMap<>();
         partNumberAndETag.put(partNumber, etag);
         
@@ -230,10 +220,8 @@ public class ObjectMultiUpload {
             CompleteMultiUploadResult completeMultiUploadResult = cosXmlService.completeMultiUpload(completeMultiUploadRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
-            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
-            assertError(e);
         }
         
         // 使用异步回调请求
@@ -250,13 +238,13 @@ public class ObjectMultiUpload {
             }
         });
         
+        
     }
     private void AbortMultiUpload()
     {
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
         String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
-        String uploadId = "example-uploadId";
-        uploadId = this.uploadId;
+        String uploadId = "this.uploadId";
         
         AbortMultiUploadRequest abortMultiUploadRequest = new AbortMultiUploadRequest(bucket, cosPath, uploadId);
         // 设置签名校验 Host，默认校验所有 Header
@@ -268,10 +256,9 @@ public class ObjectMultiUpload {
             AbortMultiUploadResult abortMultiUploadResult = cosXmlService.abortMultiUpload(abortMultiUploadRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
-            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
-            // assertError(e);
+            //
         }
         
         // 使用异步回调请求
@@ -288,28 +275,33 @@ public class ObjectMultiUpload {
             }
         });
         
+        
     }
 
     private void initService() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        String region = "ap-guangzhou";
+        
+        // 创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
         CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-            .isHttps(true)
-            .setRegion("ap-guangzhou")
-            .builder();
-
-        QCloudCredentialProvider credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600);
-        cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-
-        try {
-            File srcFile = new File(context.getExternalCacheDir(), "object4android");
-            if (!srcFile.exists() && srcFile.createNewFile()) {
-                RandomAccessFile raf = new RandomAccessFile(srcFile, "rw");
-                raf.setLength(10);
-                raf.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                .setRegion(region)
+                .isHttps(true) // 使用 HTTPS 请求, 默认为 HTTP 请求
+                .builder();
+        
+        String secretId = BuildConfig.COS_SECRET_ID; //永久密钥 secretId
+        String secretKey =BuildConfig.COS_SECRET_KEY; //永久密钥 secretKey
+        
+        /**
+         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥
+         * @parma secretId 永久密钥 secretId
+         * @param secretKey 永久密钥 secretKey
+         * @param keyDuration 密钥有效期，单位为秒
+         */
+        QCloudCredentialProvider credentialProvider = new ShortTimeCredentialProvider(secretId, secretKey, 300);
+        
+        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
+        
+        this.cosXmlService = cosXmlService;
     }
 
     @Before public void setUp() {

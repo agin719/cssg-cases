@@ -41,8 +41,8 @@ public class InitCustomProvider {
                 // 首先从您的临时密钥服务器获取包含了签名信息的响应
         
                 // 然后解析响应，获取密钥信息
-                String tmpSecretId = "BuildConfig.COS_SECRET_ID"; //临时密钥 secretId
-                String tmpSecretKey = "BuildConfig.COS_SECRET_KEY"; //临时密钥 secretKey
+                String tmpSecretId = BuildConfig.COS_SECRET_ID; //临时密钥 secretId
+                String tmpSecretKey = BuildConfig.COS_SECRET_KEY; //临时密钥 secretKey
                 String sessionToken = "TOKEN"; //临时密钥 Token
                 long expiredTime = 1556183496L;//临时密钥有效截止时间戳，单位是秒
         
@@ -55,6 +55,7 @@ public class InitCustomProvider {
                 return new SessionQCloudCredentials(tmpSecretId, tmpSecretKey, sessionToken, beginTime, expiredTime);
             }
         }
+        
 
     private Context context;
     private CosXmlService cosXmlService;
@@ -75,24 +76,28 @@ public class InitCustomProvider {
 
     private void initService() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        String region = "ap-guangzhou";
+        
+        // 创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
         CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-            .isHttps(true)
-            .setRegion("ap-guangzhou")
-            .builder();
-
-        QCloudCredentialProvider credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600);
-        cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-
-        try {
-            File srcFile = new File(context.getExternalCacheDir(), "object4android");
-            if (!srcFile.exists() && srcFile.createNewFile()) {
-                RandomAccessFile raf = new RandomAccessFile(srcFile, "rw");
-                raf.setLength(10);
-                raf.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                .setRegion(region)
+                .isHttps(true) // 使用 HTTPS 请求, 默认为 HTTP 请求
+                .builder();
+        
+        String secretId = BuildConfig.COS_SECRET_ID; //永久密钥 secretId
+        String secretKey =BuildConfig.COS_SECRET_KEY; //永久密钥 secretKey
+        
+        /**
+         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥
+         * @parma secretId 永久密钥 secretId
+         * @param secretKey 永久密钥 secretKey
+         * @param keyDuration 密钥有效期，单位为秒
+         */
+        QCloudCredentialProvider credentialProvider = new ShortTimeCredentialProvider(secretId, secretKey, 300);
+        
+        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
+        
+        this.cosXmlService = cosXmlService;
     }
 
     @Before public void setUp() {

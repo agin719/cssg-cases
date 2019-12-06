@@ -52,7 +52,7 @@ public class BucketCORS {
 
     private void PutBucket()
     {
-        String bucket = "bucket-cssg-android-temp-1253653367";
+        String bucket = "bucket-cssg-test-1253653367";
         PutBucketRequest putBucketRequest = new PutBucketRequest(bucket);
         
         // 定义存储桶的 ACL 属性。有效值：private，public-read-write，public-read；默认值：private
@@ -60,17 +60,17 @@ public class BucketCORS {
         
         // 赋予被授权者读的权限
         ACLAccount readACLS = new ACLAccount();
-        readACLS.addAccount("1278687956", "1278687956");
+        readACLS.addAccount("1278687956", "100000000001");
         putBucketRequest.setXCOSGrantRead(readACLS);
         
         // 赋予被授权者写的权限
         ACLAccount writeACLS = new ACLAccount();
-        writeACLS.addAccount("1278687956", "1278687956");
+        writeACLS.addAccount("1278687956", "100000000001");
         putBucketRequest.setXCOSGrantRead(writeACLS);
         
         // 赋予被授权者读写的权限
         ACLAccount writeandReadACLS = new ACLAccount();
-        writeandReadACLS.addAccount("1278687956", "1278687956");
+        writeandReadACLS.addAccount("1278687956", "100000000001");
         putBucketRequest.setXCOSGrantRead(writeandReadACLS);
         // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
@@ -81,10 +81,8 @@ public class BucketCORS {
             PutBucketResult putBucketResult = cosXmlService.putBucket(putBucketRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
-            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
-            assertError(e, e.getStatusCode() == 409);
         }
         
         // 使用异步回调请求
@@ -100,10 +98,11 @@ public class BucketCORS {
                 // todo Put Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
+        
     }
     private void PutBucketCors()
     {
-        String bucket = "bucket-cssg-android-temp-1253653367"; //格式：BucketName-APPID
+        String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
         PutBucketCORSRequest putBucketCORSRequest = new PutBucketCORSRequest(bucket);
         
         /**
@@ -149,10 +148,8 @@ public class BucketCORS {
             PutBucketCORSResult putBucketCORSResult = cosXmlService.putBucketCORS(putBucketCORSRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
-            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
-            assertError(e);
         }
         
         // 使用异步回调请求
@@ -168,10 +165,11 @@ public class BucketCORS {
                 // todo Put Bucket CORS failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
+        
     }
     private void GetBucketCors()
     {
-        String bucket = "bucket-cssg-android-temp-1253653367"; //格式：BucketName-APPID
+        String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
         GetBucketCORSRequest getBucketCORSRequest = new GetBucketCORSRequest(bucket);
         // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
@@ -182,10 +180,8 @@ public class BucketCORS {
             GetBucketCORSResult getBucketCORSResult = cosXmlService.getBucketCORS(getBucketCORSRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
-            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
-            assertError(e);
         }
         
         // 使用异步回调请求
@@ -201,10 +197,11 @@ public class BucketCORS {
                 // todo Get Bucket CORS failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
+        
     }
     private void OptionObject()
     {
-        String bucket = "bucket-cssg-android-temp-1253653367"; //存储桶名称，格式：BucketName-APPID
+        String bucket = "bucket-cssg-test-1253653367"; //存储桶名称，格式：BucketName-APPID
         String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键
         String origin = "https://cloud.tencent.com";
         String accessMethod = "PUT";
@@ -218,10 +215,8 @@ public class BucketCORS {
            OptionObjectResult result = cosXmlService.optionObject(optionObjectRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
-            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
-            assertError(e);
         }
         
         // 使用异步回调请求
@@ -238,10 +233,11 @@ public class BucketCORS {
             }
         });
         
+        
     }
     private void DeleteBucketCors()
     {
-        String bucket = "bucket-cssg-android-temp-1253653367"; //格式：BucketName-APPID
+        String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
         DeleteBucketCORSRequest deleteBucketCORSRequest = new DeleteBucketCORSRequest(bucket);
         // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
@@ -252,10 +248,8 @@ public class BucketCORS {
             DeleteBucketCORSResult deleteBucketCORSResult = cosXmlService.deleteBucketCORS(deleteBucketCORSRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
-            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
-            assertError(e);
         }
         
         // 使用异步回调请求
@@ -271,10 +265,11 @@ public class BucketCORS {
                 // todo Delete Bucket CORS failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
+        
     }
     private void DeleteBucket()
     {
-        String bucket = "bucket-cssg-android-temp-1253653367"; //格式：BucketName-APPID
+        String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
         DeleteBucketRequest deleteBucketRequest = new DeleteBucketRequest(bucket);
         // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
@@ -285,10 +280,8 @@ public class BucketCORS {
             DeleteBucketResult deleteBucketResult = cosXmlService.deleteBucket(deleteBucketRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
-            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
-            assertError(e);
         }
         
         // 使用异步回调请求
@@ -304,28 +297,33 @@ public class BucketCORS {
                 // todo Delete Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
+        
     }
 
     private void initService() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        String region = "ap-guangzhou";
+        
+        // 创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
         CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-            .isHttps(true)
-            .setRegion("ap-guangzhou")
-            .builder();
-
-        QCloudCredentialProvider credentialProvider = new ShortTimeCredentialProvider(BuildConfig.COS_SECRET_ID, BuildConfig.COS_SECRET_KEY, 3600);
-        cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-
-        try {
-            File srcFile = new File(context.getExternalCacheDir(), "object4android");
-            if (!srcFile.exists() && srcFile.createNewFile()) {
-                RandomAccessFile raf = new RandomAccessFile(srcFile, "rw");
-                raf.setLength(10);
-                raf.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                .setRegion(region)
+                .isHttps(true) // 使用 HTTPS 请求, 默认为 HTTP 请求
+                .builder();
+        
+        String secretId = BuildConfig.COS_SECRET_ID; //永久密钥 secretId
+        String secretKey =BuildConfig.COS_SECRET_KEY; //永久密钥 secretKey
+        
+        /**
+         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥
+         * @parma secretId 永久密钥 secretId
+         * @param secretKey 永久密钥 secretKey
+         * @param keyDuration 密钥有效期，单位为秒
+         */
+        QCloudCredentialProvider credentialProvider = new ShortTimeCredentialProvider(secretId, secretKey, 300);
+        
+        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
+        
+        this.cosXmlService = cosXmlService;
     }
 
     @Before public void setUp() {
