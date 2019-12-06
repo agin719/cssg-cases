@@ -54,14 +54,14 @@ public class GlobalInitCustom {
     {
         String region = "ap-guangzhou";
         
-        //创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
+        // 创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
         CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
                .setRegion(region)
-              .isHttps(true) // 使用 https 请求, 默认 http 请求
+            .isHttps(true) // 使用 HTTPS 请求, 默认为 HTTP 请求
                .builder();
         
         /**
-         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥。
+         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥
          */
         QCloudCredentialProvider credentialProvider = new MyCredentialProvider();
         

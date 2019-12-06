@@ -55,28 +55,28 @@ public class BucketReplication {
         String bucket = "bucket-cssg-android-temp-1253653367";
         PutBucketRequest putBucketRequest = new PutBucketRequest(bucket);
         
-        //定义存储桶的 ACL 属性。有效值：private，public-read-write，public-read；默认值：private
+        // 定义存储桶的 ACL 属性。有效值：private，public-read-write，public-read；默认值：private
         putBucketRequest.setXCOSACL("private");
         
-        //赋予被授权者读的权限
+        // 赋予被授权者读的权限
         ACLAccount readACLS = new ACLAccount();
         readACLS.addAccount("1278687956", "1278687956");
         putBucketRequest.setXCOSGrantRead(readACLS);
         
-        //赋予被授权者写的权限
+        // 赋予被授权者写的权限
         ACLAccount writeACLS = new ACLAccount();
         writeACLS.addAccount("1278687956", "1278687956");
         putBucketRequest.setXCOSGrantRead(writeACLS);
         
-        //赋予被授权者读写的权限
+        // 赋予被授权者读写的权限
         ACLAccount writeandReadACLS = new ACLAccount();
         writeandReadACLS.addAccount("1278687956", "1278687956");
         putBucketRequest.setXCOSGrantRead(writeandReadACLS);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         putBucketRequest.setSignParamsAndHeaders(null, headerKeys);
-        //使用同步方法
+        // 使用同步方法
         try {
             PutBucketResult putBucketResult = cosXmlService.putBucket(putBucketRequest);
         } catch (CosXmlClientException e) {
@@ -105,8 +105,8 @@ public class BucketReplication {
     {
         String bucket = "bucket-cssg-android-temp-1253653367"; //格式：BucketName-APPID
         PutBucketVersioningRequest putBucketVersioningRequest = new PutBucketVersioningRequest(bucket);
-        putBucketVersioningRequest.setEnableVersion(true); //true: 开启版本控制; false:暂停版本控制
-        //设置签名校验Host, 默认校验所有Header
+        putBucketVersioningRequest.setEnableVersion(true); //true：开启版本控制; false：暂停版本控制
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         putBucketVersioningRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -138,18 +138,18 @@ public class BucketReplication {
     private void PutBucketReplication()
     {
         String bucket = "bucket-cssg-android-temp-1253653367"; //格式：BucketName-APPID
-        String ownerUin = "1278687956"; //发起者身份标示:OwnerUin
-        String subUin = "1278687956"; //发起者身份标示:SubUin
+        String ownerUin = "1278687956"; //发起者身份标示：OwnerUin
+        String subUin = "1278687956"; //发起者身份标示：SubUin
         PutBucketReplicationRequest putBucketReplicationRequest = new PutBucketReplicationRequest(bucket);
         putBucketReplicationRequest.setReplicationConfigurationWithRole(ownerUin, subUin);
         PutBucketReplicationRequest.RuleStruct ruleStruct = new PutBucketReplicationRequest.RuleStruct();
         ruleStruct.id = "replication_01"; //用来标注具体 Rule 的名称
-        ruleStruct.isEnable = true; //标识 Rule 是否生效 :true, 生效； false, 不生效
+        ruleStruct.isEnable = true; //标识 Rule 是否生效。true：生效；false：不生效
         ruleStruct.region = "ap-beijing"; //目标存储桶地域信息
         ruleStruct.bucket = "bucket-cssg-assist-1253653367";  // 目标存储桶
         ruleStruct.prefix = "34"; //前缀匹配策略，
         putBucketReplicationRequest.setReplicationConfigurationWithRule(ruleStruct);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         putBucketReplicationRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -181,7 +181,7 @@ public class BucketReplication {
     {
         String bucket = "bucket-cssg-android-temp-1253653367"; //格式：BucketName-APPID
         GetBucketReplicationRequest getBucketReplicationRequest = new GetBucketReplicationRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        //设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         getBucketReplicationRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -214,7 +214,7 @@ public class BucketReplication {
     {
         String bucket = "bucket-cssg-android-temp-1253653367"; //格式：BucketName-APPID
         DeleteBucketReplicationRequest deleteBucketReplicationRequest = new DeleteBucketReplicationRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         deleteBucketReplicationRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -247,7 +247,7 @@ public class BucketReplication {
     {
         String bucket = "bucket-cssg-android-temp-1253653367"; //格式：BucketName-APPID
         DeleteBucketRequest deleteBucketRequest = new DeleteBucketRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         deleteBucketRequest.setSignParamsAndHeaders(null, headerKeys);

@@ -31,7 +31,7 @@
     XCTestExpectation* exp = [self expectationWithDescription:@"get-service"];
     QCloudGetServiceRequest* request = [[QCloudGetServiceRequest alloc] init];
     [request setFinishBlock:^(QCloudListAllMyBucketsResult* result, NSError* error) {
-        //从result中获取返回信息
+        //从 result 中获取返回信息
         XCTAssertNil(error);
         [exp fulfill];
     }];

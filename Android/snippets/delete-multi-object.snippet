@@ -1,10 +1,10 @@
 String bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
 List<String> objectList = new ArrayList<String>();
-objectList.add("exampleobject");//对象在存储桶中的位置标识符，即对象键
+objectList.add("exampleobject"); //对象在存储桶中的位置标识符，即对象键
 
 DeleteMultiObjectRequest deleteMultiObjectRequest = new DeleteMultiObjectRequest(bucket, objectList);
 deleteMultiObjectRequest.setQuiet(true);
-//设置签名校验Host, 默认校验所有Header
+// 设置签名校验 Host，默认校验所有 Header
 Set<String> headerKeys = new HashSet<>();
 headerKeys.add("Host");
 deleteMultiObjectRequest.setSignParamsAndHeaders(null, headerKeys);

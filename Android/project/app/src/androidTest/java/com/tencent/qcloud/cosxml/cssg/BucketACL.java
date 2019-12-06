@@ -55,28 +55,28 @@ public class BucketACL {
         String bucket = "bucket-cssg-android-temp-1253653367";
         PutBucketRequest putBucketRequest = new PutBucketRequest(bucket);
         
-        //定义存储桶的 ACL 属性。有效值：private，public-read-write，public-read；默认值：private
+        // 定义存储桶的 ACL 属性。有效值：private，public-read-write，public-read；默认值：private
         putBucketRequest.setXCOSACL("private");
         
-        //赋予被授权者读的权限
+        // 赋予被授权者读的权限
         ACLAccount readACLS = new ACLAccount();
         readACLS.addAccount("1278687956", "1278687956");
         putBucketRequest.setXCOSGrantRead(readACLS);
         
-        //赋予被授权者写的权限
+        // 赋予被授权者写的权限
         ACLAccount writeACLS = new ACLAccount();
         writeACLS.addAccount("1278687956", "1278687956");
         putBucketRequest.setXCOSGrantRead(writeACLS);
         
-        //赋予被授权者读写的权限
+        // 赋予被授权者读写的权限
         ACLAccount writeandReadACLS = new ACLAccount();
         writeandReadACLS.addAccount("1278687956", "1278687956");
         putBucketRequest.setXCOSGrantRead(writeandReadACLS);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         putBucketRequest.setSignParamsAndHeaders(null, headerKeys);
-        //使用同步方法
+        // 使用同步方法
         try {
             PutBucketResult putBucketResult = cosXmlService.putBucket(putBucketRequest);
         } catch (CosXmlClientException e) {
@@ -105,11 +105,11 @@ public class BucketACL {
     {
         String bucket = "bucket-cssg-android-temp-1253653367"; //格式：BucketName-APPID
         HeadBucketRequest headBucketRequest = new HeadBucketRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         headBucketRequest.setSignParamsAndHeaders(null, headerKeys);
-        //使用同步方法
+        // 使用同步方法
         try {
             HeadBucketResult headBucketResult = cosXmlService.headBucket(headBucketRequest);
         } catch (CosXmlClientException e) {
@@ -139,24 +139,24 @@ public class BucketACL {
         String bucket = "bucket-cssg-android-temp-1253653367"; //格式：BucketName-APPID
         PutBucketACLRequest putBucketACLRequest = new PutBucketACLRequest(bucket);
         
-        //设置 bucket 访问权限
+        // 设置 bucket 访问权限
         putBucketACLRequest.setXCOSACL("public-read");
         
-        //赋予被授权者读的权限
+        // 赋予被授权者读的权限
         ACLAccount readACLS = new ACLAccount();
         readACLS.addAccount("1278687956", "1278687956");
         putBucketACLRequest.setXCOSGrantRead(readACLS);
         
-        //赋予被授权者写的权限
+        // 赋予被授权者写的权限
         ACLAccount writeACLS = new ACLAccount();
         writeACLS.addAccount("1278687956", "1278687956");
         putBucketACLRequest.setXCOSGrantRead(writeACLS);
         
-        //赋予被授权者读写的权限
+        // 赋予被授权者读写的权限
         ACLAccount writeandReadACLS = new ACLAccount();
         writeandReadACLS.addAccount("1278687956", "1278687956");
         putBucketACLRequest.setXCOSGrantRead(writeandReadACLS);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         putBucketACLRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -190,7 +190,7 @@ public class BucketACL {
     {
         String bucket = "bucket-cssg-android-temp-1253653367"; //格式：BucketName-APPID
         GetBucketACLRequest getBucketACLRequest = new GetBucketACLRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         getBucketACLRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -224,7 +224,7 @@ public class BucketACL {
     {
         String bucket = "bucket-cssg-android-temp-1253653367"; //格式：BucketName-APPID
         DeleteBucketRequest deleteBucketRequest = new DeleteBucketRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         deleteBucketRequest.setSignParamsAndHeaders(null, headerKeys);

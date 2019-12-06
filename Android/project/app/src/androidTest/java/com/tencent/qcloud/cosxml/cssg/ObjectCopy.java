@@ -52,17 +52,17 @@ public class ObjectCopy {
 
     private void CopyObject()
     {
-        String sourceAppid = "1253653367"; //账号 appid
-        String sourceBucket = "bucket-cssg-test-1253653367"; //"源对象所在的存储桶
+        String sourceAppid = "1253653367"; //账号 APPID
+        String sourceBucket = "bucket-cssg-test-1253653367"; //源对象所在的存储桶
         String sourceRegion = "ap-guangzhou"; //源对象的存储桶所在的地域
         String sourceCosPath = "sourceObject"; //源对象键
-        //构造源对象属性
+        // 构造源对象属性
         CopyObjectRequest.CopySourceStruct copySourceStruct = new CopyObjectRequest.CopySourceStruct(sourceAppid, sourceBucket, sourceRegion, sourceCosPath);
         String bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
         String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键
         
         CopyObjectRequest copyObjectRequest = new CopyObjectRequest(bucket, cosPath, copySourceStruct);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         copyObjectRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -95,10 +95,10 @@ public class ObjectCopy {
     private void InitMultiUpload()
     {
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
-        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         
         InitMultipartUploadRequest initMultipartUploadRequest = new InitMultipartUploadRequest(bucket, cosPath);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         initMultipartUploadRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -132,28 +132,28 @@ public class ObjectCopy {
     private void UploadPartCopy()
     {
         //具体步骤：
-        // 1. 调用 cosXmlService.initMultipartUpload(InitMultipartUploadRequest) 初始化分片,请参考 [InitMultipartUploadRequest 初始化分片](#InitMultipartUploadRequest)。
-        // 2. 调用 cosXmlService.copyObject(UploadPartCopyRequest) 完成分片复制。
-        // 3. 调用 cosXmlService.completeMultiUpload(CompleteMultiUploadRequest) 完成分片复制,请参考 [CompleteMultiUploadRequest 完成分片复制](#CompleteMultiUploadRequest)。
+        // 1. 调用 cosXmlService.initMultipartUpload(InitMultipartUploadRequest) 初始化分块,请参考 [InitMultipartUploadRequest 初始化分块](#InitMultipartUploadRequest)。
+        // 2. 调用 cosXmlService.copyObject(UploadPartCopyRequest) 完成分块复制。
+        // 3. 调用 cosXmlService.completeMultiUpload(CompleteMultiUploadRequest) 完成分块复制,请参考 [CompleteMultiUploadRequest 完成分块复制](#CompleteMultiUploadRequest)。
         
-        String sourceAppid = "1253653367"; //账号 appid
-        String sourceBucket = "bucket-cssg-test-1253653367"; //"源对象所在的存储桶
+        String sourceAppid = "1253653367"; //账号 APPID
+        String sourceBucket = "bucket-cssg-test-1253653367"; //源对象所在的存储桶
         String sourceRegion = "ap-guangzhou"; //源对象的存储桶所在的地域
         String sourceCosPath = "sourceObject"; //源对象键
-        //构造源对象属性
+        // 构造源对象属性
         CopyObjectRequest.CopySourceStruct copySourceStruct = new CopyObjectRequest.CopySourceStruct(sourceAppid, sourceBucket, sourceRegion, sourceCosPath);
         
         String bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
-        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键
         
         String uploadId = "example-uploadId";
         uploadId = this.uploadId;
-        int partNumber = 1; //分片编号
-        long start = 0;//复制源对象的开始位置
+        int partNumber = 1; //分块编号
+        long start = 0; //复制源对象的开始位置
         long end = 100; //复制源对象的结束位置
         
         UploadPartCopyRequest uploadPartCopyRequest = new UploadPartCopyRequest(bucket, cosPath, partNumber,  uploadId, copySourceStruct, start, end);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         uploadPartCopyRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -188,7 +188,7 @@ public class ObjectCopy {
     private void CompleteMultiUpload()
     {
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
-        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         String uploadId = "example-uploadId";
         uploadId = this.uploadId;
         int partNumber = 1;
@@ -198,7 +198,7 @@ public class ObjectCopy {
         partNumberAndETag.put(partNumber, etag);
         
         CompleteMultiUploadRequest completeMultiUploadRequest = new CompleteMultiUploadRequest(bucket, cosPath, uploadId, partNumberAndETag);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         completeMultiUploadRequest.setSignParamsAndHeaders(null, headerKeys);

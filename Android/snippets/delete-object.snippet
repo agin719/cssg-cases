@@ -2,7 +2,7 @@ String bucket = "examplebucket-1250000000"; //存储桶名称，格式：BucketN
 String cosPath = "exampleobject"; //对象在存储桶中的位置标识符，即对象键
 
 DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(bucket, cosPath);
-//设置签名校验Host, 默认校验所有Header
+// 设置签名校验 Host，默认校验所有 Header
 Set<String> headerKeys = new HashSet<>();
 headerKeys.add("Host");
 deleteObjectRequest.setSignParamsAndHeaders(null, headerKeys);

@@ -5,7 +5,7 @@ put.body = [@"testFileContent" dataUsingEncoding:NSUTF8StringEncoding];
 //设置一些上传的参数
 put.initMultipleUploadFinishBlock = ^(QCloudInitiateMultipartUploadResult * multipleUploadInitResult,
     QCloudCOSXMLUploadObjectResumeData resumeData) {
-    //在初始化分块上传完成以后会回调该block，在这里可以获取 resumeData，
+    //在初始化分块上传完成以后会回调该 block，在这里可以获取 resumeData，
     //并且可以通过 resumeData 生成一个分块上传的请求
     QCloudCOSXMLUploadObjectRequest* request = [QCloudCOSXMLUploadObjectRequest
         requestWithRequestData:resumeData];
@@ -16,7 +16,7 @@ put.initMultipleUploadFinishBlock = ^(QCloudInitiateMultipartUploadResult * mult
         totalBytesExpectedToSend);
 }];
 [put setFinishBlock:^(QCloudUploadObjectResult *result, NSError* error) {
-    //可以从result获取结果
+    //可以从 result 获取结果
 }];
 
 [[QCloudCOSTransferMangerService defaultCOSTransferManager] UploadObject:put];

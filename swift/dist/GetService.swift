@@ -30,7 +30,7 @@ class GetServiceTest: XCTestCase,QCloudSignatureProvider{
           if result == nil {
               print(error!);
           } else {
-              //从result中获取返回信息
+              //从 result 中获取返回信息
               print(result!);
           }
           exception .fulfill();

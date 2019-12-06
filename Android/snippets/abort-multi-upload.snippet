@@ -1,9 +1,9 @@
 String bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
-String cosPath = "exampleobject"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+String cosPath = "exampleobject"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
 String uploadId = "example-uploadId";
 
 AbortMultiUploadRequest abortMultiUploadRequest = new AbortMultiUploadRequest(bucket, cosPath, uploadId);
-//设置签名校验Host, 默认校验所有Header
+// 设置签名校验 Host，默认校验所有 Header
 Set<String> headerKeys = new HashSet<>();
 headerKeys.add("Host");
 abortMultiUploadRequest.setSignParamsAndHeaders(null, headerKeys);

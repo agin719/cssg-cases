@@ -55,28 +55,28 @@ public class BucketCORS {
         String bucket = "bucket-cssg-android-temp-1253653367";
         PutBucketRequest putBucketRequest = new PutBucketRequest(bucket);
         
-        //定义存储桶的 ACL 属性。有效值：private，public-read-write，public-read；默认值：private
+        // 定义存储桶的 ACL 属性。有效值：private，public-read-write，public-read；默认值：private
         putBucketRequest.setXCOSACL("private");
         
-        //赋予被授权者读的权限
+        // 赋予被授权者读的权限
         ACLAccount readACLS = new ACLAccount();
         readACLS.addAccount("1278687956", "1278687956");
         putBucketRequest.setXCOSGrantRead(readACLS);
         
-        //赋予被授权者写的权限
+        // 赋予被授权者写的权限
         ACLAccount writeACLS = new ACLAccount();
         writeACLS.addAccount("1278687956", "1278687956");
         putBucketRequest.setXCOSGrantRead(writeACLS);
         
-        //赋予被授权者读写的权限
+        // 赋予被授权者读写的权限
         ACLAccount writeandReadACLS = new ACLAccount();
         writeandReadACLS.addAccount("1278687956", "1278687956");
         putBucketRequest.setXCOSGrantRead(writeandReadACLS);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         putBucketRequest.setSignParamsAndHeaders(null, headerKeys);
-        //使用同步方法
+        // 使用同步方法
         try {
             PutBucketResult putBucketResult = cosXmlService.putBucket(putBucketRequest);
         } catch (CosXmlClientException e) {
@@ -109,9 +109,9 @@ public class BucketCORS {
         /**
          * CORSConfiguration.cORSRule: 跨域访问配置信息
          * corsRule.id： 配置规则的 ID
-         * corsRule.allowedOrigin: 允许的访问来源，支持通配符 * , 格式为：协议://域名[:端口]，如：http://www.qq.com
+         * corsRule.allowedOrigin: 允许的访问来源，支持通配符 *，格式为：协议://域名[:端口]，例如：http://www.qq.com
          * corsRule.maxAgeSeconds: 设置 OPTIONS 请求得到结果的有效期
-         * corsRule.allowedMethod: 允许的 HTTP 操作，如：GET，PUT，HEAD，POST，DELETE
+         * corsRule.allowedMethod: 允许的 HTTP 操作，例如：GET，PUT，HEAD，POST，DELETE
          * corsRule.allowedHeader：在发送 OPTIONS 请求时告知服务端，接下来的请求可以使用哪些自定义的 HTTP 请求头部，支持通配符 *
          * corsRule.exposeHeader： 设置浏览器可以接收到的来自服务端的自定义头部信息
          */
@@ -136,10 +136,10 @@ public class BucketCORS {
         exposeHeaders.add("x-cos-meta-1");
         corsRule.exposeHeader = exposeHeaders;
         
-        //设置跨域访问配置信息
+        // 设置跨域访问配置信息
         putBucketCORSRequest.addCORSRule(corsRule);
         
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         putBucketCORSRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -173,11 +173,11 @@ public class BucketCORS {
     {
         String bucket = "bucket-cssg-android-temp-1253653367"; //格式：BucketName-APPID
         GetBucketCORSRequest getBucketCORSRequest = new GetBucketCORSRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         getBucketCORSRequest.setSignParamsAndHeaders(null, headerKeys);
-        //使用同步方法
+        // 使用同步方法
         try {
             GetBucketCORSResult getBucketCORSResult = cosXmlService.getBucketCORS(getBucketCORSRequest);
         } catch (CosXmlClientException e) {
@@ -209,7 +209,7 @@ public class BucketCORS {
         String origin = "https://cloud.tencent.com";
         String accessMethod = "PUT";
         OptionObjectRequest optionObjectRequest = new OptionObjectRequest(bucket, cosPath, origin, accessMethod);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         optionObjectRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -243,7 +243,7 @@ public class BucketCORS {
     {
         String bucket = "bucket-cssg-android-temp-1253653367"; //格式：BucketName-APPID
         DeleteBucketCORSRequest deleteBucketCORSRequest = new DeleteBucketCORSRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         deleteBucketCORSRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -276,7 +276,7 @@ public class BucketCORS {
     {
         String bucket = "bucket-cssg-android-temp-1253653367"; //格式：BucketName-APPID
         DeleteBucketRequest deleteBucketRequest = new DeleteBucketRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         deleteBucketRequest.setSignParamsAndHeaders(null, headerKeys);

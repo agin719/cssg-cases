@@ -1,7 +1,7 @@
 String bucket = "examplebucket-1250000000"; //存储桶，格式：BucketName-APPID
-String cosPath = "exampleobject"; //对象在存储桶中的位置标识符，即对象键。
-String uploadId ="example-uploadId"; //初始化分片上传返回的 uploadId
-int partNumber = 1; //分片块编号，必须从1开始递增
+String cosPath = "exampleobject"; //对象在存储桶中的位置标识符，即对象键
+String uploadId ="example-uploadId"; //初始化分块上传返回的 uploadId
+int partNumber = 1; //分块块编号，必须从1开始递增
 String srcPath = new File(context.getExternalCacheDir(), "exampleobject").toString(); //本地文件绝对路径
 UploadPartRequest uploadPartRequest = new UploadPartRequest(bucket, cosPath, partNumber, srcPath, uploadId);
 
@@ -12,14 +12,14 @@ uploadPartRequest.setProgressListener(new CosXmlProgressListener() {
         Log.w("TEST","progress =" + (long)result + "%");
     }
 });
-//设置签名校验Host, 默认校验所有Header
+// 设置签名校验 Host，默认校验所有 Header
 Set<String> headerKeys = new HashSet<>();
 headerKeys.add("Host");
 uploadPartRequest.setSignParamsAndHeaders(null, headerKeys);
 //使用同步方法上传
 try {
     UploadPartResult uploadPartResult = cosXmlService.uploadPart(uploadPartRequest);
-    String eTag = uploadPartResult.eTag; // 获取分片块的 eTag
+    String eTag = uploadPartResult.eTag; //获取分块块的 eTag
 } catch (CosXmlClientException e) {
     e.printStackTrace();
 } catch (CosXmlServiceException e) {

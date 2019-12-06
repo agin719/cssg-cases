@@ -53,7 +53,7 @@ public class ObjectACL {
     private void PutObject()
     {
         String bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
-        String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键。如 cosPath = "text.txt";
+        String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键。例如 cosPath = "text.txt";
         String srcPath = new File(context.getExternalCacheDir(), "object4android").toString();//"本地文件的绝对路径";
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, cosPath, srcPath);
         
@@ -63,7 +63,7 @@ public class ObjectACL {
                 // todo Do something to update progress...
             }
         });
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         putObjectRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -93,7 +93,7 @@ public class ObjectACL {
         });
         
         
-        //上传字节数组
+        // 上传字节数组
         byte[] data = "this is a test".getBytes(Charset.forName("UTF-8"));
         putObjectRequest = new PutObjectRequest(bucket, cosPath, data);
         putObjectRequest.setProgressListener(new CosXmlProgressListener() {
@@ -113,7 +113,7 @@ public class ObjectACL {
         }
         
         
-        //上传字节流
+        // 上传字节流
         InputStream inputStream = new ByteArrayInputStream("this is a test".getBytes(Charset.forName("UTF-8")));
         putObjectRequest = new PutObjectRequest(bucket, cosPath, inputStream);
         putObjectRequest.setProgressListener(new CosXmlProgressListener() {
@@ -136,22 +136,22 @@ public class ObjectACL {
     private void PutObjectAcl()
     {
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
-        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         PutObjectACLRequest putObjectACLRequest = new PutObjectACLRequest(bucket, cosPath);
         
-        //设置 bucket 访问权限
+        // 设置 bucket 访问权限
         putObjectACLRequest.setXCOSACL("public-read");
         
-        //赋予被授权者读的权限
+        // 赋予被授权者读的权限
         ACLAccount readACLS = new ACLAccount();
         readACLS.addAccount("1278687956", "1278687956");
         putObjectACLRequest.setXCOSGrantRead(readACLS);
         
-        //赋予被授权者读写的权限
+        // 赋予被授权者读写的权限
         ACLAccount writeandReadACLS = new ACLAccount();
         writeandReadACLS.addAccount("1278687956", "1278687956");
         putObjectACLRequest.setXCOSGrantRead(writeandReadACLS);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         putObjectACLRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -184,9 +184,9 @@ public class ObjectACL {
     private void GetObjectAcl()
     {
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
-        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         GetObjectACLRequest getBucketACLRequest = new GetObjectACLRequest(bucket, cosPath);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         getBucketACLRequest.setSignParamsAndHeaders(null, headerKeys);

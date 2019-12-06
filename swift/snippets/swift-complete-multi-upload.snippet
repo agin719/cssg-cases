@@ -1,17 +1,17 @@
 let  complete = QCloudCompleteMultipartUploadRequest.init();
 complete.bucket = "examplebucket-1250000000";
 complete.object = "exampleobject";
-////本次要查询的分块上传的uploadId,可从初始化分块上传的请求结果QCloudInitiateMultipartUploadResult中得到
+//本次要查询的分块上传的 uploadId，可从初始化分块上传的请求结果 QCloudInitiateMultipartUploadResult 中得到
 complete.uploadId = "example-uploadId";
 if self.uploadId != nil {
     complete.uploadId = self.uploadId!;
 }
 
 
-// 已上传分片的信息
+//已上传分块的信息
 let completeInfo = QCloudCompleteMultipartUploadInfo.init();
 if self.parts == nil {
-    print("没有要完成的分片");
+    print("没有要完成的分块");
     return;
 }
 

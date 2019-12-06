@@ -1,9 +1,9 @@
 QCloudCompleteMultipartUploadRequest *completeRequst = [QCloudCompleteMultipartUploadRequest new];
 completeRequst.object = @"exampleobject";
 completeRequst.bucket = @"examplebucket-1250000000";
-//本次要查询的分块上传的uploadId,可从初始化分块上传的请求结果QCloudInitiateMultipartUploadResult中得到
+//本次要查询的分块上传的 uploadId，可从初始化分块上传的请求结果 QCloudInitiateMultipartUploadResult 中得到
 completeRequst.uploadId = @"example-uploadId";
-// 已上传分片的信息
+//已上传分块的信息
 QCloudCompleteMultipartUploadInfo *partInfo = [QCloudCompleteMultipartUploadInfo new];
 partInfo.parts = self.parts;
 completeRequst.parts = partInfo;

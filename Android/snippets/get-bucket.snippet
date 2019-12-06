@@ -51,9 +51,9 @@ getBucketRequest = new GetBucketRequest(bucketName);
 
 // prefix 表示列出的 object 的 key 以 prefix 开始
 getBucketRequest.setPrefix("images/");
-// delimiter 表示分隔符, 设置为 / 表示列出当前目录下的 object, 设置为空表示列出所有的 object
+// delimiter 表示分隔符，设置为 / 表示列出当前目录下的 object, 设置为空表示列出所有的 object
 getBucketRequest.setDelimiter("/");
-// 设置最大遍历出多少个对象, 一次 listobject 最大支持1000
+// 设置最大遍历出多少个对象，一次 listobject 最大支持1000
 getBucketRequest.setMaxKeys(100);
 GetBucketResult getBucketResult = null;
 do {
@@ -66,7 +66,7 @@ do {
         e.printStackTrace();
         return;
     }
-    // commonPrefixs 表示表示被 delimiter 截断的路径, 例如 delimter 设置为 /, commonPrefixs 则表示子目录的路径
+    // commonPrefixs 表示表示被 delimiter 截断的路径，例如 delimter 设置为 /，commonPrefixs 则表示子目录的路径
     List<ListBucket.CommonPrefixes> commonPrefixs = getBucketResult.listBucket.commonPrefixesList;
 
     // contents 表示列出的 object 列表

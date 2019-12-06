@@ -1,16 +1,16 @@
 String bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
-String ownerUin = "100000000001"; //发起者身份标示:OwnerUin
-String subUin = "100000000001"; //发起者身份标示:SubUin
+String ownerUin = "100000000001"; //发起者身份标示：OwnerUin
+String subUin = "100000000001"; //发起者身份标示：SubUin
 PutBucketReplicationRequest putBucketReplicationRequest = new PutBucketReplicationRequest(bucket);
 putBucketReplicationRequest.setReplicationConfigurationWithRole(ownerUin, subUin);
 PutBucketReplicationRequest.RuleStruct ruleStruct = new PutBucketReplicationRequest.RuleStruct();
 ruleStruct.id = "replication_01"; //用来标注具体 Rule 的名称
-ruleStruct.isEnable = true; //标识 Rule 是否生效 :true, 生效； false, 不生效
+ruleStruct.isEnable = true; //标识 Rule 是否生效。true：生效；false：不生效
 ruleStruct.region = "ap-beijing"; //目标存储桶地域信息
 ruleStruct.bucket = "destinationbucket-1250000000";  // 目标存储桶
 ruleStruct.prefix = "34"; //前缀匹配策略，
 putBucketReplicationRequest.setReplicationConfigurationWithRule(ruleStruct);
-//设置签名校验Host, 默认校验所有Header
+// 设置签名校验 Host，默认校验所有 Header
 Set<String> headerKeys = new HashSet<>();
 headerKeys.add("Host");
 putBucketReplicationRequest.setSignParamsAndHeaders(null, headerKeys);

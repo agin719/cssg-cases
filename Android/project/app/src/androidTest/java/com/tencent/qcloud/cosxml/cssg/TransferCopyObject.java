@@ -52,15 +52,15 @@ public class TransferCopyObject {
 
     private void TransferCopyObject()
     {
-        String sourceAppid = ""; //账号 appid
-        String sourceBucket = "bucket-cssg-test-1253653367"; //"源对象所在的存储桶
+        String sourceAppid = ""; //账号 APPID
+        String sourceBucket = "bucket-cssg-test-1253653367"; //源对象所在的存储桶
         String sourceRegion = "ap-guangzhou"; //源对象的存储桶所在的地域
         String sourceCosPath = ""; //源对象的对象键
         //构造源对象属性
         CopyObjectRequest.CopySourceStruct copySourceStruct = new CopyObjectRequest.CopySourceStruct(sourceAppid, sourceBucket, sourceRegion, sourceCosPath);
         
         String bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
-        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键
         
         TransferConfig transferConfig = new TransferConfig.Builder().build();
         //初始化 TransferManager

@@ -1,7 +1,7 @@
 QCloudGetBucketACLRequest* getBucketACl = [QCloudGetBucketACLRequest new];
 getBucketACl.bucket = @"examplebucket-1250000000";
 [getBucketACl setFinishBlock:^(QCloudACLPolicy * _Nonnull result, NSError * _Nonnull error) {
-    //QCloudACLPolicy中包含了 Bucket 的 ACL 信息。
+    //QCloudACLPolicy 中包含了 Bucket 的 ACL 信息
 }];
 
 [[QCloudCOSXMLService defaultCOSXML] GetBucketACL:getBucketACl];

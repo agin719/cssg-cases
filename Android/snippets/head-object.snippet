@@ -1,11 +1,11 @@
 String bucket = bucket = "examplebucket-1250000000"; //存储桶名称，格式：BucketName-APPID
 String cosPath = "exampleobject"; //对象位于存储桶中的位置标识符，即对象键
 HeadObjectRequest headObjectRequest = new HeadObjectRequest(bucket, cosPath);
-//设置签名校验Host, 默认校验所有Header
+// 设置签名校验 Host，默认校验所有 Header
 Set<String> headerKeys = new HashSet<>();
 headerKeys.add("Host");
 headObjectRequest.setSignParamsAndHeaders(null, headerKeys);
-//使用同步方法
+// 使用同步方法
 try {
     HeadObjectResult headObjectResult = cosXmlService.headObject(headObjectRequest);
 } catch (CosXmlClientException e) {

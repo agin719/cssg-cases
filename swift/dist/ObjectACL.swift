@@ -77,7 +77,7 @@ class ObjectACLTest: XCTestCase,QCloudSignatureProvider{
           if error != nil{
               print(error!)
           }else{
-              //可以从 result的accessControlList中获取对象的 acl
+              //可以从 result 的 accessControlList 中获取对象的 ACL
               print(result!.accessControlList);
           }
           exception .fulfill();

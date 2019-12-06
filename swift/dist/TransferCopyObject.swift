@@ -23,12 +23,12 @@ class TransferCopyObjectTest: XCTestCase,QCloudSignatureProvider{
 
     func TransferCopyObject() {
       let copyRequest =  QCloudCOSXMLCopyObjectRequest.init();
-      copyRequest.bucket = "bucket-cssg-test-1253653367";//目的<BucketName-APPID>，需要是公有读或者在当前账号有权限
+      copyRequest.bucket = "bucket-cssg-test-1253653367";//目的 <BucketName-APPID>，需要是公有读或者在当前账号有权限
       copyRequest.object = "object4swift";//目的文件名称
-      //文件来源<BucketName-APPID>，需要是公有读或者在当前账号有权限
+      //文件来源 <BucketName-APPID>，需要是公有读或者在当前账号有权限
       copyRequest.sourceBucket = "bucket-cssg-test-1253653367";
       copyRequest.sourceObject = "sourceObject";//源文件名称
-      copyRequest.sourceAPPID = "1253653367";//源文件的appid
+      copyRequest.sourceAPPID = "1253653367";//源文件的 APPID
       copyRequest.sourceRegion = "ap-guangzhou";//来源的地域
       copyRequest.setFinish { (copyResult, error) in
           if error != nil{

@@ -42,7 +42,7 @@
 
 - (void)PutBucketVersioning {
     XCTestExpectation* exp = [self expectationWithDescription:@"put-bucket-versioning"];
-    // 开启版本控制
+    //开启版本控制
     QCloudPutBucketVersioningRequest* request = [[QCloudPutBucketVersioningRequest alloc] init];
     request.bucket =@"bucket-cssg-ios-temp-1253653367";
     QCloudBucketVersioningConfiguration* versioningConfiguration =
@@ -51,7 +51,7 @@
     versioningConfiguration.status = QCloudCOSBucketVersioningStatusEnabled;
     
     [request setFinishBlock:^(id outputObject, NSError* error) {
-        //可以从 outputObject 中获取服务器返回的header信息
+        //可以从 outputObject 中获取服务器返回的 header 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -78,7 +78,7 @@
     QCloudDeleteBucketRequest* request = [[QCloudDeleteBucketRequest alloc ] init];
     request.bucket = @"bucket-cssg-ios-temp-1253653367";  //存储桶名称，命名格式：BucketName-APPID
     [request setFinishBlock:^(id outputObject,NSError*error) {
-        //可以从 outputObject 中获取服务器返回的header信息
+        //可以从 outputObject 中获取服务器返回的 header 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];

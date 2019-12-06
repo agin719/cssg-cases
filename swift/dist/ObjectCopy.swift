@@ -53,7 +53,7 @@ class ObjectCopyTest: XCTestCase,QCloudSignatureProvider{
           if error != nil{
               print(error!);
           }else{
-              //获取分片上传的 uploadId，后续的上传都需要这个 id，请保存起来后续使用
+              //获取分块上传的 uploadId，后续的上传都需要这个 ID，请保存以备后续使用
               self.uploadId = result!.uploadId;
               print(result!.uploadId);
           }
@@ -69,15 +69,15 @@ class ObjectCopyTest: XCTestCase,QCloudSignatureProvider{
       let req = QCloudUploadPartCopyRequest.init();
       req.bucket = "bucket-cssg-test-1253653367";
       req.object = "object4swift";
-      //  源文件 URL 路径，可以通过 versionid 子资源指定历史版本
+      //源文件 URL 路径，可以通过 versionid 子资源指定历史版本
       req.source = "bucket-cssg-test-1253653367.cos.ap-guangzhou.myqcloud.com/sourceObject";
-      // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
+      //在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
       req.uploadID = "example-uploadId";
       if self.uploadId != nil {
           req.uploadID = self.uploadId!;
       }
       
-      //// 标志当前分块的序号
+      //标志当前分块的序号
       req.partNumber = 1;
       req.setFinish { (result, error) in
           XCTAssertNil(error);
@@ -86,7 +86,7 @@ class ObjectCopyTest: XCTestCase,QCloudSignatureProvider{
               print(error!);
           }else{
               let mutipartInfo = QCloudMultipartInfo.init();
-              //获取所复制分片的 etag
+              //获取所复制分块的 etag
               mutipartInfo.eTag = result!.eTag;
               mutipartInfo.partNumber = "1";
           }
@@ -102,17 +102,17 @@ class ObjectCopyTest: XCTestCase,QCloudSignatureProvider{
       let  complete = QCloudCompleteMultipartUploadRequest.init();
       complete.bucket = "bucket-cssg-test-1253653367";
       complete.object = "object4swift";
-      ////本次要查询的分块上传的uploadId,可从初始化分块上传的请求结果QCloudInitiateMultipartUploadResult中得到
+      //本次要查询的分块上传的 uploadId，可从初始化分块上传的请求结果 QCloudInitiateMultipartUploadResult 中得到
       complete.uploadId = "example-uploadId";
       if self.uploadId != nil {
           complete.uploadId = self.uploadId!;
       }
       
       
-      // 已上传分片的信息
+      //已上传分块的信息
       let completeInfo = QCloudCompleteMultipartUploadInfo.init();
       if self.parts == nil {
-          print("没有要完成的分片");
+          print("没有要完成的分块");
           return;
       }
       

@@ -1,6 +1,6 @@
 QCloudDeleteBucketRequest* request = [[QCloudDeleteBucketRequest alloc ] init];
 request.bucket = @"examplebucket-1250000000";  //存储桶名称，命名格式：BucketName-APPID
 [request setFinishBlock:^(id outputObject,NSError*error) {
-    //可以从 outputObject 中获取服务器返回的header信息
+    //可以从 outputObject 中获取服务器返回的 header 信息
 }];
 [[QCloudCOSXMLService defaultCOSXML] DeleteBucket:request];

@@ -1,4 +1,4 @@
-// 开启版本控制
+//开启版本控制
 QCloudPutBucketVersioningRequest* request = [[QCloudPutBucketVersioningRequest alloc] init];
 request.bucket =@"examplebucket-1250000000";
 QCloudBucketVersioningConfiguration* versioningConfiguration =
@@ -7,6 +7,6 @@ request.configuration = versioningConfiguration;
 versioningConfiguration.status = QCloudCOSBucketVersioningStatusEnabled;
 
 [request setFinishBlock:^(id outputObject, NSError* error) {
-    //可以从 outputObject 中获取服务器返回的header信息
+    //可以从 outputObject 中获取服务器返回的 header 信息
 }];
 [[QCloudCOSXMLService defaultCOSXML] PutBucketVersioning:request];

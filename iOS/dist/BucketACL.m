@@ -45,7 +45,7 @@
     QCloudHeadBucketRequest* request = [QCloudHeadBucketRequest new];
     request.bucket = @"bucket-cssg-ios-temp-1253653367";
     [request setFinishBlock:^(id outputObject, NSError* error) {
-        //可以从 outputObject 中获取服务器返回的header信息
+        //可以从 outputObject 中获取服务器返回的 header 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -56,14 +56,14 @@
 - (void)PutBucketAcl {
     XCTestExpectation* exp = [self expectationWithDescription:@"put-bucket-acl"];
     QCloudPutBucketACLRequest* putACL = [QCloudPutBucketACLRequest new];
-    NSString* appID = @"1131975903";//授予全新的账号ID
+    NSString* appID = @"1131975903";//授予全新的账号 ID
     NSString *ownerIdentifier = [NSString stringWithFormat:@"qcs::cam::uin/%@:uin/%@", appID,
         appID];
     NSString *grantString = [NSString stringWithFormat:@"id=\"%@\"",ownerIdentifier];
     putACL.grantFullControl = grantString;
     putACL.bucket = @"bucket-cssg-ios-temp-1253653367";
     [putACL setFinishBlock:^(id outputObject, NSError *error) {
-        //可以从 outputObject 中获取服务器返回的header信息
+        //可以从 outputObject 中获取服务器返回的 header 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -77,7 +77,7 @@
     QCloudGetBucketACLRequest* getBucketACl = [QCloudGetBucketACLRequest new];
     getBucketACl.bucket = @"bucket-cssg-ios-temp-1253653367";
     [getBucketACl setFinishBlock:^(QCloudACLPolicy * _Nonnull result, NSError * _Nonnull error) {
-        //QCloudACLPolicy中包含了 Bucket 的 ACL 信息。
+        //QCloudACLPolicy 中包含了 Bucket 的 ACL 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -91,7 +91,7 @@
     QCloudDeleteBucketRequest* request = [[QCloudDeleteBucketRequest alloc ] init];
     request.bucket = @"bucket-cssg-ios-temp-1253653367";  //存储桶名称，命名格式：BucketName-APPID
     [request setFinishBlock:^(id outputObject,NSError*error) {
-        //可以从 outputObject 中获取服务器返回的header信息
+        //可以从 outputObject 中获取服务器返回的 header 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];

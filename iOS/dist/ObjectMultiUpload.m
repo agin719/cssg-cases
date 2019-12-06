@@ -34,7 +34,7 @@
     initrequest.object = @"object4ios";
     
     [initrequest setFinishBlock:^(QCloudInitiateMultipartUploadResult* outputObject, NSError *error) {
-        // 获取分片上传的 uploadId，后续的上传都需要这个 id，请保存起来后续使用
+        //获取分块上传的 uploadId，后续的上传都需要这个 ID，请保存以备后续使用
         self.uploadId = outputObject.uploadId;
         XCTAssertNil(error);
         [exp fulfill];
@@ -51,7 +51,7 @@
     uploads.maxUploads = 100;
     
     [uploads setFinishBlock:^(QCloudListMultipartUploadsResult* result, NSError *error) {
-        //可以从 result 中返回分片信息
+        //可以从 result 中返回分块信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -67,21 +67,21 @@
     request.object = @"object4ios";
     request.partNumber = 1;
     //标识本次分块上传的 ID；使用 Initiate Multipart Upload 接口初始化分块上传时会得到一个 uploadId
-    // 该 ID 不但唯一标识这一分块数据，也标识了这分块数据在整个文件内的相对位置
+    //该 ID 不但唯一标识这一分块数据，也标识了这分块数据在整个文件内的相对位置
     request.uploadId = @"example-uploadId";
     request.uploadId = self.uploadId;
-    //上传的数据：支持NSData*，NSURL(本地url)和QCloudFileOffsetBody *三种类型
+    //上传的数据：支持 NSData*，NSURL(本地 URL) 和 QCloudFileOffsetBody * 三种类型
     request.body = [@"testFileContent" dataUsingEncoding:NSUTF8StringEncoding];
     
     [request setSendProcessBlock:^(int64_t bytesSent,
                                    int64_t totalBytesSent,
                                    int64_t totalBytesExpectedToSend) {
-        // 上传进度信息
+        //上传进度信息
     }];
     [request setFinishBlock:^(QCloudUploadPartResult* outputObject, NSError *error) {
         XCTAssertNil(error);
         QCloudMultipartInfo *part = [QCloudMultipartInfo new];
-        //获取所上传分片的 etag
+        //获取所上传分块的 etag
         part.eTag = outputObject.eTag;
         part.partNumber = @"1";
         self.parts = [NSMutableArray new];
@@ -98,13 +98,13 @@
     QCloudListMultipartRequest* request = [QCloudListMultipartRequest new];
     request.object = @"object4ios";
     request.bucket = @"bucket-cssg-test-1253653367";
-    // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
+    //在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
     request.uploadId = @"example-uploadId";
     request.uploadId = self.uploadId;
     
     [request setFinishBlock:^(QCloudListPartsResult * _Nonnull result,
                               NSError * _Nonnull error) {
-        //从 result 中获取已上传分片信息
+        //从 result 中获取已上传分块信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -118,10 +118,10 @@
     QCloudCompleteMultipartUploadRequest *completeRequst = [QCloudCompleteMultipartUploadRequest new];
     completeRequst.object = @"object4ios";
     completeRequst.bucket = @"bucket-cssg-test-1253653367";
-    //本次要查询的分块上传的uploadId,可从初始化分块上传的请求结果QCloudInitiateMultipartUploadResult中得到
+    //本次要查询的分块上传的 uploadId，可从初始化分块上传的请求结果 QCloudInitiateMultipartUploadResult 中得到
     completeRequst.uploadId = @"example-uploadId";
     completeRequst.uploadId = self.uploadId;
-    // 已上传分片的信息
+    //已上传分块的信息
     QCloudCompleteMultipartUploadInfo *partInfo = [QCloudCompleteMultipartUploadInfo new];
     partInfo.parts = self.parts;
     completeRequst.parts = partInfo;
@@ -142,7 +142,7 @@
     QCloudAbortMultipfartUploadRequest *abortRequest = [QCloudAbortMultipfartUploadRequest new];
     abortRequest.object = @"object4ios";
     abortRequest.bucket = @"bucket-cssg-test-1253653367";
-    //本次要查询的分块上传的uploadId,可从初始化分块上传的请求结果QCloudInitiateMultipartUploadResult中得到
+    //本次要查询的分块上传的 uploadId，可从初始化分块上传的请求结果 QCloudInitiateMultipartUploadResult 中得到
     abortRequest.uploadId = @"example-uploadId";
     abortRequest.uploadId = self.uploadId;
     

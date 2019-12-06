@@ -107,9 +107,9 @@ public class Object {
         
         // prefix 表示列出的 object 的 key 以 prefix 开始
         getBucketRequest.setPrefix("images/");
-        // delimiter 表示分隔符, 设置为 / 表示列出当前目录下的 object, 设置为空表示列出所有的 object
+        // delimiter 表示分隔符，设置为 / 表示列出当前目录下的 object, 设置为空表示列出所有的 object
         getBucketRequest.setDelimiter("/");
-        // 设置最大遍历出多少个对象, 一次 listobject 最大支持1000
+        // 设置最大遍历出多少个对象，一次 listobject 最大支持1000
         getBucketRequest.setMaxKeys(100);
         GetBucketResult getBucketResult = null;
         do {
@@ -124,7 +124,7 @@ public class Object {
                 assertError(e);
                 return;
             }
-            // commonPrefixs 表示表示被 delimiter 截断的路径, 例如 delimter 设置为 /, commonPrefixs 则表示子目录的路径
+            // commonPrefixs 表示表示被 delimiter 截断的路径，例如 delimter 设置为 /，commonPrefixs 则表示子目录的路径
             List<ListBucket.CommonPrefixes> commonPrefixs = getBucketResult.listBucket.commonPrefixesList;
         
             // contents 表示列出的 object 列表
@@ -138,7 +138,7 @@ public class Object {
     private void PutObject()
     {
         String bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
-        String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键。如 cosPath = "text.txt";
+        String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键。例如 cosPath = "text.txt";
         String srcPath = new File(context.getExternalCacheDir(), "object4android").toString();//"本地文件的绝对路径";
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, cosPath, srcPath);
         
@@ -148,7 +148,7 @@ public class Object {
                 // todo Do something to update progress...
             }
         });
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         putObjectRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -178,7 +178,7 @@ public class Object {
         });
         
         
-        //上传字节数组
+        // 上传字节数组
         byte[] data = "this is a test".getBytes(Charset.forName("UTF-8"));
         putObjectRequest = new PutObjectRequest(bucket, cosPath, data);
         putObjectRequest.setProgressListener(new CosXmlProgressListener() {
@@ -198,7 +198,7 @@ public class Object {
         }
         
         
-        //上传字节流
+        // 上传字节流
         InputStream inputStream = new ByteArrayInputStream("this is a test".getBytes(Charset.forName("UTF-8")));
         putObjectRequest = new PutObjectRequest(bucket, cosPath, inputStream);
         putObjectRequest.setProgressListener(new CosXmlProgressListener() {
@@ -223,11 +223,11 @@ public class Object {
         String bucket = bucket = "bucket-cssg-test-1253653367"; //存储桶名称，格式：BucketName-APPID
         String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键
         HeadObjectRequest headObjectRequest = new HeadObjectRequest(bucket, cosPath);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         headObjectRequest.setSignParamsAndHeaders(null, headerKeys);
-        //使用同步方法
+        // 使用同步方法
         try {
             HeadObjectResult headObjectResult = cosXmlService.headObject(headObjectRequest);
         } catch (CosXmlClientException e) {
@@ -257,7 +257,7 @@ public class Object {
     {
         String bucket = "bucket-cssg-test-1253653367"; //存储桶名称，格式：BucketName-APPID
         String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键
-        String savePath = context.getExternalCacheDir().toString();//本地路径
+        String savePath = context.getExternalCacheDir().toString(); //本地路径
         
         GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, cosPath, savePath);
         getObjectRequest.setProgressListener(new CosXmlProgressListener() {
@@ -266,11 +266,11 @@ public class Object {
                 // todo Do something to update progress...
             }
         });
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         getObjectRequest.setSignParamsAndHeaders(null, headerKeys);
-        //使用同步方法下载
+        // 使用同步方法下载
         try {
             GetObjectResult getObjectResult =cosXmlService.getObject(getObjectRequest);
         } catch (CosXmlClientException e) {
@@ -302,7 +302,7 @@ public class Object {
         String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键
         
         DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(bucket, cosPath);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         deleteObjectRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -336,11 +336,11 @@ public class Object {
     {
         String bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
         List<String> objectList = new ArrayList<String>();
-        objectList.add("object4android");//对象在存储桶中的位置标识符，即对象键
+        objectList.add("object4android"); //对象在存储桶中的位置标识符，即对象键
         
         DeleteMultiObjectRequest deleteMultiObjectRequest = new DeleteMultiObjectRequest(bucket, objectList);
         deleteMultiObjectRequest.setQuiet(true);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         deleteMultiObjectRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -373,7 +373,7 @@ public class Object {
     private void PostObject()
     {
         String bucket = "bucket-cssg-test-1253653367"; //存储桶名称，格式：BucketName-APPID
-        String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键。如 cosPath = "text.txt";
+        String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键。例如 cosPath = "text.txt";
         String srcPath = new File(context.getExternalCacheDir(), "object4android").toString();//"本地文件的绝对路径";
         
         PostObjectRequest postObjectRequest = new PostObjectRequest(bucket, cosPath, srcPath);
@@ -384,7 +384,7 @@ public class Object {
                 // todo Do something to update progress...
             }
         });
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         postObjectRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -417,11 +417,11 @@ public class Object {
     private void RestoreObject()
     {
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
-        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         RestoreRequest restoreRequest = new RestoreRequest(bucket, cosPath);
-        restoreRequest.setExpireDays(5); // 保留 5天
+        restoreRequest.setExpireDays(5); // 保留5天
         restoreRequest.setTier(RestoreConfigure.Tier.Standard); // 标准恢复模式
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         restoreRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -455,7 +455,7 @@ public class Object {
     {
         try {
             String bucket = "bucket-cssg-test-1253653367"; //存储桶名称
-            String cosPath = "object4android"; //即对象在存储桶中的位置标识符。如 cosPath = "text.txt";
+            String cosPath = "object4android"; //即对象在存储桶中的位置标识符。例如 cosPath = "text.txt";
             String method = "GET"; //请求 HTTP 方法.
             PresignedUrlRequest presignedUrlRequest = new PresignedUrlRequest(bucket, cosPath);
             presignedUrlRequest.setRequestMethod(method);
@@ -468,9 +468,9 @@ public class Object {
             String saveFileName = "object4android"; //本地文件名
             GetObjectRequest getObjectRequest = new GetObjectRequest("bucket-cssg-test-1253653367", "object4android", savePath, saveFileName);
         
-            //设置上传请求预签名 URL
+            // 设置上传请求预签名 URL
             getObjectRequest.setRequestURL(urlWithSign);
-            //设置进度回调
+            // 设置进度回调
             getObjectRequest.setProgressListener(new CosXmlProgressListener() {
                     @Override
                     public void onProgress(long progress, long max) {
@@ -494,12 +494,12 @@ public class Object {
         try {
         
          String bucket = "bucket-cssg-android-temp-1253653367"; //存储桶名称
-         String cosPath = "object4android"; //即对象在存储桶中的位置标识符。如 cosPath = "text.txt";
-         String method = "PUT"; //请求 HTTP 方法.
+         String cosPath = "object4android"; //即对象在存储桶中的位置标识符。例如 cosPath = "text.txt";
+         String method = "PUT"; //请求 HTTP 方法
          PresignedUrlRequest presignedUrlRequest = new PresignedUrlRequest(bucket, cosPath){
              @Override
                 public RequestBodySerializer getRequestBody() throws CosXmlClientException {
-                    //用于计算 put 等需要带上  body 的请求的签名URL
+                    //用于计算 put 等需要带上 body 的请求的签名 URL
                     return RequestBodySerializer.string("text/plain", "this is test");
                  }
             };

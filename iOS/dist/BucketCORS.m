@@ -56,7 +56,7 @@
     putCORS.corsConfiguration = cors;
     putCORS.bucket = @"bucket-cssg-ios-temp-1253653367";
     [putCORS setFinishBlock:^(id outputObject, NSError *error) {
-        //可以从 outputObject 中获取服务器返回的header信息
+        //可以从 outputObject 中获取服务器返回的 header 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -71,7 +71,7 @@
     corsReqeust.bucket = @"bucket-cssg-ios-temp-1253653367";
     
     [corsReqeust setFinishBlock:^(QCloudCORSConfiguration * _Nonnull result, NSError * _Nonnull error) {
-        //CORS设置封装在result中。
+        //CORS 设置封装在 result 中
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -104,7 +104,7 @@
     QCloudDeleteBucketCORSRequest* deleteCORS = [QCloudDeleteBucketCORSRequest new];
     deleteCORS.bucket = @"bucket-cssg-ios-temp-1253653367";
     [deleteCORS setFinishBlock:^(id outputObject, NSError *error) {
-        //可以从 outputObject 中获取服务器返回的header信息
+        //可以从 outputObject 中获取服务器返回的 header 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -117,7 +117,7 @@
     QCloudDeleteBucketRequest* request = [[QCloudDeleteBucketRequest alloc ] init];
     request.bucket = @"bucket-cssg-ios-temp-1253653367";  //存储桶名称，命名格式：BucketName-APPID
     [request setFinishBlock:^(id outputObject,NSError*error) {
-        //可以从 outputObject 中获取服务器返回的header信息
+        //可以从 outputObject 中获取服务器返回的 header 信息
         XCTAssertNil(error);
         [exp fulfill];
     }];

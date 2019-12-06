@@ -63,7 +63,7 @@ class BucketACLTest: XCTestCase,QCloudSignatureProvider{
       let exception = XCTestExpectation.init(description: "putBucketACL exception");
       let putBucketACLReq = QCloudPutBucketACLRequest.init();
       putBucketACLReq.bucket = "bucket-cssg-swift-temp-1253653367";
-      let appTD = "1131975903";//授予全新的账号ID
+      let appTD = "1131975903";//授予全新的账号 ID
       let ownerIdentifier = "qcs::cam::uin/\(appTD):uin/\(appTD)";
       let grantString = "id=\"\(ownerIdentifier)\"";
       putBucketACLReq.grantWrite = grantString;

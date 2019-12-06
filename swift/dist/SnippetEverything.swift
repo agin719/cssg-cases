@@ -27,7 +27,7 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
           if result == nil {
               print(error!);
           } else {
-              //从result中获取返回信息
+              //从 result 中获取返回信息
               print(result!);
           }}
       QCloudCOSXMLService.defaultCOSXML().getService(getServiceReq);
@@ -76,7 +76,7 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
     func PutBucketAcl() {
       let putBucketACLReq = QCloudPutBucketACLRequest.init();
       putBucketACLReq.bucket = "examplebucket-1250000000";
-      let appTD = "1131975903";//授予全新的账号ID
+      let appTD = "1131975903";//授予全新的账号 ID
       let ownerIdentifier = "qcs::cam::uin/\(appTD):uin/\(appTD)";
       let grantString = "id=\"\(ownerIdentifier)\"";
       putBucketACLReq.grantWrite = grantString;
@@ -313,9 +313,9 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
       uploadRequest.body = dataBody!;
       uploadRequest.bucket = "examplebucket-1250000000";
       uploadRequest.object = "exampleobject";
-      //设置一些上传的参数
+      //设置上传参数
       uploadRequest.initMultipleUploadFinishBlock = {(multipleUploadInitResult,resumeData) in
-          //在初始化分块上传完成以后会回调该block，在这里可以获取 resumeData，并且可以通过 resumeData 生成一个分块上传的请求
+          //在初始化分块上传完成以后会回调该 block，在这里可以获取 resumeData，并且可以通过 resumeData 生成一个分块上传的请求
           let resumeUploadRequest = QCloudCOSXMLUploadObjectRequest<AnyObject>.init(request: resumeData as Data?);
       }
       uploadRequest.sendProcessBlock = {(bytesSent , totalBytesSent , totalBytesExpectedToSend) in
@@ -325,7 +325,7 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
           if error != nil{
               print(error!)
           }else{
-              ////从result中获取请求的结果
+              //从 result 中获取请求的结果
               print(result!);
           }}
       
@@ -352,12 +352,12 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
 
     func TransferCopyObject() {
       let copyRequest =  QCloudCOSXMLCopyObjectRequest.init();
-      copyRequest.bucket = "examplebucket-1250000000";//目的<BucketName-APPID>，需要是公有读或者在当前账号有权限
+      copyRequest.bucket = "examplebucket-1250000000";//目的 <BucketName-APPID>，需要是公有读或者在当前账号有权限
       copyRequest.object = "exampleobject";//目的文件名称
-      //文件来源<BucketName-APPID>，需要是公有读或者在当前账号有权限
+      //文件来源 <BucketName-APPID>，需要是公有读或者在当前账号有权限
       copyRequest.sourceBucket = "source-1250000000";
       copyRequest.sourceObject = "sourceObject";//源文件名称
-      copyRequest.sourceAPPID = "1250000000";//源文件的appid
+      copyRequest.sourceAPPID = "1250000000";//源文件的 APPID
       copyRequest.sourceRegion = "COS_REGION";//来源的地域
       copyRequest.setFinish { (copyResult, error) in
           if error != nil{
@@ -525,7 +525,7 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
           if error != nil{
               print(error!);
           }else{
-              //获取分片上传的 uploadId，后续的上传都需要这个 id，请保存起来后续使用
+              //获取分块上传的 uploadId，后续的上传都需要这个 ID，请保存以备后续使用
               self.uploadId = result!.uploadId;
               print(result!.uploadId);
           }}
@@ -540,7 +540,7 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
       uploadPart.object = "exampleobject";
       uploadPart.partNumber = 1;
       //标识本次分块上传的 ID；使用 Initiate Multipart Upload 接口初始化分块上传时会得到一个 uploadId
-      // 该 ID 不但唯一标识这一分块数据，也标识了这分块数据在整个文件内的相对位置
+      //该 ID 不但唯一标识这一分块数据，也标识了这分块数据在整个文件内的相对位置
       uploadPart.uploadId = "example-uploadId";
       if self.uploadId != nil {
            uploadPart.uploadId = self.uploadId!;
@@ -553,7 +553,7 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
               print(error!);
           }else{
               let mutipartInfo = QCloudMultipartInfo.init();
-              //获取所上传分片的 etag
+              //获取所上传分块的 etag
               mutipartInfo.eTag = result!.eTag;
               mutipartInfo.partNumber = "1";
           }}
@@ -570,22 +570,22 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
       let req = QCloudUploadPartCopyRequest.init();
       req.bucket = "examplebucket-1250000000";
       req.object = "exampleobject";
-      //  源文件 URL 路径，可以通过 versionid 子资源指定历史版本
+      //源文件 URL 路径，可以通过 versionid 子资源指定历史版本
       req.source = "source-1250000000.cos.COS_REGION.myqcloud.com/sourceObject";
-      // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
+      //在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
       req.uploadID = "example-uploadId";
       if self.uploadId != nil {
           req.uploadID = self.uploadId!;
       }
       
-      //// 标志当前分块的序号
+      //标志当前分块的序号
       req.partNumber = 1;
       req.setFinish { (result, error) in
           if error != nil{
               print(error!);
           }else{
               let mutipartInfo = QCloudMultipartInfo.init();
-              //获取所复制分片的 etag
+              //获取所复制分块的 etag
               mutipartInfo.eTag = result!.eTag;
               mutipartInfo.partNumber = "1";
           }}
@@ -597,7 +597,7 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
       let req = QCloudListMultipartRequest.init();
       req.object = "exampleobject";
       req.bucket = "examplebucket-1250000000";
-      // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID
+      //在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
       req.uploadId = "example-uploadId";
       if self.uploadId != nil {
           req.uploadId = self.uploadId!;
@@ -606,7 +606,7 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
           if error != nil{
               print(error!);
           }else{
-              //从 result 中获取已上传分片信息
+              //从 result 中获取已上传分块信息
               print(result!);
           }}
       
@@ -618,17 +618,17 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
       let  complete = QCloudCompleteMultipartUploadRequest.init();
       complete.bucket = "examplebucket-1250000000";
       complete.object = "exampleobject";
-      ////本次要查询的分块上传的uploadId,可从初始化分块上传的请求结果QCloudInitiateMultipartUploadResult中得到
+      //本次要查询的分块上传的 uploadId，可从初始化分块上传的请求结果 QCloudInitiateMultipartUploadResult 中得到
       complete.uploadId = "example-uploadId";
       if self.uploadId != nil {
           complete.uploadId = self.uploadId!;
       }
       
       
-      // 已上传分片的信息
+      //已上传分块的信息
       let completeInfo = QCloudCompleteMultipartUploadInfo.init();
       if self.parts == nil {
-          print("没有要完成的分片");
+          print("没有要完成的分块");
           return;
       }
       
@@ -649,7 +649,7 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
       let abort = QCloudAbortMultipfartUploadRequest.init();
       abort.bucket = "examplebucket-1250000000";
       abort.object = "exampleobject";
-      //本次要查询的分块上传的uploadId,可从初始化分块上传的请求结果QCloudInitiateMultipartUploadResult中得到
+      //本次要查询的分块上传的 uploadId，可从初始化分块上传的请求结果 QCloudInitiateMultipartUploadResult 中得到
       abort.uploadId = "example-uploadId";
       if self.uploadId != nil {
           abort.uploadId = self.uploadId!;
@@ -709,7 +709,7 @@ class SnippetEverythingTest: XCTestCase,QCloudSignatureProvider{
           if error != nil{
               print(error!)
           }else{
-              //可以从 result的accessControlList中获取对象的 acl
+              //可以从 result 的 accessControlList 中获取对象的 ACL
               print(result!.accessControlList);
           }}
       QCloudCOSXMLService.defaultCOSXML().getObjectACL(getObjectACL);

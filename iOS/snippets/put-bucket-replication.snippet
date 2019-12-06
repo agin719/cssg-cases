@@ -18,6 +18,6 @@ replConfiguration.rule = @[rule];
 request.configuation = replConfiguration;
 
 [request setFinishBlock:^(id outputObject, NSError* error) {
-    //可以从 outputObject 中获取服务器返回的header信息
+    //可以从 outputObject 中获取服务器返回的 header 信息
 }];
 [[QCloudCOSXMLService defaultCOSXML] PutBucketRelication:request];

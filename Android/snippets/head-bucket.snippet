@@ -1,10 +1,10 @@
 String bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
 HeadBucketRequest headBucketRequest = new HeadBucketRequest(bucket);
-//设置签名校验Host, 默认校验所有Header
+// 设置签名校验 Host，默认校验所有 Header
 Set<String> headerKeys = new HashSet<>();
 headerKeys.add("Host");
 headBucketRequest.setSignParamsAndHeaders(null, headerKeys);
-//使用同步方法
+// 使用同步方法
 try {
     HeadBucketResult headBucketResult = cosXmlService.headBucket(headBucketRequest);
 } catch (CosXmlClientException e) {

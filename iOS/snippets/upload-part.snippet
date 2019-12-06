@@ -3,19 +3,19 @@ request.bucket = @"examplebucket-1250000000";
 request.object = @"exampleobject";
 request.partNumber = 1;
 //标识本次分块上传的 ID；使用 Initiate Multipart Upload 接口初始化分块上传时会得到一个 uploadId
-// 该 ID 不但唯一标识这一分块数据，也标识了这分块数据在整个文件内的相对位置
+//该 ID 不但唯一标识这一分块数据，也标识了这分块数据在整个文件内的相对位置
 request.uploadId = @"example-uploadId";
-//上传的数据：支持NSData*，NSURL(本地url)和QCloudFileOffsetBody *三种类型
+//上传的数据：支持 NSData*，NSURL(本地 URL) 和 QCloudFileOffsetBody * 三种类型
 request.body = [@"testFileContent" dataUsingEncoding:NSUTF8StringEncoding];
 
 [request setSendProcessBlock:^(int64_t bytesSent,
                                int64_t totalBytesSent,
                                int64_t totalBytesExpectedToSend) {
-    // 上传进度信息
+    //上传进度信息
 }];
 [request setFinishBlock:^(QCloudUploadPartResult* outputObject, NSError *error) {
     QCloudMultipartInfo *part = [QCloudMultipartInfo new];
-    //获取所上传分片的 etag
+    //获取所上传分块的 etag
     part.eTag = outputObject.eTag;
     part.partNumber = @"1";
 }];

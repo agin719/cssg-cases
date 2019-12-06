@@ -4,7 +4,7 @@ uploadPart.bucket = "examplebucket-1250000000";
 uploadPart.object = "exampleobject";
 uploadPart.partNumber = 1;
 //标识本次分块上传的 ID；使用 Initiate Multipart Upload 接口初始化分块上传时会得到一个 uploadId
-// 该 ID 不但唯一标识这一分块数据，也标识了这分块数据在整个文件内的相对位置
+//该 ID 不但唯一标识这一分块数据，也标识了这分块数据在整个文件内的相对位置
 uploadPart.uploadId = "example-uploadId";
 if self.uploadId != nil {
      uploadPart.uploadId = self.uploadId!;
@@ -17,7 +17,7 @@ uploadPart.setFinish { (result, error) in
         print(error!);
     }else{
         let mutipartInfo = QCloudMultipartInfo.init();
-        //获取所上传分片的 etag
+        //获取所上传分块的 etag
         mutipartInfo.eTag = result!.eTag;
         mutipartInfo.partNumber = "1";
     }}

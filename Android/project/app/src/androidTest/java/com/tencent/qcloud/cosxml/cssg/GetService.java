@@ -53,7 +53,7 @@ public class GetService {
     private void GetService()
     {
         GetServiceRequest getServiceRequest = new GetServiceRequest();
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         getServiceRequest.setSignParamsAndHeaders(null, headerKeys);

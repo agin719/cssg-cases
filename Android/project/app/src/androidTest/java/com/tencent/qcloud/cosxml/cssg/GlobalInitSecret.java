@@ -54,20 +54,20 @@ public class GlobalInitSecret {
     {
         String region = "ap-guangzhou";
         
-        //创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
+        // 创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
         CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
                 .setRegion(region)
-                .isHttps(true) // 使用 https 请求, 默认 http 请求
+                .isHttps(true) // 使用 HTTPS 请求, 默认为 HTTP 请求
                 .builder();
         
         String secretId = "BuildConfig.COS_SECRET_ID"; //永久密钥 secretId
         String secretKey ="BuildConfig.COS_SECRET_KEY"; //永久密钥 secretKey
         
         /**
-         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥。
+         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥
          * @parma secretId 永久密钥 secretId
          * @param secretKey 永久密钥 secretKey
-         * @param keyDuration 密钥有效期,单位为秒
+         * @param keyDuration 密钥有效期，单位为秒
          */
         QCloudCredentialProvider credentialProvider = new ShortTimeCredentialProvider(secretId, secretKey, 300);
         

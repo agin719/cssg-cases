@@ -53,10 +53,10 @@ public class ObjectMultiUpload {
     private void InitMultiUpload()
     {
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
-        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         
         InitMultipartUploadRequest initMultipartUploadRequest = new InitMultipartUploadRequest(bucket, cosPath);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         initMultipartUploadRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -91,7 +91,7 @@ public class ObjectMultiUpload {
     {
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
         ListMultiUploadsRequest listMultiUploadsRequest = new ListMultiUploadsRequest(bucket);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         listMultiUploadsRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -124,10 +124,10 @@ public class ObjectMultiUpload {
     private void UploadPart()
     {
         String bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
-        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。
-        String uploadId ="example-uploadId"; //初始化分片上传返回的 uploadId
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键
+        String uploadId ="example-uploadId"; //初始化分块上传返回的 uploadId
         uploadId = this.uploadId;
-        int partNumber = 1; //分片块编号，必须从1开始递增
+        int partNumber = 1; //分块块编号，必须从1开始递增
         String srcPath = new File(context.getExternalCacheDir(), "object4android").toString(); //本地文件绝对路径
         UploadPartRequest uploadPartRequest = new UploadPartRequest(bucket, cosPath, partNumber, srcPath, uploadId);
         
@@ -138,14 +138,14 @@ public class ObjectMultiUpload {
                 Log.w("TEST","progress =" + (long)result + "%");
             }
         });
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         uploadPartRequest.setSignParamsAndHeaders(null, headerKeys);
         //使用同步方法上传
         try {
             UploadPartResult uploadPartResult = cosXmlService.uploadPart(uploadPartRequest);
-            String eTag = uploadPartResult.eTag; // 获取分片块的 eTag
+            String eTag = uploadPartResult.eTag; //获取分块块的 eTag
             this.part1Etag = eTag;
         } catch (CosXmlClientException e) {
             e.printStackTrace();
@@ -173,12 +173,12 @@ public class ObjectMultiUpload {
     private void ListParts()
     {
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
-        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         String uploadId = "example-uploadId";
         uploadId = this.uploadId;
         
         ListPartsRequest listPartsRequest = new ListPartsRequest(bucket, cosPath, uploadId);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         listPartsRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -211,7 +211,7 @@ public class ObjectMultiUpload {
     private void CompleteMultiUpload()
     {
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
-        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         String uploadId = "example-uploadId";
         uploadId = this.uploadId;
         int partNumber = 1;
@@ -221,7 +221,7 @@ public class ObjectMultiUpload {
         partNumberAndETag.put(partNumber, etag);
         
         CompleteMultiUploadRequest completeMultiUploadRequest = new CompleteMultiUploadRequest(bucket, cosPath, uploadId, partNumberAndETag);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         completeMultiUploadRequest.setSignParamsAndHeaders(null, headerKeys);
@@ -254,12 +254,12 @@ public class ObjectMultiUpload {
     private void AbortMultiUpload()
     {
         String bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
-        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 如 cosPath = "text.txt";
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         String uploadId = "example-uploadId";
         uploadId = this.uploadId;
         
         AbortMultiUploadRequest abortMultiUploadRequest = new AbortMultiUploadRequest(bucket, cosPath, uploadId);
-        //设置签名校验Host, 默认校验所有Header
+        // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
         headerKeys.add("Host");
         abortMultiUploadRequest.setSignParamsAndHeaders(null, headerKeys);

@@ -32,7 +32,7 @@ class ObjectMultiUploadTest: XCTestCase,QCloudSignatureProvider{
           if error != nil{
               print(error!);
           }else{
-              //获取分片上传的 uploadId，后续的上传都需要这个 id，请保存起来后续使用
+              //获取分块上传的 uploadId，后续的上传都需要这个 ID，请保存以备后续使用
               self.uploadId = result!.uploadId;
               print(result!.uploadId);
           }
@@ -71,7 +71,7 @@ class ObjectMultiUploadTest: XCTestCase,QCloudSignatureProvider{
       uploadPart.object = "object4swift";
       uploadPart.partNumber = 1;
       //标识本次分块上传的 ID；使用 Initiate Multipart Upload 接口初始化分块上传时会得到一个 uploadId
-      // 该 ID 不但唯一标识这一分块数据，也标识了这分块数据在整个文件内的相对位置
+      //该 ID 不但唯一标识这一分块数据，也标识了这分块数据在整个文件内的相对位置
       uploadPart.uploadId = "example-uploadId";
       if self.uploadId != nil {
            uploadPart.uploadId = self.uploadId!;
@@ -86,7 +86,7 @@ class ObjectMultiUploadTest: XCTestCase,QCloudSignatureProvider{
               print(error!);
           }else{
               let mutipartInfo = QCloudMultipartInfo.init();
-              //获取所上传分片的 etag
+              //获取所上传分块的 etag
               mutipartInfo.eTag = result!.eTag;
               mutipartInfo.partNumber = "1";
           }
@@ -107,7 +107,7 @@ class ObjectMultiUploadTest: XCTestCase,QCloudSignatureProvider{
       let req = QCloudListMultipartRequest.init();
       req.object = "object4swift";
       req.bucket = "bucket-cssg-test-1253653367";
-      // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID
+      //在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
       req.uploadId = "example-uploadId";
       if self.uploadId != nil {
           req.uploadId = self.uploadId!;
@@ -118,7 +118,7 @@ class ObjectMultiUploadTest: XCTestCase,QCloudSignatureProvider{
           if error != nil{
               print(error!);
           }else{
-              //从 result 中获取已上传分片信息
+              //从 result 中获取已上传分块信息
               print(result!);
           }
           exception .fulfill();
@@ -134,17 +134,17 @@ class ObjectMultiUploadTest: XCTestCase,QCloudSignatureProvider{
       let  complete = QCloudCompleteMultipartUploadRequest.init();
       complete.bucket = "bucket-cssg-test-1253653367";
       complete.object = "object4swift";
-      ////本次要查询的分块上传的uploadId,可从初始化分块上传的请求结果QCloudInitiateMultipartUploadResult中得到
+      //本次要查询的分块上传的 uploadId，可从初始化分块上传的请求结果 QCloudInitiateMultipartUploadResult 中得到
       complete.uploadId = "example-uploadId";
       if self.uploadId != nil {
           complete.uploadId = self.uploadId!;
       }
       
       
-      // 已上传分片的信息
+      //已上传分块的信息
       let completeInfo = QCloudCompleteMultipartUploadInfo.init();
       if self.parts == nil {
-          print("没有要完成的分片");
+          print("没有要完成的分块");
           return;
       }
       
@@ -171,7 +171,7 @@ class ObjectMultiUploadTest: XCTestCase,QCloudSignatureProvider{
       let abort = QCloudAbortMultipfartUploadRequest.init();
       abort.bucket = "bucket-cssg-test-1253653367";
       abort.object = "object4swift";
-      //本次要查询的分块上传的uploadId,可从初始化分块上传的请求结果QCloudInitiateMultipartUploadResult中得到
+      //本次要查询的分块上传的 uploadId，可从初始化分块上传的请求结果 QCloudInitiateMultipartUploadResult 中得到
       abort.uploadId = "example-uploadId";
       if self.uploadId != nil {
           abort.uploadId = self.uploadId!;

@@ -3,7 +3,7 @@ initrequest.bucket = @"examplebucket-1250000000";
 initrequest.object = @"exampleobject";
 
 [initrequest setFinishBlock:^(QCloudInitiateMultipartUploadResult* outputObject, NSError *error) {
-    // 获取分片上传的 uploadId，后续的上传都需要这个 id，请保存起来后续使用
+    //获取分块上传的 uploadId，后续的上传都需要这个 ID，请保存以备后续使用
     self.uploadId = outputObject.uploadId;
 }];
 

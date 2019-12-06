@@ -14,7 +14,7 @@
 @implementation GlobalInitTest
 
     //AppDelegate.m
-    //第一步：注册默认的cos服务
+    //第一步：注册默认的 COS 服务
     - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
         QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
         configuration.appID = @"1253653367";
@@ -27,8 +27,8 @@
         return YES;
     }
     
-    //第二步：实现QCloudSignatureProvider协议
-    //实现签名的过程，我们推荐在服务器端实现签名的过程，具体请参考接下来的 “生成签名” 这一章。
+    //第二步：实现 QCloudSignatureProvider 协议
+    //实现签名的过程，我们推荐在服务器端实现签名的过程，详情请参考接下来的 “生成签名” 这一章。
 
 @end
 
@@ -40,12 +40,12 @@
 
     //AppDelegate.m
     
-    // 这里定义一个成员变量 @property (nonatomic) QCloudCredentailFenceQueue* credentialFenceQueue;
+    //这里定义一个成员变量 @property (nonatomic) QCloudCredentailFenceQueue* credentialFenceQueue;
     
     - (void) fenceQueue:(QCloudCredentailFenceQueue * )queue requestCreatorWithContinue:(QCloudCredentailFenceQueueContinue)continueBlock
     {
         QCloudCredential* credential = [QCloudCredential new];
-        //在这里可以同步过程从服务器获取临时签名需要的secretID,secretKey,expiretionDate和token参数
+        //在这里可以同步过程从服务器获取临时签名需要的 secretID，secretKey，expiretionDate 和 token 参数
         credential.secretID = @"COS_SECRETID";
         credential.secretKey = @"COS_SECRETKEY";
         /*强烈建议返回服务器时间作为签名的开始时间，用来避免由于用户手机本地时间偏差过大导致的签名不正确 */

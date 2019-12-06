@@ -2,6 +2,6 @@ QCloudDeleteBucketReplicationRequest* request = [[QCloudDeleteBucketReplicationR
 request.bucket = @"examplebucket-1250000000";
 
 [request setFinishBlock:^(id outputObject, NSError* error) {
-    //可以从 outputObject 中获取服务器返回的header信息
+    //可以从 outputObject 中获取服务器返回的 header 信息
 }];
 [[QCloudCOSXMLService defaultCOSXML] DeleteBucketReplication:request];

@@ -1,7 +1,7 @@
 String bucket = "examplebucket-1250000000"; //格式：BucketName-APPID
 PutBucketVersioningRequest putBucketVersioningRequest = new PutBucketVersioningRequest(bucket);
-putBucketVersioningRequest.setEnableVersion(true); //true: 开启版本控制; false:暂停版本控制
-//设置签名校验Host, 默认校验所有Header
+putBucketVersioningRequest.setEnableVersion(true); //true：开启版本控制; false：暂停版本控制
+// 设置签名校验 Host，默认校验所有 Header
 Set<String> headerKeys = new HashSet<>();
 headerKeys.add("Host");
 putBucketVersioningRequest.setSignParamsAndHeaders(null, headerKeys);

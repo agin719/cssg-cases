@@ -79,8 +79,8 @@
 - (void)GetObject {
     XCTestExpectation* exp = [self expectationWithDescription:@"get-object"];
     QCloudGetObjectRequest* request = [QCloudGetObjectRequest new];
-    //设置下载的路径 URL，如果设置了，文件将会被下载到指定路径中。
-    // 如果该参数没有设置，那么文件将会被下载至内存里，存放在在 finishBlock 的 	outputObject 里。
+    //设置下载的路径 URL，如果设置了，文件将会被下载到指定路径中
+    //如果未设置该参数，那么文件将会被下载至内存里，存放在在 finishBlock 的 outputObject 里
     request.downloadingURL = [NSURL URLWithString:QCloudTempFilePathWithExtension(@"downding")];
     request.object = @"object4ios";
     request.bucket = @"bucket-cssg-test-1253653367";

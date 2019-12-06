@@ -12,7 +12,7 @@ cors.rules = @[rule];
 putCORS.corsConfiguration = cors;
 putCORS.bucket = @"examplebucket-1250000000";
 [putCORS setFinishBlock:^(id outputObject, NSError *error) {
-    //可以从 outputObject 中获取服务器返回的header信息
+    //可以从 outputObject 中获取服务器返回的 header 信息
 }];
 
 [[QCloudCOSXMLService defaultCOSXML] PutBucketCORS:putCORS];

@@ -28,9 +28,9 @@ class TransferUploadObjectTest: XCTestCase,QCloudSignatureProvider{
       uploadRequest.body = dataBody!;
       uploadRequest.bucket = "bucket-cssg-test-1253653367";
       uploadRequest.object = "object4swift";
-      //设置一些上传的参数
+      //设置上传参数
       uploadRequest.initMultipleUploadFinishBlock = {(multipleUploadInitResult,resumeData) in
-          //在初始化分块上传完成以后会回调该block，在这里可以获取 resumeData，并且可以通过 resumeData 生成一个分块上传的请求
+          //在初始化分块上传完成以后会回调该 block，在这里可以获取 resumeData，并且可以通过 resumeData 生成一个分块上传的请求
           let resumeUploadRequest = QCloudCOSXMLUploadObjectRequest<AnyObject>.init(request: resumeData as Data?);
       }
       uploadRequest.sendProcessBlock = {(bytesSent , totalBytesSent , totalBytesExpectedToSend) in
@@ -42,7 +42,7 @@ class TransferUploadObjectTest: XCTestCase,QCloudSignatureProvider{
           if error != nil{
               print(error!)
           }else{
-              ////从result中获取请求的结果
+              //从 result 中获取请求的结果
               print(result!);
           }
           exception.fulfill();

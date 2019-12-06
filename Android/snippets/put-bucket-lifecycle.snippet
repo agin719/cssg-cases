@@ -13,7 +13,7 @@ transition.days = 100;
 transition.storageClass = COSStorageClass.STANDARD.getStorageClass();
 rule.transition = transition;
 putBucketLifecycleRequest.setRuleList(rule);
-//设置签名校验Host, 默认校验所有Header
+// 设置签名校验 Host，默认校验所有 Header
 Set<String> headerKeys = new HashSet<>();
 headerKeys.add("Host");
 putBucketLifecycleRequest.setSignParamsAndHeaders(null, headerKeys);

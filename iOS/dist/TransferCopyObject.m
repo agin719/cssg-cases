@@ -31,12 +31,12 @@
     XCTestExpectation* exp = [self expectationWithDescription:@"transfer-copy-object"];
     QCloudCOSXMLCopyObjectRequest* request = [[QCloudCOSXMLCopyObjectRequest alloc] init];
     
-    request.bucket = @"bucket-cssg-test-1253653367";//目的<BucketName-APPID>，需要是公有读或者在当前账号有权限
+    request.bucket = @"bucket-cssg-test-1253653367";//目的 <BucketName-APPID>，需要是公有读或者在当前账号有权限
     request.object = @"object4ios";//目的文件名称
-    //文件来源<BucketName-APPID>，需要是公有读或者在当前账号有权限
+    //文件来源 <BucketName-APPID>，需要是公有读或者在当前账号有权限
     request.sourceBucket = @"bucket-cssg-test-1253653367";
     request.sourceObject = @"sourceObject";//源文件名称
-    request.sourceAPPID = @"1253653367";//源文件的appid
+    request.sourceAPPID = @"1253653367";//源文件的 APPID
     request.sourceRegion= @"ap-guangzhou";//来源的地域
     
     [request setFinishBlock:^(QCloudCopyObjectResult* result, NSError* error) {

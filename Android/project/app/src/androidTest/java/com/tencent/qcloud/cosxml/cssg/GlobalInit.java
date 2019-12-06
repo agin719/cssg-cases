@@ -56,13 +56,13 @@ public class GlobalInit {
         
         CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
                 .setRegion(region)
-             .isHttps(true) // 使用 https 请求, 默认 http 请求
+             .isHttps(true) // 使用 HTTPS 请求，默认为 HTTP 请求
                 .builder();
         
         /**
-         * 获取授权服务的 url 地址
+         * 获取授权服务的 URL 地址
          */
-        URL url = null; // 后台授权服务的 url 地址
+        URL url = null; // 后台授权服务的 URL 地址
         try {
             url = new URL("your_auth_server_url");
         } catch (MalformedURLException e) {
@@ -71,7 +71,7 @@ public class GlobalInit {
         }
         
         /**
-         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥。
+         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥
          */
         QCloudCredentialProvider credentialProvider = new SessionCredentialProvider(new HttpRequest.Builder<String>()
                 .url(url)

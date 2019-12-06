@@ -35,7 +35,7 @@
     //源对象所在的路径
     request.objectCopySource = @"bucket-cssg-test-1253653367.cos.ap-guangzhou.myqcloud.com/sourceObject";
     [request setFinishBlock:^(QCloudCopyObjectResult * _Nonnull result, NSError * _Nonnull error) {
-        // result 返回具体信息
+        //result 返回具体信息
         XCTAssertNil(error);
         [exp fulfill];
     }];
@@ -50,7 +50,7 @@
     initrequest.object = @"object4ios";
     
     [initrequest setFinishBlock:^(QCloudInitiateMultipartUploadResult* outputObject, NSError *error) {
-        // 获取分片上传的 uploadId，后续的上传都需要这个 id，请保存起来后续使用
+        //获取分块上传的 uploadId，后续的上传都需要这个 ID，请保存以备后续使用
         self.uploadId = outputObject.uploadId;
         XCTAssertNil(error);
         [exp fulfill];
@@ -65,9 +65,9 @@
     QCloudUploadPartCopyRequest* request = [[QCloudUploadPartCopyRequest alloc] init];
     request.bucket = @"bucket-cssg-test-1253653367";
     request.object = @"object4ios";
-    //  源文件 URL 路径，可以通过 versionid 子资源指定历史版本
+    //源文件 URL 路径，可以通过 versionid 子资源指定历史版本
     request.source = @"bucket-cssg-test-1253653367.cos.ap-guangzhou.myqcloud.com/sourceObject";
-    // 在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
+    //在初始化分块上传的响应中，会返回一个唯一的描述符（upload ID）
     request.uploadID = @"example-uploadId";
     request.uploadID = self.uploadId;
     request.partNumber = 1; // 标志当前分块的序号
@@ -75,7 +75,7 @@
     [request setFinishBlock:^(QCloudCopyObjectResult* result, NSError* error) {
         XCTAssertNil(error);
         QCloudMultipartInfo *part = [QCloudMultipartInfo new];
-        //获取所复制分片的 etag
+        //获取所复制分块的 etag
         part.eTag = result.eTag;
         part.partNumber = @"1";
         self.parts = [NSMutableArray new];
@@ -92,10 +92,10 @@
     QCloudCompleteMultipartUploadRequest *completeRequst = [QCloudCompleteMultipartUploadRequest new];
     completeRequst.object = @"object4ios";
     completeRequst.bucket = @"bucket-cssg-test-1253653367";
-    //本次要查询的分块上传的uploadId,可从初始化分块上传的请求结果QCloudInitiateMultipartUploadResult中得到
+    //本次要查询的分块上传的 uploadId，可从初始化分块上传的请求结果 QCloudInitiateMultipartUploadResult 中得到
     completeRequst.uploadId = @"example-uploadId";
     completeRequst.uploadId = self.uploadId;
-    // 已上传分片的信息
+    //已上传分块的信息
     QCloudCompleteMultipartUploadInfo *partInfo = [QCloudCompleteMultipartUploadInfo new];
     partInfo.parts = self.parts;
     completeRequst.parts = partInfo;

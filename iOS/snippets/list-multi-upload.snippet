@@ -3,7 +3,7 @@ uploads.bucket = @"examplebucket-1250000000";
 uploads.maxUploads = 100;
 
 [uploads setFinishBlock:^(QCloudListMultipartUploadsResult* result, NSError *error) {
-    //可以从 result 中返回分片信息
+    //可以从 result 中返回分块信息
 }];
 
 [[QCloudCOSXMLService defaultCOSXML] ListBucketMultipartUploads:uploads];

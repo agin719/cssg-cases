@@ -1,10 +1,10 @@
 let copyRequest =  QCloudCOSXMLCopyObjectRequest.init();
-copyRequest.bucket = "examplebucket-1250000000";//目的<BucketName-APPID>，需要是公有读或者在当前账号有权限
+copyRequest.bucket = "examplebucket-1250000000";//目的 <BucketName-APPID>，需要是公有读或者在当前账号有权限
 copyRequest.object = "exampleobject";//目的文件名称
-//文件来源<BucketName-APPID>，需要是公有读或者在当前账号有权限
+//文件来源 <BucketName-APPID>，需要是公有读或者在当前账号有权限
 copyRequest.sourceBucket = "source-1250000000";
 copyRequest.sourceObject = "sourceObject";//源文件名称
-copyRequest.sourceAPPID = "1250000000";//源文件的appid
+copyRequest.sourceAPPID = "1250000000";//源文件的 APPID
 copyRequest.sourceRegion = "COS_REGION";//来源的地域
 copyRequest.setFinish { (copyResult, error) in
     if error != nil{
