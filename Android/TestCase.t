@@ -33,9 +33,9 @@ import java.io.*;
 
 @RunWith(AndroidJUnit4.class)
 public class {{name}} {
-    {{#defines}}
-    {{{snippet}}}
-    {{/defines}}
+        {{#defines}}
+        {{{snippet}}}
+        {{/defines}}
 
     private Context context;
     private CosXmlService cosXmlService;
@@ -50,8 +50,10 @@ public class {{name}} {
         assertError(e, false);
     }
 
+    {{#isMultiUpload}}
     private String uploadId;
     private String part1Etag;
+    {{/isMultiUpload}}
 
     {{#methods}}
     private void {{name}}()
@@ -60,7 +62,7 @@ public class {{name}} {
     }
     {{/methods}}
 
-    {{^isDemo}}
+    {{^isGlobalInit}}
     private void initService() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         {{{initSnippet}}}
@@ -79,7 +81,7 @@ public class {{name}} {
         {{name}}();
         {{/teardown}}
     }
-    {{/isDemo}}
+    {{/isGlobalInit}}
 
     @Test public void test{{name}}() {
         {{#steps}}

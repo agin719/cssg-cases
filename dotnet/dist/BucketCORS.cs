@@ -44,7 +44,7 @@ namespace COSSample
         
         try
         {
-          string bucket = "bucket-cssg-dotnet-temp-1253653367"; //格式：BucketName-APPID
+          string bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
           PutBucketRequest request = new PutBucketRequest(bucket);
           //设置签名有效时长
           request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -65,6 +65,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       public void PutBucketCors()
@@ -87,7 +88,7 @@ namespace COSSample
         
         try
         {
-          string bucket = "bucket-cssg-dotnet-temp-1253653367"; //格式：BucketName-APPID
+          string bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
           PutBucketCORSRequest request = new PutBucketCORSRequest(bucket);
           //设置签名有效时长
           request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -126,7 +127,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-        Thread.Sleep(500);
+        
       }   
 
       public void GetBucketCors()
@@ -149,7 +150,7 @@ namespace COSSample
         
         try
         {
-          string bucket = "bucket-cssg-dotnet-temp-1253653367"; //格式：BucketName-APPID
+          string bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
           GetBucketCORSRequest request = new GetBucketCORSRequest(bucket);
           //设置签名有效时长
           request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -162,12 +163,15 @@ namespace COSSample
         {
           //请求失败
           Console.WriteLine("CosClientException: " + clientEx);
+          Assert.Null(clientEx);
         }
         catch (COSXML.CosException.CosServerException serverEx)
         {
           //请求失败
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+          Assert.Null(serverEx);
         }
+        
       }   
 
       public void OptionObject()
@@ -190,7 +194,7 @@ namespace COSSample
         
         try
         {
-          string bucket = "bucket-cssg-dotnet-temp-1253653367"; //存储桶，格式：BucketName-APPID
+          string bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
           string key = "object4dotnet"; //对象在存储桶中的位置，即称对象键
           string origin = "http://cloud.tencent.com";
           string accessMthod = "PUT";
@@ -206,12 +210,15 @@ namespace COSSample
         {
           //请求失败
           Console.WriteLine("CosClientException: " + clientEx);
+          Assert.Null(clientEx);
         }
         catch (COSXML.CosException.CosServerException serverEx)
         {
           //请求失败
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+          Assert.Null(serverEx);
         }
+        
       }   
 
       public void DeleteBucketCors()
@@ -234,7 +241,7 @@ namespace COSSample
         
         try
         {
-          string bucket = "bucket-cssg-dotnet-temp-1253653367"; //格式：BucketName-APPID
+          string bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
           DeleteBucketCORSRequest request = new DeleteBucketCORSRequest(bucket);
           //设置签名有效时长
           request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -255,6 +262,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       public void DeleteBucket()
@@ -277,7 +285,7 @@ namespace COSSample
         
         try
         {
-          string bucket = "bucket-cssg-dotnet-temp-1253653367"; //格式：BucketName-APPID
+          string bucket = "bucket-cssg-test-1253653367"; //格式：BucketName-APPID
           DeleteBucketRequest request = new DeleteBucketRequest(bucket);
           //设置签名有效时长
           request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -290,17 +298,25 @@ namespace COSSample
         {
           //请求失败
           Console.WriteLine("CosClientException: " + clientEx);
+          Assert.Null(clientEx);
         }
         catch (COSXML.CosException.CosServerException serverEx)
         {
           //请求失败
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+          Assert.Null(serverEx);
         }
+        
       }   
 
       [SetUp()]
       public void setup() {
         PutBucket();
+      }
+
+      [TearDown()]
+      public void teardown() {
+        DeleteBucket();
       }
 
       [Test()]
@@ -309,11 +325,6 @@ namespace COSSample
         GetBucketCors();
         OptionObject();
         DeleteBucketCors();
-      }
-
-      [TearDown()]
-      public void teardown() {
-        DeleteBucket();
       }
     }
 }

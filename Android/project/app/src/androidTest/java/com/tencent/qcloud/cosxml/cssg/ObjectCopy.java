@@ -71,8 +71,10 @@ public class ObjectCopy {
             CopyObjectResult copyObjectResult = cosXmlService.copyObject(copyObjectRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -85,6 +87,7 @@ public class ObjectCopy {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Copy Object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -107,8 +110,10 @@ public class ObjectCopy {
             String uploadId =initMultipartUploadResult.initMultipartUpload.uploadId;
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步方法请求
@@ -120,6 +125,7 @@ public class ObjectCopy {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Init Multipart Upload failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -159,8 +165,10 @@ public class ObjectCopy {
             String eTag = uploadPartCopyResult.copyObject.eTag;
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -173,6 +181,7 @@ public class ObjectCopy {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Copy Object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -199,8 +208,10 @@ public class ObjectCopy {
             CompleteMultiUploadResult completeMultiUploadResult = cosXmlService.completeMultiUpload(completeMultiUploadRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -213,6 +224,7 @@ public class ObjectCopy {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Complete Multi Upload failed because of CosXmlClientException or CosXmlServiceException...
             }
         });

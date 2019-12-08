@@ -56,7 +56,6 @@ namespace COSSample
           InitMultipartUploadResult result = cosXml.InitMultipartUpload(request);
           //请求成功
           string uploadId = result.initMultipartUpload.uploadId; //用于后续分块上传的 uploadId
-          this.uploadId = uploadId;
           Console.WriteLine(result.GetResultInfo());
         }
         catch (COSXML.CosException.CosClientException clientEx)
@@ -71,6 +70,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       public void ListMultiUpload()
@@ -114,6 +114,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       public void UploadPart()
@@ -138,10 +139,9 @@ namespace COSSample
         {
           string bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
           string key = "object4dotnet"; //对象在存储桶中的位置，即称对象键
-          string uploadId = "example-uploadId"; //初始化分块上传返回的uploadId
+          string uploadId = "this.uploadId"; //初始化分块上传返回的uploadId
           int partNumber = 1; //分块编号，必须从1开始递增
-          string srcPath = @"temp-source-file";//本地文件绝对路径
-          uploadId = this.uploadId;
+          string srcPath = @"temp-bucket-cssg-test-file";//本地文件绝对路径
           if (!File.Exists(srcPath)) {
             // 如果不存在目标文件，创建一个临时的测试文件
             File.WriteAllBytes(srcPath, new byte[1024]);
@@ -159,7 +159,6 @@ namespace COSSample
           UploadPartResult result = cosXml.UploadPart(request);
           //请求成功
           //获取返回分块的eTag,用于后续CompleteMultiUploads
-          this.etag = result.eTag;
           Console.WriteLine(result.GetResultInfo());
         }
         catch (COSXML.CosException.CosClientException clientEx)
@@ -174,6 +173,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       public void ListParts()
@@ -198,8 +198,7 @@ namespace COSSample
         {
           string bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
           string key = "object4dotnet"; //对象在存储桶中的位置，即称对象键
-          string uploadId = "example-uploadId"; //初始化分块上传返回的uploadId
-          uploadId = this.uploadId;
+          string uploadId = "this.uploadId"; //初始化分块上传返回的uploadId
           ListPartsRequest request = new ListPartsRequest(bucket, key, uploadId);
           //设置签名有效时长
           request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -222,6 +221,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       public void CompleteMultiUpload()
@@ -246,8 +246,7 @@ namespace COSSample
         {
           string bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
           string key = "object4dotnet"; //对象在存储桶中的位置，即称对象键
-          string uploadId = "example-uploadId"; //初始化分块上传返回的uploadId
-          uploadId = this.uploadId;
+          string uploadId = "this.uploadId"; //初始化分块上传返回的uploadId
           CompleteMultipartUploadRequest request = new CompleteMultipartUploadRequest(bucket, 
             key, uploadId);
           //设置签名有效时长
@@ -255,7 +254,6 @@ namespace COSSample
           //设置已上传的parts,必须有序，按照partNumber递增
           // request.SetPartNumberAndETag(1, "Example Etag");
           string etag = "example etag";
-          etag = this.etag;
           request.SetPartNumberAndETag(1, etag);
           //执行请求
           CompleteMultipartUploadResult result = cosXml.CompleteMultiUpload(request);
@@ -274,6 +272,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       public void AbortMultiUpload()
@@ -298,8 +297,7 @@ namespace COSSample
         {
           string bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
           string key = "object4dotnet"; //对象在存储桶中的位置，即称对象键
-          string uploadId = "example-uploadId"; //初始化分块上传返回的uploadId
-          uploadId = this.uploadId;
+          string uploadId = "this.uploadId"; //初始化分块上传返回的uploadId
           AbortMultipartUploadRequest request = new AbortMultipartUploadRequest(bucket, key, uploadId);
           //设置签名有效时长
           request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
@@ -320,10 +318,15 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       [SetUp()]
       public void setup() {
+      }
+
+      [TearDown()]
+      public void teardown() {
       }
 
       [Test()]
@@ -336,10 +339,6 @@ namespace COSSample
         InitMultiUpload();
         UploadPart();
         AbortMultiUpload();
-      }
-
-      [TearDown()]
-      public void teardown() {
       }
     }
 }

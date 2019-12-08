@@ -47,8 +47,6 @@ public class BucketVersioning {
         assertError(e, false);
     }
 
-    private String uploadId;
-    private String part1Etag;
 
     private void PutBucket()
     {
@@ -81,8 +79,10 @@ public class BucketVersioning {
             PutBucketResult putBucketResult = cosXmlService.putBucket(putBucketRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -95,6 +95,7 @@ public class BucketVersioning {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Put Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -114,8 +115,10 @@ public class BucketVersioning {
             PutBucketVersioningResult putBucketVersioningResult = cosXmlService.putBucketVersioning(putBucketVersioningRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         // 使用异步回调请求
         cosXmlService.putBucketVersionAsync(putBucketVersioningRequest, new CosXmlResultListener() {
@@ -127,6 +130,7 @@ public class BucketVersioning {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo PUT Bucket versioning failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -146,8 +150,10 @@ public class BucketVersioning {
             GetBucketVersioningResult getBucketVersioningResult = cosXmlService.getBucketVersioning(getBucketVersioningRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         // 使用异步回调请求
         cosXmlService.getBucketVersioningAsync(getBucketVersioningRequest, new CosXmlResultListener() {
@@ -159,6 +165,7 @@ public class BucketVersioning {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo GET Bucket versioning failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -177,8 +184,10 @@ public class BucketVersioning {
             DeleteBucketResult deleteBucketResult = cosXmlService.deleteBucket(deleteBucketRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -191,6 +200,7 @@ public class BucketVersioning {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Delete Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });

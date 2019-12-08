@@ -1,6 +1,0 @@
-QCloudGetBucketLifecycleRequest* request = [QCloudGetBucketLifecycleRequest new];
-request.bucket = @"examplebucket-1250000000";
-[request setFinishBlock:^(QCloudLifecycleConfiguration* result,NSError* error) {
-    // 可以从 result 中获取返回信息
-}];
-[[QCloudCOSXMLService defaultCOSXML] GetBucketLifecycle:request];

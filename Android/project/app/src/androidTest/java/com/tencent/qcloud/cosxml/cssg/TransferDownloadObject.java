@@ -47,8 +47,6 @@ public class TransferDownloadObject {
         assertError(e, false);
     }
 
-    private String uploadId;
-    private String part1Etag;
 
     private void TransferDownloadObject()
     {
@@ -80,6 +78,7 @@ public class TransferDownloadObject {
         
                     @Override
                     public void onFail(CosXmlRequest request, CosXmlClientException exception, CosXmlServiceException serviceException) {
+                    assertError(serviceException);assertError(exception);
                         Log.d("TEST",  "Failed: " + (exception == null ? serviceException.getMessage() : exception.toString()));
                     }
                 });

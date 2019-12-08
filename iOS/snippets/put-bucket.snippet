@@ -1,6 +1,0 @@
-QCloudPutBucketRequest* request = [QCloudPutBucketRequest new];
-request.bucket = @"examplebucket-1250000000"; //additional actions after finishing
-[request setFinishBlock:^(id outputObject, NSError* error) {
-    //可以从 outputObject 中获取服务器返回的 header 信息
-}];
-[[QCloudCOSXMLService defaultCOSXML] PutBucket:request];

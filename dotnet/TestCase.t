@@ -39,7 +39,7 @@ namespace COSSample
         {{{snippet}}}
       }   
       {{/methods}}
-      {{^isDemo}}
+      {{^isGlobalInit}}
 
       [SetUp()]
       public void setup() {
@@ -47,17 +47,6 @@ namespace COSSample
         {{name}}();
         {{/setup}}
       }
-      {{/isDemo}}
-      {{^isDemo}}
-
-      [Test()]
-      public void test{{name}}() {
-        {{#steps}}
-        {{name}}();
-        {{/steps}}
-      }
-      {{/isDemo}}
-      {{^isDemo}}
 
       [TearDown()]
       public void teardown() {
@@ -65,6 +54,13 @@ namespace COSSample
         {{name}}();
         {{/teardown}}
       }
-      {{/isDemo}}
+      {{/isGlobalInit}}
+
+      [Test()]
+      public void test{{name}}() {
+        {{#steps}}
+        {{name}}();
+        {{/steps}}
+      }
     }
 }

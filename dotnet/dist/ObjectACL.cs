@@ -46,7 +46,7 @@ namespace COSSample
         {
           string bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
           string key = "object4dotnet"; //对象在存储桶中的位置，即称对象键
-          string srcPath = @"temp-source-file";//本地文件绝对路径
+          string srcPath = @"temp-bucket-cssg-test-file";//本地文件绝对路径
           if (!File.Exists(srcPath)) {
             // 如果不存在目标文件，创建一个临时的测试文件
             File.WriteAllBytes(srcPath, new byte[1024]);
@@ -77,6 +77,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       public void PutObjectAcl()
@@ -129,6 +130,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       public void GetObjectAcl()
@@ -173,10 +175,15 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       [SetUp()]
       public void setup() {
+      }
+
+      [TearDown()]
+      public void teardown() {
       }
 
       [Test()]
@@ -184,10 +191,6 @@ namespace COSSample
         PutObject();
         PutObjectAcl();
         GetObjectAcl();
-      }
-
-      [TearDown()]
-      public void teardown() {
       }
     }
 }

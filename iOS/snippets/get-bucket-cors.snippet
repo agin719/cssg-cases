@@ -1,8 +1,0 @@
-QCloudGetBucketCORSRequest* corsReqeust = [QCloudGetBucketCORSRequest new];
-corsReqeust.bucket = @"examplebucket-1250000000";
-
-[corsReqeust setFinishBlock:^(QCloudCORSConfiguration * _Nonnull result, NSError * _Nonnull error) {
-    //CORS 设置封装在 result 中
-}];
-
-[[QCloudCOSXMLService defaultCOSXML] GetBucketCORS:corsReqeust];

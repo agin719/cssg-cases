@@ -47,8 +47,6 @@ public class GetService {
         assertError(e, false);
     }
 
-    private String uploadId;
-    private String part1Etag;
 
     private void GetService()
     {
@@ -62,8 +60,10 @@ public class GetService {
             GetServiceResult result = cosXmlService.getService(getServiceRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -76,6 +76,7 @@ public class GetService {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Put Bucket Lifecycle failed because of CosXmlClientException or CosXmlServiceException...
             }
         });

@@ -64,19 +64,20 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       [SetUp()]
       public void setup() {
       }
 
+      [TearDown()]
+      public void teardown() {
+      }
+
       [Test()]
       public void testGetService() {
         GetService();
-      }
-
-      [TearDown()]
-      public void teardown() {
       }
     }
 }

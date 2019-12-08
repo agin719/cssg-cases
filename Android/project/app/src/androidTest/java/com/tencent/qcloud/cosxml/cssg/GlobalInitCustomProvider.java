@@ -32,8 +32,8 @@ import java.nio.charset.Charset;
 import java.io.*;
 
 @RunWith(AndroidJUnit4.class)
-public class InitCustomProvider {
-    public static class MyCredentialProvider extends BasicLifecycleCredentialProvider {
+public class GlobalInitCustomProvider {
+        public static class MyCredentialProvider extends BasicLifecycleCredentialProvider {
         
             @Override
             protected QCloudLifecycleCredentials fetchNewCredentials() throws QCloudClientException {
@@ -70,43 +70,9 @@ public class InitCustomProvider {
         assertError(e, false);
     }
 
-    private String uploadId;
-    private String part1Etag;
 
 
-    private void initService() {
-        context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        String region = "ap-guangzhou";
-        
-        // 创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
-        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
-                .setRegion(region)
-                .isHttps(true) // 使用 HTTPS 请求, 默认为 HTTP 请求
-                .builder();
-        
-        String secretId = BuildConfig.COS_SECRET_ID; //永久密钥 secretId
-        String secretKey =BuildConfig.COS_SECRET_KEY; //永久密钥 secretKey
-        
-        /**
-         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥
-         * @parma secretId 永久密钥 secretId
-         * @param secretKey 永久密钥 secretKey
-         * @param keyDuration 密钥有效期，单位为秒
-         */
-        QCloudCredentialProvider credentialProvider = new ShortTimeCredentialProvider(secretId, secretKey, 300);
-        
-        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
-        this.cosXmlService = cosXmlService;
-    }
 
-    @Before public void setUp() {
-        initService();
-    }
-
-    @After public void tearDown() {
-    }
-
-    @Test public void testInitCustomProvider() {
+    @Test public void testGlobalInitCustomProvider() {
     }
 }

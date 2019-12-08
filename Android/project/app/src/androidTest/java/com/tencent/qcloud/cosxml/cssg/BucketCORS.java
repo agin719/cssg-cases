@@ -47,8 +47,6 @@ public class BucketCORS {
         assertError(e, false);
     }
 
-    private String uploadId;
-    private String part1Etag;
 
     private void PutBucket()
     {
@@ -81,8 +79,10 @@ public class BucketCORS {
             PutBucketResult putBucketResult = cosXmlService.putBucket(putBucketRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -95,6 +95,7 @@ public class BucketCORS {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Put Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -148,8 +149,10 @@ public class BucketCORS {
             PutBucketCORSResult putBucketCORSResult = cosXmlService.putBucketCORS(putBucketCORSRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -162,6 +165,7 @@ public class BucketCORS {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Put Bucket CORS failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -180,8 +184,10 @@ public class BucketCORS {
             GetBucketCORSResult getBucketCORSResult = cosXmlService.getBucketCORS(getBucketCORSRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -194,6 +200,7 @@ public class BucketCORS {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Get Bucket CORS failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -215,8 +222,10 @@ public class BucketCORS {
            OptionObjectResult result = cosXmlService.optionObject(optionObjectRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -229,6 +238,7 @@ public class BucketCORS {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo OptionOb Object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -248,8 +258,10 @@ public class BucketCORS {
             DeleteBucketCORSResult deleteBucketCORSResult = cosXmlService.deleteBucketCORS(deleteBucketCORSRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -262,6 +274,7 @@ public class BucketCORS {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Delete Bucket CORS failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -280,8 +293,10 @@ public class BucketCORS {
             DeleteBucketResult deleteBucketResult = cosXmlService.deleteBucket(deleteBucketRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -294,6 +309,7 @@ public class BucketCORS {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Delete Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });

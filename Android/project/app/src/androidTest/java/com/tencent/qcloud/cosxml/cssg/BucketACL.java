@@ -47,8 +47,6 @@ public class BucketACL {
         assertError(e, false);
     }
 
-    private String uploadId;
-    private String part1Etag;
 
     private void PutBucket()
     {
@@ -81,8 +79,10 @@ public class BucketACL {
             PutBucketResult putBucketResult = cosXmlService.putBucket(putBucketRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -95,6 +95,7 @@ public class BucketACL {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Put Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -113,8 +114,10 @@ public class BucketACL {
             HeadBucketResult headBucketResult = cosXmlService.headBucket(headBucketRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -127,6 +130,7 @@ public class BucketACL {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Head Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -163,8 +167,10 @@ public class BucketACL {
             PutBucketACLResult putBucketACLResult = cosXmlService.putBucketACL(putBucketACLRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -177,6 +183,7 @@ public class BucketACL {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Put Bucket ACL failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -196,8 +203,10 @@ public class BucketACL {
             GetBucketACLResult getBucketACLResult = cosXmlService.getBucketACL(getBucketACLRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -210,6 +219,7 @@ public class BucketACL {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Get Bucket ACL failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -229,8 +239,10 @@ public class BucketACL {
             DeleteBucketResult deleteBucketResult = cosXmlService.deleteBucket(deleteBucketRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -243,6 +255,7 @@ public class BucketACL {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Delete Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });

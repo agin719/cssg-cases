@@ -1,5 +1,5 @@
 #!/bin/sh
 
-cssg compile
+cssg build
 cd project
 ./gradlew app:connectedDebugAndroidTest -i

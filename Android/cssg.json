@@ -23,14 +23,24 @@
     "insert": [
       {
         "expression": "assertError(e);",
-        "target": "e.printStackTrace();",
-        "anchor": "below"
+        "anchor": "e.printStackTrace();",
+        "align": "below"
+      },
+      {
+        "expression": "assertError(serviceException);assertError(exception);",
+        "anchor": "public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {",
+        "align": "below"
+      },
+      {
+        "expression": "assertError(serviceException);assertError(exception);",
+        "anchor": "public void onFail(CosXmlRequest request, CosXmlClientException exception, CosXmlServiceException serviceException) {",
+        "align": "below"
       }
     ]
   },
 
   "testGroup": {
-    "init-custom-provider": {
+    "global-init-custom-provider": {
       "defines": [
         "global-init-custom-provider"
       ]

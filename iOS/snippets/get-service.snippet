@@ -1,5 +1,0 @@
-QCloudGetServiceRequest* request = [[QCloudGetServiceRequest alloc] init];
-[request setFinishBlock:^(QCloudListAllMyBucketsResult* result, NSError* error) {
-    //从 result 中获取返回信息
-}];
-[[QCloudCOSXMLService defaultCOSXML] GetService:request];

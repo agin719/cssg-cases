@@ -47,8 +47,6 @@ public class BucketLifecycle {
         assertError(e, false);
     }
 
-    private String uploadId;
-    private String part1Etag;
 
     private void PutBucket()
     {
@@ -81,8 +79,10 @@ public class BucketLifecycle {
             PutBucketResult putBucketResult = cosXmlService.putBucket(putBucketRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -95,6 +95,7 @@ public class BucketLifecycle {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Put Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -126,8 +127,10 @@ public class BucketLifecycle {
             PutBucketLifecycleResult putBucketLifecycleResult = cosXmlService.putBucketLifecycle(putBucketLifecycleRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -140,6 +143,7 @@ public class BucketLifecycle {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Put Bucket Lifecycle failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -159,8 +163,10 @@ public class BucketLifecycle {
             GetBucketLifecycleResult getBucketLifecycleResult = cosXmlService.getBucketLifecycle(getBucketLifecycleRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -173,6 +179,7 @@ public class BucketLifecycle {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Get Bucket Lifecycle failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -193,8 +200,10 @@ public class BucketLifecycle {
         
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -207,6 +216,7 @@ public class BucketLifecycle {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Delete Bucket Lifecycle failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -226,8 +236,10 @@ public class BucketLifecycle {
             DeleteBucketResult deleteBucketResult = cosXmlService.deleteBucket(deleteBucketRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -240,6 +252,7 @@ public class BucketLifecycle {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Delete Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });

@@ -67,6 +67,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       public void PutObject()
@@ -91,7 +92,7 @@ namespace COSSample
         {
           string bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
           string key = "object4dotnet"; //对象在存储桶中的位置，即称对象键
-          string srcPath = @"temp-source-file";//本地文件绝对路径
+          string srcPath = @"temp-bucket-cssg-test-file";//本地文件绝对路径
           if (!File.Exists(srcPath)) {
             // 如果不存在目标文件，创建一个临时的测试文件
             File.WriteAllBytes(srcPath, new byte[1024]);
@@ -122,6 +123,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       public void HeadObject()
@@ -166,6 +168,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       public void GetObject()
@@ -251,6 +254,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       public void DeleteObject()
@@ -295,6 +299,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       public void DeleteMultiObject()
@@ -345,6 +350,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       public void PostObject()
@@ -369,7 +375,7 @@ namespace COSSample
         {
           string bucket = "bucket-cssg-test-1253653367"; //存储桶，格式：BucketName-APPID
           string key = "object4dotnet"; //对象在存储桶中的位置，即称对象键
-          string srcPath = @"temp-source-file";//本地文件绝对路径
+          string srcPath = @"temp-bucket-cssg-test-file";//本地文件绝对路径
           if (!File.Exists(srcPath)) {
             // 如果不存在目标文件，创建一个临时的测试文件
             File.WriteAllBytes(srcPath, new byte[1024]);
@@ -399,6 +405,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       public void RestoreObject()
@@ -439,12 +446,15 @@ namespace COSSample
         {
           //请求失败
           Console.WriteLine("CosClientException: " + clientEx);
+          Assert.Null(clientEx);
         }
         catch (COSXML.CosException.CosServerException serverEx)
         {
           //请求失败
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
+          Assert.Null(serverEx);
         }
+        
       }   
 
       public void GetPresignDownloadUrl()
@@ -508,6 +518,7 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       public void GetPresignUploadUrl()
@@ -544,7 +555,7 @@ namespace COSSample
           //上传预签名 URL (使用永久密钥方式计算的签名 URL)
           string requestSignURL = cosXml.GenerateSignURL(preSignatureStruct);
         
-          string srcPath = @"temp-source-file";//本地文件绝地路径
+          string srcPath = @"temp-bucket-cssg-test-file";//本地文件绝地路径
           PutObjectRequest request = new PutObjectRequest(null, null, srcPath);
           //设置上传请求预签名 URL
           request.RequestURLWithSign = requestSignURL;
@@ -570,10 +581,15 @@ namespace COSSample
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
+        
       }   
 
       [SetUp()]
       public void setup() {
+      }
+
+      [TearDown()]
+      public void teardown() {
       }
 
       [Test()]
@@ -588,10 +604,6 @@ namespace COSSample
         RestoreObject();
         GetPresignDownloadUrl();
         GetPresignUploadUrl();
-      }
-
-      [TearDown()]
-      public void teardown() {
       }
     }
 }

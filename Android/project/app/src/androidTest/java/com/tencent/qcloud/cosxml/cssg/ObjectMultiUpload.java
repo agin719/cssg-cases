@@ -66,8 +66,10 @@ public class ObjectMultiUpload {
             String uploadId =initMultipartUploadResult.initMultipartUpload.uploadId;
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步方法请求
@@ -79,6 +81,7 @@ public class ObjectMultiUpload {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Init Multipart Upload failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -98,8 +101,10 @@ public class ObjectMultiUpload {
             ListMultiUploadsResult listMultiUploadsResult = cosXmlService.listMultiUploads(listMultiUploadsRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -112,6 +117,7 @@ public class ObjectMultiUpload {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 //  Delete Multi Object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -144,8 +150,10 @@ public class ObjectMultiUpload {
             String eTag = uploadPartResult.eTag; //获取分块块的 eTag
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         
@@ -158,6 +166,7 @@ public class ObjectMultiUpload {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Upload Part failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -181,8 +190,10 @@ public class ObjectMultiUpload {
             ListParts listParts = listPartsResult.listParts;
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -194,6 +205,7 @@ public class ObjectMultiUpload {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo List Part failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -220,8 +232,10 @@ public class ObjectMultiUpload {
             CompleteMultiUploadResult completeMultiUploadResult = cosXmlService.completeMultiUpload(completeMultiUploadRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -234,6 +248,7 @@ public class ObjectMultiUpload {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Complete Multi Upload failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -256,8 +271,10 @@ public class ObjectMultiUpload {
             AbortMultiUploadResult abortMultiUploadResult = cosXmlService.abortMultiUpload(abortMultiUploadRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
             //
         }
         
@@ -271,6 +288,7 @@ public class ObjectMultiUpload {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Abort Multi Upload failed because of CosXmlClientException or CosXmlServiceException...
             }
         });

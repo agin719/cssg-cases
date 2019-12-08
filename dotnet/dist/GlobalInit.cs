@@ -42,14 +42,14 @@ namespace COSSample
         QCloudCredentialProvider cosCredentialProvider = null;
         
         //方式1， 永久密钥
-        string secretId = "COS_SECRETID"; //"云 API 密钥 SecretId";
-        string secretKey = "COS_SECRETKEY"; //"云 API 密钥 SecretKey";
+        string secretId = Environment.GetEnvironmentVariable("COS_KEY"); //"云 API 密钥 SecretId";
+        string secretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //"云 API 密钥 SecretKey";
         long durationSecond = 600;  //每次请求签名有效时长，单位为秒
         cosCredentialProvider = new DefaultQCloudCredentialProvider(secretId, secretKey, durationSecond);
         
         //方式2， 临时密钥
-        string tmpSecretId = "COS_SECRETID"; //"临时密钥 SecretId";
-        string tmpSecretKey = "COS_SECRETKEY"; //"临时密钥 SecretKey";
+        string tmpSecretId = Environment.GetEnvironmentVariable("COS_KEY"); //"临时密钥 SecretId";
+        string tmpSecretKey = Environment.GetEnvironmentVariable("COS_SECRET"); //"临时密钥 SecretKey";
         string tmpToken = "COS_TOKEN"; //"临时密钥 token";
         long tmpExpireTime = 1546862502;//临时密钥有效截止时间
         cosCredentialProvider = new DefaultSessionQCloudCredentialProvider(tmpSecretId, tmpSecretKey, 
@@ -57,19 +57,12 @@ namespace COSSample
         
         //初始化 CosXmlServer
         CosXmlServer cosXml = new CosXmlServer(config, cosCredentialProvider);
+        
       }   
-
-      [SetUp()]
-      public void setup() {
-      }
 
       [Test()]
       public void testGlobalInit() {
         GlobalInit();
-      }
-
-      [TearDown()]
-      public void teardown() {
       }
     }
 }

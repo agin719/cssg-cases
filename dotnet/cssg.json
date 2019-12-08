@@ -1,19 +1,9 @@
 {
   "language": "dotnet",
-  "sourcesRoot": ".",
-  "sourceExtension": ".cs",
-
   "docRoot": ".NET SDK/",
 
   "testcaseTemplate": "TestCase.t",
-  "ignoreExpressionInDoc": [
-    "Assert.Null\\([^()]+\\);",
-    "Thread.Sleep\\(\\d+\\);",
-    "this.uploadId\\s*=\\s*.+;",
-    "this.etag\\s*=\\s*.+;",
-    ".+\\s*=\\s*this.uploadId;",
-    ".+\\s*=\\s*this.etag;"
-  ],
+  "sourceExtension": ".cs",
 
   "macro4doc": {
     "secretId": "\"${g.secretId}\"",
@@ -21,10 +11,28 @@
   },
   "macro4test": {
     "secretId": "Environment.GetEnvironmentVariable(\"COS_KEY\")",
-    "secretKey": "Environment.GetEnvironmentVariable(\"COS_SECRET\")"
+    "secretKey": "Environment.GetEnvironmentVariable(\"COS_SECRET\")",
+    "uploadId": "this.uploadId",
+    "eTag": "this.part1Etag"
   },
+
+  "beforeRun": {
+    "insert": [
+      {
+        "expression": "Assert.Null(clientEx);",
+        "anchor": "Console.WriteLine(\"CosClientException: \" + clientEx);",
+        "align": "below"
+      },
+      {
+        "expression": "Assert.Null(serverEx);",
+        "anchor": "Console.WriteLine(\"CosServerException: \" + serverEx.GetInfo());",
+        "align": "below"
+      }
+    ]
+  },
+
   "testGroup": {
-    "init-credential-provider": {
+    "global-init-credential-provider": {
       "defines": [
         "global-init-custom-credential-provider"
       ]

@@ -1,6 +1,0 @@
-QCloudDeleteBucketLifeCycleRequest* request = [[QCloudDeleteBucketLifeCycleRequest alloc ] init];
-request.bucket = @"examplebucket-1250000000";
-[request setFinishBlock:^(QCloudLifecycleConfiguration* deleteResult, NSError* deleteError) {
-    //deleteResult 返回删除结果
-}];
-[[QCloudCOSXMLService defaultCOSXML] DeleteBucketLifeCycle:request];

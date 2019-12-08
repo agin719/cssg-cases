@@ -47,8 +47,6 @@ public class Object {
         assertError(e, false);
     }
 
-    private String uploadId;
-    private String part1Etag;
 
     private void GetBucket()
     {
@@ -80,8 +78,10 @@ public class Object {
             GetBucketResult getBucketResult = cosXmlService.getBucket(getBucketRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -94,6 +94,7 @@ public class Object {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Get Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -115,9 +116,11 @@ public class Object {
                 getBucketResult = cosXmlService.getBucket(getBucketRequest);
             } catch (CosXmlClientException e) {
                 e.printStackTrace();
+                assertError(e);
                 return;
             } catch (CosXmlServiceException e) {
                 e.printStackTrace();
+                assertError(e);
                 return;
             }
             // commonPrefixs 表示表示被 delimiter 截断的路径，例如 delimter 设置为 /，commonPrefixs 则表示子目录的路径
@@ -153,8 +156,10 @@ public class Object {
             PutObjectResult putObjectResult = cosXmlService.putObject(putObjectRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调上传
@@ -167,6 +172,7 @@ public class Object {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Put object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -185,8 +191,10 @@ public class Object {
             PutObjectResult putObjectResult = cosXmlService.putObject(putObjectRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         
@@ -203,8 +211,10 @@ public class Object {
             PutObjectResult putObjectResult = cosXmlService.putObject(putObjectRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         
@@ -223,8 +233,10 @@ public class Object {
             HeadObjectResult headObjectResult = cosXmlService.headObject(headObjectRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -237,6 +249,7 @@ public class Object {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Head Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -265,8 +278,10 @@ public class Object {
             GetObjectResult getObjectResult =cosXmlService.getObject(getObjectRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -279,6 +294,7 @@ public class Object {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Get Object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -300,8 +316,10 @@ public class Object {
             DeleteObjectResult deleteObjectResult = cosXmlService.deleteObject(deleteObjectRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -314,6 +332,7 @@ public class Object {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Delete Object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -336,8 +355,10 @@ public class Object {
              DeleteMultiObjectResult deleteMultiObjectResult =cosXmlService.deleteMultiObject(deleteMultiObjectRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -350,6 +371,7 @@ public class Object {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 //  Delete Multi Object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -379,8 +401,10 @@ public class Object {
             PostObjectResult postObjectResult = cosXmlService.postObject(postObjectRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调上传
@@ -393,6 +417,7 @@ public class Object {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Put object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -415,8 +440,10 @@ public class Object {
             RestoreResult restoreResult = cosXmlService.restoreObject(restoreRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -429,6 +456,7 @@ public class Object {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Get Bucket ACL failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -466,8 +494,10 @@ public class Object {
         
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         
@@ -507,8 +537,10 @@ public class Object {
          PutObjectResult putObjectResult = cosXmlService.putObject(putObjectRequest);
         } catch (CosXmlClientException e) {
          e.printStackTrace();
+         assertError(e);
         } catch (CosXmlServiceException e) {
          e.printStackTrace();
+         assertError(e);
         }
         
         

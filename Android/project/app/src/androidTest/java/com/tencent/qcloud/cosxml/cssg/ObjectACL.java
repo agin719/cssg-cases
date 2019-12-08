@@ -47,8 +47,6 @@ public class ObjectACL {
         assertError(e, false);
     }
 
-    private String uploadId;
-    private String part1Etag;
 
     private void PutObject()
     {
@@ -72,8 +70,10 @@ public class ObjectACL {
             PutObjectResult putObjectResult = cosXmlService.putObject(putObjectRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调上传
@@ -86,6 +86,7 @@ public class ObjectACL {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Put object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -104,8 +105,10 @@ public class ObjectACL {
             PutObjectResult putObjectResult = cosXmlService.putObject(putObjectRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         
@@ -122,8 +125,10 @@ public class ObjectACL {
             PutObjectResult putObjectResult = cosXmlService.putObject(putObjectRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         
@@ -155,8 +160,10 @@ public class ObjectACL {
             PutObjectACLResult putObjectACLResult = cosXmlService.putObjectACL(putObjectACLRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -169,6 +176,7 @@ public class ObjectACL {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Put Bucket ACL failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
@@ -189,8 +197,10 @@ public class ObjectACL {
             GetObjectACLResult getObjectACLResult = cosXmlService.getObjectACL(getBucketACLRequest);
         } catch (CosXmlClientException e) {
             e.printStackTrace();
+            assertError(e);
         } catch (CosXmlServiceException e) {
             e.printStackTrace();
+            assertError(e);
         }
         
         // 使用异步回调请求
@@ -203,6 +213,7 @@ public class ObjectACL {
         
             @Override
             public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+            assertError(serviceException);assertError(exception);
                 // todo Get Bucket ACL failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
