@@ -1,29 +1,47 @@
 {
   "language": "ios",
-  "sourcesRoot": "COS_iOS_TestTests/",
   "sourceExtension": ".m",
 
   "docRoot": "iOS SDK/",
-
   "testcaseTemplate": "TestCase.t",
+  "snippetNameCommonPrefix": "objc-",
 
-  "ignoreExpressionInDoc": [
-    "XCTestExpectation\\*\\s+exp\\s*=\\s*.+;\\r\\n",
-    "\\[exp\\s+fulfill\\];",
-    "\\[self\\s+waitForExpectationsWithTimeout:\\d+ handler:nil\\];",
-    "XCTAssertNotNil\\(.+\\);",
-    "XCTAssertNil\\(.+\\);",
-    ".+\\s*=\\s*self\\.uploadId;",
-    "self\\.parts\\s*=\\s*.+;",
-    "\\[self\\.parts\\s*.+\\];"
-  ],
+  "compileDist": "dist/cases/",
 
   "macro4doc": {
+    "secretId": "@\"${g.secretId}\"",
+    "secretKey": "@\"${g.secretKey}\"",
+    "uploadId": "@\"${g.uploadId}\""
   },
   "macro4test": {
     "secretId": "[SecretStorage sharedInstance].secretID",
-    "secretKey": "[SecretStorage sharedInstance].secretKey"
+    "secretKey": "[SecretStorage sharedInstance].secretKey",
+    "uploadId": "self.uploadId"
   },
+
+  "beforeRun": {
+    "insert": [
+      {
+        "expression": "XCTAssertNil(error);",
+        "indentation": 4,
+        "isRegex": true,
+        "anchor": "setFinishBlock:\\^\\(.+,\\s*NSError.+\\)\\s*\\{",
+        "align": "below",
+        "type": "assert",
+        "excludes": [
+          "transfer-upload-object"
+        ]
+      },
+      {
+        "expression": "[exp fulfill];",
+        "indentation": 4,
+        "isRegex": true,
+        "anchor": "setFinishBlock:\\^\\(.+,\\s*NSError.+\\)\\s*\\{",
+        "align": "below"
+      }
+    ]
+  },
+
   "testGroup": {
     "global-init": {
       "defines": [

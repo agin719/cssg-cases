@@ -1,0 +1,415 @@
+package com.tencent.qcloud.cosxml.cssg;
+
+import android.support.test.runner.AndroidJUnit4;
+import android.support.test.InstrumentationRegistry;
+
+import com.tencent.cos.xml.*;
+import com.tencent.cos.xml.common.*;
+import com.tencent.cos.xml.exception.*;
+import com.tencent.cos.xml.listener.*;
+import com.tencent.cos.xml.model.*;
+import com.tencent.cos.xml.model.object.*;
+import com.tencent.cos.xml.model.bucket.*;
+import com.tencent.cos.xml.model.tag.*;
+import com.tencent.cos.xml.transfer.*;
+import com.tencent.qcloud.core.auth.*;
+import com.tencent.qcloud.core.common.*;
+import com.tencent.qcloud.core.http.*;
+import com.tencent.cos.xml.model.service.*;
+import com.tencent.qcloud.cosxml.cssg.GlobalInitCustomProviderTest.MyCredentialProvider;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.runner.RunWith;
+
+import android.content.Context;
+import android.util.Log;
+
+import java.net.*;
+import java.util.*;
+import java.nio.charset.Charset;
+import java.io.*;
+
+@RunWith(AndroidJUnit4.class)
+public class ObjectCopyTest {
+
+    private Context context;
+    private CosXmlService cosXmlService;
+
+    private static void assertError(Exception e, boolean isMatch) {
+        if (!isMatch) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    private static void assertError(Exception e) {
+        assertError(e, false);
+    }
+
+    public ObjectCopyTest() {
+        super();
+        context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+    }
+
+    private String uploadId;
+    private String eTag;
+
+    private void PutBucket()
+    {
+        String bucket = "bucket-cssg-test-android-1253653367";
+        PutBucketRequest putBucketRequest = new PutBucketRequest(bucket);
+        
+        // 定义存储桶的 ACL 属性。有效值：private，public-read-write，public-read；默认值：private
+        putBucketRequest.setXCOSACL("private");
+        
+        // 赋予被授权者读的权限
+        ACLAccount readACLS = new ACLAccount();
+        readACLS.addAccount("1278687956", "1278687956");
+        putBucketRequest.setXCOSGrantRead(readACLS);
+        
+        // 赋予被授权者写的权限
+        ACLAccount writeACLS = new ACLAccount();
+        writeACLS.addAccount("1278687956", "1278687956");
+        putBucketRequest.setXCOSGrantRead(writeACLS);
+        
+        // 赋予被授权者读写的权限
+        ACLAccount writeandReadACLS = new ACLAccount();
+        writeandReadACLS.addAccount("1278687956", "1278687956");
+        putBucketRequest.setXCOSGrantRead(writeandReadACLS);
+        // 设置签名校验 Host，默认校验所有 Header
+        Set<String> headerKeys = new HashSet<>();
+        headerKeys.add("Host");
+        putBucketRequest.setSignParamsAndHeaders(null, headerKeys);
+        // 使用同步方法
+        try {
+            PutBucketResult putBucketResult = cosXmlService.putBucket(putBucketRequest);
+        } catch (CosXmlClientException e) {
+            e.printStackTrace();
+        } catch (CosXmlServiceException e) {
+            e.printStackTrace();
+        }
+        
+        if (true) {return;}
+        // 使用异步回调请求
+        cosXmlService.putBucketAsync(putBucketRequest, new CosXmlResultListener() {
+            @Override
+            public void onSuccess(CosXmlRequest request, CosXmlResult result) {
+                // todo Put Bucket success
+                PutBucketResult putBucketResult = (PutBucketResult)result;
+            }
+        
+            @Override
+            public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+                // todo Put Bucket failed because of CosXmlClientException or CosXmlServiceException...
+            }
+        });
+        
+    }
+    private void CopyObject()
+    {
+        String sourceAppid = "1253653367"; //账号 APPID
+        String sourceBucket = "bucket-cssg-source-1253653367"; //源对象所在的存储桶
+        String sourceRegion = "ap-guangzhou"; //源对象的存储桶所在的地域
+        String sourceCosPath = "sourceObject"; //源对象键
+        // 构造源对象属性
+        CopyObjectRequest.CopySourceStruct copySourceStruct = new CopyObjectRequest.CopySourceStruct(sourceAppid, sourceBucket, sourceRegion, sourceCosPath);
+        String bucket = "bucket-cssg-test-android-1253653367"; //存储桶，格式：BucketName-APPID
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键
+        
+        CopyObjectRequest copyObjectRequest = new CopyObjectRequest(bucket, cosPath, copySourceStruct);
+        // 设置签名校验 Host，默认校验所有 Header
+        Set<String> headerKeys = new HashSet<>();
+        headerKeys.add("Host");
+        copyObjectRequest.setSignParamsAndHeaders(null, headerKeys);
+        // 使用同步方法
+        try {
+            CopyObjectResult copyObjectResult = cosXmlService.copyObject(copyObjectRequest);
+        } catch (CosXmlClientException e) {
+            e.printStackTrace();
+            assertError(e);
+        } catch (CosXmlServiceException e) {
+            e.printStackTrace();
+            assertError(e);
+        }
+        
+        if (true) {return;}
+        // 使用异步回调请求
+        cosXmlService.copyObjectAsync(copyObjectRequest, new CosXmlResultListener() {
+            @Override
+            public void onSuccess(CosXmlRequest request, CosXmlResult result) {
+                // todo Copy Object success
+          CopyObjectResult copyObjectResult  = (CopyObjectResult)result;
+            }
+        
+            @Override
+            public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+                // todo Copy Object failed because of CosXmlClientException or CosXmlServiceException...
+            }
+        });
+        
+        
+    }
+    private void InitMultiUpload()
+    {
+        String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
+        
+        InitMultipartUploadRequest initMultipartUploadRequest = new InitMultipartUploadRequest(bucket, cosPath);
+        // 设置签名校验 Host，默认校验所有 Header
+        Set<String> headerKeys = new HashSet<>();
+        headerKeys.add("Host");
+        initMultipartUploadRequest.setSignParamsAndHeaders(null, headerKeys);
+        // 使用同步方法请求
+        try {
+            InitMultipartUploadResult initMultipartUploadResult = cosXmlService.initMultipartUpload(initMultipartUploadRequest);
+            uploadId =initMultipartUploadResult.initMultipartUpload.uploadId;
+        } catch (CosXmlClientException e) {
+            e.printStackTrace();
+            assertError(e);
+        } catch (CosXmlServiceException e) {
+            e.printStackTrace();
+            assertError(e);
+        }
+        
+        if (true) {return;}
+        // 使用异步回调请求
+        cosXmlService.initMultipartUploadAsync(initMultipartUploadRequest, new CosXmlResultListener() {
+            @Override
+            public void onSuccess(CosXmlRequest cosXmlRequest, CosXmlResult result) {
+                String uploadId = ((InitMultipartUploadResult)result).initMultipartUpload.uploadId;
+            }
+        
+            @Override
+            public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+                // todo Init Multipart Upload failed because of CosXmlClientException or CosXmlServiceException...
+            }
+        });
+        
+        
+    }
+    private void UploadPartCopy()
+    {
+        //具体步骤：
+        // 1. 调用 cosXmlService.initMultipartUpload(InitMultipartUploadRequest) 初始化分块,请参考 [InitMultipartUploadRequest 初始化分块](#InitMultipartUploadRequest)。
+        // 2. 调用 cosXmlService.copyObject(UploadPartCopyRequest) 完成分块复制。
+        // 3. 调用 cosXmlService.completeMultiUpload(CompleteMultiUploadRequest) 完成分块复制,请参考 [CompleteMultiUploadRequest 完成分块复制](#CompleteMultiUploadRequest)。
+        
+        String sourceAppid = "1253653367"; //账号 APPID
+        String sourceBucket = "bucket-cssg-source-1253653367"; //源对象所在的存储桶
+        String sourceRegion = "ap-guangzhou"; //源对象的存储桶所在的地域
+        String sourceCosPath = "sourceObject"; //源对象键
+        // 构造源对象属性
+        CopyObjectRequest.CopySourceStruct copySourceStruct = new CopyObjectRequest.CopySourceStruct(sourceAppid, sourceBucket, sourceRegion, sourceCosPath);
+        
+        String bucket = "bucket-cssg-test-android-1253653367"; //存储桶，格式：BucketName-APPID
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键
+        
+        String uploadId = this.uploadId;
+        int partNumber = 1; //分块编号
+        long start = 0; //复制源对象的开始位置
+        long end = 1023; //复制源对象的结束位置
+        
+        UploadPartCopyRequest uploadPartCopyRequest = new UploadPartCopyRequest(bucket, cosPath, partNumber,  uploadId, copySourceStruct, start, end);
+        // 设置签名校验 Host，默认校验所有 Header
+        Set<String> headerKeys = new HashSet<>();
+        headerKeys.add("Host");
+        uploadPartCopyRequest.setSignParamsAndHeaders(null, headerKeys);
+        // 使用同步方法
+        try {
+            UploadPartCopyResult uploadPartCopyResult = cosXmlService.copyObject(uploadPartCopyRequest);
+            eTag = uploadPartCopyResult.copyObject.eTag;
+        } catch (CosXmlClientException e) {
+            e.printStackTrace();
+            assertError(e);
+        } catch (CosXmlServiceException e) {
+            e.printStackTrace();
+            assertError(e);
+        }
+        
+        if (true) {return;}
+        // 使用异步回调请求
+        cosXmlService.copyObjectAsync(uploadPartCopyRequest, new CosXmlResultListener() {
+            @Override
+            public void onSuccess(CosXmlRequest request, CosXmlResult result) {
+                // todo Copy Object success
+          UploadPartCopyResult uploadPartCopyResult  = (UploadPartCopyResult)result;
+            }
+        
+            @Override
+            public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+                // todo Copy Object failed because of CosXmlClientException or CosXmlServiceException...
+            }
+        });
+        
+        
+    }
+    private void CompleteMultiUpload()
+    {
+        String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
+        String uploadId = this.uploadId;
+        int partNumber = 1;
+        String etag = this.eTag;
+        Map<Integer, String> partNumberAndETag = new HashMap<>();
+        partNumberAndETag.put(partNumber, etag);
+        
+        CompleteMultiUploadRequest completeMultiUploadRequest = new CompleteMultiUploadRequest(bucket, cosPath, uploadId, partNumberAndETag);
+        // 设置签名校验 Host，默认校验所有 Header
+        Set<String> headerKeys = new HashSet<>();
+        headerKeys.add("Host");
+        completeMultiUploadRequest.setSignParamsAndHeaders(null, headerKeys);
+        // 使用同步方法请求
+        try {
+            CompleteMultiUploadResult completeMultiUploadResult = cosXmlService.completeMultiUpload(completeMultiUploadRequest);
+        } catch (CosXmlClientException e) {
+            e.printStackTrace();
+            assertError(e);
+        } catch (CosXmlServiceException e) {
+            e.printStackTrace();
+            assertError(e);
+        }
+        
+        if (true) {return;}
+        // 使用异步回调请求
+        cosXmlService.completeMultiUploadAsync(completeMultiUploadRequest, new CosXmlResultListener() {
+            @Override
+            public void onSuccess(CosXmlRequest cosXmlRequest, CosXmlResult result) {
+                // todo Complete Multi Upload success...
+          CompleteMultiUploadResult completeMultiUploadResult = (CompleteMultiUploadResult)result;
+            }
+        
+            @Override
+            public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+                // todo Complete Multi Upload failed because of CosXmlClientException or CosXmlServiceException...
+            }
+        });
+        
+        
+    }
+    private void DeleteObject()
+    {
+        String bucket = "bucket-cssg-test-android-1253653367"; //存储桶名称，格式：BucketName-APPID
+        String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键
+        
+        DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(bucket, cosPath);
+        // 设置签名校验 Host，默认校验所有 Header
+        Set<String> headerKeys = new HashSet<>();
+        headerKeys.add("Host");
+        deleteObjectRequest.setSignParamsAndHeaders(null, headerKeys);
+        // 使用同步方法删除
+        try {
+            DeleteObjectResult deleteObjectResult = cosXmlService.deleteObject(deleteObjectRequest);
+        } catch (CosXmlClientException e) {
+            e.printStackTrace();
+            assertError(e);
+        } catch (CosXmlServiceException e) {
+            e.printStackTrace();
+            assertError(e);
+        }
+        
+        if (true) {return;}
+        // 使用异步回调请求
+        cosXmlService.deleteObjectAsync(deleteObjectRequest, new CosXmlResultListener() {
+            @Override
+            public void onSuccess(CosXmlRequest cosXmlRequest, CosXmlResult result) {
+                // todo Delete Object success...
+          DeleteObjectResult deleteObjectResult  = (DeleteObjectResult)result;
+            }
+        
+            @Override
+            public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+                // todo Delete Object failed because of CosXmlClientException or CosXmlServiceException...
+            }
+        });
+        
+    }
+    private void DeleteBucket()
+    {
+        String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
+        DeleteBucketRequest deleteBucketRequest = new DeleteBucketRequest(bucket);
+        // 设置签名校验 Host，默认校验所有 Header
+        Set<String> headerKeys = new HashSet<>();
+        headerKeys.add("Host");
+        deleteBucketRequest.setSignParamsAndHeaders(null, headerKeys);
+        // 使用同步方法
+        try {
+            DeleteBucketResult deleteBucketResult = cosXmlService.deleteBucket(deleteBucketRequest);
+        } catch (CosXmlClientException e) {
+            e.printStackTrace();
+        } catch (CosXmlServiceException e) {
+            e.printStackTrace();
+        }
+        
+        if (true) {return;}
+        // 使用异步回调请求
+        cosXmlService.deleteBucketAsync(deleteBucketRequest, new CosXmlResultListener() {
+            @Override
+            public void onSuccess(CosXmlRequest request, CosXmlResult result) {
+                // todo Delete Bucket success
+          DeleteBucketResult deleteBucketResult = (DeleteBucketResult)result;
+            }
+        
+            @Override
+            public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {
+                // todo Delete Bucket failed because of CosXmlClientException or CosXmlServiceException...
+            }
+        });
+        
+    }
+
+    private void initService() {
+        String region = "ap-guangzhou";
+        
+        // 创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
+        CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
+                .setRegion(region)
+                .isHttps(true) // 使用 HTTPS 请求, 默认为 HTTP 请求
+                .builder();
+        
+        String secretId = BuildConfig.COS_SECRET_ID; //永久密钥 secretId
+        String secretKey =BuildConfig.COS_SECRET_KEY; //永久密钥 secretKey
+        
+        /**
+         * 初始化 {@link QCloudCredentialProvider} 对象，来给 SDK 提供临时密钥
+         * @parma secretId 永久密钥 secretId
+         * @param secretKey 永久密钥 secretKey
+         * @param keyDuration 密钥有效期，单位为秒
+         */
+        QCloudCredentialProvider credentialProvider = new ShortTimeCredentialProvider(secretId, secretKey, 300);
+        
+        CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
+        
+        this.cosXmlService = cosXmlService;
+
+        try {
+            File srcFile = new File(context.getExternalCacheDir(), "object4android");
+            if (!srcFile.exists() && srcFile.createNewFile()) {
+                RandomAccessFile raf = new RandomAccessFile(srcFile, "rw");
+                raf.setLength(1024);
+                raf.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Before public void setUp() {
+        initService();
+        PutBucket();
+    }
+
+    @After public void tearDown() {
+        DeleteObject();
+        DeleteBucket();
+    }
+
+    @Test public void testObjectCopy() {
+        CopyObject();
+        InitMultiUpload();
+        UploadPartCopy();
+        CompleteMultiUpload();
+    }
+}

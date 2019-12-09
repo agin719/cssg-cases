@@ -9,32 +9,30 @@
 
   "macro4doc": {
     "secretId": "\"${g.secretId}\"",
-    "secretKey": "\"${g.secretKey}\""
+    "secretKey": "\"${g.secretKey}\"",
+    "uploadId": "\"${g.uploadId}\"",
+    "eTag": "\"${g.eTag}\""
   },
 
   "macro4test": {
     "secretId": "BuildConfig.COS_SECRET_ID",
     "secretKey": "BuildConfig.COS_SECRET_KEY",
     "uploadId": "this.uploadId",
-    "eTag": "this.part1Etag"
+    "eTag": "this.eTag"
   },
 
   "beforeRun": {
     "insert": [
       {
+        "expression": "if (true) {return;}",
+        "anchor": "// 使用异步回调请求",
+        "align": "above"
+      },
+      {
         "expression": "assertError(e);",
         "anchor": "e.printStackTrace();",
-        "align": "below"
-      },
-      {
-        "expression": "assertError(serviceException);assertError(exception);",
-        "anchor": "public void onFail(CosXmlRequest cosXmlRequest, CosXmlClientException clientException, CosXmlServiceException serviceException)  {",
-        "align": "below"
-      },
-      {
-        "expression": "assertError(serviceException);assertError(exception);",
-        "anchor": "public void onFail(CosXmlRequest request, CosXmlClientException exception, CosXmlServiceException serviceException) {",
-        "align": "below"
+        "align": "below",
+        "type": "assert"
       }
     ]
   },
@@ -43,6 +41,9 @@
     "global-init-custom-provider": {
       "defines": [
         "global-init-custom-provider"
+      ],
+      "steps": [
+        "global-init-custom"
       ]
     }
   }

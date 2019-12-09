@@ -18,7 +18,7 @@ Flutter provides an easy and productive way to build and deploy high-performance
   s.frameworks = 'XCTest'
   s.dependency 'QCloudCOSXML'
   s.source_files  = [
-      '*.{swift}',
+      'cases/*.{swift}',
       'secret/*.{swift}'
       ]
 end

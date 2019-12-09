@@ -21,12 +21,12 @@ using System.Threading.Tasks;
 
 namespace COSSample
 {
-    public class {{name}}Sample {
+    public class {{name}}Test {
 
       {{#isMultiUpload}}
 
       string uploadId;
-      string etag;
+      string eTag;
       {{/isMultiUpload}}
       {{#defines}}
 

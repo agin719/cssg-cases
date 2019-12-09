@@ -2,8 +2,8 @@
   "docExtension": ".md",
   "compileDist": "dist",
 
-  "docsRemoteRepo": "https://github.com/tencentyun/qcloud-documents.git",
-  "docRelativePath": "/product/存储与CDN/对象存储 4.0/SDK文档",
+  "docSetRemoteGitUrl": "https://github.com/tencentyun/qcloud-documents.git",
+  "sdkDocSetRelativePath": "/product/存储与CDN/对象存储 4.0/SDK文档",
 
   "macro4doc": {
     "secretId": "COS_SECRETID",
@@ -12,27 +12,21 @@
     "appId": "1250000000",
     "uin": "100000000001",
     "region": "COS_REGION",
-    "persistBucket": "examplebucket-",
-    "tempBucket": "examplebucket-",
-    "copySourceBucket": "source-",
-    "copySourceObject": "sourceObject",
+    "bucket": "examplebucket-",
+    "copySourceBucket": "sourcebucket-",
     "replicationDestBucket":"destinationbucket-",
-    "replicationDestBucketRegion": "ap-beijing",
     "object": "exampleobject",
 
-    "eTag": "exampleEtag",
-    "uploadId": "example-uploadId"
+    "eTag": "exampleETag",
+    "uploadId": "exampleUploadId"
   },
   "macro4test": {
     "appId": "1253653367",
     "uin": "1278687956",
     "region": "ap-guangzhou",
-    "persistBucket": "bucket-cssg-test-",
-    "tempBucket": "bucket-cssg-${config.language}-temp-",
-    "copySourceBucket":"bucket-cssg-test-",
-    "copySourceObject": "sourceObject",
+    "bucket": "bucket-cssg-test-${config.language}-",
+    "copySourceBucket":"bucket-cssg-source-",
     "replicationDestBucket":"bucket-cssg-assist-",
-    "replicationDestBucketRegion": "ap-beijing",
     "object": "object4${config.language}"
   },
 
@@ -45,6 +39,7 @@
     "bucket-ACL": {
       "setup": ["put-bucket"],
       "steps": [
+        "get-bucket",
         "head-bucket",
         "put-bucket-acl",
         "get-bucket-acl"
@@ -76,10 +71,11 @@
         "delete-bucket"
       ]
     },
-    "bucket-replication": {
+    "bucket-replication-and-versioning": {
       "setup": ["put-bucket"],
       "steps": [
         "put-bucket-versioning",
+        "get-bucket-versioning",
         "put-bucket-replication",
         "get-bucket-replication",
         "delete-bucket-replication"
@@ -88,27 +84,12 @@
         "delete-bucket"
       ]
     },
-    "bucket-versioning": {
+    "object": {
       "setup": ["put-bucket"],
-      "steps": [
-        "put-bucket-versioning",
-        "get-bucket-versioning"
-      ],
-      "teardown": [
-        "delete-bucket"
-      ]
-    },
-    "object-ACL": {
       "steps": [
         "put-object",
         "put-object-acl",
-        "get-object-acl"
-      ]
-    },
-    "object": {
-      "steps": [
-        "get-bucket",
-        "put-object",
+        "get-object-acl",
         "head-object",
         "get-object",
         "delete-object",
@@ -117,9 +98,11 @@
         "restore-object",
         "get-presign-download-url",
         "get-presign-upload-url"
-      ]
+      ],
+      "teardown": ["delete-object", "delete-bucket"]
     },
-    "object-multi-upload": {
+    "object-transfer": {
+      "setup": ["put-bucket"],
       "steps": [
         "init-multi-upload",
         "list-multi-upload",
@@ -129,38 +112,36 @@
   
         "init-multi-upload",
         "upload-part",
-        "abort-multi-upload"
+        "abort-multi-upload",
+
+        "transfer-upload-object",
+        "transfer-download-object",
+        "transfer-copy-object"
       ],
+      "teardown": ["delete-object", "delete-bucket"],
       "isMultiUpload": true
     },
     "object-copy": {
+      "setup": ["put-bucket"],
       "steps": [
         "copy-object",
         "init-multi-upload",
         "upload-part-copy",
         "complete-multi-upload"
       ],
+      "teardown": ["delete-object", "delete-bucket"],
       "isMultiUpload": true
     },
     "get-service": {
       "steps": [
         "get-service"
       ]
-    },
-    "transfer-upload-object": {
-      "steps": [
-        "transfer-upload-object"
-      ]
-    },
-    "transfer-download-object": {
-      "steps": [
-        "transfer-download-object"
-      ]
-    },
-    "transfer-copy-object": {
-      "steps": [
-        "transfer-copy-object"
-      ]
     }
-  }
+  },
+
+  "testResultFree": [
+    "put-bucket",
+    "delete-bucket",
+    "restore-object"
+  ]
 }

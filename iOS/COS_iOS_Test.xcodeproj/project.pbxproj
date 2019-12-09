@@ -19,8 +19,6 @@
 		A720F12A237BFD1200C7E84A /* QCloudCOSXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A720F129237BFD1200C7E84A /* QCloudCOSXML.framework */; };
 		A75F545F238399FC0029CC8E /* key.json in Resources */ = {isa = PBXBuildFile; fileRef = A75F545E238399FC0029CC8E /* key.json */; };
 		A78A2EA9238BC60E00C71F4B /* Assembly.m in Sources */ = {isa = PBXBuildFile; fileRef = A78A2EA8238BC60E00C71F4B /* Assembly.m */; };
-		A78A2EAB238BCEDC00C71F4B /* InitWithSTS.m in Sources */ = {isa = PBXBuildFile; fileRef = A78A2EAA238BCEDC00C71F4B /* InitWithSTS.m */; };
-		A78A2EAD238BD0E700C71F4B /* InitWithSecret.m in Sources */ = {isa = PBXBuildFile; fileRef = A78A2EAC238BD0E700C71F4B /* InitWithSecret.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,8 +53,6 @@
 		A720F129237BFD1200C7E84A /* QCloudCOSXML.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QCloudCOSXML.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A75F545E238399FC0029CC8E /* key.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = key.json; sourceTree = "<group>"; };
 		A78A2EA8238BC60E00C71F4B /* Assembly.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Assembly.m; sourceTree = "<group>"; };
-		A78A2EAA238BCEDC00C71F4B /* InitWithSTS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InitWithSTS.m; sourceTree = "<group>"; };
-		A78A2EAC238BD0E700C71F4B /* InitWithSecret.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InitWithSecret.m; sourceTree = "<group>"; };
 		C3F5B1A2016000B60E2D9018 /* Pods_COS_iOS_TestTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_COS_iOS_TestTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -135,8 +131,6 @@
 			children = (
 				7FE4A4DF237BF85400C5DDDA /* Info.plist */,
 				A78A2EA8238BC60E00C71F4B /* Assembly.m */,
-				A78A2EAA238BCEDC00C71F4B /* InitWithSTS.m */,
-				A78A2EAC238BD0E700C71F4B /* InitWithSecret.m */,
 			);
 			path = COS_iOS_TestTests;
 			sourceTree = "<group>";
@@ -312,9 +306,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A78A2EAD238BD0E700C71F4B /* InitWithSecret.m in Sources */,
 				A78A2EA9238BC60E00C71F4B /* Assembly.m in Sources */,
-				A78A2EAB238BCEDC00C71F4B /* InitWithSTS.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

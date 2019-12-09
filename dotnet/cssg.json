@@ -7,13 +7,15 @@
 
   "macro4doc": {
     "secretId": "\"${g.secretId}\"",
-    "secretKey": "\"${g.secretKey}\""
+    "secretKey": "\"${g.secretKey}\"",
+    "uploadId": "\"${g.uploadId}\"",
+    "eTag": "\"${g.eTag}\""
   },
   "macro4test": {
     "secretId": "Environment.GetEnvironmentVariable(\"COS_KEY\")",
     "secretKey": "Environment.GetEnvironmentVariable(\"COS_SECRET\")",
     "uploadId": "this.uploadId",
-    "eTag": "this.part1Etag"
+    "eTag": "this.eTag"
   },
 
   "beforeRun": {
@@ -21,12 +23,14 @@
       {
         "expression": "Assert.Null(clientEx);",
         "anchor": "Console.WriteLine(\"CosClientException: \" + clientEx);",
-        "align": "below"
+        "align": "below",
+        "type": "assert"
       },
       {
         "expression": "Assert.Null(serverEx);",
         "anchor": "Console.WriteLine(\"CosServerException: \" + serverEx.GetInfo());",
-        "align": "below"
+        "align": "below",
+        "type": "assert"
       }
     ]
   },
