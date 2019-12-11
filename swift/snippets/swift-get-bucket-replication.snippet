@@ -1,9 +1,0 @@
-let getBucketReplication = QCloudGetBucketReplicationRequest.init();
-getBucketReplication.bucket = "examplebucket-1250000000";
-getBucketReplication.setFinish { (config, error) in
-    if error != nil{
-        print(error!);
-    }else{
-        print(config!);
-    }}
-QCloudCOSXMLService.defaultCOSXML().getBucketReplication(getBucketReplication);

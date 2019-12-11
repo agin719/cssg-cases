@@ -36,10 +36,10 @@
   },
 
   "testGroup": {
-    "global-init-credential-provider": {
-      "defines": [
-        "global-init-custom-credential-provider"
-      ]
+    "custom-service": {
+      "classDefine": true,
+      "isGlobalInit": true,
+      "custom-init": ["global-init-custom-credential-provider"]
     }
   }
 }

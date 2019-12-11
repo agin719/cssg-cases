@@ -1,9 +1,0 @@
-let deleteBucketReplication = QCloudDeleteBucketReplicationRequest.init();
-deleteBucketReplication.bucket = "examplebucket-1250000000";
-deleteBucketReplication.finishBlock = {(result,error) in
-    if error != nil{
-        print(error!);
-    }else{
-        print(result!);
-    }}
-QCloudCOSXMLService.defaultCOSXML().deleteBucketReplication(deleteBucketReplication);

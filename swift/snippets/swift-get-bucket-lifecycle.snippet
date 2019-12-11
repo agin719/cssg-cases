@@ -1,9 +1,0 @@
-let getBucketLifeCycle = QCloudGetBucketLifecycleRequest.init();
-getBucketLifeCycle.bucket = "examplebucket-1250000000";
-getBucketLifeCycle.setFinish { (config, error) in
-    if error != nil{
-        print(error!);
-    }else{
-        print(config!);
-    }};
-QCloudCOSXMLService.defaultCOSXML().getBucketLifecycle(getBucketLifeCycle);

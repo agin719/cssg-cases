@@ -33,108 +33,101 @@
   "globalInitNamePrefix": "global-init",
   "globalHeaderName": "global-header",
 
-  "methodsCategory": ["setup", "steps", "teardown"],
-
   "testGroup": {
-    "bucket-ACL": {
+    "bucket": {
+      "isBucketTest": true,
       "setup": ["put-bucket"],
-      "steps": [
+      "teardown": ["delete-bucket"],
+      
+      "bucket-ACL": [
         "get-bucket",
         "head-bucket",
         "put-bucket-acl",
         "get-bucket-acl"
       ],
-      "teardown": [
-        "delete-bucket"
-      ]
-    },
-    "bucket-CORS": {
-      "setup": ["put-bucket"],
-      "steps": [
+      "bucket-policy": [
+        "put-bucket-policy",
+        "get-bucket-policy",
+        "delete-bucket-policy"
+      ],
+      "bucket-CORS": [
         "put-bucket-cors",
         "get-bucket-cors",
         "option-object",
         "delete-bucket-cors"
       ],
-      "teardown": [
-        "delete-bucket"
-      ]
-    },
-    "bucket-lifecycle": {
-      "setup": ["put-bucket"],
-      "steps": [
+      "bucket-lifecycle": [
         "put-bucket-lifecycle",
         "get-bucket-lifecycle",
         "delete-bucket-lifecycle"
       ],
-      "teardown": [
-        "delete-bucket"
-      ]
-    },
-    "bucket-replication-and-versioning": {
-      "setup": ["put-bucket"],
-      "steps": [
+      "bucket-replication-and-versioning": [
         "put-bucket-versioning",
         "get-bucket-versioning",
         "put-bucket-replication",
         "get-bucket-replication",
         "delete-bucket-replication"
       ],
-      "teardown": [
-        "delete-bucket"
+      "bucket-tagging": [
+        "put-bucket-tagging",
+        "get-bucket-tagging",
+        "delete-bucket-tagging"
       ]
     },
+
     "object": {
       "setup": ["put-bucket"],
-      "steps": [
+      "teardown": ["delete-object", "delete-bucket"],
+      "isObjectTest": true,
+
+      "object-metadata": [
         "put-object",
         "put-object-acl",
         "get-object-acl",
         "head-object",
         "get-object",
+        "get-presign-download-url",
+        "get-presign-upload-url",
         "delete-object",
         "delete-multi-object",
         "post-object",
-        "restore-object",
-        "get-presign-download-url",
-        "get-presign-upload-url"
+        "restore-object"
       ],
-      "teardown": ["delete-object", "delete-bucket"]
-    },
-    "object-transfer": {
-      "setup": ["put-bucket"],
-      "steps": [
+
+      "object-multi-upload": [
         "init-multi-upload",
         "list-multi-upload",
         "upload-part",
         "list-parts",
-        "complete-multi-upload",
-  
+        "complete-multi-upload"
+      ],
+
+      "object-abort-multi-upload": [
         "init-multi-upload",
         "upload-part",
-        "abort-multi-upload",
+        "abort-multi-upload"
+      ],
 
+      "object-transfer": [
         "transfer-upload-object",
         "transfer-download-object",
-        "transfer-copy-object"
+        "transfer-copy-object",
+        "batch-upload-objects"
       ],
-      "teardown": ["delete-object", "delete-bucket"],
-      "isMultiUpload": true
-    },
-    "object-copy": {
-      "setup": ["put-bucket"],
-      "steps": [
+
+      "object-copy": [
         "copy-object",
         "init-multi-upload",
         "upload-part-copy",
         "complete-multi-upload"
-      ],
-      "teardown": ["delete-object", "delete-bucket"],
-      "isMultiUpload": true
+      ]
     },
-    "get-service": {
-      "steps": [
-        "get-service"
+
+    "service": {
+      "get-service": [
+        "get-service",
+        "get-regional-service",
+        "get-authorization"
       ]
     }
   },

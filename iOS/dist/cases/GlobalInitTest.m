@@ -7,11 +7,11 @@
 #import <QCloudCOSXML/QCloudMultipartInfo.h>
 #import <QCloudCOSXML/QCloudCompleteMultipartUploadInfo.h>
 
-@interface GlobalInitTest : NSObject
+@interface globalInitTest : NSObject
 @property (nonatomic) QCloudCredentailFenceQueue* credentialFenceQueue;
 @end
 
-@implementation GlobalInitTest
+@implementation globalInitTest
 
     //AppDelegate.m
     //第一步：注册默认的 COS 服务
@@ -33,11 +33,11 @@
 
 @end
 
-@interface GlobalInitFenceQueueTest : NSObject
+@interface globalInitFenceQueueTest : NSObject
 @property (nonatomic) QCloudCredentailFenceQueue* credentialFenceQueue;
 @end
 
-@implementation GlobalInitFenceQueueTest
+@implementation globalInitFenceQueueTest
 
     //AppDelegate.m
     
@@ -76,11 +76,11 @@
 
 @end
 
-@interface GlobalInitSignatureTest : NSObject
+@interface globalInitSignatureTest : NSObject
 @property (nonatomic) QCloudCredentailFenceQueue* credentialFenceQueue;
 @end
 
-@implementation GlobalInitSignatureTest
+@implementation globalInitSignatureTest
 
     - (void) signatureWithFields:(QCloudSignatureFields*)fileds
                          request:(QCloudBizHTTPRequest*)request
@@ -99,11 +99,11 @@
 
 @end
 
-@interface GlobalInitSignatureStsTest : NSObject
+@interface globalInitSignatureStsTest : NSObject
 @property (nonatomic) QCloudCredentailFenceQueue* credentialFenceQueue;
 @end
 
-@implementation GlobalInitSignatureStsTest
+@implementation globalInitSignatureStsTest
 
     - (void) signatureWithFields:(QCloudSignatureFields*)fileds
                          request:(QCloudBizHTTPRequest*)request

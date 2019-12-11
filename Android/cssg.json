@@ -38,12 +38,20 @@
   },
 
   "testGroup": {
-    "global-init-custom-provider": {
-      "defines": [
-        "global-init-custom-provider"
+    "init": {
+      "isGlobalInit": true,
+      "init-service": [
+        "global-init"
       ],
-      "steps": [
+      "init-custom": [
         "global-init-custom"
+      ]
+    },
+    "init-custom-provider": {
+      "isGlobalInit": true,
+      "classDefine": true,
+      "init-custom-provider": [
+        "global-init-custom-provider"
       ]
     }
   }

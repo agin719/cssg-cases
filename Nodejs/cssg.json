@@ -1,0 +1,129 @@
+{
+  "language": "nodejs",
+  "docRoot": "Node.js SDK/",
+
+  "testcaseTemplate": "TestCase.t",
+  "sourceExtension": ".js",
+
+  "compileDist": "src/",
+
+  "macro4doc": {
+    "secretId": "'${g.secretId}'",
+    "secretKey": "'${g.secretKey}'",
+    "uploadId": "'${g.uploadId}'",
+    "eTag": "'${g.eTag}'",
+    "localFilePath": "\"temp-file-to-upload\""
+  },
+  "macro4test": {
+    "secretId": "process.env[\"COS_KEY\"]",
+    "secretKey": "process.env[\"COS_SECRET\"]",
+    "uploadId": "uploadId",
+    "eTag": "eTag",
+    "localFilePath": "tempFilePath"
+  },
+
+  "initSnippetName": "global-init",
+
+  "beforeRun": {
+    "insert": [
+      {
+        "expression": "assert.ifError(err)",
+        "anchor": "\\s*function\\s*\\(err\\s*,\\s*data\\)\\s*\\{",
+        "align": "below",
+        "type": "assert",
+        "indentation": 4,
+        "isRegex": true
+      },
+      {
+        "expression": "resolve(data)",
+        "anchor": "\\s*function\\s*\\(err\\s*,\\s*data\\)\\s*\\{",
+        "align": "below",
+        "indentation": 4,
+        "isRegex": true
+      }
+    ]
+  },
+
+  "testGroup": {
+    "bucket": {
+      "bucket-ACL": [
+        "get-bucket",
+        "get-bucket-prefix",
+        "head-bucket",
+        "put-bucket-acl",
+        "put-bucket-acl-user",
+        "put-bucket-acl-acp",
+        "get-bucket-acl"
+      ],
+    
+      "bucket-lifecycle": [
+        "put-bucket-lifecycle",
+        "put-bucket-lifecycle-archive",
+        "put-bucket-lifecycle-expired",
+        "put-bucket-lifecycle-cleanAbort",
+        "put-bucket-lifecycle-historyArchive",
+        "get-bucket-lifecycle",
+        "delete-bucket-lifecycle"
+      ]
+    },
+
+    "object": {
+      "object-putget": [
+        "put-object",
+        "put-object-buffer",
+        "put-object-string",
+        "put-object-folder",
+
+        "head-object",
+
+        "get-object",
+        "get-object-range",
+        "get-object-path",
+        "get-object-stream",
+
+        "delete-object"
+      ],
+
+      "object-metadata": [
+        "put-object",
+
+        "put-object-acl",
+        "put-object-acl-user",
+        "put-object-acl-acp",
+        "get-object-acl",
+
+        "get-presign-download-url",
+        "get-presign-download-url-signed",
+        "get-presign-download-url-callback",
+        "get-presign-download-url-expiration",
+        "get-presign-download-url-then-fetch",
+
+        "get-presign-upload-url",
+
+        "delete-multi-object",
+        "post-object",
+        "restore-object"
+      ]
+    },
+
+    "init-service": {
+      "init-sts": ["global-init-sts"],
+      "isStsCase": true
+    }
+  },
+
+  "testMetadata": {
+    "syncMethod": [
+      "get-presign-download-url",
+      "get-presign-download-url-signed",
+      "get-authorization"
+    ],
+    "isPresignUrl": [
+      "get-presign-download-url",
+      "get-presign-download-url-signed"
+    ],
+    "isGetAuthorization": [
+      "get-authorization"
+    ]
+  }
+}

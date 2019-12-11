@@ -44,13 +44,11 @@
 
   "testGroup": {
     "global-init": {
-      "defines": [
-        "global-init",
-        "global-init-fence-queue",
-        "global-init-signature",
-        "global-init-signature-sts"
-      ],
-      "isDefine": true
+      "isDefine": true,
+      "global-init": ["global-init"],
+      "global-init-fence-queue": ["global-init-fence-queue"],
+      "global-init-signature": ["global-init-signature"],
+      "global-init-signature-sts": ["global-init-signature-sts"]
     }
   }
 }

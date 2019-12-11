@@ -1,9 +1,0 @@
-let putBucketReq = QCloudPutBucketRequest.init();
-putBucketReq.bucket = "examplebucket-1250000000";
-putBucketReq.finishBlock = {(result,error) in
-    if error != nil {
-        print(error!);
-    } else {
-        print(result!);
-    }}
-QCloudCOSXMLService.defaultCOSXML().putBucket(putBucketReq);

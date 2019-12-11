@@ -19,12 +19,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace COSSample
+namespace COSTest
 {
     public class GlobalInitTest {
 
-
-      public void GlobalInit()
+      public void globalInit()
       {
         //初始化 CosXmlConfig 
         string appid = "1253653367";//设置腾讯云账户的账户标识 APPID
@@ -60,9 +59,19 @@ namespace COSSample
         
       }   
 
+
+      [SetUp()]
+      public void setup() {
+      }
+
+      [TearDown()]
+      public void teardown() {
+      }
+
       [Test()]
       public void testGlobalInit() {
-        GlobalInit();
+        globalInit();
       }
+
     }
 }

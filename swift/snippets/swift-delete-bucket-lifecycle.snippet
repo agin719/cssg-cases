@@ -1,9 +1,0 @@
-let deleteBucketLifeCycle = QCloudDeleteBucketLifeCycleRequest.init();
-deleteBucketLifeCycle.bucket = "examplebucket-1250000000";
-deleteBucketLifeCycle.finishBlock = { (result, error) in
-    if error != nil{
-        print(error!);
-    }else{
-        print(result!);
-    }};
-QCloudCOSXMLService.defaultCOSXML().deleteBucketLifeCycle(deleteBucketLifeCycle);

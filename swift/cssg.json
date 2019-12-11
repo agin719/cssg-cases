@@ -60,18 +60,14 @@
 
   "testGroup": {
     "global-init": {
-      "defines": [
-        "global-init"
-      ],
+      "global-init": ["global-init"],
       "isDefine": true,
       "appInit": true
     },
     "global-init-custom": {
-      "defines": [
-        "global-init-fence-queue",
-        "global-init-signature",
-        "global-init-signature-sts"
-      ],
+      "global-init-fence-queue": ["global-init-fence-queue"],
+      "global-init-signature": ["global-init-signature"],
+      "global-init-signature-sts": ["global-init-signature-sts"],
       "isDefine": true
     }
   }

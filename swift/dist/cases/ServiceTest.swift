@@ -4,25 +4,7 @@
 import XCTest
 import QCloudCOSXML
 
-{{#isDefine}}
-{{#methods}}
-class {{name}}Test : NSObject,QCloudSignatureProvider {
-    var credentialFenceQueue:QCloudCredentailFenceQueue?;
-
-    {{{snippet}}}
-
-    {{#appInit}}
-    func signature(with fileds: QCloudSignatureFields!, 
-    request: QCloudBizHTTPRequest!, 
-    urlRequest urlRequst: NSMutableURLRequest!, 
-    compelete continueBlock: QCloudHTTPAuthentationContinueBlock!) {    
-    }
-    {{/appInit}}
-}
-{{/methods}}
-{{/isDefine}}
-{{^isDefine}}
-class {{name}}Test: XCTestCase,QCloudSignatureProvider{
+class ServiceTest: XCTestCase,QCloudSignatureProvider{
 
 
     var uploadId:String?;
@@ -38,15 +20,24 @@ class {{name}}Test: XCTestCase,QCloudSignatureProvider{
       continueBlock(signature,nil);
     }
 
-    {{#methods}}
 
-    func {{name}}() {
-      let exception = XCTestExpectation.init(description: "{{name}}");
-      {{{snippet}}}
+    func getService() {
+      let exception = XCTestExpectation.init(description: "getService");
+      let getServiceReq = QCloudGetServiceRequest.init();
+    getServiceReq.setFinish{(result,error) in
+        XCTAssertNil(error);
+        exception.fulfill();
+        if result == nil {
+            print(error!);
+        } else {
+            //从 result 中获取返回信息
+            print(result!);
+        }}
+    QCloudCOSXMLService.defaultCOSXML().getService(getServiceReq);
+    
       self.wait(for: [exception], timeout: 100);
     }
 
-    {{/methods}}
 
     override func setUp() {
       let config = QCloudServiceConfiguration.init();
@@ -59,23 +50,12 @@ class {{name}}Test: XCTestCase,QCloudSignatureProvider{
       QCloudCOSXMLService.registerDefaultCOSXML(with: config);
       QCloudCOSTransferMangerService.registerDefaultCOSTransferManger(with: config);
 
-      {{#setup}}
-      self.{{name}}();
-      {{/setup}}
     }
 
     override func tearDown() {
-      {{#teardown}}
-      self.{{name}}();
-      {{/teardown}}
     }
 
-    {{#cases}}
-    func test{{name}}() {
-      {{#steps}}
-      self.{{name}}();
-      {{/steps}}
+    func testtestGetService() {
+      self.getService();
     }
-    {{/cases}}
 }
-{{/isDefine}}

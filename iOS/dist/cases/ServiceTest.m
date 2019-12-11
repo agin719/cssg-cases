@@ -7,27 +7,12 @@
 #import <QCloudCOSXML/QCloudMultipartInfo.h>
 #import <QCloudCOSXML/QCloudCompleteMultipartUploadInfo.h>
 
-{{#isDefine}}
-{{#methods}}
-@interface {{name}}Test : NSObject
-@property (nonatomic) QCloudCredentailFenceQueue* credentialFenceQueue;
-@end
-
-@implementation {{name}}Test
-
-    {{{snippet}}}
-
-@end
-
-{{/methods}}
-{{/isDefine}}
-{{^isDefine}}
-@interface {{name}}Test : XCTestCase <QCloudSignatureProvider>
+@interface ServiceTest : XCTestCase <QCloudSignatureProvider>
 @property (nonatomic) NSString* uploadId;
 @property (nonatomic) NSMutableArray<QCloudMultipartInfo *> *parts;
 @end
 
-@implementation {{name}}Test
+@implementation ServiceTest
 
 - (void) signatureWithFields:(QCloudSignatureFields*)fileds
                      request:(QCloudBizHTTPRequest*)request
@@ -42,14 +27,19 @@
     continueBlock(signature, nil);
 }
 
-{{#methods}}
-- (void){{name}} {
-    XCTestExpectation* exp = [self expectationWithDescription:@"{{name}}"];
-    {{{snippet}}}
+- (void)getService {
+    XCTestExpectation* exp = [self expectationWithDescription:@"getService"];
+    QCloudGetServiceRequest* request = [[QCloudGetServiceRequest alloc] init];
+    [request setFinishBlock:^(QCloudListAllMyBucketsResult* result, NSError* error) {
+        XCTAssertNil(error);
+        [exp fulfill];
+        //从 result 中获取返回信息
+    }];
+    [[QCloudCOSXMLService defaultCOSXML] GetService:request];
+    
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
-{{/methods}}
 
 - (void)setUp {
     QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];
@@ -64,24 +54,13 @@
     [QCloudCOSXMLService registerDefaultCOSXMLWithConfiguration:configuration];
     [QCloudCOSTransferMangerService registerDefaultCOSTransferMangerWithConfiguration:configuration];
 
-    {{#setup}}
-    [self {{name}}];
-    {{/setup}}
 }
 
 - (void)tearDown {
-    {{#teardown}}
-    [self {{name}}];
-    {{/teardown}}
 }
 
-{{#cases}}
-- (void){{name}} {
-    {{#steps}}
-    [self {{name}}];
-    {{/steps}}
+- (void)testGetService {
+    [self getService];
 }
-{{/cases}}
 
 @end
-{{/isDefine}}

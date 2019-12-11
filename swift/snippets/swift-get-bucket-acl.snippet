@@ -1,9 +1,0 @@
-let getBucketACLReq = QCloudGetBucketACLRequest.init();
-getBucketACLReq.bucket = "examplebucket-1250000000";
-getBucketACLReq.setFinish { (result, error) in
-    if error != nil{
-        print(error!);
-    }else{
-        print(result!);
-    }}
-QCloudCOSXMLService.defaultCOSXML().getBucketACL(getBucketACLReq)

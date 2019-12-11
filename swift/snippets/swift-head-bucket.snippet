@@ -1,9 +1,0 @@
-let headBucketReq = QCloudHeadBucketRequest.init();
-headBucketReq.bucket = "examplebucket-1250000000";
-headBucketReq.finishBlock = {(result,error) in
-    if error != nil{
-        print(error!);
-    }else{
-        print( result!);
-    }}
-QCloudCOSXMLService.defaultCOSXML().headBucket(headBucketReq);

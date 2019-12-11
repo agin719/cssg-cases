@@ -19,26 +19,28 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace COSSample
+namespace COSTest
 {
     public class {{name}}Test {
 
-      {{#isMultiUpload}}
-
+      {{#isObjectTest}}
       string uploadId;
       string eTag;
-      {{/isMultiUpload}}
-      {{#defines}}
-
-      {{{snippet}}}
-      {{/defines}}
+      {{/isObjectTest}}
+      {{#classDefine}}
+        {{#methods}}
+        {{{snippet}}}
+        {{/methods}}
+      {{/classDefine}}
+      {{^classDefine}}
       {{#methods}}
-
       public void {{name}}()
       {
         {{{snippet}}}
       }   
       {{/methods}}
+      {{/classDefine}}
+
       {{^isGlobalInit}}
 
       [SetUp()]
@@ -54,13 +56,16 @@ namespace COSSample
         {{name}}();
         {{/teardown}}
       }
-      {{/isGlobalInit}}
 
+      {{#cases}}
       [Test()]
-      public void test{{name}}() {
+      public void {{name}}() {
         {{#steps}}
         {{name}}();
         {{/steps}}
       }
+
+      {{/cases}}
+      {{/isGlobalInit}}
     }
 }
