@@ -72,6 +72,24 @@
         "put-bucket-tagging",
         "get-bucket-tagging",
         "delete-bucket-tagging"
+      ],
+      "bucket-logging": [
+        "put-bucket-logging",
+        "get-bucket-logging"
+      ],
+      "bucket-domain": [
+        "put-bucket-domain",
+        "get-bucket-domain"
+      ],
+      "bucket-website": [
+        "put-bucket-website",
+        "get-bucket-website",
+        "delete-bucket-website"
+      ],
+      "bucket-inventory": [
+        "put-bucket-inventory",
+        "get-bucket-inventory",
+        "delete-bucket-inventory"
       ]
     },
 
