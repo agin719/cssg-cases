@@ -1,15 +1,17 @@
 function globalInit(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[global-init]
     var cos = new COS({
         SecretId: 'COS_SECRETID',
         SecretKey: 'COS_SECRETKEY',
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function globalInitSts(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[global-init-sts]
     var COS = require('cos-js-sdk-v5');
     var cos = new COS({
         // 必选参数
@@ -29,12 +31,13 @@ function globalInitSts(assert) {
             });
         }
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function globalInitSignature(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[global-init-signature]
     var cos = new COS({
         // 必选参数
         getAuthorization: function (options, callback) {
@@ -55,12 +58,13 @@ function globalInitSignature(assert) {
         ChunkParallelLimit: 3,   // 控制单个文件下分片上传并发数
         ProgressInterval: 1000,  // 控制上传的 onProgress 回调的间隔
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function globalInitStsScope(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[global-init-sts-scope]
     var COS = require('cos-js-sdk-v5');
     var cos = new COS({
         // 必选参数
@@ -87,7 +91,7 @@ function globalInitStsScope(assert) {
             });
         }
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 

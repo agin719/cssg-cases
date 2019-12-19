@@ -35,6 +35,7 @@ import java.io.*;
 @RunWith(AndroidJUnit4.class)
 public class InitCustomProviderTest {
 
+        //.cssg-snippet-body-start:[global-init-custom-provider]
         public static class MyCredentialProvider extends BasicLifecycleCredentialProvider {
         
             @Override
@@ -57,7 +58,7 @@ public class InitCustomProviderTest {
                 return new SessionQCloudCredentials(tmpSecretId, tmpSecretKey, sessionToken, beginTime, expiredTime);
             }
         }
-        
+        //.cssg-snippet-body-end
 
     private Context context;
     private CosXmlService cosXmlService;

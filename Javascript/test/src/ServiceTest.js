@@ -1,4 +1,5 @@
 function getAuthorization(assert) {
+    //.cssg-snippet-body-start:[get-authorization]
     var Authorization = COS.getAuthorization({
         SecretId: 'COS_SECRETID',
         SecretKey: 'COS_SECRETKEY',
@@ -8,7 +9,7 @@ function getAuthorization(assert) {
         Query: {},
         Headers: {}
     });
-    
+    //.cssg-snippet-body-end
     assert.ok(Authorization)
 }
 

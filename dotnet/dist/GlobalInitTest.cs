@@ -25,6 +25,7 @@ namespace COSTest
 
       public void globalInit()
       {
+        //.cssg-snippet-body-start:[global-init]
         //初始化 CosXmlConfig 
         string appid = "1253653367";//设置腾讯云账户的账户标识 APPID
         string region = "ap-guangzhou"; //设置一个默认的存储桶地域
@@ -56,7 +57,7 @@ namespace COSTest
         
         //初始化 CosXmlServer
         CosXmlServer cosXml = new CosXmlServer(config, cosCredentialProvider);
-        
+        //.cssg-snippet-body-end
       }   
 
 

@@ -1,0 +1,72 @@
+{
+  "language": "java",
+  "docRoot": "Java SDK/",
+
+  "testcaseTemplate": "TestCase.t",
+  "sourceExtension": ".java",
+  "compileDist": "cos_sdk_java_doc_test/src/test/java/com/qcloud/cssg",
+
+  "initSnippetName": "global-init",
+
+  "macro4doc": {
+    "secretId": "\"${g.secretId}\"",
+    "secretKey": "\"${g.secretKey}\"",
+    "uploadId": "\"${g.uploadId}\"",
+    "eTag": "\"${g.eTag}\""
+  },
+  "macro4test": {
+    "secretId": "System.getenv(\"COS_KEY\")",
+    "secretKey": "System.getenv(\"COS_SECRET\")",
+    "uploadId": "this.uploadId",
+    "eTag": "this.eTag"
+  },
+
+  "beforeRun": {
+    "insert": [
+      {
+        "expression": "Assert.Null(clientEx);",
+        "anchor": "Console.WriteLine(\"CosClientException: \" + clientEx);",
+        "align": "below",
+        "type": "assert"
+      },
+      {
+        "expression": "Assert.Null(serverEx);",
+        "anchor": "Console.WriteLine(\"CosServerException: \" + serverEx.GetInfo());",
+        "align": "below",
+        "type": "assert"
+      }
+    ]
+  },
+
+  "testGroup": {
+    "authorization": {
+      "get-authorization": [
+        "get-authorization-for-download",
+        "get-authorization-for-upload",
+        "get-authorization-for-delete"]
+    },
+    "object": {
+      "setup": ["put-bucket-complete"],
+      "get-presign-url": [
+        "get-presign-download-url-override-headers",
+        "get-presign-download-url-public"
+      ],
+      "put-object-cse-c": [
+        "put-object-cse-c-aes",
+        "put-object-cse-c-rsa"
+      ],
+      "put-object-flex": [
+        "put-and-list-objects",
+        "put-object-flex"
+      ],
+
+      "object-transfer": [
+        "transfer-upload-object",
+        "transfer-download-object",
+        "transfer-copy-object",
+        "transfer-empty",
+        "transfer-upload-object-complete"
+      ]
+    }
+  }
+}

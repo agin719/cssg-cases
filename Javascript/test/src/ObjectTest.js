@@ -1,5 +1,6 @@
 function deleteObject(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[delete-object]
     cos.deleteObject({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -9,12 +10,13 @@ function deleteObject(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function deleteBucket(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[delete-bucket]
     cos.deleteBucket({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -22,12 +24,13 @@ function deleteBucket(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putObject(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-object]
     cos.putObject({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -42,12 +45,13 @@ function putObject(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putObjectAcl(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-object-acl]
     cos.putObjectAcl({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -58,12 +62,13 @@ function putObjectAcl(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putObjectAclUser(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-object-acl-user]
     cos.putObjectAcl({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -74,12 +79,13 @@ function putObjectAclUser(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putObjectAclAcp(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-object-acl-acp]
     cos.putObjectAcl({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -100,12 +106,13 @@ function putObjectAclAcp(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getObjectAcl(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-object-acl]
     cos.getObjectAcl({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -115,33 +122,36 @@ function getObjectAcl(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getPresignDownloadUrl(assert) {
+    //.cssg-snippet-body-start:[get-presign-download-url]
     var url = cos.getObjectUrl({
         Bucket: 'bucket-cssg-test-js-1253653367',
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
         Key: 'object4js',
         Sign: false
     });
-    
+    //.cssg-snippet-body-end
     assert.ok(url)
 }
 
 function getPresignDownloadUrlSigned(assert) {
+    //.cssg-snippet-body-start:[get-presign-download-url-signed]
     var url = cos.getObjectUrl({
         Bucket: 'bucket-cssg-test-js-1253653367',
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
         Key: 'object4js'
     });
-    
+    //.cssg-snippet-body-end
     assert.ok(url)
 }
 
 function getPresignDownloadUrlCallback(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-presign-download-url-callback]
     cos.getObjectUrl({
         Bucket: 'bucket-cssg-test-js-1253653367',
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -152,12 +162,13 @@ function getPresignDownloadUrlCallback(assert) {
         resolve(data)
         console.log(err || data.Url);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getPresignDownloadUrlExpiration(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-presign-download-url-expiration]
     cos.getObjectUrl({
         Bucket: 'bucket-cssg-test-js-1253653367',
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -169,12 +180,13 @@ function getPresignDownloadUrlExpiration(assert) {
         resolve(data)
         console.log(err || data.Url);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getPresignDownloadUrlThenFetch(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-presign-download-url-then-fetch]
     cos.getObjectUrl({
         Bucket: 'bucket-cssg-test-js-1253653367',
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -187,12 +199,13 @@ function getPresignDownloadUrlThenFetch(assert) {
         var downloadUrl = data.Url + (data.Url.indexOf('?') > -1 ? '&' : '?') + 'response-content-disposition=attachment'; // 补充强制下载的参数
         window.open(downloadUrl); // 这里是新窗口打开 url，如果需要在当前窗口打开，可以使用隐藏的 iframe 下载，或使用 a 标签 download 属性协助下载
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getPresignUploadUrl(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-presign-upload-url]
     cos.getObjectUrl({
         Bucket: 'bucket-cssg-test-js-1253653367',
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -215,12 +228,13 @@ function getPresignUploadUrl(assert) {
         };
         xhr.send();
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function deleteMultiObject(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[delete-multi-object]
     cos.deleteMultipleObject({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -233,12 +247,13 @@ function deleteMultiObject(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function restoreObject(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[restore-object]
     cos.restoreObject({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -253,12 +268,13 @@ function restoreObject(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function initMultiUpload(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[init-multi-upload]
     cos.multipartInit({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -273,12 +289,13 @@ function initMultiUpload(assert) {
           uploadId = data.UploadId;
         }
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function listMultiUpload(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[list-multi-upload]
     cos.multipartList({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -288,12 +305,13 @@ function listMultiUpload(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function uploadPart(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[upload-part]
     cos.multipartUpload({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -309,12 +327,13 @@ function uploadPart(assert) {
           eTag = data.ETag;
         }
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function listParts(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[list-parts]
     cos.multipartListPart({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -325,12 +344,13 @@ function listParts(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function completeMultiUpload(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[complete-multi-upload]
     cos.multipartComplete({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -344,12 +364,13 @@ function completeMultiUpload(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function abortMultiUpload(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[abort-multi-upload]
     cos.multipartAbort({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -360,13 +381,13 @@ function abortMultiUpload(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function transferUploadObject(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[transfer-upload-object]
     cos.sliceUploadFile({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -386,12 +407,13 @@ function transferUploadObject(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function transferCopyObject(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[transfer-copy-object]
     cos.sliceCopyFile({
         Bucket: 'bucket-cssg-test-js-1253653367',                               /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -405,12 +427,13 @@ function transferCopyObject(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function batchUploadObjects(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[batch-upload-objects]
     cos.uploadFiles({
         files: [{
             Bucket: 'bucket-cssg-test-js-1253653367', // Bucket 格式：BucketName-APPID
@@ -437,12 +460,13 @@ function batchUploadObjects(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function copyObject(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[copy-object]
     cos.putObjectCopy({
         Bucket: 'bucket-cssg-test-js-1253653367',                               /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -453,12 +477,13 @@ function copyObject(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function uploadPartCopy(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[upload-part-copy]
     cos.uploadPartCopy({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -474,12 +499,13 @@ function uploadPartCopy(assert) {
           eTag = data.ETag;
         }
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putObjectString(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-object-string]
     cos.putObject({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -490,12 +516,13 @@ function putObjectString(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putObjectFolder(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-object-folder]
     cos.putObject({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -506,12 +533,13 @@ function putObjectFolder(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function headObject(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[head-object]
     cos.headObject({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -521,12 +549,13 @@ function headObject(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getObject(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-object]
     cos.getObject({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -536,12 +565,13 @@ function getObject(assert) {
         resolve(data)
         console.log(err || data.Body);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getObjectRange(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-object-range]
     cos.getObject({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -552,7 +582,7 @@ function getObjectRange(assert) {
         resolve(data)
         console.log(err || data.Body);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 

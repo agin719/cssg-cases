@@ -9,7 +9,7 @@ import QCloudCOSXML
 class {{name}}Test : NSObject,QCloudSignatureProvider {
     var credentialFenceQueue:QCloudCredentailFenceQueue?;
 
-    {{{snippet}}}
+      {{{snippet}}}
 
     {{#appInit}}
     func signature(with fileds: QCloudSignatureFields!, 

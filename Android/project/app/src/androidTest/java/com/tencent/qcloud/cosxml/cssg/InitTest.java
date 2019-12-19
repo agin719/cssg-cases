@@ -57,6 +57,7 @@ public class InitTest {
 
     private void globalInit()
     {
+        //.cssg-snippet-body-start:[global-init]
         String region = "ap-guangzhou";
         
         CosXmlServiceConfig serviceConfig = new CosXmlServiceConfig.Builder()
@@ -85,10 +86,11 @@ public class InitTest {
                 .build());
         
         CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
+        //.cssg-snippet-body-end
     }
     private void globalInitCustom()
     {
+        //.cssg-snippet-body-start:[global-init-custom]
         String region = "ap-guangzhou";
         
         // 创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
@@ -103,7 +105,7 @@ public class InitTest {
         QCloudCredentialProvider credentialProvider = new MyCredentialProvider();
         
         CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
+        //.cssg-snippet-body-end
     }
 
 

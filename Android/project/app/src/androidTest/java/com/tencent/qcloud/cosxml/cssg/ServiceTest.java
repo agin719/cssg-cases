@@ -57,6 +57,7 @@ public class ServiceTest {
 
     private void getService()
     {
+        //.cssg-snippet-body-start:[get-service]
         GetServiceRequest getServiceRequest = new GetServiceRequest();
         // 设置签名校验 Host，默认校验所有 Header
         Set<String> headerKeys = new HashSet<>();
@@ -87,10 +88,11 @@ public class ServiceTest {
                 // todo Put Bucket Lifecycle failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
+        //.cssg-snippet-body-end
     }
 
     private void initService() {
+        //.cssg-snippet-body-start:[global-init-secret]
         String region = "ap-guangzhou";
         
         // 创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
@@ -111,7 +113,7 @@ public class ServiceTest {
         QCloudCredentialProvider credentialProvider = new ShortTimeCredentialProvider(secretId, secretKey, 300);
         
         CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
+        //.cssg-snippet-body-end
         this.cosXmlService = cosXmlService;
 
         try {

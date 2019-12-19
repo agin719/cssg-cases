@@ -13,6 +13,7 @@
 
 @implementation globalInitTest
 
+    //.cssg-snippet-body-start:[global-init]
     //AppDelegate.m
     //第一步：注册默认的 COS 服务
     - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -29,7 +30,7 @@
     
     //第二步：实现 QCloudSignatureProvider 协议
     //实现签名的过程，我们推荐在服务器端实现签名的过程，详情请参考接下来的 “生成签名” 这一章。
-    
+    //.cssg-snippet-body-end
 
 @end
 
@@ -39,6 +40,7 @@
 
 @implementation globalInitFenceQueueTest
 
+    //.cssg-snippet-body-start:[global-init-fence-queue]
     //AppDelegate.m
     
     //这里定义一个成员变量 @property (nonatomic) QCloudCredentailFenceQueue* credentialFenceQueue;
@@ -72,7 +74,7 @@
             }
         }];
     }
-    
+    //.cssg-snippet-body-end
 
 @end
 
@@ -82,6 +84,7 @@
 
 @implementation globalInitSignatureTest
 
+    //.cssg-snippet-body-start:[global-init-signature]
     - (void) signatureWithFields:(QCloudSignatureFields*)fileds
                          request:(QCloudBizHTTPRequest*)request
                       urlRequest:(NSMutableURLRequest*)urlRequst
@@ -95,7 +98,7 @@
         QCloudSignature* signature =  [creator signatureForData:urlRequst];
         continueBlock(signature, nil);
     }
-    
+    //.cssg-snippet-body-end
 
 @end
 
@@ -105,6 +108,7 @@
 
 @implementation globalInitSignatureStsTest
 
+    //.cssg-snippet-body-start:[global-init-signature-sts]
     - (void) signatureWithFields:(QCloudSignatureFields*)fileds
                          request:(QCloudBizHTTPRequest*)request
                       urlRequest:(NSMutableURLRequest*)urlRequst
@@ -122,7 +126,7 @@
         QCloudSignature* signature =  [creator signatureForData:urlRequst];
         continueBlock(signature, nil);
     }
-    
+    //.cssg-snippet-body-end
 
 @end
 

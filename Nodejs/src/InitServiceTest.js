@@ -12,6 +12,7 @@ var createFileSync = function (filePath, size) {
 
 function globalInitSts() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[global-init-sts]
     var request = require('request');
     var COS = require('cos-nodejs-sdk-v5');
     var cos = new COS({
@@ -36,7 +37,7 @@ function globalInitSts() {
             });
         }
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 

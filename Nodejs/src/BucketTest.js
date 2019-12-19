@@ -10,18 +10,20 @@ var createFileSync = function (filePath, size) {
 };
 
 function initCOS () {
+    //.cssg-snippet-body-start:[global-init]
     var COS = require('cos-nodejs-sdk-v5');
     var cos = new COS({
         SecretId: process.env["COS_KEY"],
         SecretKey: process.env["COS_SECRET"]
     });
-    
+    //.cssg-snippet-body-end
     return cos
 }
 var cos = initCOS()
 
 function putBucket() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket]
     cos.putBucket({
         Bucket: 'bucket-cssg-test-nodejs-1253653367',
         Region: 'ap-guangzhou'
@@ -29,12 +31,13 @@ function putBucket() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function deleteBucket() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[delete-bucket]
     cos.deleteBucket({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou'     /* 必须 */
@@ -42,12 +45,13 @@ function deleteBucket() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getBucket() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-bucket]
     cos.getBucket({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 必须 */
@@ -57,12 +61,13 @@ function getBucket() {
         resolve(data)
         console.log(err || data.Contents);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getBucketPrefix() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-bucket-prefix]
     cos.getBucket({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -73,12 +78,13 @@ function getBucketPrefix() {
         resolve(data)
         console.log(err || data.CommonPrefixes);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function headBucket() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[head-bucket]
     cos.headBucket({
         Bucket: 'bucket-cssg-test-nodejs-1253653367',
         Region: 'ap-guangzhou',
@@ -89,12 +95,13 @@ function headBucket() {
             console.log(err.error);
         }
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketAcl() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-acl]
     cos.putBucketAcl({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -104,12 +111,13 @@ function putBucketAcl() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketAclUser() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-acl-user]
     cos.putBucketAcl({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -119,12 +127,13 @@ function putBucketAclUser() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketAclAcp() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-acl-acp]
     cos.putBucketAcl({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -144,12 +153,13 @@ function putBucketAclAcp() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getBucketAcl() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-bucket-acl]
     cos.getBucketAcl({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou'     /* 必须 */
@@ -158,12 +168,13 @@ function getBucketAcl() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketPolicy() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-policy]
     cos.putBucketPolicy({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -190,12 +201,13 @@ function putBucketPolicy() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getBucketPolicy() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-bucket-policy]
     cos.getBucketPolicy({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -204,12 +216,13 @@ function getBucketPolicy() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function deleteBucketPolicy() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[delete-bucket-policy]
     cos.deleteBucketPolicy({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -218,12 +231,13 @@ function deleteBucketPolicy() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketCors() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-cors]
     cos.putBucketCors({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -239,12 +253,13 @@ function putBucketCors() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getBucketCors() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-bucket-cors]
     cos.getBucketCors({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -253,12 +268,13 @@ function getBucketCors() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function optionObject() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[option-object]
     cos.optionsObject({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -271,12 +287,13 @@ function optionObject() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function deleteBucketCors() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[delete-bucket-cors]
     cos.deleteBucketCors({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -285,12 +302,13 @@ function deleteBucketCors() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketLifecycle() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-lifecycle]
     cos.putBucketLifecycle({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -308,12 +326,13 @@ function putBucketLifecycle() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketLifecycleArchive() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-lifecycle-archive]
     cos.putBucketLifecycle({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -333,12 +352,13 @@ function putBucketLifecycleArchive() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketLifecycleExpired() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-lifecycle-expired]
     cos.putBucketLifecycle({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -355,12 +375,13 @@ function putBucketLifecycleExpired() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketLifecycleCleanAbort() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-lifecycle-cleanAbort]
     cos.putBucketLifecycle({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -377,12 +398,13 @@ function putBucketLifecycleCleanAbort() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketLifecycleHistoryArchive() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-lifecycle-historyArchive]
     cos.putBucketLifecycle({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -400,12 +422,13 @@ function putBucketLifecycleHistoryArchive() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getBucketLifecycle() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-bucket-lifecycle]
     cos.getBucketLifecycle({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -414,12 +437,13 @@ function getBucketLifecycle() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function deleteBucketLifecycle() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[delete-bucket-lifecycle]
     cos.deleteBucketLifecycle({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -428,12 +452,13 @@ function deleteBucketLifecycle() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketVersioning() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-versioning]
     cos.putBucketVersioning({
         Bucket: 'bucket-cssg-test-nodejs-1253653367',  /* 必须 */
         Region: 'ap-guangzhou',     /* 必须 */
@@ -445,12 +470,13 @@ function putBucketVersioning() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getBucketVersioning() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-bucket-versioning]
     cos.getBucketVersioning({
         Bucket: 'bucket-cssg-test-nodejs-1253653367',  /* 必须 */
         Region: 'ap-guangzhou',     /* 必须 */
@@ -459,12 +485,13 @@ function getBucketVersioning() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketReplication() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-replication]
     cos.putBucketReplication({
         Bucket: 'bucket-cssg-test-nodejs-1253653367',  /* 必须 */
         Region: 'ap-guangzhou',     /* 必须 */
@@ -485,12 +512,13 @@ function putBucketReplication() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getBucketReplication() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-bucket-replication]
     cos.getBucketReplication({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -499,12 +527,13 @@ function getBucketReplication() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function deleteBucketReplication() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[delete-bucket-replication]
     cos.deleteBucketReplication({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -513,12 +542,13 @@ function deleteBucketReplication() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketTagging() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-tagging]
     cos.putBucketTagging({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -533,12 +563,13 @@ function putBucketTagging() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getBucketTagging() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-bucket-tagging]
     cos.getBucketTagging({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -547,12 +578,13 @@ function getBucketTagging() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function deleteBucketTagging() {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[delete-bucket-tagging]
     cos.deleteBucketTagging({
         Bucket: 'bucket-cssg-test-nodejs-1253653367', /* 必须 */
         Region: 'ap-guangzhou',    /* 必须 */
@@ -561,7 +593,7 @@ function deleteBucketTagging() {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 

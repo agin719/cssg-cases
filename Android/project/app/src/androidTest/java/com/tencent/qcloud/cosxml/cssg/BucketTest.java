@@ -57,6 +57,7 @@ public class BucketTest {
 
     private void putBucket()
     {
+        //.cssg-snippet-body-start:[put-bucket]
         String bucket = "bucket-cssg-test-android-1253653367";
         PutBucketRequest putBucketRequest = new PutBucketRequest(bucket);
         
@@ -104,10 +105,11 @@ public class BucketTest {
                 // todo Put Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
+        //.cssg-snippet-body-end
     }
     private void deleteBucket()
     {
+        //.cssg-snippet-body-start:[delete-bucket]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         DeleteBucketRequest deleteBucketRequest = new DeleteBucketRequest(bucket);
         // 设置签名校验 Host，默认校验所有 Header
@@ -137,10 +139,11 @@ public class BucketTest {
                 // todo Delete Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
+        //.cssg-snippet-body-end
     }
     private void getBucket()
     {
+        //.cssg-snippet-body-start:[get-bucket]
         String bucketName = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID;
         GetBucketRequest getBucketRequest = new GetBucketRequest(bucketName);
         
@@ -223,10 +226,11 @@ public class BucketTest {
             String nextMarker = getBucketResult.listBucket.nextMarker;
             getBucketRequest.setMarker(nextMarker);
         } while (getBucketResult.listBucket.isTruncated);
-        
+        //.cssg-snippet-body-end
     }
     private void headBucket()
     {
+        //.cssg-snippet-body-start:[head-bucket]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         HeadBucketRequest headBucketRequest = new HeadBucketRequest(bucket);
         // 设置签名校验 Host，默认校验所有 Header
@@ -258,10 +262,11 @@ public class BucketTest {
                 // todo Head Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
+        //.cssg-snippet-body-end
     }
     private void putBucketAcl()
     {
+        //.cssg-snippet-body-start:[put-bucket-acl]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         PutBucketACLRequest putBucketACLRequest = new PutBucketACLRequest(bucket);
         
@@ -311,11 +316,11 @@ public class BucketTest {
                 // todo Put Bucket ACL failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void getBucketAcl()
     {
+        //.cssg-snippet-body-start:[get-bucket-acl]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         GetBucketACLRequest getBucketACLRequest = new GetBucketACLRequest(bucket);
         // 设置签名校验 Host，默认校验所有 Header
@@ -347,11 +352,11 @@ public class BucketTest {
                 // todo Get Bucket ACL failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void putBucketCors()
     {
+        //.cssg-snippet-body-start:[put-bucket-cors]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         PutBucketCORSRequest putBucketCORSRequest = new PutBucketCORSRequest(bucket);
         
@@ -418,10 +423,11 @@ public class BucketTest {
                 // todo Put Bucket CORS failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
+        //.cssg-snippet-body-end
     }
     private void getBucketCors()
     {
+        //.cssg-snippet-body-start:[get-bucket-cors]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         GetBucketCORSRequest getBucketCORSRequest = new GetBucketCORSRequest(bucket);
         // 设置签名校验 Host，默认校验所有 Header
@@ -453,10 +459,11 @@ public class BucketTest {
                 // todo Get Bucket CORS failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
+        //.cssg-snippet-body-end
     }
     private void optionObject()
     {
+        //.cssg-snippet-body-start:[option-object]
         String bucket = "bucket-cssg-test-android-1253653367"; //存储桶名称，格式：BucketName-APPID
         String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键
         String origin = "https://cloud.tencent.com";
@@ -491,11 +498,11 @@ public class BucketTest {
                 // todo OptionOb Object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void deleteBucketCors()
     {
+        //.cssg-snippet-body-start:[delete-bucket-cors]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         DeleteBucketCORSRequest deleteBucketCORSRequest = new DeleteBucketCORSRequest(bucket);
         // 设置签名校验 Host，默认校验所有 Header
@@ -527,10 +534,11 @@ public class BucketTest {
                 // todo Delete Bucket CORS failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
+        //.cssg-snippet-body-end
     }
     private void putBucketLifecycle()
     {
+        //.cssg-snippet-body-start:[put-bucket-lifecycle]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         PutBucketLifecycleRequest putBucketLifecycleRequest = new PutBucketLifecycleRequest(bucket);
         
@@ -575,11 +583,11 @@ public class BucketTest {
                 // todo Put Bucket Lifecycle failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void getBucketLifecycle()
     {
+        //.cssg-snippet-body-start:[get-bucket-lifecycle]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         GetBucketLifecycleRequest getBucketLifecycleRequest = new GetBucketLifecycleRequest(bucket);
         // 设置签名校验 Host，默认校验所有 Header
@@ -611,11 +619,11 @@ public class BucketTest {
                 // todo Get Bucket Lifecycle failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void deleteBucketLifecycle()
     {
+        //.cssg-snippet-body-start:[delete-bucket-lifecycle]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         DeleteBucketLifecycleRequest deleteBucketLifecycleRequest = new DeleteBucketLifecycleRequest(bucket);
         // 设置签名校验 Host，默认校验所有 Header
@@ -648,11 +656,11 @@ public class BucketTest {
                 // todo Delete Bucket Lifecycle failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void putBucketVersioning()
     {
+        //.cssg-snippet-body-start:[put-bucket-versioning]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         PutBucketVersioningRequest putBucketVersioningRequest = new PutBucketVersioningRequest(bucket);
         putBucketVersioningRequest.setEnableVersion(true); //true：开启版本控制; false：暂停版本控制
@@ -684,11 +692,11 @@ public class BucketTest {
                 // todo PUT Bucket versioning failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void getBucketVersioning()
     {
+        //.cssg-snippet-body-start:[get-bucket-versioning]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         GetBucketVersioningRequest getBucketVersioningRequest = new GetBucketVersioningRequest(bucket);
         // 设置签名校验 Host，默认校验所有 Header
@@ -719,10 +727,11 @@ public class BucketTest {
                 // todo GET Bucket versioning failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
+        //.cssg-snippet-body-end
     }
     private void putBucketReplication()
     {
+        //.cssg-snippet-body-start:[put-bucket-replication]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         String ownerUin = "1278687956"; //发起者身份标示：OwnerUin
         String subUin = "1278687956"; //发起者身份标示：SubUin
@@ -763,10 +772,11 @@ public class BucketTest {
                 // todo PUT Bucket replication failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
+        //.cssg-snippet-body-end
     }
     private void getBucketReplication()
     {
+        //.cssg-snippet-body-start:[get-bucket-replication]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         GetBucketReplicationRequest getBucketReplicationRequest = new GetBucketReplicationRequest(bucket);
         //设置签名校验 Host，默认校验所有 Header
@@ -797,11 +807,11 @@ public class BucketTest {
                 // todo GET Bucket replication failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void deleteBucketReplication()
     {
+        //.cssg-snippet-body-start:[delete-bucket-replication]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         DeleteBucketReplicationRequest deleteBucketReplicationRequest = new DeleteBucketReplicationRequest(bucket);
         // 设置签名校验 Host，默认校验所有 Header
@@ -832,11 +842,11 @@ public class BucketTest {
                 // todo DELETE Bucket replication failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
 
     private void initService() {
+        //.cssg-snippet-body-start:[global-init-secret]
         String region = "ap-guangzhou";
         
         // 创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
@@ -857,7 +867,7 @@ public class BucketTest {
         QCloudCredentialProvider credentialProvider = new ShortTimeCredentialProvider(secretId, secretKey, 300);
         
         CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
+        //.cssg-snippet-body-end
         this.cosXmlService = cosXmlService;
 
         try {

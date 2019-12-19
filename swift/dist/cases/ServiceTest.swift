@@ -23,18 +23,19 @@ class ServiceTest: XCTestCase,QCloudSignatureProvider{
 
     func getService() {
       let exception = XCTestExpectation.init(description: "getService");
+      //.cssg-snippet-body-start:[get-service]
       let getServiceReq = QCloudGetServiceRequest.init();
-    getServiceReq.setFinish{(result,error) in
-        XCTAssertNil(error);
-        exception.fulfill();
-        if result == nil {
-            print(error!);
-        } else {
-            //从 result 中获取返回信息
-            print(result!);
-        }}
-    QCloudCOSXMLService.defaultCOSXML().getService(getServiceReq);
-    
+      getServiceReq.setFinish{(result,error) in
+          XCTAssertNil(error);
+          exception.fulfill();
+          if result == nil {
+              print(error!);
+          } else {
+              //从 result 中获取返回信息
+              print(result!);
+          }}
+      QCloudCOSXMLService.defaultCOSXML().getService(getServiceReq);
+      //.cssg-snippet-body-end
       self.wait(for: [exception], timeout: 100);
     }
 

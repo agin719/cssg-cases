@@ -29,6 +29,7 @@
 
 - (void)getService {
     XCTestExpectation* exp = [self expectationWithDescription:@"getService"];
+    //.cssg-snippet-body-start:[get-service]
     QCloudGetServiceRequest* request = [[QCloudGetServiceRequest alloc] init];
     [request setFinishBlock:^(QCloudListAllMyBucketsResult* result, NSError* error) {
         XCTAssertNil(error);
@@ -36,7 +37,7 @@
         //从 result 中获取返回信息
     }];
     [[QCloudCOSXMLService defaultCOSXML] GetService:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 

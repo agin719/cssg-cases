@@ -5,6 +5,8 @@
   "docSetRemoteGitUrl": "https://github.com/tencentyun/qcloud-documents.git",
   "sdkDocSetRelativePath": "/product/存储与CDN/对象存储 4.0/SDK文档",
 
+  "commentDelimiter": ["//", ""],
+
   "macro4doc": {
     "secretId": "COS_SECRETID",
     "secretKey": "COS_SECRETKEY",
@@ -29,9 +31,6 @@
     "replicationDestBucket":"bucket-cssg-assist-",
     "object": "object4${config.language}"
   },
-
-  "globalInitNamePrefix": "global-init",
-  "globalHeaderName": "global-header",
 
   "testGroup": {
     "bucket": {

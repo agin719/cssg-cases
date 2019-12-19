@@ -59,6 +59,7 @@ public class ObjectTest {
 
     private void putBucket()
     {
+        //.cssg-snippet-body-start:[put-bucket]
         String bucket = "bucket-cssg-test-android-1253653367";
         PutBucketRequest putBucketRequest = new PutBucketRequest(bucket);
         
@@ -106,10 +107,11 @@ public class ObjectTest {
                 // todo Put Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
+        //.cssg-snippet-body-end
     }
     private void deleteObject()
     {
+        //.cssg-snippet-body-start:[delete-object]
         String bucket = "bucket-cssg-test-android-1253653367"; //存储桶名称，格式：BucketName-APPID
         String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键
         
@@ -143,10 +145,11 @@ public class ObjectTest {
                 // todo Delete Object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
+        //.cssg-snippet-body-end
     }
     private void deleteBucket()
     {
+        //.cssg-snippet-body-start:[delete-bucket]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         DeleteBucketRequest deleteBucketRequest = new DeleteBucketRequest(bucket);
         // 设置签名校验 Host，默认校验所有 Header
@@ -176,10 +179,11 @@ public class ObjectTest {
                 // todo Delete Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
+        //.cssg-snippet-body-end
     }
     private void putObject()
     {
+        //.cssg-snippet-body-start:[put-object]
         String bucket = "bucket-cssg-test-android-1253653367"; //存储桶，格式：BucketName-APPID
         String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键。例如 cosPath = "text.txt";
         String srcPath = new File(context.getExternalCacheDir(), "object4android").toString();//"本地文件的绝对路径";
@@ -259,11 +263,11 @@ public class ObjectTest {
             e.printStackTrace();
             assertError(e);
         }
-        
-        
+        //.cssg-snippet-body-end
     }
     private void putObjectAcl()
     {
+        //.cssg-snippet-body-start:[put-object-acl]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         PutObjectACLRequest putObjectACLRequest = new PutObjectACLRequest(bucket, cosPath);
@@ -309,11 +313,11 @@ public class ObjectTest {
                 // todo Put Bucket ACL failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void getObjectAcl()
     {
+        //.cssg-snippet-body-start:[get-object-acl]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         GetObjectACLRequest getBucketACLRequest = new GetObjectACLRequest(bucket, cosPath);
@@ -346,11 +350,11 @@ public class ObjectTest {
                 // todo Get Bucket ACL failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void headObject()
     {
+        //.cssg-snippet-body-start:[head-object]
         String bucket = bucket = "bucket-cssg-test-android-1253653367"; //存储桶名称，格式：BucketName-APPID
         String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键
         HeadObjectRequest headObjectRequest = new HeadObjectRequest(bucket, cosPath);
@@ -383,11 +387,11 @@ public class ObjectTest {
                 // todo Head Bucket failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void getObject()
     {
+        //.cssg-snippet-body-start:[get-object]
         String bucket = "bucket-cssg-test-android-1253653367"; //存储桶名称，格式：BucketName-APPID
         String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键
         String savePath = context.getExternalCacheDir().toString(); //本地路径
@@ -428,11 +432,11 @@ public class ObjectTest {
                 // todo Get Object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void getPresignDownloadUrl()
     {
+        //.cssg-snippet-body-start:[get-presign-download-url]
         try {
             String bucket = "bucket-cssg-test-android-1253653367"; //存储桶名称
             String cosPath = "object4android"; //即对象在存储桶中的位置标识符。例如 cosPath = "text.txt";
@@ -467,11 +471,11 @@ public class ObjectTest {
             e.printStackTrace();
             assertError(e);
         }
-        
-        
+        //.cssg-snippet-body-end
     }
     private void getPresignUploadUrl()
     {
+        //.cssg-snippet-body-start:[get-presign-upload-url]
         try {
         
          String bucket = "bucket-cssg-test-android-1253653367"; //存储桶名称
@@ -510,11 +514,11 @@ public class ObjectTest {
          e.printStackTrace();
          assertError(e);
         }
-        
-        
+        //.cssg-snippet-body-end
     }
     private void deleteMultiObject()
     {
+        //.cssg-snippet-body-start:[delete-multi-object]
         String bucket = "bucket-cssg-test-android-1253653367"; //存储桶，格式：BucketName-APPID
         List<String> objectList = new ArrayList<String>();
         objectList.add("object4android"); //对象在存储桶中的位置标识符，即对象键
@@ -550,11 +554,11 @@ public class ObjectTest {
                 //  Delete Multi Object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void postObject()
     {
+        //.cssg-snippet-body-start:[post-object]
         String bucket = "bucket-cssg-test-android-1253653367"; //存储桶名称，格式：BucketName-APPID
         String cosPath = "object4android"; //对象位于存储桶中的位置标识符，即对象键。例如 cosPath = "text.txt";
         String srcPath = new File(context.getExternalCacheDir(), "object4android").toString();//"本地文件的绝对路径";
@@ -595,11 +599,11 @@ public class ObjectTest {
                 // todo Put object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void restoreObject()
     {
+        //.cssg-snippet-body-start:[restore-object]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         RestoreRequest restoreRequest = new RestoreRequest(bucket, cosPath);
@@ -632,11 +636,11 @@ public class ObjectTest {
                 // todo Get Bucket ACL failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void initMultiUpload()
     {
+        //.cssg-snippet-body-start:[init-multi-upload]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         
@@ -670,11 +674,11 @@ public class ObjectTest {
                 // todo Init Multipart Upload failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void listMultiUpload()
     {
+        //.cssg-snippet-body-start:[list-multi-upload]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         ListMultiUploadsRequest listMultiUploadsRequest = new ListMultiUploadsRequest(bucket);
         // 设置签名校验 Host，默认校验所有 Header
@@ -706,11 +710,11 @@ public class ObjectTest {
                 //  Delete Multi Object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void uploadPart()
     {
+        //.cssg-snippet-body-start:[upload-part]
         String bucket = "bucket-cssg-test-android-1253653367"; //存储桶，格式：BucketName-APPID
         String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键
         String uploadId =this.uploadId; //初始化分块上传返回的 uploadId
@@ -755,11 +759,11 @@ public class ObjectTest {
                 // todo Upload Part failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void listParts()
     {
+        //.cssg-snippet-body-start:[list-parts]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         String uploadId = this.uploadId;
@@ -794,11 +798,11 @@ public class ObjectTest {
                 // todo List Part failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void completeMultiUpload()
     {
+        //.cssg-snippet-body-start:[complete-multi-upload]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         String uploadId = this.uploadId;
@@ -837,11 +841,11 @@ public class ObjectTest {
                 // todo Complete Multi Upload failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void abortMultiUpload()
     {
+        //.cssg-snippet-body-start:[abort-multi-upload]
         String bucket = "bucket-cssg-test-android-1253653367"; //格式：BucketName-APPID
         String cosPath = "object4android"; //对象在存储桶中的位置标识符，即对象键。 例如 cosPath = "text.txt";
         String uploadId = this.uploadId;
@@ -877,11 +881,11 @@ public class ObjectTest {
                 // todo Abort Multi Upload failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void transferUploadObject()
     {
+        //.cssg-snippet-body-start:[transfer-upload-object]
         // 初始化 TransferConfig
         TransferConfig transferConfig = new TransferConfig.Builder().build();
         
@@ -961,11 +965,11 @@ public class ObjectTest {
         
         //恢复上传
         cosxmlUploadTask.resume();
-        
-        
+        //.cssg-snippet-body-end
     }
     private void transferDownloadObject()
     {
+        //.cssg-snippet-body-start:[transfer-download-object]
         Context applicationContext = context.getApplicationContext(); // application context
         String bucket = "bucket-cssg-test-android-1253653367"; //存储桶，格式：BucketName-APPID
         String cosPath = "object4android"; //对象在存储桶中的位置标识符，即称对象键
@@ -1020,10 +1024,11 @@ public class ObjectTest {
         
         //恢复下载
         cosxmlDownloadTask.resume();
-        
+        //.cssg-snippet-body-end
     }
     private void transferCopyObject()
     {
+        //.cssg-snippet-body-start:[transfer-copy-object]
         String sourceAppid = ""; //账号 APPID
         String sourceBucket = "bucket-cssg-source-1253653367"; //源对象所在的存储桶
         String sourceRegion = "ap-guangzhou"; //源对象的存储桶所在的地域
@@ -1075,10 +1080,11 @@ public class ObjectTest {
         
         //恢复复制
         cosxmlCopyTask.resume();
-        
+        //.cssg-snippet-body-end
     }
     private void copyObject()
     {
+        //.cssg-snippet-body-start:[copy-object]
         String sourceAppid = "1253653367"; //账号 APPID
         String sourceBucket = "bucket-cssg-source-1253653367"; //源对象所在的存储桶
         String sourceRegion = "ap-guangzhou"; //源对象的存储桶所在的地域
@@ -1118,11 +1124,11 @@ public class ObjectTest {
                 // todo Copy Object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
     private void uploadPartCopy()
     {
+        //.cssg-snippet-body-start:[upload-part-copy]
         //具体步骤：
         // 1. 调用 cosXmlService.initMultipartUpload(InitMultipartUploadRequest) 初始化分块,请参考 [InitMultipartUploadRequest 初始化分块](#InitMultipartUploadRequest)。
         // 2. 调用 cosXmlService.copyObject(UploadPartCopyRequest) 完成分块复制。
@@ -1174,11 +1180,11 @@ public class ObjectTest {
                 // todo Copy Object failed because of CosXmlClientException or CosXmlServiceException...
             }
         });
-        
-        
+        //.cssg-snippet-body-end
     }
 
     private void initService() {
+        //.cssg-snippet-body-start:[global-init-secret]
         String region = "ap-guangzhou";
         
         // 创建 CosXmlServiceConfig 对象，根据需要修改默认的配置参数
@@ -1199,7 +1205,7 @@ public class ObjectTest {
         QCloudCredentialProvider credentialProvider = new ShortTimeCredentialProvider(secretId, secretKey, 300);
         
         CosXmlService cosXmlService = new CosXmlService(context, serviceConfig, credentialProvider);
-        
+        //.cssg-snippet-body-end
         this.cosXmlService = cosXmlService;
 
         try {

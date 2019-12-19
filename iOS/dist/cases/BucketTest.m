@@ -29,6 +29,7 @@
 
 - (void)putBucket {
     XCTestExpectation* exp = [self expectationWithDescription:@"putBucket"];
+    //.cssg-snippet-body-start:[put-bucket]
     QCloudPutBucketRequest* request = [QCloudPutBucketRequest new];
     request.bucket = @"bucket-cssg-test-ios-1253653367"; //additional actions after finishing
     [request setFinishBlock:^(id outputObject, NSError* error) {
@@ -36,12 +37,13 @@
         //可以从 outputObject 中获取服务器返回的 header 信息
     }];
     [[QCloudCOSXMLService defaultCOSXML] PutBucket:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)deleteBucket {
     XCTestExpectation* exp = [self expectationWithDescription:@"deleteBucket"];
+    //.cssg-snippet-body-start:[delete-bucket]
     QCloudDeleteBucketRequest* request = [[QCloudDeleteBucketRequest alloc ] init];
     request.bucket = @"bucket-cssg-test-ios-1253653367";  //存储桶名称，命名格式：BucketName-APPID
     [request setFinishBlock:^(id outputObject,NSError*error) {
@@ -49,12 +51,13 @@
         //可以从 outputObject 中获取服务器返回的 header 信息
     }];
     [[QCloudCOSXMLService defaultCOSXML] DeleteBucket:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)getBucket {
     XCTestExpectation* exp = [self expectationWithDescription:@"getBucket"];
+    //.cssg-snippet-body-start:[get-bucket]
     QCloudGetBucketRequest* request = [QCloudGetBucketRequest new];
     request.bucket = @"bucket-cssg-test-ios-1253653367";
     request.maxKeys = 1000;
@@ -66,12 +69,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] GetBucket:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)headBucket {
     XCTestExpectation* exp = [self expectationWithDescription:@"headBucket"];
+    //.cssg-snippet-body-start:[head-bucket]
     QCloudHeadBucketRequest* request = [QCloudHeadBucketRequest new];
     request.bucket = @"bucket-cssg-test-ios-1253653367";
     [request setFinishBlock:^(id outputObject, NSError* error) {
@@ -80,12 +84,13 @@
         //可以从 outputObject 中获取服务器返回的 header 信息
     }];
     [[QCloudCOSXMLService defaultCOSXML] HeadBucket:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)putBucketAcl {
     XCTestExpectation* exp = [self expectationWithDescription:@"putBucketAcl"];
+    //.cssg-snippet-body-start:[put-bucket-acl]
     QCloudPutBucketACLRequest* putACL = [QCloudPutBucketACLRequest new];
     NSString* appID = @"1131975903";//授予全新的账号 ID
     NSString *ownerIdentifier = [NSString stringWithFormat:@"qcs::cam::uin/%@:uin/%@", appID,
@@ -100,12 +105,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] PutBucketACL:putACL];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)getBucketAcl {
     XCTestExpectation* exp = [self expectationWithDescription:@"getBucketAcl"];
+    //.cssg-snippet-body-start:[get-bucket-acl]
     QCloudGetBucketACLRequest* getBucketACl = [QCloudGetBucketACLRequest new];
     getBucketACl.bucket = @"bucket-cssg-test-ios-1253653367";
     [getBucketACl setFinishBlock:^(QCloudACLPolicy * _Nonnull result, NSError * _Nonnull error) {
@@ -115,12 +121,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] GetBucketACL:getBucketACl];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)putBucketCors {
     XCTestExpectation* exp = [self expectationWithDescription:@"putBucketCors"];
+    //.cssg-snippet-body-start:[put-bucket-cors]
     QCloudPutBucketCORSRequest* putCORS = [QCloudPutBucketCORSRequest new];
     QCloudCORSConfiguration* cors = [QCloudCORSConfiguration new];
     
@@ -141,12 +148,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] PutBucketCORS:putCORS];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)getBucketCors {
     XCTestExpectation* exp = [self expectationWithDescription:@"getBucketCors"];
+    //.cssg-snippet-body-start:[get-bucket-cors]
     QCloudGetBucketCORSRequest* corsReqeust = [QCloudGetBucketCORSRequest new];
     corsReqeust.bucket = @"bucket-cssg-test-ios-1253653367";
     
@@ -157,12 +165,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] GetBucketCORS:corsReqeust];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)optionObject {
     XCTestExpectation* exp = [self expectationWithDescription:@"optionObject"];
+    //.cssg-snippet-body-start:[option-object]
     QCloudOptionsObjectRequest* request = [[QCloudOptionsObjectRequest alloc] init];
     request.bucket =@"bucket-cssg-test-ios-1253653367";
     request.origin = @"http://cloud.tencent.com";
@@ -177,12 +186,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] OptionsObject:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)deleteBucketCors {
     XCTestExpectation* exp = [self expectationWithDescription:@"deleteBucketCors"];
+    //.cssg-snippet-body-start:[delete-bucket-cors]
     QCloudDeleteBucketCORSRequest* deleteCORS = [QCloudDeleteBucketCORSRequest new];
     deleteCORS.bucket = @"bucket-cssg-test-ios-1253653367";
     [deleteCORS setFinishBlock:^(id outputObject, NSError *error) {
@@ -191,12 +201,13 @@
         //可以从 outputObject 中获取服务器返回的 header 信息
     }];
     [[QCloudCOSXMLService defaultCOSXML] DeleteBucketCORS:deleteCORS];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)putBucketLifecycle {
     XCTestExpectation* exp = [self expectationWithDescription:@"putBucketLifecycle"];
+    //.cssg-snippet-body-start:[put-bucket-lifecycle]
     QCloudPutBucketLifecycleRequest* request = [QCloudPutBucketLifecycleRequest new];
     request.bucket = @"bucket-cssg-test-ios-1253653367";
     __block QCloudLifecycleConfiguration* lifecycleConfiguration = [[QCloudLifecycleConfiguration
@@ -221,12 +232,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] PutBucketLifecycle:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)getBucketLifecycle {
     XCTestExpectation* exp = [self expectationWithDescription:@"getBucketLifecycle"];
+    //.cssg-snippet-body-start:[get-bucket-lifecycle]
     QCloudGetBucketLifecycleRequest* request = [QCloudGetBucketLifecycleRequest new];
     request.bucket = @"bucket-cssg-test-ios-1253653367";
     [request setFinishBlock:^(QCloudLifecycleConfiguration* result,NSError* error) {
@@ -235,12 +247,13 @@
         // 可以从 result 中获取返回信息
     }];
     [[QCloudCOSXMLService defaultCOSXML] GetBucketLifecycle:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)deleteBucketLifecycle {
     XCTestExpectation* exp = [self expectationWithDescription:@"deleteBucketLifecycle"];
+    //.cssg-snippet-body-start:[delete-bucket-lifecycle]
     QCloudDeleteBucketLifeCycleRequest* request = [[QCloudDeleteBucketLifeCycleRequest alloc ] init];
     request.bucket = @"bucket-cssg-test-ios-1253653367";
     [request setFinishBlock:^(QCloudLifecycleConfiguration* deleteResult, NSError* error) {
@@ -249,12 +262,13 @@
         //error 返回删除结果
     }];
     [[QCloudCOSXMLService defaultCOSXML] DeleteBucketLifeCycle:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)putBucketVersioning {
     XCTestExpectation* exp = [self expectationWithDescription:@"putBucketVersioning"];
+    //.cssg-snippet-body-start:[put-bucket-versioning]
     //开启版本控制
     QCloudPutBucketVersioningRequest* request = [[QCloudPutBucketVersioningRequest alloc] init];
     request.bucket =@"bucket-cssg-test-ios-1253653367";
@@ -269,12 +283,13 @@
         //可以从 outputObject 中获取服务器返回的 header 信息
     }];
     [[QCloudCOSXMLService defaultCOSXML] PutBucketVersioning:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)getBucketVersioning {
     XCTestExpectation* exp = [self expectationWithDescription:@"getBucketVersioning"];
+    //.cssg-snippet-body-start:[get-bucket-versioning]
     QCloudGetBucketVersioningRequest* request = [[QCloudGetBucketVersioningRequest alloc] init];
     request.bucket = @"bucket-cssg-test-ios-1253653367";
     [request setFinishBlock:^(QCloudBucketVersioningConfiguration* result, NSError* error) {
@@ -284,12 +299,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] GetBucketVersioning:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)putBucketReplication {
     XCTestExpectation* exp = [self expectationWithDescription:@"putBucketReplication"];
+    //.cssg-snippet-body-start:[put-bucket-replication]
     QCloudPutBucketReplicationRequest* request = [[QCloudPutBucketReplicationRequest alloc] init];
     request.bucket = @"bucket-cssg-test-ios-1253653367";
     QCloudBucketReplicationConfiguation* replConfiguration = [[QCloudBucketReplicationConfiguation
@@ -315,12 +331,13 @@
         //可以从 outputObject 中获取服务器返回的 header 信息
     }];
     [[QCloudCOSXMLService defaultCOSXML] PutBucketRelication:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)getBucketReplication {
     XCTestExpectation* exp = [self expectationWithDescription:@"getBucketReplication"];
+    //.cssg-snippet-body-start:[get-bucket-replication]
     QCloudGetBucketReplicationRequest* request = [[QCloudGetBucketReplicationRequest alloc] init];
     request.bucket = @"bucket-cssg-test-ios-1253653367";
     
@@ -330,12 +347,13 @@
         //可以从 result 中获取返回信息
     }];
     [[QCloudCOSXMLService defaultCOSXML] GetBucketReplication:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)deleteBucketReplication {
     XCTestExpectation* exp = [self expectationWithDescription:@"deleteBucketReplication"];
+    //.cssg-snippet-body-start:[delete-bucket-replication]
     QCloudDeleteBucketReplicationRequest* request = [[QCloudDeleteBucketReplicationRequest alloc] init];
     request.bucket = @"bucket-cssg-test-ios-1253653367";
     
@@ -345,7 +363,7 @@
         //可以从 outputObject 中获取服务器返回的 header 信息
     }];
     [[QCloudCOSXMLService defaultCOSXML] DeleteBucketReplication:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 

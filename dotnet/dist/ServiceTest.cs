@@ -25,6 +25,7 @@ namespace COSTest
 
       public void getService()
       {
+        //.cssg-snippet-body-start:[get-service]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -63,7 +64,7 @@ namespace COSTest
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-        
+        //.cssg-snippet-body-end
       }   
 
 

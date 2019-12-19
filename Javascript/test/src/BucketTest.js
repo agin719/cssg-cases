@@ -1,5 +1,6 @@
 function deleteBucket(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[delete-bucket]
     cos.deleteBucket({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -7,12 +8,13 @@ function deleteBucket(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getBucket(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-bucket]
     cos.getBucket({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -22,12 +24,13 @@ function getBucket(assert) {
         resolve(data)
         console.log(err || data.Contents);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getBucketPrefix(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-bucket-prefix]
     cos.getBucket({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -38,12 +41,13 @@ function getBucketPrefix(assert) {
         resolve(data)
         console.log(err || data.CommonPrefixes);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function headBucket(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[head-bucket]
     cos.headBucket({
         Bucket: 'bucket-cssg-test-js-1253653367',
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -54,12 +58,13 @@ function headBucket(assert) {
             console.log(err.error);
         }
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketAcl(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-acl]
     cos.putBucketAcl({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -69,12 +74,13 @@ function putBucketAcl(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketAclUser(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-acl-user]
     cos.putBucketAcl({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -84,12 +90,13 @@ function putBucketAclUser(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketAclAcp(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-acl-acp]
     cos.putBucketAcl({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -109,12 +116,13 @@ function putBucketAclAcp(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getBucketAcl(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-bucket-acl]
     cos.getBucketAcl({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -123,12 +131,13 @@ function getBucketAcl(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketPolicy(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-policy]
     cos.putBucketPolicy({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -155,12 +164,13 @@ function putBucketPolicy(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getBucketPolicy(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-bucket-policy]
     cos.getBucketPolicy({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -169,12 +179,13 @@ function getBucketPolicy(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function deleteBucketPolicy(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[delete-bucket-policy]
     cos.deleteBucketPolicy({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -183,12 +194,13 @@ function deleteBucketPolicy(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketCors(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-cors]
     cos.putBucketCors({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -204,12 +216,13 @@ function putBucketCors(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getBucketCors(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-bucket-cors]
     cos.getBucketCors({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -218,12 +231,13 @@ function getBucketCors(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function optionObject(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[option-object]
     cos.optionsObject({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -236,12 +250,13 @@ function optionObject(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function deleteBucketCors(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[delete-bucket-cors]
     cos.deleteBucketCors({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -250,12 +265,13 @@ function deleteBucketCors(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketLifecycle(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-lifecycle]
     cos.putBucketLifecycle({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -273,12 +289,13 @@ function putBucketLifecycle(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketLifecycleArchive(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-lifecycle-archive]
     cos.putBucketLifecycle({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -298,12 +315,13 @@ function putBucketLifecycleArchive(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketLifecycleExpired(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-lifecycle-expired]
     cos.putBucketLifecycle({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -320,12 +338,13 @@ function putBucketLifecycleExpired(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketLifecycleCleanAbort(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-lifecycle-cleanAbort]
     cos.putBucketLifecycle({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -342,12 +361,13 @@ function putBucketLifecycleCleanAbort(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketLifecycleHistoryArchive(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-lifecycle-historyArchive]
     cos.putBucketLifecycle({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -365,12 +385,13 @@ function putBucketLifecycleHistoryArchive(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getBucketLifecycle(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-bucket-lifecycle]
     cos.getBucketLifecycle({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -379,12 +400,13 @@ function getBucketLifecycle(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function deleteBucketLifecycle(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[delete-bucket-lifecycle]
     cos.deleteBucketLifecycle({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -393,12 +415,13 @@ function deleteBucketLifecycle(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketVersioning(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-versioning]
     cos.putBucketVersioning({
         Bucket: 'bucket-cssg-test-js-1253653367',  /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -410,12 +433,13 @@ function putBucketVersioning(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getBucketVersioning(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-bucket-versioning]
     cos.getBucketVersioning({
         Bucket: 'bucket-cssg-test-js-1253653367',  /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -424,12 +448,13 @@ function getBucketVersioning(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketReplication(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-replication]
     cos.putBucketReplication({
         Bucket: 'bucket-cssg-test-js-1253653367',  /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -450,12 +475,13 @@ function putBucketReplication(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getBucketReplication(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-bucket-replication]
     cos.getBucketReplication({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -464,12 +490,13 @@ function getBucketReplication(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function deleteBucketReplication(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[delete-bucket-replication]
     cos.deleteBucketReplication({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -478,12 +505,13 @@ function deleteBucketReplication(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function putBucketTagging(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[put-bucket-tagging]
     cos.putBucketTagging({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -498,12 +526,13 @@ function putBucketTagging(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function getBucketTagging(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[get-bucket-tagging]
     cos.getBucketTagging({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -512,12 +541,13 @@ function getBucketTagging(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 
 function deleteBucketTagging(assert) {
   return new Promise((resolve, reject) => {
+    //.cssg-snippet-body-start:[delete-bucket-tagging]
     cos.deleteBucketTagging({
         Bucket: 'bucket-cssg-test-js-1253653367', /* 必须 */
         Region: 'ap-guangzhou',     /* 存储桶所在地域，必须字段 */
@@ -526,7 +556,7 @@ function deleteBucketTagging(assert) {
         resolve(data)
         console.log(err || data);
     });
-    
+    //.cssg-snippet-body-end
   })
 }
 

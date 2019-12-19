@@ -29,6 +29,7 @@
 
 - (void)putBucket {
     XCTestExpectation* exp = [self expectationWithDescription:@"putBucket"];
+    //.cssg-snippet-body-start:[put-bucket]
     QCloudPutBucketRequest* request = [QCloudPutBucketRequest new];
     request.bucket = @"bucket-cssg-test-ios-1253653367"; //additional actions after finishing
     [request setFinishBlock:^(id outputObject, NSError* error) {
@@ -36,12 +37,13 @@
         //可以从 outputObject 中获取服务器返回的 header 信息
     }];
     [[QCloudCOSXMLService defaultCOSXML] PutBucket:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)deleteObject {
     XCTestExpectation* exp = [self expectationWithDescription:@"deleteObject"];
+    //.cssg-snippet-body-start:[delete-object]
     QCloudDeleteObjectRequest* deleteObjectRequest = [QCloudDeleteObjectRequest new];
     deleteObjectRequest.bucket = @"bucket-cssg-test-ios-1253653367";
     deleteObjectRequest.object = @"object4ios";
@@ -53,12 +55,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] DeleteObject:deleteObjectRequest];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)deleteBucket {
     XCTestExpectation* exp = [self expectationWithDescription:@"deleteBucket"];
+    //.cssg-snippet-body-start:[delete-bucket]
     QCloudDeleteBucketRequest* request = [[QCloudDeleteBucketRequest alloc ] init];
     request.bucket = @"bucket-cssg-test-ios-1253653367";  //存储桶名称，命名格式：BucketName-APPID
     [request setFinishBlock:^(id outputObject,NSError*error) {
@@ -66,12 +69,13 @@
         //可以从 outputObject 中获取服务器返回的 header 信息
     }];
     [[QCloudCOSXMLService defaultCOSXML] DeleteBucket:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)putObject {
     XCTestExpectation* exp = [self expectationWithDescription:@"putObject"];
+    //.cssg-snippet-body-start:[put-object]
     QCloudPutObjectRequest* put = [QCloudPutObjectRequest new];
     put.object = @"object4ios";
     put.bucket = @"bucket-cssg-test-ios-1253653367";
@@ -84,12 +88,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] PutObject:put];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)putObjectAcl {
     XCTestExpectation* exp = [self expectationWithDescription:@"putObjectAcl"];
+    //.cssg-snippet-body-start:[put-object-acl]
     QCloudPutObjectACLRequest* request = [QCloudPutObjectACLRequest new];
     request.object = @"object4ios";
     request.bucket = @"bucket-cssg-test-ios-1253653367";
@@ -102,12 +107,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] PutObjectACL:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)getObjectAcl {
     XCTestExpectation* exp = [self expectationWithDescription:@"getObjectAcl"];
+    //.cssg-snippet-body-start:[get-object-acl]
     QCloudGetObjectACLRequest *request = [QCloudGetObjectACLRequest new];
     request.object = @"object4ios";
     request.bucket = @"bucket-cssg-test-ios-1253653367";
@@ -119,53 +125,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] GetObjectACL:request];
-    
-    [self waitForExpectationsWithTimeout:80 handler:nil];
-}
-
-- (void)headObject {
-    XCTestExpectation* exp = [self expectationWithDescription:@"headObject"];
-    QCloudHeadObjectRequest* headerRequest = [QCloudHeadObjectRequest new];
-    headerRequest.object = @"object4ios";
-    headerRequest.bucket = @"bucket-cssg-test-ios-1253653367";
-    
-    [headerRequest setFinishBlock:^(NSDictionary* result, NSError *error) {
-        XCTAssertNil(error);
-        [exp fulfill];
-        // result 返回具体信息
-    }];
-    
-    [[QCloudCOSXMLService defaultCOSXML] HeadObject:headerRequest];
-    
-    [self waitForExpectationsWithTimeout:80 handler:nil];
-}
-
-- (void)getObject {
-    XCTestExpectation* exp = [self expectationWithDescription:@"getObject"];
-    QCloudGetObjectRequest* request = [QCloudGetObjectRequest new];
-    //设置下载的路径 URL，如果设置了，文件将会被下载到指定路径中
-    //如果未设置该参数，那么文件将会被下载至内存里，存放在在 finishBlock 的 outputObject 里
-    request.downloadingURL = [NSURL URLWithString:QCloudTempFilePathWithExtension(@"downding")];
-    request.object = @"object4ios";
-    request.bucket = @"bucket-cssg-test-ios-1253653367";
-    
-    [request setFinishBlock:^(id outputObject, NSError *error) {
-        XCTAssertNil(error);
-        [exp fulfill];
-        //可以从 outputObject 中获取 response 中 etag 或者自定义头部等信息
-    }];
-    [request setDownProcessBlock:^(int64_t bytesDownload, int64_t totalBytesDownload,
-        int64_t totalBytesExpectedToDownload) {
-        //下载过程中的进度
-    }];
-    
-    [[QCloudCOSXMLService defaultCOSXML] GetObject:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)getPresignDownloadUrl {
     XCTestExpectation* exp = [self expectationWithDescription:@"getPresignDownloadUrl"];
+    //.cssg-snippet-body-start:[get-presign-download-url]
     QCloudGetPresignedURLRequest* getPresignedURLRequest = [[QCloudGetPresignedURLRequest alloc] init];
     getPresignedURLRequest.bucket = @"bucket-cssg-test-ios-1253653367";
     getPresignedURLRequest.HTTPMethod = @"GET";
@@ -178,12 +144,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] getPresignedURL:getPresignedURLRequest];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)deleteMultiObject {
     XCTestExpectation* exp = [self expectationWithDescription:@"deleteMultiObject"];
+    //.cssg-snippet-body-start:[delete-multi-object]
     QCloudDeleteMultipleObjectRequest* delteRequest = [QCloudDeleteMultipleObjectRequest new];
     delteRequest.bucket = @"bucket-cssg-test-ios-1253653367";
     
@@ -202,12 +169,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] DeleteMultipleObject:delteRequest];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)restoreObject {
     XCTestExpectation* exp = [self expectationWithDescription:@"restoreObject"];
+    //.cssg-snippet-body-start:[restore-object]
     QCloudPostObjectRestoreRequest *req = [QCloudPostObjectRestoreRequest new];
     req.bucket = @"bucket-cssg-test-ios-1253653367";
     req.object = @"object4ios";
@@ -220,12 +188,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] PostObjectRestore:req];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)initMultiUpload {
     XCTestExpectation* exp = [self expectationWithDescription:@"initMultiUpload"];
+    //.cssg-snippet-body-start:[init-multi-upload]
     QCloudInitiateMultipartUploadRequest* initrequest = [QCloudInitiateMultipartUploadRequest new];
     initrequest.bucket = @"bucket-cssg-test-ios-1253653367";
     initrequest.object = @"object4ios";
@@ -238,12 +207,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] InitiateMultipartUpload:initrequest];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)listMultiUpload {
     XCTestExpectation* exp = [self expectationWithDescription:@"listMultiUpload"];
+    //.cssg-snippet-body-start:[list-multi-upload]
     QCloudListBucketMultipartUploadsRequest* uploads = [QCloudListBucketMultipartUploadsRequest new];
     uploads.bucket = @"bucket-cssg-test-ios-1253653367";
     uploads.maxUploads = 100;
@@ -255,12 +225,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] ListBucketMultipartUploads:uploads];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)uploadPart {
     XCTestExpectation* exp = [self expectationWithDescription:@"uploadPart"];
+    //.cssg-snippet-body-start:[upload-part]
     QCloudUploadPartRequest* request = [QCloudUploadPartRequest new];
     request.bucket = @"bucket-cssg-test-ios-1253653367";
     request.object = @"object4ios";
@@ -288,12 +259,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML]  UploadPart:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)listParts {
     XCTestExpectation* exp = [self expectationWithDescription:@"listParts"];
+    //.cssg-snippet-body-start:[list-parts]
     QCloudListMultipartRequest* request = [QCloudListMultipartRequest new];
     request.object = @"object4ios";
     request.bucket = @"bucket-cssg-test-ios-1253653367";
@@ -307,12 +279,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] ListMultipart:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)completeMultiUpload {
     XCTestExpectation* exp = [self expectationWithDescription:@"completeMultiUpload"];
+    //.cssg-snippet-body-start:[complete-multi-upload]
     QCloudCompleteMultipartUploadRequest *completeRequst = [QCloudCompleteMultipartUploadRequest new];
     completeRequst.object = @"object4ios";
     completeRequst.bucket = @"bucket-cssg-test-ios-1253653367";
@@ -330,12 +303,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML] CompleteMultipartUpload:completeRequst];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)abortMultiUpload {
     XCTestExpectation* exp = [self expectationWithDescription:@"abortMultiUpload"];
+    //.cssg-snippet-body-start:[abort-multi-upload]
     QCloudAbortMultipfartUploadRequest *abortRequest = [QCloudAbortMultipfartUploadRequest new];
     abortRequest.object = @"object4ios";
     abortRequest.bucket = @"bucket-cssg-test-ios-1253653367";
@@ -349,12 +323,13 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML]AbortMultipfartUpload:abortRequest];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)transferUploadObject {
     XCTestExpectation* exp = [self expectationWithDescription:@"transferUploadObject"];
+    //.cssg-snippet-body-start:[transfer-upload-object]
     QCloudCOSXMLUploadObjectRequest* put = [QCloudCOSXMLUploadObjectRequest new];
     put.object = @"object4ios";
     put.bucket = @"bucket-cssg-test-ios-1253653367";
@@ -389,12 +364,13 @@
     }
     //生成的用于恢复上传的请求可以直接上传
     [[QCloudCOSTransferMangerService defaultCOSTransferManager] UploadObject:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)transferCopyObject {
     XCTestExpectation* exp = [self expectationWithDescription:@"transferCopyObject"];
+    //.cssg-snippet-body-start:[transfer-copy-object]
     QCloudCOSXMLCopyObjectRequest* request = [[QCloudCOSXMLCopyObjectRequest alloc] init];
     
     request.bucket = @"bucket-cssg-test-ios-1253653367";//目的 <BucketName-APPID>，需要是公有读或者在当前账号有权限
@@ -413,12 +389,13 @@
     
     //注意如果是跨地域复制，这里使用的 transferManager 所在的 region 必须为目标桶所在的 region
     [[QCloudCOSTransferMangerService defaultCOSTransferManager] CopyObject:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)copyObject {
     XCTestExpectation* exp = [self expectationWithDescription:@"copyObject"];
+    //.cssg-snippet-body-start:[copy-object]
     QCloudPutObjectCopyRequest* request = [[QCloudPutObjectCopyRequest alloc] init];
     request.bucket = @"bucket-cssg-test-ios-1253653367";
     request.object = @"object4ios";
@@ -430,12 +407,13 @@
         //result 返回具体信息
     }];
     [[QCloudCOSXMLService defaultCOSXML]  PutObjectCopy:request];
-    
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
 - (void)uploadPartCopy {
     XCTestExpectation* exp = [self expectationWithDescription:@"uploadPartCopy"];
+    //.cssg-snippet-body-start:[upload-part-copy]
     QCloudUploadPartCopyRequest* request = [[QCloudUploadPartCopyRequest alloc] init];
     request.bucket = @"bucket-cssg-test-ios-1253653367";
     request.object = @"object4ios";
@@ -457,7 +435,50 @@
     }];
     
     [[QCloudCOSXMLService defaultCOSXML]UploadPartCopy:request];
+    //.cssg-snippet-body-end
+    [self waitForExpectationsWithTimeout:80 handler:nil];
+}
+
+- (void)headObject {
+    XCTestExpectation* exp = [self expectationWithDescription:@"headObject"];
+    //.cssg-snippet-body-start:[head-object]
+    QCloudHeadObjectRequest* headerRequest = [QCloudHeadObjectRequest new];
+    headerRequest.object = @"object4ios";
+    headerRequest.bucket = @"bucket-cssg-test-ios-1253653367";
     
+    [headerRequest setFinishBlock:^(NSDictionary* result, NSError *error) {
+        XCTAssertNil(error);
+        [exp fulfill];
+        // result 返回具体信息
+    }];
+    
+    [[QCloudCOSXMLService defaultCOSXML] HeadObject:headerRequest];
+    //.cssg-snippet-body-end
+    [self waitForExpectationsWithTimeout:80 handler:nil];
+}
+
+- (void)getObject {
+    XCTestExpectation* exp = [self expectationWithDescription:@"getObject"];
+    //.cssg-snippet-body-start:[get-object]
+    QCloudGetObjectRequest* request = [QCloudGetObjectRequest new];
+    //设置下载的路径 URL，如果设置了，文件将会被下载到指定路径中
+    //如果未设置该参数，那么文件将会被下载至内存里，存放在在 finishBlock 的 outputObject 里
+    request.downloadingURL = [NSURL URLWithString:QCloudTempFilePathWithExtension(@"downding")];
+    request.object = @"object4ios";
+    request.bucket = @"bucket-cssg-test-ios-1253653367";
+    
+    [request setFinishBlock:^(id outputObject, NSError *error) {
+        XCTAssertNil(error);
+        [exp fulfill];
+        //可以从 outputObject 中获取 response 中 etag 或者自定义头部等信息
+    }];
+    [request setDownProcessBlock:^(int64_t bytesDownload, int64_t totalBytesDownload,
+        int64_t totalBytesExpectedToDownload) {
+        //下载过程中的进度
+    }];
+    
+    [[QCloudCOSXMLService defaultCOSXML] GetObject:request];
+    //.cssg-snippet-body-end
     [self waitForExpectationsWithTimeout:80 handler:nil];
 }
 
@@ -487,10 +508,7 @@
     [self putObject];
     [self putObjectAcl];
     [self getObjectAcl];
-    [self headObject];
-    [self getObject];
     [self getPresignDownloadUrl];
-    [self deleteObject];
     [self deleteMultiObject];
     [self restoreObject];
 }
@@ -515,6 +533,12 @@
     [self initMultiUpload];
     [self uploadPartCopy];
     [self completeMultiUpload];
+}
+- (void)testObjectPutget {
+    [self putObject];
+    [self headObject];
+    [self getObject];
+    [self deleteObject];
 }
 
 @end

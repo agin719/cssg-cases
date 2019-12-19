@@ -25,6 +25,7 @@ namespace COSTest
 
       public void putBucket()
       {
+        //.cssg-snippet-body-start:[put-bucket]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -62,10 +63,11 @@ namespace COSTest
           //请求失败
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
         }
-        
+        //.cssg-snippet-body-end
       }   
       public void deleteBucket()
       {
+        //.cssg-snippet-body-start:[delete-bucket]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -103,10 +105,11 @@ namespace COSTest
           //请求失败
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
         }
-        
+        //.cssg-snippet-body-end
       }   
       public void getBucket()
       {
+        //.cssg-snippet-body-start:[get-bucket]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -148,10 +151,11 @@ namespace COSTest
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-        
+        //.cssg-snippet-body-end
       }   
       public void headBucket()
       {
+        //.cssg-snippet-body-start:[head-bucket]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -191,10 +195,11 @@ namespace COSTest
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-        
+        //.cssg-snippet-body-end
       }   
       public void putBucketAcl()
       {
+        //.cssg-snippet-body-start:[put-bucket-acl]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -240,10 +245,11 @@ namespace COSTest
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-        
+        //.cssg-snippet-body-end
       }   
       public void getBucketAcl()
       {
+        //.cssg-snippet-body-start:[get-bucket-acl]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -283,10 +289,11 @@ namespace COSTest
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-        
+        //.cssg-snippet-body-end
       }   
       public void putBucketCors()
       {
+        //.cssg-snippet-body-start:[put-bucket-cors]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -344,10 +351,11 @@ namespace COSTest
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-        
+        //.cssg-snippet-body-end
       }   
       public void getBucketCors()
       {
+        //.cssg-snippet-body-start:[get-bucket-cors]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -387,10 +395,11 @@ namespace COSTest
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-        
+        //.cssg-snippet-body-end
       }   
       public void optionObject()
       {
+        //.cssg-snippet-body-start:[option-object]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -433,10 +442,11 @@ namespace COSTest
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-        
+        //.cssg-snippet-body-end
       }   
       public void deleteBucketCors()
       {
+        //.cssg-snippet-body-start:[delete-bucket-cors]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -476,10 +486,11 @@ namespace COSTest
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-        
+        //.cssg-snippet-body-end
       }   
       public void putBucketLifecycle()
       {
+        //.cssg-snippet-body-start:[put-bucket-lifecycle]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -533,10 +544,11 @@ namespace COSTest
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-        
+        //.cssg-snippet-body-end
       }   
       public void getBucketLifecycle()
       {
+        //.cssg-snippet-body-start:[get-bucket-lifecycle]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -576,10 +588,11 @@ namespace COSTest
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-        
+        //.cssg-snippet-body-end
       }   
       public void deleteBucketLifecycle()
       {
+        //.cssg-snippet-body-start:[delete-bucket-lifecycle]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -619,10 +632,11 @@ namespace COSTest
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-        
+        //.cssg-snippet-body-end
       }   
       public void putBucketVersioning()
       {
+        //.cssg-snippet-body-start:[put-bucket-versioning]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -661,10 +675,11 @@ namespace COSTest
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-        
+        //.cssg-snippet-body-end
       }   
       public void getBucketVersioning()
       {
+        //.cssg-snippet-body-start:[get-bucket-versioning]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -700,10 +715,11 @@ namespace COSTest
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-        
+        //.cssg-snippet-body-end
       }   
       public void putBucketReplication()
       {
+        //.cssg-snippet-body-start:[put-bucket-replication]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -754,10 +770,11 @@ namespace COSTest
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-        
+        //.cssg-snippet-body-end
       }   
       public void getBucketReplication()
       {
+        //.cssg-snippet-body-start:[get-bucket-replication]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -793,10 +810,11 @@ namespace COSTest
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-        
+        //.cssg-snippet-body-end
       }   
       public void deleteBucketReplication()
       {
+        //.cssg-snippet-body-start:[delete-bucket-replication]
         CosXmlConfig config = new CosXmlConfig.Builder()
           .SetConnectionTimeoutMs(60000)  //设置连接超时时间，单位毫秒，默认45000ms
           .SetReadWriteTimeoutMs(40000)  //设置读写超时时间，单位毫秒，默认45000ms
@@ -832,7 +850,7 @@ namespace COSTest
           Console.WriteLine("CosServerException: " + serverEx.GetInfo());
           Assert.Null(serverEx);
         }
-        
+        //.cssg-snippet-body-end
       }   
 
 
