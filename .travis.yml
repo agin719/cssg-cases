@@ -1,33 +1,14 @@
-language: node_js
-node_js:
-  - '8'
+language: python
+python:
+- '2.7'
+- '3.5'
+- '3.6'
 
 before_install:
-- nvm install v8.11.3
-- npm i -g cssg
-- gem install cocoapods -v '1.7.2'
+- cd Python
 
-jobs:
-  include:
-    - language: csharp
-      mono: none
-      dotnet: 2.2.402
-      script:
-      - cd dotnet
-      # - cssg compile
-      - dotnet restore
-      - dotnet test
-      # - cssg write
-    - language: objective-c
-      podfile: Podfile 
-      xcode_workspace: COS_iOS_Test.xcworkspace
-      xcode_scheme: COS_iOS_Test
-      xcode_destination: platform=iOS Simulator,OS=11.3,name=iPhone X
-      install:
-      - cd iOS
-      # - cssg compile
-      # - pod repo update
-      - pod install
-      # after_success:
-      # - cssg write
+install:
+- pip install -r requirements.txt
 
+script:
+- nosetests -s -v dist/
