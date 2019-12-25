@@ -1,0 +1,84 @@
+{
+  "language": "python",
+  "docRoot": "Python SDK/",
+
+  "testcaseTemplate": "TestCase.t",
+  "sourceExtension": ".py",
+
+  "initSnippetName": "global-init",
+  "initSnippetNoIdentation": true,
+
+  "commentDelimiter": ["#", ""],
+
+  "macro4doc": {
+    "secretId": "'${g.secretId}'",
+    "secretKey": "'${g.secretKey}'",
+    "uploadId": "'${g.uploadId}'",
+    "eTag": "'${g.eTag}'",
+    "region": "'${g.region}'"
+  },
+  "macro4test": {
+    "secretId": "os.environ['COS_KEY']",
+    "secretKey": "os.environ['COS_SECRET']",
+    "uploadId": "uploadId",
+    "eTag": "eTag",
+    "region": "'${g.region}'"
+  },
+
+  "beforeRun": {
+    "insert": [
+      {
+        "expression": "assert response",
+        "align": "tail",
+        "type": "assert",
+        "excludes": [
+          "global-init",
+          "global-init-proxy",
+          "global-init-endpoint",
+          "put-bucket-comp"
+        ]
+      }
+    ]
+  },
+
+  "testGroup": {
+    "bucket": {
+      "setup": [
+        "put-bucket-comp"
+      ],
+      "bucket-ACL": [
+        "get-bucket",
+        "get-bucket-recursive",
+        "get-bucket-comp",
+        "list-object-versioning",
+        "list-object-versioning-comp",
+        "head-bucket",
+        "put-bucket-acl",
+        "get-bucket-acl"
+      ]
+    },
+    "object": {
+      "object-comp": [
+        "put-object-comp",
+        "put-object-comp-comp",
+        "get-object-comp",
+        "delete-object-comp"
+      ],
+      "preisign-url": [
+        "get-presign-download-url-alias"
+      ]
+    },
+    "init": {
+      "global-init": [
+        "global-init-proxy",
+        "global-init-endpoint"
+      ]
+    },
+    "service": {
+      "get-authorization": [
+        "get-authorization-download",
+        "get-authorization-upload"
+      ]
+    }
+  }
+}
