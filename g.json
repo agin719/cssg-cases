@@ -40,6 +40,7 @@
       
       "bucket-ACL": [
         "get-bucket",
+        "list-object-versioning",
         "head-bucket",
         "put-bucket-acl",
         "get-bucket-acl"
