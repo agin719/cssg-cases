@@ -1,0 +1,69 @@
+{
+  "language": "php",
+  "docRoot": "PHP SDK/",
+
+  "testcaseTemplate": "TestCase.t",
+  "sourceExtension": ".php",
+
+  "initSnippetName": "global-init",
+
+  "macro4doc": {
+    "secretId": "\"${g.secretId}\"",
+    "secretKey": "\"${g.secretKey}\"",
+    "uploadId": "'${g.uploadId}'",
+    "eTag": "'${g.eTag}'"
+  },
+  "macro4test": {
+    "secretId": "getenv('COS_KEY')",
+    "secretKey": "getenv('COS_SECRET')",
+    "uploadId": "uploadId",
+    "eTag": "eTag"
+  },
+
+  "beforeRun": {
+    "insert": [
+      {
+        "expression": "$this->assertNull($e);",
+        "anchor": "echo($e);",
+        "align": "below",
+        "type": "assert"
+      },
+      {
+        "expression": "$this->assertNull($e);",
+        "anchor": "echo \"$e\\n\";",
+        "align": "below",
+        "type": "assert"
+      }
+    ]
+  },
+
+  "testGroup": {
+    "bucket": {
+      "bucket-ACL": [
+        "get-bucket",
+        "get-bucket-recursive",
+        "list-object-versioning",
+        "head-bucket",
+        "put-bucket-acl",
+        "get-bucket-acl"
+      ]
+    },
+    "object": {
+      "object-comp": [
+        "put-object-comp",
+        "put-object-comp-comp",
+        "get-object-comp",
+        "delete-object-comp"
+      ],
+      "preisign-url": [
+        "get-presign-sts-download-url",
+        "get-presign-sts-upload-url"
+      ]
+    },
+    "init": {
+      "global-init": [
+        "global-init-sts"
+      ]
+    }
+  }
+}

@@ -1,0 +1,5 @@
+<phpunit>
+    <testsuite name="cos">
+      <directory>dist</directory>
+    </testsuite>
+</phpunit>
