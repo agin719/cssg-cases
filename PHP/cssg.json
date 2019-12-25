@@ -11,13 +11,15 @@
     "secretId": "\"${g.secretId}\"",
     "secretKey": "\"${g.secretKey}\"",
     "uploadId": "'${g.uploadId}'",
-    "eTag": "'${g.eTag}'"
+    "eTag": "'${g.eTag}'",
+    "region": "'{g.region}'"
   },
   "macro4test": {
     "secretId": "getenv('COS_KEY')",
     "secretKey": "getenv('COS_SECRET')",
     "uploadId": "uploadId",
-    "eTag": "eTag"
+    "eTag": "eTag",
+    "region": "'{g.region}'"
   },
 
   "beforeRun": {
@@ -41,6 +43,7 @@
     "bucket": {
       "bucket-ACL": [
         "get-bucket",
+        "get-bucket-comp",
         "get-bucket-recursive",
         "list-object-versioning",
         "head-bucket",
