@@ -305,8 +305,8 @@ def copyObject():
         Bucket='bucket-cssg-test-python-1253653367',
         Key='object4python',
         CopySource={
-            'Bucket': 'bucket-cssg-test-python-1253653367', 
-            'Key': 'object4python', 
+            'Bucket': 'bucket-cssg-source-1253653367', 
+            'Key': 'sourceObject', 
             'Region': 'ap-guangzhou', #替换为源存储桶的 Region
             'VersionId': 'string'
         },
@@ -337,8 +337,8 @@ def uploadPartCopy():
         PartNumber=100,
         UploadId='string',
         CopySource={
-            'Bucket': 'bucket-cssg-test-python-1253653367', 
-            'Key': 'object4python', 
+            'Bucket': 'bucket-cssg-source-1253653367', 
+            'Key': 'sourceObject', 
             'Region': 'ap-guangzhou', #替换为源存储桶的 Region
             'VersionId': 'string'
         },

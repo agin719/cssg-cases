@@ -31,7 +31,7 @@ def putBucketComp():
         ACL='private'|'public-read'|'public-read-write',
         GrantFullControl='string',
         GrantRead='string',
-        GrantWrite='string'	
+        GrantWrite='string'    
     )
     #.cssg-snippet-body-end
 
@@ -288,7 +288,7 @@ def putBucketReplication():
                     'Status': 'Enabled'|'Disabled',
                     'Prefix': 'string',
                     'Destination': {
-                        'Bucket': 'qcs::cos:ap-shanghai::examplebucket1-1253653367',
+                        'Bucket': 'qcs::cos:ap-beijing::bucket-cssg-assist-1253653367',
                         'StorageClass': 'STANDARD'|'STANDARD_IA'
                     }
                 },
@@ -297,7 +297,7 @@ def putBucketReplication():
                     'Status': 'Enabled'|'Disabled',
                     'Prefix': 'string',
                     'Destination': {
-                        'Bucket': 'qcs::cos:ap-guangzhou::examplebucket2-1253653367',
+                        'Bucket': 'qcs::cos:ap-beijing::destinationbucket2-1253653367',
                         'StorageClass': 'STANDARD'|'STANDARD_IA'
                     }
                 },
