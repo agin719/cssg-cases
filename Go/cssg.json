@@ -1,0 +1,80 @@
+{
+  "language": "go",
+  "docRoot": "Go SDK/",
+
+  "testcaseTemplate": "TestCase.t",
+  "sourceExtension": ".go",
+  "sourceNameUseUnderscore": true,
+  "methodNameBeginWithUpperCase": true,
+
+  "macro4doc": {
+    "secretId": "\"${g.secretId}\"",
+    "secretKey": "\"${g.secretKey}\"",
+    "uploadId": "'${g.uploadId}'",
+    "eTag": "'${g.eTag}'"
+  },
+  "macro4test": {
+    "secretId": "os.Getenv(\"COS_KEY\")",
+    "secretKey": "os.Getenv(\"COS_SECRET\")",
+    "uploadId": "uploadId",
+    "eTag": "eTag"
+  },
+
+  "initSnippetName": "global-init",
+
+  "beforeRun": {
+    "insert": [
+      {
+        "expression": "assert.Nil(s.T(), err, \"Test Failed\")",
+        "align": "tail",
+        "type": "assert"
+      }
+    ]
+  },
+
+  "testGroup": {
+    "put-bucket-comp": {
+      "put-bucket-comp": [
+        "put-bucket-comp"
+      ],
+      "isRunnable": true
+    },
+    "get-service-comp": {
+      "get-service-comp": [
+        "get-service-comp"
+      ],
+      "isRunnable": true
+    },
+    "put-object-comp": {
+      "put-object-comp": [
+        "put-object-comp"
+      ],
+      "isRunnable": true
+    },
+    "get-object-comp": {
+      "get-object-comp": [
+        "get-object-comp"
+      ],
+      "isRunnable": true
+    },
+    "delete-object-comp": {
+      "delete-object-comp": [
+        "delete-object-comp"
+      ],
+      "isRunnable": true
+    },
+    "get-bucket-comp": {
+      "get-bucket-comp": [
+        "get-bucket-comp"
+      ],
+      "isRunnable": true
+    },
+    "init-sts": {
+      "init-sts": [
+        "global-init-sts"
+      ],
+      "isServcieInit": true
+    }
+
+  }
+}
