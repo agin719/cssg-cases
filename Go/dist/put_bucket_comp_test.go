@@ -12,9 +12,8 @@
   )
   
   func main() {
-      // 将<BucketName-APPID>和<region>修改为真实的信息
-      // 例如：http://bucket-cssg-test-go-1253653367.cos.ap-guangzhou.myqcloud.com
-      u, _ := url.Parse("http://<BucketName-APPID>.cos.<region>.myqcloud.com")
+      // 将 bucket-cssg-test-go-1253653367 和 ap-guangzhou 修改为真实的信息
+      u, _ := url.Parse("http://bucket-cssg-test-go-1253653367.cos.ap-guangzhou.myqcloud.com")
       b := &cos.BaseURL{BucketURL: u}
       c := cos.NewClient(b, &http.Client{
           Transport: &cos.AuthorizationTransport{
