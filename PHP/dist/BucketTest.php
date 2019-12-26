@@ -58,6 +58,27 @@ class BucketTest extends \PHPUnit\Framework\TestCase
         //.cssg-snippet-body-end
     }
 
+    protected function getBucketComp() {
+        //.cssg-snippet-body-start:[get-bucket-comp]
+        try {
+            $result = $cosClient->listObjects(array(
+                'Bucket' => 'bucket-cssg-test-php-1253653367', //格式：BucketName-APPID
+                'Delimiter' => '/',
+                'EncodingType' => 'url',
+                'Marker' => 'doc/picture.jpg',
+                'Prefix' => 'doc',
+                'MaxKeys' => 1000,
+            )); 
+            // 请求成功
+            print_r($result);
+        } catch (\Exception $e) {
+            // 请求失败
+            echo($e);
+            $this->assertNull($e);
+        }
+        //.cssg-snippet-body-end
+    }
+
     protected function getBucketRecursive() {
         //.cssg-snippet-body-start:[get-bucket-recursive]
         try {
@@ -299,7 +320,7 @@ class BucketTest extends \PHPUnit\Framework\TestCase
         //.cssg-snippet-body-start:[put-bucket-versioning]
         try {
             $result = $cosClient->putBucketVersioning(array(
-                'Bucket' => 'bucket-cssg-test-php-125000000', //格式：BucketName-APPID
+                'Bucket' => 'bucket-cssg-test-php-1253653367', //格式：BucketName-APPID
                 'Status' => 'Enabled'
             )); 
             // 请求成功
@@ -316,7 +337,7 @@ class BucketTest extends \PHPUnit\Framework\TestCase
         //.cssg-snippet-body-start:[get-bucket-versioning]
         try {
             $result = $cosClient->getBucketVersioning(array(
-                'Bucket' => 'bucket-cssg-test-php-125000000', //格式：BucketName-APPID
+                'Bucket' => 'bucket-cssg-test-php-1253653367', //格式：BucketName-APPID
             )); 
             // 请求成功
             print_r($result);
@@ -332,7 +353,7 @@ class BucketTest extends \PHPUnit\Framework\TestCase
         //.cssg-snippet-body-start:[put-bucket-replication]
         try {
             $result = $cosClient->putBucketReplication(array(
-                'Bucket' => 'bucket-cssg-test-php-125000000', //格式：BucketName-APPID
+                'Bucket' => 'bucket-cssg-test-php-1253653367', //格式：BucketName-APPID
                 'Role' => 'qcs::cam::uin/1278687956:uin/1278687956',
                 'Rules'=>array(
                     array(
@@ -340,7 +361,7 @@ class BucketTest extends \PHPUnit\Framework\TestCase
                         'ID' => 'string',
                         'Prefix' => 'string',
                         'Destination' => array(                    
-                            'Bucket' => 'qcs::cos:ap-guangzhou::examplebucket2-125000000',
+                            'Bucket' => 'qcs::cos:ap-beijing::bucket-cssg-assist-1253653367',
                             'StorageClass' => 'standard',                
                         ),  
                         // ...repeated            ),  
@@ -358,7 +379,7 @@ class BucketTest extends \PHPUnit\Framework\TestCase
         //.cssg-snippet-body-start:[get-bucket-replication]
         try {
             $result = $cosClient->getBucketReplication(array(
-                'Bucket' => 'bucket-cssg-test-php-125000000', //格式：BucketName-APPID
+                'Bucket' => 'bucket-cssg-test-php-1253653367', //格式：BucketName-APPID
             )); 
             // 请求成功
             print_r($result);
@@ -374,7 +395,7 @@ class BucketTest extends \PHPUnit\Framework\TestCase
         //.cssg-snippet-body-start:[delete-bucket-replication]
         try {
             $result = $cosClient->deleteBucketReplication(array(
-                'Bucket' => 'bucket-cssg-test-php-125000000', //格式：BucketName-APPID
+                'Bucket' => 'bucket-cssg-test-php-1253653367', //格式：BucketName-APPID
             )); 
             // 请求成功
             print_r($result);
@@ -411,6 +432,7 @@ class BucketTest extends \PHPUnit\Framework\TestCase
 
     public function testBucketACL() {
         $this->getBucket();
+        $this->getBucketComp();
         $this->getBucketRecursive();
         $this->listObjectVersioning();
         $this->headBucket();

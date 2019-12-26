@@ -556,7 +556,7 @@ class ObjectTest extends \PHPUnit\Framework\TestCase
             $result = $cosClient->copyObject(array(
                 'Bucket' => 'bucket-cssg-test-php-1253653367', //格式：BucketName-APPID
                 'Key' => 'object4php',
-                'CopySource' => 'examplebucket2-1253653367.cos.ap-guangzhou.myqcloud.com/object4php',
+                'CopySource' => 'bucket-cssg-source-1253653367.cos.ap-guangzhou.myqcloud.com/object4php',
                 /*
                 'MetadataDirective' => 'string',
                 'ACL' => 'string',
