@@ -13,29 +13,35 @@ import com.qcloud.cos.utils.DateUtils;
 import com.qcloud.cos.transfer.*;
 import com.qcloud.cos.model.lifecycle.*;
 
+import com.qcloud.util.FileUtil;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.*;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.net.URL;
-import java.io.File;
-import java.io.FileInputStream;
+import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.security.KeyPair;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import static com.qcloud.cos.demo.SymmetricKeyEncryptionClientDemo.loadSymmetricAESKey;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AuthorizationTest {
 
     private COSClient cosClient;
+    private String bucketName = "bucket-cssg-test-java-1253653367";
 
 
-    public void getAuthorizationForDownload() {
+    public void getAuthorizationForDownload() throws InterruptedException {
         //.cssg-snippet-body-start:[get-authorization-for-download]
         String secretId = System.getenv("COS_KEY");
         String secretKey = System.getenv("COS_SECRET");
@@ -49,7 +55,7 @@ public class AuthorizationTest {
         //.cssg-snippet-body-end
     }
 
-    public void getAuthorizationForUpload() {
+    public void getAuthorizationForUpload() throws InterruptedException {
         //.cssg-snippet-body-start:[get-authorization-for-upload]
         String secretId = System.getenv("COS_KEY");
         String secretKey = System.getenv("COS_SECRET");
@@ -63,7 +69,7 @@ public class AuthorizationTest {
         //.cssg-snippet-body-end
     }
 
-    public void getAuthorizationForDelete() {
+    public void getAuthorizationForDelete() throws InterruptedException {
         //.cssg-snippet-body-start:[get-authorization-for-delete]
         String secretId = System.getenv("COS_KEY");
         String secretKey = System.getenv("COS_SECRET");
@@ -79,7 +85,7 @@ public class AuthorizationTest {
 
 
     @Before
-    public void setup() {
+    public void setup() throws InterruptedException{
         //.cssg-snippet-body-start:[global-init]
         // 1 初始化用户身份信息（secretId, secretKey）。
         String secretId = System.getenv("COS_KEY");
@@ -90,16 +96,16 @@ public class AuthorizationTest {
         Region region = new Region("ap-guangzhou");
         ClientConfig clientConfig = new ClientConfig(region);
         // 3 生成 cos 客户端。
-        COSClient cosClient = new COSClient(cred, clientConfig);
+        cosClient = new COSClient(cred, clientConfig);
         //.cssg-snippet-body-end
     }
 
     @After
-    public void teardown() {
+    public void teardown() throws InterruptedException{
     }
 
     @Test
-    public void testGetAuthorization() {
+    public void testGetAuthorization() throws InterruptedException {
         getAuthorizationForDownload();
         getAuthorizationForUpload();
         getAuthorizationForDelete();

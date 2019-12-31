@@ -13,40 +13,45 @@ import com.qcloud.cos.utils.DateUtils;
 import com.qcloud.cos.transfer.*;
 import com.qcloud.cos.model.lifecycle.*;
 
+import com.qcloud.util.FileUtil;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.*;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.net.URL;
-import java.io.File;
-import java.io.FileInputStream;
+import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.security.KeyPair;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import static com.qcloud.cos.demo.SymmetricKeyEncryptionClientDemo.loadSymmetricAESKey;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class BucketTest {
 
     private COSClient cosClient;
+    private String bucketName = "bucket-cssg-test-java-1253653367";
 
 
-    public void putBucket() {
+    public void putBucket() throws InterruptedException {
         //.cssg-snippet-body-start:[put-bucket]
         String bucket = "bucket-cssg-test-java-1253653367"; //存储桶名称，格式：BucketName-APPID
         CreateBucketRequest createBucketRequest = new CreateBucketRequest(bucket);
         // 设置 bucket 的权限为 Private(私有读写), 其他可选有公有读私有写, 公有读写
         createBucketRequest.setCannedAcl(CannedAccessControlList.Private);
         Bucket bucketResult = cosClient.createBucket(createBucketRequest);
-
         //.cssg-snippet-body-end
     }
 
-    public void deleteBucket() {
+    public void deleteBucket() throws InterruptedException {
         //.cssg-snippet-body-start:[delete-bucket]
         // bucket的命名规则为 BucketName-APPID ，此处填写的存储桶名称必须为此格式
         String bucketName = "bucket-cssg-test-java-1253653367";
@@ -54,7 +59,7 @@ public class BucketTest {
         //.cssg-snippet-body-end
     }
 
-    public void getBucket() {
+    public void getBucket() throws InterruptedException {
         //.cssg-snippet-body-start:[get-bucket]
         // Bucket的命名格式为 BucketName-APPID ，此处填写的存储桶名称必须为此格式
         String bucketName = "bucket-cssg-test-java-1253653367";
@@ -100,7 +105,7 @@ public class BucketTest {
         //.cssg-snippet-body-end
     }
 
-    public void headBucket() {
+    public void headBucket() throws InterruptedException {
         //.cssg-snippet-body-start:[head-bucket]
         // bucket的命名规则为 BucketName-APPID ，此处填写的存储桶名称必须为此格式
         String bucketName = "bucket-cssg-test-java-1253653367";
@@ -108,7 +113,7 @@ public class BucketTest {
         //.cssg-snippet-body-end
     }
 
-    public void putBucketAcl() {
+    public void putBucketAcl() throws InterruptedException {
         //.cssg-snippet-body-start:[put-bucket-acl]
         // bucket的命名规则为 BucketName-APPID ，此处填写的存储桶名称必须为此格式
         String bucketName = "bucket-cssg-test-java-1253653367";
@@ -133,7 +138,7 @@ public class BucketTest {
         //.cssg-snippet-body-end
     }
 
-    public void getBucketAcl() {
+    public void getBucketAcl() throws InterruptedException {
         //.cssg-snippet-body-start:[get-bucket-acl]
         // bucket的命名规则为 BucketName-APPID ，此处填写的存储桶名称必须为此格式
         String bucketName = "bucket-cssg-test-java-1253653367";
@@ -141,7 +146,7 @@ public class BucketTest {
         //.cssg-snippet-body-end
     }
 
-    public void putBucketCors() {
+    public void putBucketCors() throws InterruptedException {
         //.cssg-snippet-body-start:[put-bucket-cors]
         // bucket的命名格式为 BucketName-APPID ，此处填写的存储桶名称必须为此格式
         String bucketName = "bucket-cssg-test-java-1253653367";
@@ -149,11 +154,11 @@ public class BucketTest {
         List<CORSRule> corsRules = new ArrayList<CORSRule>();
         CORSRule corsRule = new CORSRule();
         // 规则名称
-        corsRule.setId("set-bucket-cors-test");  
+        corsRule.setId("set-bucket-cors-test");
         // 允许的 HTTP 方法
         corsRule.setAllowedMethods(CORSRule.AllowedMethods.PUT, CORSRule.AllowedMethods.GET, CORSRule.AllowedMethods.HEAD);
         corsRule.setAllowedHeaders("x-cos-grant-full-control");
-        corsRule.setAllowedOrigins("http://mail.qq.com",         "http://www.qq.com", "http://video.qq.com");
+        corsRule.setAllowedOrigins("http://mail.qq.com", "http://www.qq.com", "http://video.qq.com");
         corsRule.setExposedHeaders("x-cos-request-id");
         corsRule.setMaxAgeSeconds(60);
         corsRules.add(corsRule);
@@ -162,7 +167,7 @@ public class BucketTest {
         //.cssg-snippet-body-end
     }
 
-    public void getBucketCors() {
+    public void getBucketCors() throws InterruptedException {
         //.cssg-snippet-body-start:[get-bucket-cors]
         // bucket的命名格式为 BucketName-APPID ，此处填写的存储桶名称必须为此格式
         String bucketName = "bucket-cssg-test-java-1253653367";
@@ -178,7 +183,7 @@ public class BucketTest {
         //.cssg-snippet-body-end
     }
 
-    public void deleteBucketCors() {
+    public void deleteBucketCors() throws InterruptedException {
         //.cssg-snippet-body-start:[delete-bucket-cors]
         //存储桶的命名格式为 BucketName-APPID
         String bucketName = "bucket-cssg-test-java-1253653367";
@@ -186,7 +191,7 @@ public class BucketTest {
         //.cssg-snippet-body-end
     }
 
-    public void putBucketLifecycle() {
+    public void putBucketLifecycle() throws InterruptedException {
         //.cssg-snippet-body-start:[put-bucket-lifecycle]
         List<BucketLifecycleConfiguration.Rule> rules = new ArrayList<BucketLifecycleConfiguration.Rule>();
         // 规则1  30天后删除路径以 hongkong_movie/ 为开始的文件
@@ -210,7 +215,7 @@ public class BucketTest {
         standardIaRule.setTransitions(standardIaTransitions);
         standardIaRule.setStatus(BucketLifecycleConfiguration.ENABLED);
         standardIaRule.setExpirationInDays(365);
-          
+        
         // 将两条规则添加到策略集合中
         rules.add(deletePrefixRule);
         rules.add(standardIaRule);
@@ -223,14 +228,14 @@ public class BucketTest {
         // 存储桶的命名格式为 BucketName-APPID
         String bucketName = "bucket-cssg-test-java-1253653367";
         SetBucketLifecycleConfigurationRequest setBucketLifecycleConfigurationRequest =
-        new SetBucketLifecycleConfigurationRequest(bucketName, bucketLifecycleConfiguration);
+                new SetBucketLifecycleConfigurationRequest(bucketName, bucketLifecycleConfiguration);
         
         // 设置生命周期
         cosClient.setBucketLifecycleConfiguration(setBucketLifecycleConfigurationRequest);
         //.cssg-snippet-body-end
     }
 
-    public void getBucketLifecycle() {
+    public void getBucketLifecycle() throws InterruptedException {
         //.cssg-snippet-body-start:[get-bucket-lifecycle]
         // 存储桶的命名格式为 BucketName-APPID ，此处填写的存储桶名称必须为此格式
         String bucketName = "bucket-cssg-test-java-1253653367";
@@ -240,7 +245,7 @@ public class BucketTest {
         //.cssg-snippet-body-end
     }
 
-    public void deleteBucketLifecycle() {
+    public void deleteBucketLifecycle() throws InterruptedException {
         //.cssg-snippet-body-start:[delete-bucket-lifecycle]
         //存储桶的命名格式为 BucketName-APPID
         String bucketName = "bucket-cssg-test-java-1253653367";
@@ -248,29 +253,29 @@ public class BucketTest {
         //.cssg-snippet-body-end
     }
 
-    public void putBucketVersioning() {
+    public void putBucketVersioning() throws InterruptedException {
         //.cssg-snippet-body-start:[put-bucket-versioning]
         String bucketName = "bucket-cssg-test-java-1253653367";
         // 开启版本控制
         cosClient.setBucketVersioningConfiguration(
-        new SetBucketVersioningConfigurationRequest(bucketName,
-        new BucketVersioningConfiguration(BucketVersioningConfiguration.ENABLED)));
+                new SetBucketVersioningConfigurationRequest(bucketName,
+                        new BucketVersioningConfiguration(BucketVersioningConfiguration.ENABLED)));
         //.cssg-snippet-body-end
     }
 
-    public void getBucketVersioning() {
+    public void getBucketVersioning() throws InterruptedException {
         //.cssg-snippet-body-start:[get-bucket-versioning]
         String bucketName = "bucket-cssg-test-java-1253653367";
         // 获取版本控制
         BucketVersioningConfiguration bvc =
-             cosClient.getBucketVersioningConfiguration(bucketName);
+                cosClient.getBucketVersioningConfiguration(bucketName);
         // 获取版本控制
         BucketVersioningConfiguration bvc2 = cosClient.getBucketVersioningConfiguration(
-           new GetBucketVersioningConfigurationRequest(bucketName));
+                new GetBucketVersioningConfigurationRequest(bucketName));
         //.cssg-snippet-body-end
     }
 
-    public void putBucketReplication() {
+    public void putBucketReplication() throws InterruptedException {
         //.cssg-snippet-body-start:[put-bucket-replication]
         // 源存储桶名称，需包含 appid
         String bucketName = "bucket-cssg-test-java-1253653367";
@@ -292,28 +297,27 @@ public class BucketTest {
         // 添加规则
         String ruleId = "replication-to-beijing";
         bucketReplicationConfiguration.addRule(ruleId, replicationRule);
-
+        
         SetBucketReplicationConfigurationRequest setBucketReplicationConfigurationRequest =
-            new SetBucketReplicationConfigurationRequest(bucketName, bucketReplicationConfiguration);
+                new SetBucketReplicationConfigurationRequest(bucketName, bucketReplicationConfiguration);
         cosClient.setBucketReplicationConfiguration(setBucketReplicationConfigurationRequest);
-
         //.cssg-snippet-body-end
     }
 
-    public void getBucketReplication() {
+    public void getBucketReplication() throws InterruptedException {
         //.cssg-snippet-body-start:[get-bucket-replication]
         String bucketName = "bucket-cssg-test-java-1253653367";
         
         // 获取存储桶跨地域复制配置方法1
         BucketReplicationConfiguration brcfRet = cosClient.getBucketReplicationConfiguration(bucketName);
-
+        
         // 获取存储桶跨地域复制配置方法2
         BucketReplicationConfiguration brcfRet2 = cosClient.getBucketReplicationConfiguration(
-         new GetBucketReplicationConfigurationRequest(bucketName));
+                new GetBucketReplicationConfigurationRequest(bucketName));
         //.cssg-snippet-body-end
     }
 
-    public void deleteBucketReplication() {
+    public void deleteBucketReplication() throws InterruptedException {
         //.cssg-snippet-body-start:[delete-bucket-replication]
         String bucketName = "bucket-cssg-test-java-1253653367";
         
@@ -327,7 +331,7 @@ public class BucketTest {
 
 
     @Before
-    public void setup() {
+    public void setup() throws InterruptedException{
         //.cssg-snippet-body-start:[global-init]
         // 1 初始化用户身份信息（secretId, secretKey）。
         String secretId = System.getenv("COS_KEY");
@@ -344,12 +348,12 @@ public class BucketTest {
     }
 
     @After
-    public void teardown() {
+    public void teardown() throws InterruptedException{
         deleteBucket();
     }
 
     @Test
-    public void testBucketACL() {
+    public void testBucketACL() throws InterruptedException {
         getBucket();
         headBucket();
         putBucketAcl();
@@ -357,21 +361,21 @@ public class BucketTest {
     }
 
     @Test
-    public void testBucketCORS() {
+    public void testBucketCORS() throws InterruptedException {
         putBucketCors();
         getBucketCors();
         deleteBucketCors();
     }
 
     @Test
-    public void testBucketLifecycle() {
+    public void testBucketLifecycle() throws InterruptedException {
         putBucketLifecycle();
         getBucketLifecycle();
         deleteBucketLifecycle();
     }
 
     @Test
-    public void testBucketReplicationAndVersioning() {
+    public void testBucketReplicationAndVersioning() throws InterruptedException {
         putBucketVersioning();
         getBucketVersioning();
         putBucketReplication();

@@ -49,8 +49,8 @@ namespace COSTest
           request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
           //执行请求
           GetServiceResult result = cosXml.GetService(request);
-          //请求成功
-          Console.WriteLine(result.GetResultInfo());
+          //得到所有的 buckets
+          List<ListAllMyBuckets.Bucket> allBuckets = result.listAllMyBuckets.buckets;
         }
         catch (COSXML.CosException.CosClientException clientEx)
         {

@@ -13,29 +13,35 @@ import com.qcloud.cos.utils.DateUtils;
 import com.qcloud.cos.transfer.*;
 import com.qcloud.cos.model.lifecycle.*;
 
+import com.qcloud.util.FileUtil;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.*;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.net.URL;
-import java.io.File;
-import java.io.FileInputStream;
+import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.security.KeyPair;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import static com.qcloud.cos.demo.SymmetricKeyEncryptionClientDemo.loadSymmetricAESKey;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ServiceTest {
 
     private COSClient cosClient;
+    private String bucketName = "bucket-cssg-test-java-1253653367";
 
 
-    public void getService() {
+    public void getService() throws InterruptedException {
         //.cssg-snippet-body-start:[get-service]
         List<Bucket> buckets = cosClient.listBuckets();
         for (Bucket bucketElement : buckets) {
@@ -47,7 +53,7 @@ public class ServiceTest {
 
 
     @Before
-    public void setup() {
+    public void setup() throws InterruptedException{
         //.cssg-snippet-body-start:[global-init]
         // 1 初始化用户身份信息（secretId, secretKey）。
         String secretId = System.getenv("COS_KEY");
@@ -63,11 +69,11 @@ public class ServiceTest {
     }
 
     @After
-    public void teardown() {
+    public void teardown() throws InterruptedException{
     }
 
     @Test
-    public void testGetService() {
+    public void testGetService() throws InterruptedException {
         getService();
     }
 

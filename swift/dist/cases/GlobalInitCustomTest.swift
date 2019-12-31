@@ -19,8 +19,8 @@ class globalInitFenceQueueTest : NSObject,QCloudSignatureProvider {
           cre.secretKey = SecretStorage.shared.secretKey as String?;
           cre.token = "COS_TOKEN";
           /*强烈建议返回服务器时间作为签名的开始时间，用来避免由于用户手机本地时间偏差过大导致的签名不正确 */
-          cre.startDate = DateFormatter().date(from: "start-time");
-          cre.experationDate = DateFormatter().date(from: "expire-time");
+          cre.startDate = DateFormatter().date(from: "startTime"); // 单位是秒
+          cre.experationDate = DateFormatter().date(from: "expiredTime");
           let auth = QCloudAuthentationV5Creator.init(credential: cre);
           continueBlock(auth,nil);
       }
@@ -65,8 +65,8 @@ class globalInitSignatureStsTest : NSObject,QCloudSignatureProvider {
           cre.secretKey = SecretStorage.shared.secretKey as String?;
           cre.token = "COS_TOKEN";
           /*强烈建议返回服务器时间作为签名的开始时间，用来避免由于用户手机本地时间偏差过大导致的签名不正确 */
-          cre.startDate = DateFormatter().date(from: "start-time");
-          cre.experationDate = DateFormatter().date(from: "expire-time");
+          cre.startDate = DateFormatter().date(from: "startTime"); // 单位是秒
+          cre.experationDate = DateFormatter().date(from: "expiredTime");
           let auth = QCloudAuthentationV5Creator.init(credential: cre);
           let signature = auth?.signature(forData: urlRequst)
           continueBlock(signature,nil);

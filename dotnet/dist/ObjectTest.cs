@@ -193,8 +193,8 @@ namespace COSTest
           });
           //执行请求
           PutObjectResult result = cosXml.PutObject(request);
-          //请求成功
-          Console.WriteLine(result.GetResultInfo());
+          //对象的 eTag
+          string eTag = result.eTag;
         }
         catch (COSXML.CosException.CosClientException clientEx)
         {
@@ -291,8 +291,8 @@ namespace COSTest
           request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
           //执行请求
           GetObjectACLResult result = cosXml.GetObjectACL(request);
-          //请求成功
-          Console.WriteLine(result.GetResultInfo());
+          //对象的 ACL 信息
+          AccessControlPolicy acl = result.accessControlPolicy;
         }
         catch (COSXML.CosException.CosClientException clientEx)
         {

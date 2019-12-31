@@ -4,7 +4,7 @@
 
   "testcaseTemplate": "TestCase.t",
   "sourceExtension": ".java",
-  "compileDist": "cos_sdk_java_doc_test/src/test/java/com/qcloud/cssg",
+  "compileDist": "cos_sdk_java_doc_test/src/test/java/com/qcloud/cssg/",
 
   "initSnippetName": "global-init",
 
@@ -21,23 +21,6 @@
     "eTag": "this.eTag"
   },
 
-  "beforeRun": {
-    "insert": [
-      {
-        "expression": "Assert.Null(clientEx);",
-        "anchor": "Console.WriteLine(\"CosClientException: \" + clientEx);",
-        "align": "below",
-        "type": "assert"
-      },
-      {
-        "expression": "Assert.Null(serverEx);",
-        "anchor": "Console.WriteLine(\"CosServerException: \" + serverEx.GetInfo());",
-        "align": "below",
-        "type": "assert"
-      }
-    ]
-  },
-
   "testGroup": {
     "authorization": {
       "get-authorization": [
@@ -46,7 +29,10 @@
         "get-authorization-for-delete"]
     },
     "object": {
-      "setup": ["put-bucket-complete"],
+      "setup": ["put-bucket-comp"],
+      "put-bucket-complete": [
+        "put-bucket-complete"
+      ],
       "get-presign-url": [
         "get-presign-download-url-override-headers",
         "get-presign-download-url-public"
@@ -68,5 +54,12 @@
         "transfer-upload-object-complete"
       ]
     }
-  }
+  },
+
+  "skipCases": [
+    "put-object-cse-c-aes",
+    "put-object-cse-c-rsa",
+    "transfer-upload-object-complete",
+    "restore-object"
+  ]
 }

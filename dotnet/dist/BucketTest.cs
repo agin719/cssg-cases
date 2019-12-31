@@ -136,8 +136,8 @@ namespace COSTest
           request.SetPrefix("a/");
           //执行请求
           GetBucketResult result = cosXml.GetBucket(request);
-          //请求成功
-          Console.WriteLine(result.GetResultInfo());
+          //bucket的相关信息
+          ListBucket info = result.listBucket;
         }
         catch (COSXML.CosException.CosClientException clientEx)
         {
@@ -274,8 +274,8 @@ namespace COSTest
           request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
           //执行请求
           GetBucketACLResult result = cosXml.GetBucketACL(request);
-          //请求成功
-          Console.WriteLine(result.GetResultInfo());
+          //存储桶的 ACL 信息
+          AccessControlPolicy acl = result.accessControlPolicy;
         }
         catch (COSXML.CosException.CosClientException clientEx)
         {
@@ -380,8 +380,8 @@ namespace COSTest
           request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
           //执行请求
           GetBucketCORSResult result = cosXml.GetBucketCORS(request);
-          //请求成功
-          Console.WriteLine(result.GetResultInfo());
+          //存储桶的 CORS 配置信息
+          CORSConfiguration conf = result.corsConfiguration;
         }
         catch (COSXML.CosException.CosClientException clientEx)
         {
@@ -573,8 +573,8 @@ namespace COSTest
           request.SetSign(TimeUtils.GetCurrentTime(TimeUnit.SECONDS), 600);
           //执行请求
           GetBucketLifecycleResult result = cosXml.GetBucketLifecycle(request);
-          //请求成功
-          Console.WriteLine(result.GetResultInfo());
+          //存储桶的生命周期配置
+          LifecycleConfiguration conf = result.lifecycleConfiguration;
         }
         catch (COSXML.CosException.CosClientException clientEx)
         {
@@ -703,7 +703,8 @@ namespace COSTest
         try
         {
           GetBucketVersioningResult result = cosXml.GetBucketVersioning(request);
-          Console.WriteLine(result.GetResultInfo());
+          // 存储桶的生命周期配置
+          VersioningConfiguration conf =  result.versioningConfiguration;
         }
         catch (COSXML.CosException.CosClientException clientEx)
         {
@@ -798,7 +799,8 @@ namespace COSTest
         try
         {
           GetBucketReplicationResult result = cosXml.GetBucketReplication(request);
-          Console.WriteLine(result.GetResultInfo());
+          // 存储桶的跨区域复制配置
+          ReplicationConfiguration conf =  result.replicationConfiguration;
         }
         catch (COSXML.CosException.CosClientException clientEx)
         {

@@ -26,6 +26,8 @@ function globalInitSts(assert) {
                     TmpSecretId: data.TmpSecretId,
                     TmpSecretKey: data.TmpSecretKey,
                     XCosSecurityToken: data.XCosSecurityToken,
+                    // 建议返回服务器时间作为签名的开始时间，避免用户浏览器本地时间偏差过大导致签名错误
+                    StartTime: data.startTime, // 单位是秒
                     ExpiredTime: data.ExpiredTime, // SDK 在 ExpiredTime 时间前，不会再次调用 getAuthorization
                 });
             });
@@ -83,7 +85,9 @@ function globalInitStsScope(assert) {
                     callback({
                         TmpSecretId: credentials.tmpSecretId,
                         TmpSecretKey: credentials.tmpSecretKey,
-                        XCosSecurityToken: credentials.sessionToken, // 需要提供把 sessionToken 传给
+                        XCosSecurityToken: credentials.sessionToken,
+                        // 建议返回服务器时间作为签名的开始时间，避免用户浏览器本地时间偏差过大导致签名错误
+                        StartTime: data.startTime, // 单位是秒
                         ExpiredTime: data.expiredTime,
                         ScopeLimit: true, // 细粒度控制权限需要设为 true，会限制密钥只在相同请求时重复使用
                     });
