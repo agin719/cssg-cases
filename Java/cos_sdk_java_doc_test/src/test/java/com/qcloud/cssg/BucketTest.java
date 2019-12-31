@@ -41,13 +41,8 @@ public class BucketTest {
         CreateBucketRequest createBucketRequest = new CreateBucketRequest(bucket);
         // 设置 bucket 的权限为 Private(私有读写), 其他可选有公有读私有写, 公有读写
         createBucketRequest.setCannedAcl(CannedAccessControlList.Private);
-        try{
-            Bucket bucketResult = cosClient.createBucket(createBucketRequest);
-        } catch (CosServiceException serverException) {
-            serverException.printStackTrace();
-        } catch (CosClientException clientException) {
-            clientException.printStackTrace();
-        }
+        Bucket bucketResult = cosClient.createBucket(createBucketRequest);
+
         //.cssg-snippet-body-end
     }
 
@@ -120,10 +115,10 @@ public class BucketTest {
         // 设置自定义 ACL
         AccessControlList acl = new AccessControlList();
         Owner owner = new Owner();
-        owner.setId("qcs::cam::uin/2779643970:uin/2779643970");
+        owner.setId("qcs::cam::uin/1278687956:uin/1278687956");
         acl.setOwner(owner);
-        String id = "qcs::cam::uin/2779643970:uin/734505014";
-        UinGrantee uinGrantee = new UinGrantee("qcs::cam::uin/2779643970:uin/734505014");
+        String id = "qcs::cam::uin/2779643970:uin/2779643970";
+        UinGrantee uinGrantee = new UinGrantee("qcs::cam::uin/2779643970:uin/2779643970");
         uinGrantee.setIdentifier(id);
         acl.grantPermission(uinGrantee, Permission.FullControl);
         cosClient.setBucketAcl(bucketName, acl);
@@ -174,11 +169,11 @@ public class BucketTest {
         BucketCrossOriginConfiguration corsGet = cosClient.getBucketCrossOriginConfiguration(bucketName);
         List<CORSRule> corsRules = corsGet.getRules();
         for (CORSRule rule : corsRules) {
-        List<CORSRule.AllowedMethods> allowedMethods = rule.getAllowedMethods();
-        List<String> allowedHeaders = rule.getAllowedHeaders();
-        List<String> allowedOrigins = rule.getAllowedOrigins();
-        List<String> exposedHeaders = rule.getExposedHeaders();
-        int maxAgeSeconds = rule.getMaxAgeSeconds();
+            List<CORSRule.AllowedMethods> allowedMethods = rule.getAllowedMethods();
+            List<String> allowedHeaders = rule.getAllowedHeaders();
+            List<String> allowedOrigins = rule.getAllowedOrigins();
+            List<String> exposedHeaders = rule.getExposedHeaders();
+            int maxAgeSeconds = rule.getMaxAgeSeconds();
         }
         //.cssg-snippet-body-end
     }
@@ -197,8 +192,7 @@ public class BucketTest {
         // 规则1  30天后删除路径以 hongkong_movie/ 为开始的文件
         BucketLifecycleConfiguration.Rule deletePrefixRule = new BucketLifecycleConfiguration.Rule();
         deletePrefixRule.setId("delete prefix xxxy after 30 days");
-        deletePrefixRule
-        .setFilter(new LifecycleFilter(new LifecyclePrefixPredicate("hongkong_movie/")));
+        deletePrefixRule.setFilter(new LifecycleFilter(new LifecyclePrefixPredicate("hongkong_movie/")));
         // 文件上传或者变更后, 30天后删除
         deletePrefixRule.setExpirationInDays(30);
         // 设置规则为生效状态
@@ -223,7 +217,7 @@ public class BucketTest {
         
         // 生成 bucketLifecycleConfiguration
         BucketLifecycleConfiguration bucketLifecycleConfiguration =
-        new BucketLifecycleConfiguration();
+                new BucketLifecycleConfiguration();
         bucketLifecycleConfiguration.setRules(rules);
         
         // 存储桶的命名格式为 BucketName-APPID
@@ -283,11 +277,11 @@ public class BucketTest {
         
         BucketReplicationConfiguration bucketReplicationConfiguration = new BucketReplicationConfiguration();
         // 设置发起者身份, 格式为： qcs::cam::uin/<OwnerUin>:uin/<SubUin>
-        bucketReplicationConfiguration.setRoleName("qcs::cam::uin/123456789:uin/987654543");
+        bucketReplicationConfiguration.setRoleName("qcs::cam::uin/1278687956:uin/1278687956");
         
         // 设置目标存储桶和存储类型，QCS 的格式为：qcs::cos:[region]::[bucketname-AppId]
         ReplicationDestinationConfig replicationDestinationConfig = new ReplicationDestinationConfig();
-        replicationDestinationConfig.setBucketQCS("qcs::cos:ap-chongqing::bucket-cssg-test-java-target-1253653367");
+        replicationDestinationConfig.setBucketQCS("qcs::cos:ap-beijing::bucket-cssg-assist-1253653367");
         replicationDestinationConfig.setStorageClass(StorageClass.Standard);
         
         // 设置规则状态和前缀
@@ -296,20 +290,13 @@ public class BucketTest {
         replicationRule.setPrefix("");
         replicationRule.setDestinationConfig(replicationDestinationConfig);
         // 添加规则
-        String ruleId = "replication-to-chongqing";
-        bucketReplicationConfiguration.addRule("replication-to-chongqing", replicationRule);
-        
-        try {
-            SetBucketReplicationConfigurationRequest setBucketReplicationConfigurationRequest =
-                new SetBucketReplicationConfigurationRequest(bucketName, bucketReplicationConfiguration);
-          cosClient.setBucketReplicationConfiguration(setBucketReplicationConfigurationRequest);
-        } catch (CosServiceException e) {
-            e.printStackTrace();
-        } catch (CosClientException e) {
-            e.printStackTrace();
-        } finally {
-            cosClient.shutdown();
-        }
+        String ruleId = "replication-to-beijing";
+        bucketReplicationConfiguration.addRule(ruleId, replicationRule);
+
+        SetBucketReplicationConfigurationRequest setBucketReplicationConfigurationRequest =
+            new SetBucketReplicationConfigurationRequest(bucketName, bucketReplicationConfiguration);
+        cosClient.setBucketReplicationConfiguration(setBucketReplicationConfigurationRequest);
+
         //.cssg-snippet-body-end
     }
 
@@ -319,7 +306,7 @@ public class BucketTest {
         
         // 获取存储桶跨地域复制配置方法1
         BucketReplicationConfiguration brcfRet = cosClient.getBucketReplicationConfiguration(bucketName);
-        
+
         // 获取存储桶跨地域复制配置方法2
         BucketReplicationConfiguration brcfRet2 = cosClient.getBucketReplicationConfiguration(
          new GetBucketReplicationConfigurationRequest(bucketName));
@@ -351,7 +338,7 @@ public class BucketTest {
         Region region = new Region("ap-guangzhou");
         ClientConfig clientConfig = new ClientConfig(region);
         // 3 生成 cos 客户端。
-        COSClient cosClient = new COSClient(cred, clientConfig);
+        cosClient = new COSClient(cred, clientConfig);
         //.cssg-snippet-body-end
         putBucket();
     }

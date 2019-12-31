@@ -17,50 +17,51 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.*;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.net.URL;
-import java.io.File;
-import java.io.FileInputStream;
+import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.security.KeyPair;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static com.qcloud.cos.demo.SymmetricKeyEncryptionClientDemo.loadSymmetricAESKey;
 
 public class ObjectTest {
-
+    private String localFilePath;
     private COSClient cosClient;
+    private String uploadId;
+    private List<PartETag> partETags;
 
-    String uploadId;
-    String eTag;
+
 
     public void putBucketComplete() {
         //.cssg-snippet-body-start:[put-bucket-complete]
         COSCredentials cred = new BasicCOSCredentials(System.getenv("COS_KEY"), System.getenv("COS_SECRET"));
         // 采用了新的 region 名字，可用 region 的列表可以在官网文档中获取，也可以参考下面的 XML SDK 和 JSON SDK 的地域对照表
-        ClientConfig clientConfig = new ClientConfig(new Region("ap-beijing-1"));
+        ClientConfig clientConfig = new ClientConfig(new Region("ap-guangzhou"));
         COSClient cosClient = new COSClient(cred, clientConfig);
         // 存储桶名称，格式为：BucketName-APPID
         String bucketName = "bucket-cssg-test-java-1253653367";
         
         // 以下是向这个存储桶上传一个文件的示例
-        String key = "docs/object4java.doc";
-        File localFile = new File("src/test/resources/len10M.txt");
+        String key = "object4java";
+        File localFile = new File(localFilePath);
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, localFile);
         // 设置存储类型：标准存储（Standard）, 低频存储（Standard_IA）和归档存储（ARCHIVE）。默认是标准存储（Standard）
         putObjectRequest.setStorageClass(StorageClass.Standard_IA);
-        try {
-            PutObjectResult putObjectResult = cosClient.putObject(putObjectRequest);
-            // putobjectResult 会返回文件的 etag
-            String etag = putObjectResult.getETag();
-        } catch (CosServiceException e) {
-            e.printStackTrace();
-        } catch (CosClientException e) {
-            e.printStackTrace();
-        }
+
+        PutObjectResult putObjectResult = cosClient.putObject(putObjectRequest);
+        // putobjectResult 会返回文件的 etag
+        String etag = putObjectResult.getETag();
         
         // 关闭客户端
         cosClient.shutdown();
@@ -86,21 +87,25 @@ public class ObjectTest {
 
     public void putObject() {
         //.cssg-snippet-body-start:[put-object]
-        try {
-            // 指定要上传的文件
-            File localFile = new File("object4java");
-            // 指定要上传到的存储桶
-            String bucketName = "bucket-cssg-test-java-1253653367";
-            // 指定要上传到 COS 上对象键
-            String key = "object4java";
-            PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, localFile);
-            PutObjectResult putObjectResult = cosClient.putObject(putObjectRequest);
-        } catch (CosServiceException serverException) {
-            serverException.printStackTrace();
-        } catch (CosClientException clientException) {
-            clientException.printStackTrace();
-        }
+        // 指定要上传的文件
+        File localFile = new File(localFilePath);
+        // 指定要上传到的存储桶
+        String bucketName = "bucket-cssg-test-java-1253653367";
+        // 指定要上传到 COS 上对象键
+        String key = "object4java";
+        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, localFile);
+        PutObjectResult putObjectResult = cosClient.putObject(putObjectRequest);
         //.cssg-snippet-body-end
+    }
+
+    public void putSrcObject() {
+        File localFile = new File(localFilePath);
+        // 指定要上传到的存储桶
+        String bucketName = "bucket-cssg-test-java-1253653367";
+        // 指定要上传到 COS 上对象键
+        String key = "object4java";
+        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, localFile);
+        PutObjectResult putObjectResult = cosClient.putObject(putObjectRequest);
     }
 
     public void putObjectAcl() {
@@ -118,18 +123,12 @@ public class ObjectTest {
         AccessControlList acl = new AccessControlList();
         Owner owner = new Owner();
         // 设置 owner 的信息, owner 只能是主账号
-        owner.setId("qcs::cam::uin/2779643970:uin/2779643970");
+        owner.setId("qcs::cam::uin/1278687956:uin/1278687956");
         acl.setOwner(owner);
         
         // 授权给主账号73410000可读可写权限
-        UinGrantee uinGrantee1 = new UinGrantee("qcs::cam::uin/73410000:uin/73410000");
+        UinGrantee uinGrantee1 = new UinGrantee("qcs::cam::uin/2779643970:uin/2779643970");
         acl.grantPermission(uinGrantee1, Permission.FullControl);
-        // 授权给 2779643970 的子账号 72300000 可读权限
-        UinGrantee uinGrantee2 = new UinGrantee("qcs::cam::uin/2779643970:uin/72300000");
-        acl.grantPermission(uinGrantee2, Permission.Read);
-        // 授权给 2779643970 的子账号 7234444 可写权限
-        UinGrantee uinGrantee3 = new UinGrantee("qcs::cam::uin/7234444:uin/7234444");
-        acl.grantPermission(uinGrantee3, Permission.Write);
         cosClient.setObjectAcl(bucketName, key, acl);
         
         // 设置预定义 ACL
@@ -171,8 +170,9 @@ public class ObjectTest {
         COSObjectInputStream cosObjectInput = cosObject.getObjectContent();
         
         // 方法2 下载文件到本地
-        File downFile = new File("output/object4java");
-        GetObjectRequest getObjectRequest = new GetObjectRequest(bucketName, key);
+        String outputFilePath = "object4java";
+        File downFile = new File(outputFilePath);
+        getObjectRequest = new GetObjectRequest(bucketName, key);
         ObjectMetadata downObjectMeta = cosClient.getObject(getObjectRequest, downFile);
         //.cssg-snippet-body-end
     }
@@ -223,7 +223,7 @@ public class ObjectTest {
         
         DeleteObjectsRequest deleteObjectsRequest = new DeleteObjectsRequest(bucketName);
         // 设置要删除的key列表, 最多一次删除1000个
-        ArrayList<DeleteObjectsRequest.KeyVersion> keyList = new ArrayList<>();
+        ArrayList<DeleteObjectsRequest.KeyVersion> keyList = new ArrayList<DeleteObjectsRequest.KeyVersion>();
         // 传入要删除的文件名
         keyList.add(new DeleteObjectsRequest.KeyVersion("project/folder1/picture.jpg"));
         keyList.add(new DeleteObjectsRequest.KeyVersion("project/folder2/text.txt"));
@@ -239,8 +239,10 @@ public class ObjectTest {
             List<MultiObjectDeleteException.DeleteError> deleteErrors = mde.getErrors();
         } catch (CosServiceException e) { // 如果是其他错误，例如参数错误， 身份验证不过等会抛出 CosServiceException
             e.printStackTrace();
+            throw e;
         } catch (CosClientException e) { // 如果是客户端错误，例如连接不上COS
             e.printStackTrace();
+            throw e;
         }
         //.cssg-snippet-body-end
     }
@@ -268,7 +270,7 @@ public class ObjectTest {
         String key = "object4java";
         InitiateMultipartUploadRequest initRequest = new InitiateMultipartUploadRequest(bucketName, key);
         InitiateMultipartUploadResult initResponse = cosClient.initiateMultipartUpload(initRequest);
-        String uploadId = initResponse.getUploadId();
+        uploadId = initResponse.getUploadId();
         //.cssg-snippet-body-end
     }
 
@@ -289,11 +291,15 @@ public class ObjectTest {
         //.cssg-snippet-body-start:[upload-part]
         // 上传分块, 最多10000个分块, 分块大小支持为1M - 5G。
         // 分块大小设置为4M。如果总计 n 个分块, 则 1 ~ n-1 的分块大小一致，最后一块小于等于前面的分块大小。
-        List<PartETag> partETags = new ArrayList<PartETag>();
+        partETags = new ArrayList<PartETag>();
         int partNumber = 1;
         int partSize = 4 * 1024 * 1024;
+        String bucketName = "bucket-cssg-test-java-1253653367";
+        String key = "object4java";
+        byte data[] = new byte[partSize];
+        ByteArrayInputStream partStream = new ByteArrayInputStream(data);
         // partStream 代表 part 数据的输入流, 流长度为 partSize
-        UploadPartRequest uploadRequest =  new    UploadPartRequest().withBucketName(bucketName).
+        UploadPartRequest uploadRequest =  new UploadPartRequest().withBucketName(bucketName).
          withUploadId(uploadId).withKey(key).withPartNumber(partNumber).
           withInputStream(partStream).withPartSize(partSize);  
         UploadPartResult uploadPartResult = cosClient.uploadPart(uploadRequest);
@@ -307,9 +313,12 @@ public class ObjectTest {
         //.cssg-snippet-body-start:[list-parts]
         // ListPart 用于在 complete 分块上传前或者 abort 分块上传前获取 uploadId 对应的已上传的分块信息, 可以用来构造 partEtags
         List<PartETag> partETags = new ArrayList<PartETag>();
+        String bucketName = "bucket-cssg-test-java-1253653367";
+        String key = "object4java";
         ListPartsRequest listPartsRequest = new ListPartsRequest(bucketName, key, uploadId);
+        PartListing partListing = null;
         do {
-              PartListing partListing = cosClient.listParts(listPartsRequest);
+            partListing = cosClient.listParts(listPartsRequest);
             for (PartSummary partSummary : partListing.getParts()) {
                 partETags.add(new PartETag(partSummary.getPartNumber(), partSummary.getETag()));
             }
@@ -321,6 +330,8 @@ public class ObjectTest {
     public void completeMultiUpload() {
         //.cssg-snippet-body-start:[complete-multi-upload]
         // complete 完成分块上传.
+        String bucketName = "bucket-cssg-test-java-1253653367";
+        String key = "object4java";
         CompleteMultipartUploadRequest compRequest = new CompleteMultipartUploadRequest(bucketName, key, uploadId, partETags);
         CompleteMultipartUploadResult result =  cosClient.completeMultipartUpload(compRequest);
         //.cssg-snippet-body-end
@@ -329,89 +340,76 @@ public class ObjectTest {
     public void abortMultiUpload() {
         //.cssg-snippet-body-start:[abort-multi-upload]
         // abortMultipartUpload 用于终止一个还未 complete 的分块上传
+        String bucketName = "bucket-cssg-test-java-1253653367";
+        String key = "object4java";
         AbortMultipartUploadRequest abortMultipartUploadRequest = new AbortMultipartUploadRequest(bucketName, key, uploadId);
         cosClient.abortMultipartUpload(abortMultipartUploadRequest);
         //.cssg-snippet-body-end
     }
 
-    public void transferUploadObject() {
+    public void transferUploadObject() throws InterruptedException {
         //.cssg-snippet-body-start:[transfer-upload-object]
         // 示例1：
         // 存储桶的命名格式为 BucketName-APPID，此处填写的存储桶名称必须为此格式
+        ExecutorService threadPool = Executors.newFixedThreadPool(1);
+        // 传入一个threadpool, 若不传入线程池, 默认TransferManager中会生成一个单线程的线程池。
+        TransferManager transferManager = new TransferManager(cosClient, threadPool);
         String bucketName = "bucket-cssg-test-java-1253653367";
-        String key = "/doc/picture.jpg";
-        File localFile = new File("/doc/picture.jpg");
+        String key = "object4java";
+        File localFile = new File(localFilePath);
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, localFile);
         // 本地文件上传
         Upload upload = transferManager.upload(putObjectRequest);
-         // 等待传输结束（如果想同步的等待上传结束，则调用 waitForCompletion）
+        // 等待传输结束（如果想同步的等待上传结束，则调用 waitForCompletion）
         UploadResult uploadResult = upload.waitForUploadResult();
-        
-        // 示例2：对大于分块大小的文件，使用断点续传
-        // 步骤一：获取 PersistableUpload
-        String bucketName = "bucket-cssg-test-java-1253653367";
-        String key = "exmpleobject";
-        File localFile = new File("exmpleobject");
-        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, localFile);
-        // 本地文件上传
-        PersistableUpload persistableUpload = null;
-        Upload upload = transferManager.upload(putObjectRequest);
-        // 等待"分块上传初始化"完成，并获取到 persistableUpload （包含uploadId等）
-        while(persistableUpload == null) {
-            persistableUpload = upload.getResumeableMultipartUploadId();
-            Thread.sleep(100);
-        }
-        // 保存 persistableUpload
-        
-        // 步骤二：当由于网络等问题，大文件的上传被中断，则根据 PersistableUpload 恢复该文件的上传，只上传未上传的分块
-        Upload newUpload = transferManager.resumeUpload(persistableUpload);
-         // 等待传输结束（如果想同步的等待上传结束，则调用 waitForCompletion）
-        UploadResult uploadResult = newUpload.waitForUploadResult();
+        transferManager.shutdownNow();
         //.cssg-snippet-body-end
     }
 
-    public void transferDownloadObject() {
+    public void transferDownloadObject() throws InterruptedException {
         //.cssg-snippet-body-start:[transfer-download-object]
         // Bucket 的命名格式为 BucketName-APPID ，此处填写的存储桶名称必须为此格式
+        ExecutorService threadPool = Executors.newFixedThreadPool(1);
+        // 传入一个threadpool, 若不传入线程池, 默认TransferManager中会生成一个单线程的线程池。
+        TransferManager transferManager = new TransferManager(cosClient, threadPool);
         String bucketName = "bucket-cssg-test-java-1253653367";
-        String key = "/doc/picture.jpg";
-        File localDownFile = new File("/doc/picture.jpg");
+        String key = "object4java";
+        File localDownFile = new File(localFilePath);
         GetObjectRequest getObjectRequest = new GetObjectRequest(bucketName, key);
         // 下载文件
         Download download = transferManager.download(getObjectRequest, localDownFile);
          // 等待传输结束（如果想同步的等待上传结束，则调用 waitForCompletion）
         download.waitForCompletion();
+        transferManager.shutdownNow();
         //.cssg-snippet-body-end
     }
 
-    public void transferCopyObject() {
+    public void transferCopyObject() throws InterruptedException {
         //.cssg-snippet-body-start:[transfer-copy-object]
         // 要拷贝的 bucket region, 支持跨地域拷贝
-        Region srcBucketRegion = new Region("ap-shanghai");
+        ExecutorService threadPool = Executors.newFixedThreadPool(1);
+        // 传入一个threadpool, 若不传入线程池, 默认TransferManager中会生成一个单线程的线程池。
+        TransferManager transferManager = new TransferManager(cosClient, threadPool);
+        String secretId = System.getenv("COS_KEY");
+        String secretKey = System.getenv("COS_SECRET");
+        COSCredentials srcCredentials = new BasicCOSCredentials(secretId, secretKey);
+        Region srcBucketRegion = new Region("ap-guangzhou");
         // 源 Bucket, 存储桶的命名格式为 BucketName-APPID，此处填写的存储桶名称必须为此格式
-        String srcBucketName = "srcBucket-1251668577";
+        String srcBucketName = "bucket-cssg-source-1253653367";
         // 要拷贝的源文件
-        String srcKey = "object4java";
+        String srcKey = "sourceObject";
         // 目的 Bucket, 存储桶的命名格式为 BucketName-APPID，此处填写的存储桶名称必须为此格式
         String destBucketName = "bucket-cssg-test-java-1253653367";
         // 要拷贝的目的文件
         String destKey = "object4java";
-        
         // 生成用于获取源文件信息的 srcCOSClient
-        COSClient srcCOSClient = new COSClient(cred, new ClientConfig(srcBucketRegion));
+        COSClient srcCOSClient = new COSClient(srcCredentials, new ClientConfig(srcBucketRegion));
         CopyObjectRequest copyObjectRequest = new CopyObjectRequest(srcBucketRegion, srcBucketName,
                 srcKey, destBucketName, destKey);
-        try {
-            Copy copy = transferManager.copy(copyObjectRequest, srcCOSClient, null);
-            // 返回一个异步结果 copy, 可同步的调用 waitForCopyResult 等待 copy 结束, 成功返回 CopyResult, 失败抛出异常.
-            CopyResult copyResult = copy.waitForCopyResult();
-        } catch (CosServiceException e) {
-            e.printStackTrace();
-        } catch (CosClientException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Copy copy = transferManager.copy(copyObjectRequest, srcCOSClient, null);
+        // 返回一个异步结果 copy, 可同步的调用 waitForCopyResult 等待 copy 结束, 成功返回 CopyResult, 失败抛出异常.
+        CopyResult copyResult = copy.waitForCopyResult();
+        transferManager.shutdownNow();
         //.cssg-snippet-body-end
     }
 
@@ -419,7 +417,7 @@ public class ObjectTest {
         //.cssg-snippet-body-start:[transfer-empty]
         // 线程池大小，建议在客户端与 COS 网络充足（例如使用腾讯云的 CVM，同地域上传 COS）的情况下，设置成16或32即可，可较充分的利用网络资源
         // 对于使用公网传输且网络带宽质量不高的情况，建议减小该值，避免因网速过慢，造成请求超时。
-        ExecutorService threadPool = Executors.newFixedThreadPool(32);
+        ExecutorService threadPool = Executors.newFixedThreadPool(1);
         // 传入一个 threadpool, 若不传入线程池，默认 TransferManager 中会生成一个单线程的线程池。
         TransferManager transferManager = new TransferManager(cosClient, threadPool);
         // 设置高级接口的分块上传阈值和分块大小为10MB
@@ -433,34 +431,34 @@ public class ObjectTest {
         //.cssg-snippet-body-end
     }
 
-    public void transferUploadObjectComplete() {
+    public void transferUploadObjectComplete() throws InterruptedException {
         //.cssg-snippet-body-start:[transfer-upload-object-complete]
+        ExecutorService threadPool = Executors.newFixedThreadPool(1);
         TransferManager transferManager = new TransferManager(cosClient, threadPool);
         
-        String key = "docs/object4java.doc";
-        File localFile = new File("src/test/resources/len30M.txt");
+        String key = "object4java";
+        File localFile = new File(localFilePath);
+        String bucketName = "bucket-cssg-test-java-1253653367";
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, localFile);
-        try {
-            // 返回一个异步结果 Upload, 可同步的调用 waitForUploadResult 等待 upload 结束, 成功返回 UploadResult, 失败抛出异常.
-            Upload upload = transferManager.upload(putObjectRequest);
-            Thread.sleep(10000);
-            // 暂停任务
-            PersistableUpload persistableUpload = upload.pause();
-            // 恢复上传
-            upload = transferManager.resumeUpload(persistableUpload);
-            // 等待上传任务完成
-            UploadResult uploadResult = upload.waitForUploadResult();
-            System.out.println(uploadResult.getETag());
-        } catch (CosServiceException e) {
-            e.printStackTrace();
-        } catch (CosClientException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        
+        // 返回一个异步结果 Upload, 可同步的调用 waitForUploadResult 等待 upload 结束, 成功返回 UploadResult, 失败抛出异常.
+        Upload upload = transferManager.upload(putObjectRequest);
+        Thread.sleep(1000);
+
+        // 暂停任务，获取 PersistableUpload
+        PersistableUpload persistableUpload = upload.pause();
+        //也可通过如下方式，获取PersistableUpload
+        // while(persistableUpload == null) {
+        //     persistableUpload = upload.getResumeableMultipartUploadId();
+        //     System.out.println(System.currentTimeMillis());
+        //     Thread.sleep(100);
+        // }
+        // 恢复上传
+        upload = transferManager.resumeUpload(persistableUpload);
+        // 等待上传任务完成
+        UploadResult uploadResult = upload.waitForUploadResult();
+        System.out.println(uploadResult.getETag());
+
         transferManager.shutdownNow();
-        cosClient.shutdown();
         //.cssg-snippet-body-end
     }
 
@@ -468,9 +466,9 @@ public class ObjectTest {
         //.cssg-snippet-body-start:[copy-object]
         // 同地域同账号拷贝
         // 源 Bucket, Bucket的命名格式为 BucketName-APPID，此处填写的存储桶名称必须为此格式
-        String srcBucketName = "srcBucket-1253653367";
+        String srcBucketName = "bucket-cssg-source-1253653367";
         // 要拷贝的源文件
-        String srcKey = "srcobject";
+        String srcKey = "sourceObject";
         // 目标存储桶, Bucket的命名格式为 BucketName-APPID，此处填写的存储桶名称必须为此格式
         String destBucketName = "bucket-cssg-test-java-1253653367";
         // 要拷贝的目的文件
@@ -479,7 +477,7 @@ public class ObjectTest {
         CopyObjectResult copyObjectResult = cosClient.copyObject(copyObjectRequest);
         
         // 跨账号跨地域拷贝（需要拥有对源文件的读取权限以及目的文件的写入权限）
-        String srcBucketNameOfDiffAppid = "srcBucket-125100000";
+        String srcBucketNameOfDiffAppid = "bucket-own-by-others-1251668577";
         Region srcBucketRegion = new Region("ap-shanghai");
         copyObjectRequest = new CopyObjectRequest(srcBucketRegion, srcBucketNameOfDiffAppid, srcKey, destBucketName, destKey);
         copyObjectResult = cosClient.copyObject(copyObjectRequest);
@@ -498,8 +496,7 @@ public class ObjectTest {
         // 存储桶名称，格式为：BucketName-APPID
         // 设置目标存储桶名称，对象名称和分块上传 ID
         String destinationBucketName = "bucket-cssg-test-java-1253653367";
-        String destinationTargetKey = "target_object4java";
-        String uploadId = "1559020734eeca6640329099e680457e0ef653a72dd70d4eade64205d270b532c22a38649e";
+        String destinationTargetKey = "object4java";
         int partNumber = 1;
         CopyPartRequest copyPartRequest = new CopyPartRequest();
         copyPartRequest.setDestinationBucketName(destinationBucketName);
@@ -508,10 +505,10 @@ public class ObjectTest {
         copyPartRequest.setPartNumber(partNumber);
         // 设置源存储桶的区域和名称，以及对象名称，偏移量区间
         String sourceBucketRegion = "ap-guangzhou";
-        String sourceBucketName = "bucket-cssg-test-java-1253653367";
-        String sourceKey = "object4java";
+        String sourceBucketName = "bucket-cssg-source-1253653367";
+        String sourceKey = "sourceObject";
         Long firstByte = 1L;
-        Long lastByte = 5242880L;
+        Long lastByte = 1048576L;
         copyPartRequest.setSourceBucketRegion(new Region(sourceBucketRegion));
         copyPartRequest.setSourceBucketName(sourceBucketName);
         copyPartRequest.setSourceKey(sourceKey);
@@ -519,6 +516,7 @@ public class ObjectTest {
         copyPartRequest.setLastByte(lastByte);
         
         CopyPartResult copyPartResult = cosClient.copyPart(copyPartRequest);
+        partETags.add(copyPartResult.getPartETag());
         //.cssg-snippet-body-end
     }
 
@@ -570,7 +568,7 @@ public class ObjectTest {
         // 初始化用户身份信息, 匿名身份不用传入 SecretId、SecretKey 等密钥信息
         COSCredentials cred = new AnonymousCOSCredentials();
         // 设置 bucket 的区域，COS 地域的简称请参照 https://cloud.tencent.com/document/product/436/6224
-        ClientConfig clientConfig = new ClientConfig(new Region("ap-beijing"));
+        ClientConfig clientConfig = new ClientConfig(new Region("ap-guangzhou"));
         // 生成 cos 客户端
         COSClient cosClient = new COSClient(cred, clientConfig);
         // bucket 名需包含 appid
@@ -585,19 +583,20 @@ public class ObjectTest {
         //.cssg-snippet-body-end
     }
 
-    public void putObjectCseCAes() {
+    public void putObjectCseCAes() throws NoSuchAlgorithmException {
         //.cssg-snippet-body-start:[put-object-cse-c-aes]
         // 初始化用户身份信息(secretId, secretKey)
         String secretId = System.getenv("COS_KEY");
         String secretKey = System.getenv("COS_SECRET");
         COSCredentials cred = new BasicCOSCredentials(secretId, secretKey);
         // 设置存储桶地域，COS 地域的简称请参照 https://www..com/document/product/436/6224
-        ClientConfig clientConfig = new ClientConfig(new Region("ap-beijing"));
+        ClientConfig clientConfig = new ClientConfig(new Region("ap-guangzhou"));
         
-        // 加载保存在文件中的密钥, 如果不存在，请先使用 buildAndSaveSymmetricKey 生成密钥
-        // buildAndSaveSymmetricKey();
-        SecretKey symKey = loadSymmetricAESKey();
-        
+        // 生成对称密钥，你可以将其保存在文件中
+        KeyGenerator symKeyGenerator = KeyGenerator.getInstance("AES");
+        symKeyGenerator.init(256);
+        SecretKey symKey = symKeyGenerator.generateKey();
+
         EncryptionMaterials encryptionMaterials = new EncryptionMaterials(symKey);
         // 使用 AES/GCM 模式，并将加密信息存储在文件元数据中.
         CryptoConfiguration cryptoConf = new CryptoConfiguration(CryptoMode.AuthenticatedEncryption)
@@ -614,24 +613,26 @@ public class ObjectTest {
         // 这里给出 putObject 的示例, 对于高级 API 上传，只用在生成 TransferManager 时传入 COSEncryptionClient 对象即可
         String bucketName = "bucket-cssg-test-java-1253653367";
         String key = "object4java";
-        File localFile = new File("src/test/resources/plain.txt");
+        File localFile = new File(localFilePath);
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, localFile);
         cosEncryptionClient.putObject(putObjectRequest);
         //.cssg-snippet-body-end
     }
 
-    public void putObjectCseCRsa() {
+    public void putObjectCseCRsa() throws NoSuchAlgorithmException {
         //.cssg-snippet-body-start:[put-object-cse-c-rsa]
         // 初始化用户身份信息(secretId, secretKey)
         String secretId = System.getenv("COS_KEY");
         String secretKey = System.getenv("COS_SECRET");
         COSCredentials cred = new BasicCOSCredentials(secretId, secretKey);
         // 设置存储桶地域，COS 地域的简称请参照 https://cloud.tencent.com/document/product/436/6224
-        ClientConfig clientConfig = new ClientConfig(new Region("ap-beijing"));
+        ClientConfig clientConfig = new ClientConfig(new Region("ap-guangzhou"));
         
-        // 加载保存在文件中的密钥, 如果不存在，请先使用 buildAndSaveAsymKeyPair 生成密钥
-        buildAndSaveAsymKeyPair();
-        KeyPair asymKeyPair = loadAsymKeyPair();
+        // 生成非对称密钥
+        KeyPairGenerator keyGenerator = KeyPairGenerator.getInstance("RSA");
+        SecureRandom srand = new SecureRandom();
+        keyGenerator.initialize(1024, srand);
+        KeyPair asymKeyPair = keyGenerator.generateKeyPair();
         
         EncryptionMaterials encryptionMaterials = new EncryptionMaterials(asymKeyPair);
         // 使用 AES/GCM 模式，并将加密信息存储在文件元数据中.
@@ -649,7 +650,7 @@ public class ObjectTest {
         // 这里给出 putObject 的示例，对于高级 API 上传，只用在生成 TransferManager 时传入 COSEncryptionClient 对象即可
         String bucketName = "bucket-cssg-test-java-1253653367";
         String key = "object4java";
-        File localFile = new File("src/test/resources/plain.txt");
+        File localFile = new File(localFilePath);
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, localFile);
         cosEncryptionClient.putObject(putObjectRequest);
         //.cssg-snippet-body-end
@@ -657,6 +658,7 @@ public class ObjectTest {
 
     public void putAndListObjects() {
         //.cssg-snippet-body-start:[put-and-list-objects]
+        String bucketName = "bucket-cssg-test-java-1253653367";
         cosClient.putObject(bucketName, "project/folder1/picture.jpg", "content");
         cosClient.putObject(bucketName, "project/folder2/text.txt", "content");
         cosClient.putObject(bucketName, "project/folder2/music.mp3", "content");
@@ -691,12 +693,12 @@ public class ObjectTest {
         //.cssg-snippet-body-end
     }
 
-    public void putObjectFlex() {
+    public void putObjectFlex() throws FileNotFoundException {
         //.cssg-snippet-body-start:[put-object-flex]
         // Bucket的命名格式为 BucketName-APPID ，此处填写的存储桶名称必须为此格式
         String bucketName = "bucket-cssg-test-java-1253653367";
         // 方法1 本地文件上传
-        File localFile = new File("object4java");
+        File localFile = new File(localFilePath);
         String key = "object4java";
         PutObjectResult putObjectResult = cosClient.putObject(bucketName, key, localFile);
         String etag = putObjectResult.getETag();  // 获取文件的 etag
@@ -708,8 +710,8 @@ public class ObjectTest {
         objectMetadata.setContentLength(500);  
         // 设置 Content type, 默认是 application/octet-stream
         objectMetadata.setContentType("application/pdf");
-        PutObjectResult putObjectResult = cosClient.putObject(bucketName, key, fileInputStream, objectMetadata);
-        String etag = putObjectResult.getETag();
+        putObjectResult = cosClient.putObject(bucketName, key, fileInputStream, objectMetadata);
+        etag = putObjectResult.getETag();
         // 关闭输入流...
         
         // 方法3 提供更多细粒度的控制, 常用的设置如下
@@ -719,25 +721,47 @@ public class ObjectTest {
         // 3 上传的同时指定权限(也可通过调用 API set object acl 来设置)
         // 4 若要全局关闭上传MD5校验, 则设置系统环境变量，此设置会对所有的会影响所有的上传校验。 默认是进行校验的。
         // 关闭MD5校验：  System.setProperty(SkipMd5CheckStrategy.DISABLE_PUT_OBJECT_MD5_VALIDATION_PROPERTY, "true");
-        // 再次打开校验  System.setProperty(SkipMd5CheckStrategy.DISABLE_PUT_OBJECT_MD5_VALIDATION_PROPERTY, null);
-        File localFile = new File("picture.jpg");
-        String key = "picture.jpg";
+        // 打开MD5校验  System.setProperty(SkipMd5CheckStrategy.DISABLE_PUT_OBJECT_MD5_VALIDATION_PROPERTY, null);
+        localFile = new File(localFilePath);
+        key = "picture.jpg";
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, localFile);
         // 设置存储类型为低频
         putObjectRequest.setStorageClass(StorageClass.Standard_IA);
         // 设置自定义属性(如 content-type, content-disposition 等)
-        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata = new ObjectMetadata();
         // 设置 Content type, 默认是 application/octet-stream
         objectMetadata.setContentType("image/jpeg");
         putObjectRequest.setMetadata(objectMetadata);
-        PutObjectResult putObjectResult = cosClient.putObject(putObjectRequest);
-        String etag = putObjectResult.getETag();  // 获取文件的 etag
+        putObjectResult = cosClient.putObject(putObjectRequest);
+        etag = putObjectResult.getETag();  // 获取文件的 etag
         //.cssg-snippet-body-end
     }
 
+    protected static void buildTestFile(String fileName, long fileSize) throws IOException {
+        BufferedOutputStream bos = null;
+        try {
+            bos = new BufferedOutputStream(new FileOutputStream(fileName));
+            final int buffSize = 1024;
+            byte[] tmpBuf = new byte[buffSize];
+            long byteWriten = 0;
+            while (byteWriten < fileSize) {
+                ThreadLocalRandom.current().nextBytes(tmpBuf);
+                long maxWriteLen = Math.min(buffSize, fileSize - byteWriten);
+                bos.write(tmpBuf, 0, new Long(maxWriteLen).intValue());
+                byteWriten += maxWriteLen;
+            }
+        } finally {
+            if (bos != null) {
+                try {
+                    bos.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+    }
 
     @Before
-    public void setup() {
+    public void setup() throws IOException {
         //.cssg-snippet-body-start:[global-init]
         // 1 初始化用户身份信息（secretId, secretKey）。
         String secretId = System.getenv("COS_KEY");
@@ -748,16 +772,38 @@ public class ObjectTest {
         Region region = new Region("ap-guangzhou");
         ClientConfig clientConfig = new ClientConfig(region);
         // 3 生成 cos 客户端。
-        COSClient cosClient = new COSClient(cred, clientConfig);
+        cosClient = new COSClient(cred, clientConfig);
         //.cssg-snippet-body-end
+        String bucketName = "bucket-cssg-test-java-1253653367";
+        cosClient.createBucket(bucketName);
+        localFilePath = "test.txt";
+        buildTestFile(localFilePath, 100 * 1024 * 1024);
         putBucketComplete();
     }
 
-    @After
-    public void teardown() {
-        deleteObject();
-        deleteBucket();
+    void deleteLocalFile() {
+        new File(localFilePath).delete();
     }
+
+    @After
+    public void teardown() throws InterruptedException {
+        deleteObject();
+        Thread.sleep(5000);
+        deleteBucket();
+        deleteLocalFile();
+    }
+
+    void uploadArchiveObject() {
+        // 上传一个归档文件
+        String bucketName = "bucket-cssg-test-java-1253653367";
+        String key = "object4java";
+        File localFile = new File(localFilePath);
+        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, localFile);
+        // 设置存储类型：标准存储（Standard）, 低频存储（Standard_IA）和归档存储（ARCHIVE）。默认是标准存储（Standard）
+        putObjectRequest.setStorageClass(StorageClass.Archive);
+        cosClient.putObject(putObjectRequest);
+    }
+
 
     @Test
     public void testObjectMetadata() {
@@ -770,6 +816,7 @@ public class ObjectTest {
         getPresignUploadUrl();
         deleteObject();
         deleteMultiObject();
+        uploadArchiveObject();
         restoreObject();
     }
 
@@ -777,6 +824,7 @@ public class ObjectTest {
     public void testObjectMultiUpload() {
         initMultiUpload();
         listMultiUpload();
+        partETags = new LinkedList<>();
         uploadPart();
         listParts();
         completeMultiUpload();
@@ -790,7 +838,7 @@ public class ObjectTest {
     }
 
     @Test
-    public void testObjectTransfer() {
+    public void testObjectTransfer() throws InterruptedException {
         transferUploadObject();
         transferDownloadObject();
         transferCopyObject();
@@ -802,6 +850,7 @@ public class ObjectTest {
     public void testObjectCopy() {
         copyObject();
         initMultiUpload();
+        partETags = new LinkedList<>();
         uploadPartCopy();
         completeMultiUpload();
     }
@@ -813,15 +862,21 @@ public class ObjectTest {
     }
 
     @Test
-    public void testPutObjectCseC() {
+    public void testPutObjectCseC() throws NoSuchAlgorithmException {
         putObjectCseCAes();
         putObjectCseCRsa();
     }
 
     @Test
-    public void testPutObjectFlex() {
+    public void testPutObjectFlex() throws FileNotFoundException {
         putAndListObjects();
         putObjectFlex();
+        String bucketName = "bucket-cssg-test-java-1253653367";
+        cosClient.deleteObject(bucketName, "project/folder1/picture.jpg");
+        cosClient.deleteObject(bucketName, "project/folder2/text.txt");
+        cosClient.deleteObject(bucketName, "project/folder2/music.mp3");
+        cosClient.deleteObject(bucketName, "project/video.mp4");
+        cosClient.deleteObject(bucketName, "picture.jpg");
     }
 
 }

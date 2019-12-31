@@ -58,7 +58,7 @@ public class ServiceTest {
         Region region = new Region("ap-guangzhou");
         ClientConfig clientConfig = new ClientConfig(region);
         // 3 生成 cos 客户端。
-        COSClient cosClient = new COSClient(cred, clientConfig);
+        cosClient = new COSClient(cred, clientConfig);
         //.cssg-snippet-body-end
     }
 
