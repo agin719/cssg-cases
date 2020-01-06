@@ -26,16 +26,10 @@ type CosTestSuite struct {
 
 	// special_file_name
 	SepFileName string
-
-	Uin                   string
-	ReplicationDestBucket string
 }
 
 func (s *CosTestSuite) SetupSuite() {
 	//.cssg-snippet-body-start:[global-init]
-	// 将uin和跨区域复制存储桶替换成真是信息，跨区域复制存储桶与原存储桶的地域不能相同
-	s.Uin = "100000760461"
-	s.ReplicationDestBucket = "qcs::cos:ap-beijing::bucket-cssg-assist-1253653367"
 	// 将 bucket-cssg-test-go-1253653367 和 ap-guangzhou修改为真实的信息
 	u, _ := url.Parse("https://bucket-cssg-test-go-1253653367.cos.ap-guangzhou.myqcloud.com")
 	b := &cos.BaseURL{BucketURL: u}
@@ -113,14 +107,14 @@ func (s *CosTestSuite) putBucketAcl() {
 	opt = &cos.BucketPutACLOptions{
 		Body: &cos.ACLXml{
 			Owner: &cos.Owner{
-				ID: "qcs::cam::uin/" + s.Uin + ":uin/" + s.Uin,
+				ID: "qcs::cam::uin/100000760461:uin/100000760461",
 			},
 			AccessControlList: []cos.ACLGrant{
 				{
 					Grantee: &cos.ACLGrantee{
 						// Type can also chose the "Group", "CanonicalUser"
 						Type: "RootAccount",
-						ID:   "qcs::cam::uin/" + s.Uin + ":uin/" + s.Uin,
+						ID:   "qcs::cam::uin/100000760461:uin/100000760461",
 					},
 					// Permission can also chose the "WRITE"，"FULL_CONTROL"
 					Permission: "FULL_CONTROL",
@@ -252,7 +246,7 @@ func (s *CosTestSuite) putBucketReplication() {
 	//.cssg-snippet-body-start:[put-bucket-replication]
 	opt := &cos.PutBucketReplicationOptions{
 		// qcs::cam::uin/[UIN]:uin/[Subaccount]
-		Role: "qcs::cam::uin/" + s.Uin + ":uin/" + s.Uin,
+		Role: "qcs::cam::uin/100000760461:uin/100000760461",
 		Rule: []cos.BucketReplicationRule{
 			{
 				ID: "1",
@@ -260,7 +254,7 @@ func (s *CosTestSuite) putBucketReplication() {
 				Status: "Enabled",
 				Destination: &cos.ReplicationDestination{
 					// qcs::cos:[Region]::[Bucketname-Appid]
-					Bucket: s.ReplicationDestBucket,
+					Bucket: "qcs::cos:ap-beijing::bucket-cssg-assist-1253653367",
 				},
 			},
 		},

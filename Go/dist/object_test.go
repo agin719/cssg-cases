@@ -57,13 +57,13 @@ func (s *CosTestSuite) putObjectAcl() {
 	opt = &cos.ObjectPutACLOptions{
 		Body: &cos.ACLXml{
 			Owner: &cos.Owner{
-				ID: "qcs::cam::uin/" + s.Uin + ":uin/" + s.Uin,
+				ID: "qcs::cam::uin/100000760461:uin/100000760461",
 			},
 			AccessControlList: []cos.ACLGrant{
 				{
 					Grantee: &cos.ACLGrantee{
 						Type: "RootAccount",
-						ID:   "qcs::cam::uin/" + s.Uin + ":uin/" + s.Uin,
+						ID:   "qcs::cam::uin/100000760461:uin/100000760461",
 					},
 
 					Permission: "FULL_CONTROL",
