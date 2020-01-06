@@ -9,7 +9,6 @@ import (
 	"io/ioutil"
 	"math/rand"
 	"net/http"
-	"net/url"
 	"os"
 	"strings"
 	"time"
@@ -18,7 +17,7 @@ import (
 func (s *CosTestSuite) deleteObject() {
 	client := s.Client
 	//.cssg-snippet-body-start:[delete-object]
-	key := "test/objectPut.go"
+	key := "example"
 	_, err := client.Object.Delete(context.Background(), key)
 	assert.Nil(s.T(), err, "Test Failed")
 	//.cssg-snippet-body-end
@@ -27,7 +26,7 @@ func (s *CosTestSuite) deleteObject() {
 func (s *CosTestSuite) putObject() {
 	client := s.Client
 	//.cssg-snippet-body-start:[put-object]
-	key := "test/objectPut.go"
+	key := "example"
 	f, err := os.Open("./test")
 	opt := &cos.ObjectPutOptions{
 		ObjectPutHeaderOptions: &cos.ObjectPutHeaderOptions{
@@ -52,7 +51,7 @@ func (s *CosTestSuite) putObjectAcl() {
 			XCosACL: "private",
 		},
 	}
-	key := "test/objectPut.go"
+	key := "example"
 	_, err := client.Object.PutACL(context.Background(), key, opt)
 	// 2.Set by body
 	opt = &cos.ObjectPutACLOptions{
@@ -81,7 +80,7 @@ func (s *CosTestSuite) putObjectAcl() {
 func (s *CosTestSuite) getObjectAcl() {
 	client := s.Client
 	//.cssg-snippet-body-start:[get-object-acl]
-	key := "test/objectPut.go"
+	key := "example"
 	_, _, err := client.Object.GetACL(context.Background(), key)
 	assert.Nil(s.T(), err, "Test Failed")
 	//.cssg-snippet-body-end
@@ -90,7 +89,7 @@ func (s *CosTestSuite) getObjectAcl() {
 func (s *CosTestSuite) headObject() {
 	client := s.Client
 	//.cssg-snippet-body-start:[head-object]
-	key := "test/objectPut.go"
+	key := "example"
 	_, err := client.Object.Head(context.Background(), key, nil)
 	assert.Nil(s.T(), err, "Test Failed")
 	//.cssg-snippet-body-end
@@ -99,7 +98,7 @@ func (s *CosTestSuite) headObject() {
 func (s *CosTestSuite) getObject() {
 	client := s.Client
 	//.cssg-snippet-body-start:[get-object]
-	key := "test/objectPut.go"
+	key := "example"
 	opt := &cos.ObjectGetOptions{
 		ResponseContentType: "text/html",
 		Range:               "bytes=0-3",
@@ -111,10 +110,7 @@ func (s *CosTestSuite) getObject() {
 	resp.Body.Close()
 
 	// 2.Get object to local file.
-	_, err = client.Object.GetToFile(context.Background(), key, "hello_1.txt", nil)
-	if err != nil {
-		panic(err)
-	}
+	_, err = client.Object.GetToFile(context.Background(), key, "example.txt", nil)
 	assert.Nil(s.T(), err, "Test Failed")
 	//.cssg-snippet-body-end
 }
@@ -124,7 +120,7 @@ func (s *CosTestSuite) getPresignDownloadUrl() {
 	//.cssg-snippet-body-start:[get-presign-download-url]
 	ak := os.Getenv("COS_KEY")
 	sk := os.Getenv("COS_SECRET")
-	name := "test/objectPut.go"
+	name := "example"
 	ctx := context.Background()
 	// 1.Normal add auth header way to get object
 	resp, err := client.Object.Get(ctx, name, nil)
@@ -156,7 +152,7 @@ func (s *CosTestSuite) getPresignUploadUrl() {
 	ak := os.Getenv("COS_KEY")
 	sk := os.Getenv("COS_SECRET")
 
-	name := "test/objectPut.go"
+	name := "example"
 	ctx := context.Background()
 	// NewReader create file content
 	f := strings.NewReader("test")
@@ -212,7 +208,7 @@ func (s *CosTestSuite) deleteMultiObject() {
 func (s *CosTestSuite) restoreObject() {
 	client := s.Client
 	//.cssg-snippet-body-start:[restore-object]
-	key := "test/restore"
+	key := "example_restore"
 	f, err := os.Open("./test")
 	opt := &cos.ObjectPutOptions{
 		ObjectPutHeaderOptions: &cos.ObjectPutHeaderOptions{
@@ -237,14 +233,15 @@ func (s *CosTestSuite) restoreObject() {
 	_, err = client.Object.PostRestore(context.Background(), key, opts)
 	assert.Nil(s.T(), err, "Test Failed")
 
-	_, err = client.Object.Delete(context.Background(), key)
 	//.cssg-snippet-body-end
+	_, err = client.Object.Delete(context.Background(), key)
+	assert.Nil(s.T(), err, "Test Failed")
 }
 
 func (s *CosTestSuite) initMultiUpload() string {
 	client := s.Client
 	//.cssg-snippet-body-start:[init-multi-upload]
-	name := "test_multipart"
+	name := "example_multipart"
 	// 可选opt,如果不是必要操作，建议上传文件时不要给单个文件设置权限，避免达到限制。若不设置默认继承桶的权限。
 	v, _, err := client.Object.InitiateMultipartUpload(context.Background(), name, nil)
 	assert.Nil(s.T(), err, "Test Failed")
@@ -264,8 +261,8 @@ func (s *CosTestSuite) uploadPart(uploadID string) {
 	client := s.Client
 	//.cssg-snippet-body-start:[upload-part]
 	// 注意，上传分块的块数最多10000块
-	key := "test_multipart"
-	f := strings.NewReader("test heoo")
+	key := "example_multipart"
+	f := strings.NewReader("test hello")
 	// opt可选
 	_, err := client.Object.UploadPart(
 		context.Background(), key, uploadID, 1, f, nil,
@@ -277,7 +274,7 @@ func (s *CosTestSuite) uploadPart(uploadID string) {
 func (s *CosTestSuite) listParts(uploadID string) {
 	client := s.Client
 	//.cssg-snippet-body-start:[list-parts]
-	key := "test_multipart"
+	key := "example_multipart"
 	_, _, err := client.Object.ListParts(context.Background(), key, uploadID, nil)
 	assert.Nil(s.T(), err, "Test Failed")
 	//.cssg-snippet-body-end
@@ -311,7 +308,7 @@ func (s *CosTestSuite) completeMultiUpload() {
 	// 封装 UploadPart 接口返回 etag 信息
 
 	// Init, UploadPart and Complete process
-	key := "test_multipart"
+	key := "example_multipart"
 	v, _, err := client.Object.InitiateMultipartUpload(context.Background(), key, nil)
 	uploadID := v.UploadID
 	blockSize := 1024 * 1024 * 3
@@ -337,7 +334,7 @@ func (s *CosTestSuite) completeMultiUpload() {
 func (s *CosTestSuite) abortMultiUpload(uploadID string) {
 	client := s.Client
 	//.cssg-snippet-body-start:[abort-multi-upload]
-	key := "test_multipart"
+	key := "example_multipart"
 	// Abort
 	_, err := client.Object.AbortMultipartUpload(context.Background(), key, uploadID)
 	assert.Nil(s.T(), err, "Test Failed")
@@ -347,7 +344,7 @@ func (s *CosTestSuite) abortMultiUpload(uploadID string) {
 func (s *CosTestSuite) transferUploadObject() {
 	client := s.Client
 	//.cssg-snippet-body-start:[transfer-upload-object]
-	key := "object4go"
+	key := "example"
 	file := "./test"
 
 	_, _, err := client.Object.Upload(
@@ -362,23 +359,22 @@ func (s *CosTestSuite) transferUploadObject() {
 func (s *CosTestSuite) copyObject() {
 	client := s.Client
 	//.cssg-snippet-body-start:[copy-object]
-	name := "test/objectPut.go"
+	name := "example"
 	// 1.Normal put string content
 	f := strings.NewReader("test")
 	_, err := client.Object.Put(context.Background(), name, f, nil)
 	assert.Nil(s.T(), err, "Test Failed")
 
-	u, _ := url.Parse("http://bucket-cssg-test-go-1259654469.cos.ap-guangzhou.myqcloud.com")
-	soruceURL := fmt.Sprintf("%s/%s", u.Host, name)
-	dest := "test/objectMove_dest"
+	soruceURL := fmt.Sprintf("%s/%s", client.BaseURL.BucketURL.Host, name)
+	dest := "example_dest"
 	// 如果不是必要操作，建议上传文件时不要给单个文件设置权限，避免达到限制。若不设置默认继承桶的权限。
 	// opt := &cos.ObjectCopyOptions{}
 	_, _, err = client.Object.Copy(context.Background(), dest, soruceURL, nil)
 	assert.Nil(s.T(), err, "Test Failed")
 	//.cssg-snippet-body-end
+
 	_, err = client.Object.Delete(context.Background(), name)
 	assert.Nil(s.T(), err, "Test Failed")
-
 	_, err = client.Object.Delete(context.Background(), dest)
 	assert.Nil(s.T(), err, "Test Failed")
 }

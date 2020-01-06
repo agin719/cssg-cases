@@ -37,7 +37,7 @@ func (s *CosTestSuite) SetupSuite() {
 	s.Uin = "100000760461"
 	s.ReplicationDestBucket = "qcs::cos:ap-beijing::bucket-cssg-assist-1253653367"
 	// 将 bucket-cssg-test-go-1253653367 和 ap-guangzhou修改为真实的信息
-	u, _ := url.Parse("http://bucket-cssg-test-go-1253653367.cos.ap-guangzhou.myqcloud.com")
+	u, _ := url.Parse("https://bucket-cssg-test-go-1253653367.cos.ap-guangzhou.myqcloud.com")
 	b := &cos.BaseURL{BucketURL: u}
 	// 1.永久密钥
 	client := cos.NewClient(b, &http.Client{
@@ -107,6 +107,7 @@ func (s *CosTestSuite) putBucketAcl() {
 		},
 	}
 	_, err := client.Bucket.PutACL(context.Background(), opt)
+	assert.Nil(s.T(), err, "Test Failed")
 
 	// 2. Set Bucket ACL by body.
 	opt = &cos.BucketPutACLOptions{
