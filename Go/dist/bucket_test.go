@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"os"
 	"testing"
+	"time"
 )
 
 type CosTestSuite struct {
@@ -58,16 +59,22 @@ func (s *CosTestSuite) putBucket() {
 		XCosACL: "public-read",
 	}
 	_, err := client.Bucket.Put(context.Background(), opt)
-	assert.Nil(s.T(), err, "Test Failed")
+	if err != nil {
+		panic(err)
+	}
 	//.cssg-snippet-body-end
+	assert.Nil(s.T(), err, "Test Failed")
 }
 
 func (s *CosTestSuite) deleteBucket() {
 	client := s.Client
 	//.cssg-snippet-body-start:[delete-bucket]
 	_, err := client.Bucket.Delete(context.Background())
-	assert.Nil(s.T(), err, "Test Failed")
+	if err != nil {
+		panic(err)
+	}
 	//.cssg-snippet-body-end
+	assert.Nil(s.T(), err, "Test Failed")
 }
 
 func (s *CosTestSuite) getBucket() {
@@ -78,22 +85,28 @@ func (s *CosTestSuite) getBucket() {
 		MaxKeys: 100,
 	}
 	_, _, err := client.Bucket.Get(context.Background(), opt)
-	assert.Nil(s.T(), err, "Test Failed")
+	if err != nil {
+		panic(err)
+	}
 	//.cssg-snippet-body-end
+	assert.Nil(s.T(), err, "Test Failed")
 }
 
 func (s *CosTestSuite) headBucket() {
 	client := s.Client
 	//.cssg-snippet-body-start:[head-bucket]
 	_, err := client.Bucket.Head(context.Background())
-	assert.Nil(s.T(), err, "Test Failed")
+	if err != nil {
+		panic(err)
+	}
 	//.cssg-snippet-body-end
+	assert.Nil(s.T(), err, "Test Failed")
 }
 
 func (s *CosTestSuite) putBucketAcl() {
 	client := s.Client
 	//.cssg-snippet-body-start:[put-bucket-acl]
-	// 1. Set Bucket ACL by header.
+	// 1. 通过请求头设置Bucket ACL
 	opt := &cos.BucketPutACLOptions{
 		Header: &cos.ACLHeaderOptions{
 			//private，public-read，public-read-write
@@ -101,9 +114,11 @@ func (s *CosTestSuite) putBucketAcl() {
 		},
 	}
 	_, err := client.Bucket.PutACL(context.Background(), opt)
-	assert.Nil(s.T(), err, "Test Failed")
+	if err != nil {
+		panic(err)
+	}
 
-	// 2. Set Bucket ACL by body.
+	// 2. 通过请求体设置Bucket ACL
 	opt = &cos.BucketPutACLOptions{
 		Body: &cos.ACLXml{
 			Owner: &cos.Owner{
@@ -123,16 +138,22 @@ func (s *CosTestSuite) putBucketAcl() {
 		},
 	}
 	_, err = client.Bucket.PutACL(context.Background(), opt)
-	assert.Nil(s.T(), err, "Test Failed")
+	if err != nil {
+		panic(err)
+	}
 	//.cssg-snippet-body-end
+	assert.Nil(s.T(), err, "Test Failed")
 }
 
 func (s *CosTestSuite) getBucketAcl() {
 	client := s.Client
 	//.cssg-snippet-body-start:[get-bucket-acl]
 	_, _, err := client.Bucket.GetACL(context.Background())
-	assert.Nil(s.T(), err, "Test Failed")
+	if err != nil {
+		panic(err)
+	}
 	//.cssg-snippet-body-end
+	assert.Nil(s.T(), err, "Test Failed")
 }
 
 func (s *CosTestSuite) putBucketCors() {
@@ -156,24 +177,33 @@ func (s *CosTestSuite) putBucketCors() {
 		},
 	}
 	_, err := client.Bucket.PutCORS(context.Background(), opt)
-	assert.Nil(s.T(), err, "Test Failed")
+	if err != nil {
+		panic(err)
+	}
 	//.cssg-snippet-body-end
+	assert.Nil(s.T(), err, "Test Failed")
 }
 
 func (s *CosTestSuite) getBucketCors() {
 	client := s.Client
 	//.cssg-snippet-body-start:[get-bucket-cors]
 	_, _, err := client.Bucket.GetCORS(context.Background())
-	assert.Nil(s.T(), err, "Test Failed")
+	if err != nil {
+		panic(err)
+	}
 	//.cssg-snippet-body-end
+	assert.Nil(s.T(), err, "Test Failed")
 }
 
 func (s *CosTestSuite) deleteBucketCors() {
 	client := s.Client
 	//.cssg-snippet-body-start:[delete-bucket-cors]
 	_, err := client.Bucket.DeleteCORS(context.Background())
-	assert.Nil(s.T(), err, "Test Failed")
+	if err != nil {
+		panic(err)
+	}
 	//.cssg-snippet-body-end
+	assert.Nil(s.T(), err, "Test Failed")
 }
 
 func (s *CosTestSuite) putBucketLifecycle() {
@@ -201,24 +231,33 @@ func (s *CosTestSuite) putBucketLifecycle() {
 		},
 	}
 	_, err := client.Bucket.PutLifecycle(context.Background(), lc)
-	assert.Nil(s.T(), err, "Test Failed")
+	if err != nil {
+		panic(err)
+	}
 	//.cssg-snippet-body-end
+	assert.Nil(s.T(), err, "Test Failed")
 }
 
 func (s *CosTestSuite) getBucketLifecycle() {
 	client := s.Client
 	//.cssg-snippet-body-start:[get-bucket-lifecycle]
 	_, _, err := client.Bucket.GetLifecycle(context.Background())
-	assert.Nil(s.T(), err, "Test Failed")
+	if err != nil {
+		panic(err)
+	}
 	//.cssg-snippet-body-end
+	assert.Nil(s.T(), err, "Test Failed")
 }
 
 func (s *CosTestSuite) deleteBucketLifecycle() {
 	client := s.Client
 	//.cssg-snippet-body-start:[delete-bucket-lifecycle]
 	_, err := client.Bucket.DeleteLifecycle(context.Background())
-	assert.Nil(s.T(), err, "Test Failed")
+	if err != nil {
+		panic(err)
+	}
 	//.cssg-snippet-body-end
+	assert.Nil(s.T(), err, "Test Failed")
 }
 
 func (s *CosTestSuite) putBucketVersioning() {
@@ -229,16 +268,22 @@ func (s *CosTestSuite) putBucketVersioning() {
 		Status: "Enabled",
 	}
 	_, err := client.Bucket.PutVersioning(context.Background(), opt)
-	assert.Nil(s.T(), err, "Test Failed")
+	if err != nil {
+		panic(err)
+	}
 	//.cssg-snippet-body-end
+	assert.Nil(s.T(), err, "Test Failed")
 }
 
 func (s *CosTestSuite) getBucketVersioning() {
 	client := s.Client
 	//.cssg-snippet-body-start:[get-bucket-versioning]
 	_, _, err := client.Bucket.GetVersioning(context.Background())
-	assert.Nil(s.T(), err, "Test Failed")
+	if err != nil {
+		panic(err)
+	}
 	//.cssg-snippet-body-end
+	assert.Nil(s.T(), err, "Test Failed")
 }
 
 func (s *CosTestSuite) putBucketReplication() {
@@ -260,24 +305,33 @@ func (s *CosTestSuite) putBucketReplication() {
 		},
 	}
 	_, err := client.Bucket.PutBucketReplication(context.Background(), opt)
-	assert.Nil(s.T(), err, "Test Failed")
+	if err != nil {
+		panic(err)
+	}
 	//.cssg-snippet-body-end
+	assert.Nil(s.T(), err, "Test Failed")
 }
 
 func (s *CosTestSuite) getBucketReplication() {
 	client := s.Client
 	//.cssg-snippet-body-start:[get-bucket-replication]
 	_, _, err := client.Bucket.GetBucketReplication(context.Background())
-	assert.Nil(s.T(), err, "Test Failed")
+	if err != nil {
+		panic(err)
+	}
 	//.cssg-snippet-body-end
+	assert.Nil(s.T(), err, "Test Failed")
 }
 
 func (s *CosTestSuite) deleteBucketReplication() {
 	client := s.Client
 	//.cssg-snippet-body-start:[delete-bucket-replication]
 	_, err := client.Bucket.DeleteBucketReplication(context.Background())
-	assert.Nil(s.T(), err, "Test Failed")
+	if err != nil {
+		panic(err)
+	}
 	//.cssg-snippet-body-end
+	assert.Nil(s.T(), err, "Test Failed")
 }
 
 func (s *CosTestSuite) TestBucketACL() {
@@ -288,19 +342,24 @@ func (s *CosTestSuite) TestBucketACL() {
 }
 func (s *CosTestSuite) TestBucketCORS() {
 	s.putBucketCors()
+	time.Sleep(2 * time.Second)
 	s.getBucketCors()
 	s.deleteBucketCors()
 }
 func (s *CosTestSuite) TestBucketLifecycle() {
 	s.putBucketLifecycle()
+	time.Sleep(2 * time.Second)
 	s.getBucketLifecycle()
 	s.deleteBucketLifecycle()
 }
 
 func (s *CosTestSuite) testBucketReplicationAndVersioning() {
 	s.putBucketVersioning()
+	time.Sleep(2 * time.Second)
 	s.getBucketVersioning()
+	time.Sleep(2 * time.Second)
 	s.putBucketReplication()
+	time.Sleep(2 * time.Second)
 	s.getBucketReplication()
 	s.deleteBucketReplication()
 }
